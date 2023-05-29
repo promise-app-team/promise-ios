@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FC27D23129FD103E00A3B2B3"
+               BlueprintIdentifier = "FC5974052A24D38700A642D7"
                BuildableName = "Promise.app"
                BlueprintName = "Promise"
                ReferencedContainer = "container:Promise.xcodeproj">
@@ -34,7 +34,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FC27D24129FD104000A3B2B3"
+               BlueprintIdentifier = "FC59741B2A24D38800A642D7"
                BuildableName = "PromiseTests.xctest"
                BlueprintName = "PromiseTests"
                ReferencedContainer = "container:Promise.xcodeproj">
@@ -45,7 +45,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FC27D24B29FD104000A3B2B3"
+               BlueprintIdentifier = "FC5974252A24D38800A642D7"
                BuildableName = "PromiseUITests.xctest"
                BlueprintName = "PromiseUITests"
                ReferencedContainer = "container:Promise.xcodeproj">
@@ -54,7 +54,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -67,7 +67,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FC27D23129FD103E00A3B2B3"
+            BlueprintIdentifier = "FC5974052A24D38700A642D7"
             BuildableName = "Promise.app"
             BlueprintName = "Promise"
             ReferencedContainer = "container:Promise.xcodeproj">
@@ -84,7 +84,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FC27D23129FD103E00A3B2B3"
+            BlueprintIdentifier = "FC5974052A24D38700A642D7"
             BuildableName = "Promise.app"
             BlueprintName = "Promise"
             ReferencedContainer = "container:Promise.xcodeproj">
