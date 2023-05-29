@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAA620322A24E9710091B3BE /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA620312A24E9710091B3BE /* BaseButton.swift */; };
+		FAA620342A24EA010091B3BE /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA620332A24EA010091B3BE /* PrimaryButton.swift */; };
+		FAA620362A24EA260091B3BE /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA620352A24EA260091B3BE /* SecondaryButton.swift */; };
+		FAA620382A24EA3F0091B3BE /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA620372A24EA3F0091B3BE /* DefaultButton.swift */; };
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
 		FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740D2A24D38700A642D7 /* ViewController.swift */; };
@@ -41,7 +45,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-
+		FAA620312A24E9710091B3BE /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseButton.swift; path = "../../../../../.Trash/promise-ios 오후 10.40.51/Promise/Components/BaseButton.swift"; sourceTree = "<group>"; };
+		FAA620332A24EA010091B3BE /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		FAA620352A24EA260091B3BE /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
+		FAA620372A24EA3F0091B3BE /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		FC5974062A24D38700A642D7 /* Promise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Promise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5974092A24D38700A642D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC59740B2A24D38700A642D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,7 +67,6 @@
 		FC5974402A24D5B500A642D7 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		FC5974432A24D5D000A642D7 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		FC5974462A24D5FD00A642D7 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FAA6202F2A24E95C0091B3BE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FAA620302A24E9640091B3BE /* Buttons */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FAA620302A24E9640091B3BE /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				FAA620312A24E9710091B3BE /* BaseButton.swift */,
+				FAA620332A24EA010091B3BE /* PrimaryButton.swift */,
+				FAA620352A24EA260091B3BE /* SecondaryButton.swift */,
+				FAA620372A24EA3F0091B3BE /* DefaultButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		FC5973FD2A24D38700A642D7 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +136,7 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6202F2A24E95C0091B3BE /* Components */,
 				FC5974482A24D60B00A642D7 /* Views */,
 				FC5974392A24D54800A642D7 /* ViewModels */,
 				FC59743C2A24D58800A642D7 /* Models */,
@@ -323,10 +349,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA620362A24EA260091B3BE /* SecondaryButton.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* Model.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
+				FAA620342A24EA010091B3BE /* PrimaryButton.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* Service.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */,
+				FAA620322A24E9710091B3BE /* BaseButton.swift in Sources */,
+				FAA620382A24EA3F0091B3BE /* DefaultButton.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* ViewModel.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
@@ -510,6 +540,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DQNSTQBH74;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -517,6 +548,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -525,7 +557,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-development";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -542,20 +574,18 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Promise/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				DEVELOPMENT_TEAM = DQNSTQBH74;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,7 +594,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-production";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
