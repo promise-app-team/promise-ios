@@ -1,0 +1,13 @@
+//
+//  development.xcconfig
+//  Promise
+//
+//  Created by dylan on 2023/06/05.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+APP_ENV = development
+
+API_URL = http:/$()/ec2-3-34-126-40.ap-northeast-2.compute.amazonaws.com
