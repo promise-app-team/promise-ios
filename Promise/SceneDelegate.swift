@@ -13,11 +13,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+
+        let viewController = UIViewController()
+        let imageView = UIImageView(frame: viewController.view.bounds)
+        imageView.image = UIImage(named: "LaunchScreenImage")
+        imageView.contentMode = .scaleAspectFill
+        viewController.view.addSubview(imageView)
+
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: viewController.view.topAnchor, constant: 391),
+            imageView.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: 77),
+            imageView.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor, constant: 77)
+        ])
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            window.rootViewController = mainVC
+        }
     }
+
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
