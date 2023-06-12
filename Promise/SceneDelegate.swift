@@ -14,24 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-
-        let viewController = UIViewController()
-        let imageView = UIImageView(frame: viewController.view.bounds)
-        imageView.image = UIImage(named: "LaunchScreenImage")
-        imageView.contentMode = .scaleAspectFill
-        viewController.view.addSubview(imageView)
-
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: viewController.view.topAnchor, constant: 391),
-            imageView.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: 77),
-            imageView.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor, constant: 77)
-        ])
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-            window.rootViewController = mainVC
+        window = UIWindow(windowScene: windowScene)
+        
+        guard let window = window else { return }
+        
+        let launchViewController = LaunchScreenViewController()
+        window.rootViewController = launchViewController
+        window.makeKeyAndVisible()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+            let mainViewController = ViewController()
+            window.rootViewController = mainViewController
         }
     }
 
