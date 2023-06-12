@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0262A263889002D8869 /* PrimaryButton.swift */; };
 		FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0282A263892002D8869 /* SecondaryButton.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
@@ -94,9 +96,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
+			isa = PBXGroup;
+			children = (
+				4A4719EF2A37138B00812B29 /* ToastMessage.swift */,
+			);
+			path = ToastMessage;
+			sourceTree = "<group>";
+		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				4A4719EE2A36F29200812B29 /* ToastMessage */,
 				FAE2E0232A26382D002D8869 /* Buttons */,
 			);
 			path = Components;
@@ -355,6 +366,7 @@
 				FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* Service.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */,
+				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				FAE2E02B2A26389C002D8869 /* DefaultButton.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
