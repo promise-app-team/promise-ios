@@ -17,7 +17,7 @@ class LaunchScreenViewController: UIViewController {
     }()
 
     private lazy var logoImageView: UIImageView = {
-        let logoImage = UIImage(named: "LaunchScreenImage")
+        let logoImage = UIImage(named: "launch_screen_promise")
         let imageView = UIImageView(image: logoImage)
         return imageView
     }()
