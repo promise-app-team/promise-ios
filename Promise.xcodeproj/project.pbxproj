@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FABF06B72A34DF0400D2B796 /* CommonModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */; };
+		FABF06B92A3756D900D2B796 /* ModalPresentationDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */; };
+		FABF06BB2A37578400D2B796 /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0262A263889002D8869 /* PrimaryButton.swift */; };
 		FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0282A263892002D8869 /* SecondaryButton.swift */; };
@@ -45,6 +48,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalViewController.swift; sourceTree = "<group>"; };
+		FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationDelegator.swift; sourceTree = "<group>"; };
+		FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
@@ -94,9 +100,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FABF06B32A34D2B300D2B796 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */,
+				FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */,
+				FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FABF06B32A34D2B300D2B796 /* Modal */,
 				FAE2E0232A26382D002D8869 /* Buttons */,
 			);
 			path = Components;
@@ -349,6 +366,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FABF06B92A3756D900D2B796 /* ModalPresentationDelegator.swift in Sources */,
+				FABF06BB2A37578400D2B796 /* ModalPresentationController.swift in Sources */,
 				FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* Model.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
@@ -361,6 +380,7 @@
 				FC59743B2A24D57600A642D7 /* ViewModel.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				FC5974412A24D5B500A642D7 /* Helper.swift in Sources */,
+				FABF06B72A34DF0400D2B796 /* CommonModalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
