@@ -54,10 +54,10 @@ class LaunchScreenViewController: UIViewController {
             logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 381),
 
             // 프로미스앱 로고 로티 이미지 오토레이아웃 설정
-            lottieAnimationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 189),
+            lottieAnimationView.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: -124),
             lottieAnimationView.widthAnchor.constraint(equalToConstant: 80),
             lottieAnimationView.heightAnchor.constraint(equalToConstant: 80),
-            lottieAnimationView.topAnchor.constraint(equalTo: view.topAnchor, constant: 301)
+            lottieAnimationView.topAnchor.constraint(equalTo: logoImageView.topAnchor, constant: -81)
         ])
     }
 }
