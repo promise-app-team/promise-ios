@@ -48,17 +48,15 @@ class LaunchScreenViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             // 프로미스앱 로고 이미지 오토레이아웃 설정
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 236),
             logoImageView.heightAnchor.constraint(equalToConstant: 71),
-            logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 77),
-            logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -77),
             logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 381),
-            
+
             // 프로미스앱 로고 로티 이미지 오토레이아웃 설정
+            lottieAnimationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 189),
             lottieAnimationView.widthAnchor.constraint(equalToConstant: 80),
             lottieAnimationView.heightAnchor.constraint(equalToConstant: 80),
-            lottieAnimationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 189),
-            lottieAnimationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -121),
             lottieAnimationView.topAnchor.constraint(equalTo: view.topAnchor, constant: 301)
         ])
     }
