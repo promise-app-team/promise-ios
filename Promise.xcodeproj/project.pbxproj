@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
+		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0262A263889002D8869 /* PrimaryButton.swift */; };
 		FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0282A263892002D8869 /* SecondaryButton.swift */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
+		4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
@@ -108,9 +110,18 @@
 			path = ToastMessage;
 			sourceTree = "<group>";
 		};
+		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				4AEBC3CF2A4A9171004E6EA5 /* Label */,
 				4A4719EE2A36F29200812B29 /* ToastMessage */,
 				FAE2E0232A26382D002D8869 /* Buttons */,
 			);
@@ -384,6 +395,7 @@
 				FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
+				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
 				FAE2E02B2A26389C002D8869 /* DefaultButton.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* ViewModel.swift in Sources */,
