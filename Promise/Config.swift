@@ -16,12 +16,12 @@ public enum Config {
         return dict
     }()
     
-    static let apiURL: URL = {
+    static let apiURL: URLComponents = {
         guard let baseURL = Config.infoDictionary[Keys.apiURL.rawValue] as? String else {
             fatalError("API URL not set in plist")
         }
         
-        guard let url = URL(string: baseURL) else {
+        guard let url = URLComponents(string: baseURL) else {
             fatalError("API URL is invalid")
         }
         
