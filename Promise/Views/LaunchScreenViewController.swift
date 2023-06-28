@@ -17,7 +17,7 @@ class LaunchScreenViewController: UIViewController {
     }()
 
     private lazy var logoImageView: UIImageView = {
-        let logoImage = UIImage(named: "launch_screen_promise")
+        let logoImage = UIImage(named: "promise_logo")
         let imageView = UIImageView(image: logoImage)
         return imageView
     }()
@@ -49,9 +49,9 @@ class LaunchScreenViewController: UIViewController {
         NSLayoutConstraint.activate([
             // 프로미스앱 로고 이미지 오토레이아웃 설정
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.widthAnchor.constraint(equalToConstant: 236),
-            logoImageView.heightAnchor.constraint(equalToConstant: 71),
-            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 381),
+            logoImageView.widthAnchor.constraint(equalToConstant: 159.81),
+            logoImageView.heightAnchor.constraint(equalToConstant: 39.33),
+            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 406.83),
 
             // 프로미스앱 로고 로티 이미지 오토레이아웃 설정
             lottieAnimationView.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: -124),
