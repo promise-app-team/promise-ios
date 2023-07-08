@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import OpenAPIRuntime
+import OpenAPIURLSession
 
 enum NetworkError: Error {
     case badRequest
@@ -25,12 +27,11 @@ struct LoginResponse: Codable {
 
 final class APIService {
     static let shared = APIService()
+    static let client: Client = Client(serverURL: Config.apiURL, transport: URLSessionTransport())
     
-    private var urlComponents = Config.apiURL
-    private lazy var url = urlComponents.url!
     
     private lazy var request = {
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: Config.apiURL)
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
         request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
@@ -39,11 +40,11 @@ final class APIService {
         return request
     }()
     
-    func fetch<Body: Encodable, Response: Decodable>(_ method: HttpMethod, _ params: [String: String]? = nil , _ body: Body? = nil, completion: @escaping (Result<Response, NetworkError>) -> Void) {
+    func fetch<Response: Decodable>(_ method: HttpMethod, _ params: [String: String]? = nil , _ body: Encodable? = nil, completion: @escaping (Result<Response, NetworkError>) -> Void) {
         request.httpMethod = method.rawValue
         
         if let params = params {
-            urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+            Config.apiURLComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
         }
         
         switch(method) {
