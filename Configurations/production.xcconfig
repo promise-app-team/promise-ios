@@ -8,6 +8,8 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-APP_ENV = production
+#include "Pods/Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"
+#include "Pods/Target Support Files/Pods-Promise/Pods-Promise.release (production).xcconfig"
 
-API_URL = http:/$()/ec2-3-34-129-86.ap-northeast-2.compute.amazonaws.com
+APP_ENV = production
+API_URL = http:/$()/ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080/api
