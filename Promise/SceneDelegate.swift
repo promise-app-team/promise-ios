@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let window = window else { return }
         
         let launchViewController = LaunchScreenViewController()
+        window.backgroundColor = .white // MARK: set default color
         window.rootViewController = launchViewController
         window.makeKeyAndVisible()
         
