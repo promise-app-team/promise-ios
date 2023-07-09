@@ -27,26 +27,40 @@ struct LoginResponse: Codable {
 
 final class APIService {
     static let shared = APIService()
-    static let client: Client = Client(serverURL: Config.apiURL, transport: URLSessionTransport())
     
+    // MARK: client by swift openapi generator
+    public let client: Client = Client(serverURL: Config.apiURL, transport: URLSessionTransport())
     
-    private lazy var request = {
-        var request = URLRequest(url: Config.apiURL)
+    func fetch<Response: Decodable>(_ method: HttpMethod, _ path: String? = nil, _ params: [String: String]? = nil , _ body: Encodable? = nil, completion: @escaping (Result<Response, NetworkError>) -> Void) {
         
+        var url = Config.apiURL
+        
+        // Step 1: endpoint path setting
+        if let path = path {
+            url.appendPathComponent(path)
+        }
+        
+        // Step 2: create URLComponents
+        guard var urlComponents = URLComponents(string: url.absoluteString) else { return }
+        
+        // Step 3: query paramenters setting
+        if let params = params {
+            urlComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+        }
+        
+        // Step 4: create URLRequest and URLComponents
+        guard let requestUrl = urlComponents.url else { return }
+        var request = URLRequest(url: requestUrl)
+        
+        // Step 5: http header setting
         request.addValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
         request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
         // request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
         
-        return request
-    }()
-    
-    func fetch<Response: Decodable>(_ method: HttpMethod, _ params: [String: String]? = nil , _ body: Encodable? = nil, completion: @escaping (Result<Response, NetworkError>) -> Void) {
+        // Step 6: http method setting
         request.httpMethod = method.rawValue
         
-        if let params = params {
-            Config.apiURLComponents.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
-        }
-        
+        // Step 7: body setting by method
         switch(method) {
         case .GET:
             break
@@ -61,6 +75,7 @@ final class APIService {
             // Ohter handle http methods
         }
         
+        // Step 7: resume url session task
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if (response as? HTTPURLResponse)?.statusCode == 401 {
                 completion(.failure(.notAuthenticated))
@@ -73,7 +88,6 @@ final class APIService {
                 return
             }
             
-            // TODO: 어떤 타입으로 파싱할거냐...
             guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
                 completion(.failure(.decodingError))
                 return
