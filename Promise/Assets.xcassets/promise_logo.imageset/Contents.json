@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "promise_logo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
