@@ -9,7 +9,7 @@ import Foundation
 import KakaoSDKUser
 
 final class SignInVM {
-    private let UserMDL = UserMDL()
+    private let userMDL = UserMDL()
     private let isAvailableKakaoTalkAuth: Bool = UserApi.isKakaoTalkLoginAvailable()
     
     func getKakaoTalkAuth() {
