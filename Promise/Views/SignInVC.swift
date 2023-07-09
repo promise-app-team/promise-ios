@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class SignInVC: UIViewController {
+    private lazy var signInVM = SignInVM()
+    
     private lazy var signInButtonsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             kakaoSignInButton,
@@ -31,12 +33,9 @@ final class ViewController: UIViewController {
         button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
         button.layer.cornerRadius = 12
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.addTarget(self, action: #selector(onTapKakaoSignInButton), for: .touchUpInside)
         
         let shadowedButton = setShadow(button)
-        
-        //MARK: 탭 이벤트
-        // button.addTarget(self, action: #selector(kakaoSignInButtonTapped), for: .touchUpInside)
-        
         shadowedButton.translatesAutoresizingMaskIntoConstraints = false
         return shadowedButton
     }()
@@ -168,6 +167,10 @@ final class ViewController: UIViewController {
             signInButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             signInButtonsStackView.heightAnchor.constraint(equalToConstant: 202),
         ])
+    }
+    
+    @objc func onTapKakaoSignInButton() {
+        signInVM.handleKakaoSignIn()
     }
     
     override func viewDidLoad() {

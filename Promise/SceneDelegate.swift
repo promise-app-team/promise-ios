@@ -9,7 +9,6 @@ import UIKit
 import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
 
 
@@ -19,13 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let window = window else { return }
         
-        let launchViewController = LaunchScreenViewController()
+        let launchViewController = LaunchVC()
         window.backgroundColor = .white // MARK: set default color
         window.rootViewController = launchViewController
         window.makeKeyAndVisible()
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            let mainViewController = ViewController()
+            let mainViewController = SignInVC()
             window.rootViewController = mainViewController
         }
     }
