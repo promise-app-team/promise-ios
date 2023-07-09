@@ -28,6 +28,9 @@
 		FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974462A24D5FD00A642D7 /* Resource.swift */; };
 		FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7B5CE92A2E1EA5002FC94E /* Config.swift */; };
 		FCB9915B2A5A9D9E00B82924 /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = FCB9915A2A5A9D9E00B82924 /* openapi.json */; };
+		FCB991752A5B049200B82924 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FCB991742A5B049200B82924 /* KakaoSDKAuth */; };
+		FCB991772A5B049200B82924 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = FCB991762A5B049200B82924 /* KakaoSDKCommon */; };
+		FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = FCB991782A5B049200B82924 /* KakaoSDKUser */; };
 		FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB552A59DBF00048192E /* OpenAPIRuntime */; };
 		FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB592A59DC180048192E /* OpenAPIURLSession */; };
 		FCEAAB622A59DE110048192E /* openapi-generator-config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */; };
@@ -100,7 +103,10 @@
 			files = (
 				FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
+				FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */,
 				60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */,
+				FCB991772A5B049200B82924 /* KakaoSDKCommon in Frameworks */,
+				FCB991752A5B049200B82924 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +310,9 @@
 			packageProductDependencies = (
 				FCEAAB552A59DBF00048192E /* OpenAPIRuntime */,
 				FCEAAB592A59DC180048192E /* OpenAPIURLSession */,
+				FCB991742A5B049200B82924 /* KakaoSDKAuth */,
+				FCB991762A5B049200B82924 /* KakaoSDKCommon */,
+				FCB991782A5B049200B82924 /* KakaoSDKUser */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -384,6 +393,7 @@
 				FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
 				FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+				FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1191,6 +1201,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.15.0;
+			};
+		};
 		FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
@@ -1218,6 +1236,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FCB991742A5B049200B82924 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		FCB991762A5B049200B82924 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		FCB991782A5B049200B82924 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
 		FCEAAB552A59DBF00048192E /* OpenAPIRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
