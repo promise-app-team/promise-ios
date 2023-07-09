@@ -359,8 +359,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC5974302A24D38800A642D7 /* Build configuration list for PBXNativeTarget "Promise" */;
 			buildPhases = (
-				EB927691611FB8362908AF4E /* [CP] Check Pods Manifest.lock */,
 				FCB991502A5A995E00B82924 /* ShellScript */,
+				EB927691611FB8362908AF4E /* [CP] Check Pods Manifest.lock */,
 				FC5974022A24D38700A642D7 /* Sources */,
 				FC5974032A24D38700A642D7 /* Frameworks */,
 				FC5974042A24D38700A642D7 /* Resources */,
@@ -600,6 +600,7 @@
 		};
 		FCB991502A5A995E00B82924 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -673,7 +674,7 @@
 		};
 		FCEAAB682A59DED60048192E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */;
+			productRef = FCEAAB672A59DED60048192E /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1310,7 +1311,7 @@
 			package = FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
 			productName = OpenAPIURLSession;
 		};
-		FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */ = {
+		FCEAAB672A59DED60048192E /* OpenAPIGenerator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
 			productName = "plugin:OpenAPIGenerator";
