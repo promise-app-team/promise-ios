@@ -27,10 +27,10 @@
 		FC5974442A24D5D000A642D7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974432A24D5D000A642D7 /* APIService.swift */; };
 		FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974462A24D5FD00A642D7 /* Resource.swift */; };
 		FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7B5CE92A2E1EA5002FC94E /* Config.swift */; };
+		FCB9915B2A5A9D9E00B82924 /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = FCB9915A2A5A9D9E00B82924 /* openapi.json */; };
 		FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB552A59DBF00048192E /* OpenAPIRuntime */; };
 		FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB592A59DC180048192E /* OpenAPIURLSession */; };
 		FCEAAB622A59DE110048192E /* openapi-generator-config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */; };
-		FCEAAB642A59DE3B0048192E /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = FCEAAB632A59DE3B0048192E /* openapi.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +89,8 @@
 		FC7B5CDF2A2E099A002FC94E /* development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = development.xcconfig; sourceTree = "<group>"; };
 		FC7B5CE02A2E0D55002FC94E /* production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = production.xcconfig; sourceTree = "<group>"; };
 		FC7B5CE92A2E1EA5002FC94E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		FCB9915A2A5A9D9E00B82924 /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
 		FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
-		FCEAAB632A59DE3B0048192E /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +187,6 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
-				FCEAAB632A59DE3B0048192E /* openapi.yaml */,
-				FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */,
 				FC5974482A24D60B00A642D7 /* Views */,
 				FC5974392A24D54800A642D7 /* ViewModels */,
 				FC59743C2A24D58800A642D7 /* Models */,
@@ -200,8 +198,10 @@
 				FC59740F2A24D38700A642D7 /* Main.storyboard */,
 				FC5974122A24D38800A642D7 /* Assets.xcassets */,
 				FC5974142A24D38800A642D7 /* LaunchScreen.storyboard */,
-				FC5974172A24D38800A642D7 /* Info.plist */,
 				FC7B5CE92A2E1EA5002FC94E /* Config.swift */,
+				FC5974172A24D38800A642D7 /* Info.plist */,
+				FCB9915A2A5A9D9E00B82924 /* openapi.json */,
+				FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */,
 			);
 			path = Promise;
 			sourceTree = "<group>";
@@ -288,6 +288,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC5974302A24D38800A642D7 /* Build configuration list for PBXNativeTarget "Promise" */;
 			buildPhases = (
+				FCB991502A5A995E00B82924 /* ShellScript */,
 				C650BE8F78614077FD779D89 /* [CP] Check Pods Manifest.lock */,
 				FC5974022A24D38700A642D7 /* Sources */,
 				FC5974032A24D38700A642D7 /* Frameworks */,
@@ -402,7 +403,7 @@
 			files = (
 				4A5EE2602A36BB7D005D5020 /* _primary-gps-lottie.json in Resources */,
 				FC5974162A24D38800A642D7 /* LaunchScreen.storyboard in Resources */,
-				FCEAAB642A59DE3B0048192E /* openapi.yaml in Resources */,
+				FCB9915B2A5A9D9E00B82924 /* openapi.json in Resources */,
 				FC5974132A24D38800A642D7 /* Assets.xcassets in Resources */,
 				FC5974112A24D38700A642D7 /* Main.storyboard in Resources */,
 				FCEAAB622A59DE110048192E /* openapi-generator-config.yaml in Resources */,
@@ -525,6 +526,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FCB991502A5A995E00B82924 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncurl ${API_DOC_URL} > ${SRCROOT}/Promise/openapi.json\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
