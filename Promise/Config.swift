@@ -16,7 +16,7 @@ public enum Config {
         return dict
     }()
     
-    static let apiURL: URL = {
+    static var apiURL: URL = {
         guard let baseURL = Config.infoDictionary[Keys.apiURL.rawValue] as? String else {
             fatalError("API URL not set in plist")
         }
