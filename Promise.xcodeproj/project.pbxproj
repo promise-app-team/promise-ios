@@ -198,7 +198,6 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
-				FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */,
 				FC5974482A24D60B00A642D7 /* Views */,
 				FC5974392A24D54800A642D7 /* ViewModels */,
 				FC59743C2A24D58800A642D7 /* Models */,
@@ -212,6 +211,7 @@
 				FC5974142A24D38800A642D7 /* LaunchScreen.storyboard */,
 				FC7B5CE92A2E1EA5002FC94E /* Config.swift */,
 				FC5974172A24D38800A642D7 /* Info.plist */,
+				FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */,
 				FCB9915A2A5A9D9E00B82924 /* openapi.json */,
 				FCEAAB612A59DE110048192E /* openapi-generator-config.yaml */,
 			);
