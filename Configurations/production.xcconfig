@@ -12,6 +12,6 @@
 #include "Pods/Target Support Files/Pods-Promise/Pods-Promise.release (production).xcconfig"
 
 APP_ENV = production
-API_URL = http:/$()/ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080/api
+API_URL = http:/$()/ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080
 API_DOC_URL = http:/$()/ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080/api-json
 KAKAO_NATIVE_APP_KEY = 325babc84c1119a1bf72c318eefde3f5
