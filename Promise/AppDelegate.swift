@@ -9,14 +9,13 @@ import UIKit
 import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        UIApplication.shared.registerForRemoteNotifications()
         registerForPushNotifications()
+        pushNotiOnForeground()
         return true
     }
 
@@ -34,18 +33,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    //APNs에 등록되면 자동으로 호출되는 함수로 디바이스 토큰을 가져올 수 있다.
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+    }
+    
+    //에러처리
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+    }
+    
     func registerForPushNotifications() {
-        // 알림을 포함 앱의 모든 알림 관련 활동 처리.
+        print(#function)
         UNUserNotificationCenter.current()
-        // 알림 유형 설정가능 (alert, sound, badge)
             .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
                 print("Permission granted: \(granted)") //인증결과 표시
-                guard granted else { return }
-                self.getNotificationSettings()
+                if granted {
+                    self.getNotificationSettings()
+                    
+                }
             }
     }
     
     func getNotificationSettings() {
+        print(#function)
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
@@ -56,16 +69,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    //registerForPushNotifications가 성공할 때마다 자동으로 호출되는 함수.
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
-        let token = tokenParts.joined()
-        print("Device Token: \(token)")
+    func pushNotiOnForeground() {
+        UNUserNotificationCenter.current().delegate = self
     }
-
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register: \(error)")
+    
+    // 앱이 foreground 상태일 때, 알림을 수신하면 자동 호출되는 함수.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print(#function)
+        completionHandler([.alert, .sound, .badge])
     }
-
 }
 
