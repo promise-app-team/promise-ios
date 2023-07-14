@@ -170,12 +170,17 @@ final class SignInVC: UIViewController {
     }
     
     @objc func onTapKakaoSignInButton() {
-        signInVM.handleKakaoSignIn()
+        signInVM.handleKakaoSignIn(currentVC: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureMainVIew()
         render()
+    }
+    
+    private func configureMainVIew() {
+        view.backgroundColor = .white
     }
     
     private func render() {
