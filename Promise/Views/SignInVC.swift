@@ -8,7 +8,7 @@
 import UIKit
 
 final class SignInVC: UIViewController {
-    private lazy var signInVM = SignInVM()
+    private lazy var signInVM = SignInVM(currentVC: self)
     
     private lazy var signInButtonsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
@@ -61,13 +61,9 @@ final class SignInVC: UIViewController {
         button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
         button.layer.cornerRadius = 12
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.addTarget(self, action: #selector(onTapAppleSignInButton), for: .touchUpInside)
         
         let shadowedButton = setShadow(button, shouldCornerRadius: true)
-        
-        
-        //MARK: 탭 이벤트
-        // shadowedButton.addTarget(self, action: #selector(appleSignInButtonTapped), for: .touchUpInside)
-        
         shadowedButton.translatesAutoresizingMaskIntoConstraints = false
         return shadowedButton
     }()
@@ -167,11 +163,15 @@ final class SignInVC: UIViewController {
     }
     
     @objc func onTapKakaoSignInButton() {
-        signInVM.handleSignIn(currentVC: self, method: .KAKAO)
+        signInVM.handleSignIn(method: .KAKAO)
     }
     
     @objc func onTapGoogleSignInButton() {
-        signInVM.handleSignIn(currentVC: self, method: .GOOGLE)
+        signInVM.handleSignIn(method: .GOOGLE)
+    }
+    
+    @objc func onTapAppleSignInButton() {
+        signInVM.handleSignIn(method: .APPLE)
     }
     
     override func viewDidLoad() {

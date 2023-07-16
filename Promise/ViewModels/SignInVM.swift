@@ -7,10 +7,12 @@
 
 import Foundation
 import UIKit
+
 import KakaoSDKUser
 import GoogleSignIn
+import AuthenticationServices
 
-final class SignInVM {
+final class SignInVM: NSObject {
     var signInStatus: Bool = false
     var loading: Bool = false
     
@@ -18,6 +20,10 @@ final class SignInVM {
     
     private let userMDL = UserMDL()
     private let isAvailableKakaoTalkAuth: Bool = UserApi.isKakaoTalkLoginAvailable()
+    
+    init(currentVC: UIViewController? = nil) {
+        self.currentVC = currentVC
+    }
     
     private func getUserAuthToken(user: String, profileUrl: String, provider: Components.Schemas.InputCreateUser.providerPayload, providerId: String) async {
     
@@ -41,7 +47,6 @@ final class SignInVM {
                     loading = false
                     signInStatus = true // TODO: 임시
                     
-                    print("아아!")
                     // 로그인이 성공했으므로 메인 화면으로 이동
                     navigateMainScreen()
                 }
@@ -115,13 +120,25 @@ final class SignInVM {
                 return
             }
             
+            // user.userID = jwtToken's sub
             if let providerId = user.userID, let nickname = user.profile?.name, let profileUrl = user.profile?.imageURL(withDimension: 320)?.absoluteString {
                 
                 Task { [weak self] in
                     await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .GOOGLE, providerId: providerId)
                 }
             }
-          }
+        }
+    }
+    
+    private func getAppleAuth() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName] // MARK: 유저로 부터 알 수 있는 정보는 name과 email만 요청가능
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
     
     private func navigateMainScreen() {
@@ -131,9 +148,8 @@ final class SignInVM {
         }
     }
     
-    func handleSignIn(currentVC: UIViewController, method: Components.Schemas.InputCreateUser.providerPayload) {
+    func handleSignIn(method: Components.Schemas.InputCreateUser.providerPayload) {
         loading = true
-        self.currentVC = currentVC
         
         switch method {
         case .KAKAO:
@@ -145,9 +161,61 @@ final class SignInVM {
         case .GOOGLE:
             getGoogleAuth()
         case .APPLE:
+            getAppleAuth()
             break
         case .undocumented(_):
             break
         }
     }
 }
+
+extension SignInVM: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            
+            let providerId = appleIDCredential.user // userIdentifier(= jwtToken's sub)
+            let fullName = appleIDCredential.fullName
+            let totalName = "\(fullName?.familyName ?? "") \(fullName?.givenName ?? "")"
+            let trimmedNickname = totalName.trimmingCharacters(in: .whitespaces)
+            let nickname = trimmedNickname.isEmpty ? "" : totalName
+            let profileUrl = ""
+            
+            Task { [weak self] in
+                await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .APPLE, providerId: providerId)
+            }
+            
+            if  let authorizationCode = appleIDCredential.authorizationCode,
+                let identityToken = appleIDCredential.identityToken,
+                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                
+                // unsued
+                _ = identityToken
+                _ = authCodeString
+                _ = identifyTokenString
+            }
+        case let passwordCredential as ASPasswordCredential:
+            // sign in using an existing iCloud Keychain credential.
+            let _ = passwordCredential.user
+            let _ = passwordCredential.password
+        default:
+            break
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // TODO: Apple 로그인 인증 실패 처리
+    }
+}
+
+extension SignInVM: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        guard let window = self.currentVC?.view.window else {
+            fatalError("No Window Available")
+        }
+        return window
+    }
+}
+
+
