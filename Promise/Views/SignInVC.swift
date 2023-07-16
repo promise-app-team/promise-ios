@@ -47,12 +47,9 @@ final class SignInVC: UIViewController {
         button.setTitle("Google", for: .normal)
         button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.addTarget(self, action: #selector(onTapGoogleSignInButton), for: .touchUpInside)
         
         let shadowedButton = setShadow(button, shouldCornerRadius: true)
-        
-        //MARK: 탭 이벤트
-        // shadowedButton.addTarget(self, action: #selector(googleSignInButtonTapped), for: .touchUpInside)
-        
         shadowedButton.translatesAutoresizingMaskIntoConstraints = false
         return shadowedButton
     }()
@@ -170,7 +167,11 @@ final class SignInVC: UIViewController {
     }
     
     @objc func onTapKakaoSignInButton() {
-        signInVM.handleKakaoSignIn(currentVC: self)
+        signInVM.handleSignIn(currentVC: self, method: .KAKAO)
+    }
+    
+    @objc func onTapGoogleSignInButton() {
+        signInVM.handleSignIn(currentVC: self, method: .GOOGLE)
     }
     
     override func viewDidLoad() {

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import KakaoSDKUser
+import GoogleSignIn
 
 final class SignInVM {
     var signInStatus: Bool = false
@@ -100,6 +101,29 @@ final class SignInVM {
         }
     }
     
+    private func getGoogleAuth() {
+        guard let presentedVC = self.currentVC else { return }
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentedVC) { signInResult, error in
+            guard error == nil else {
+                // TODO: 구글 인증 실패시 핸들러 - 토스트 및 로그인 실패 액션(웹 뷰가 닫힌 후 다음)
+                return
+            }
+            
+            guard let user = signInResult?.user else {
+                // TODO: 구글 인증결과에서 유저 정보가 없을시 핸들러
+                return
+            }
+            
+            if let providerId = user.userID, let nickname = user.profile?.name, let profileUrl = user.profile?.imageURL(withDimension: 320)?.absoluteString {
+                
+                Task { [weak self] in
+                    await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .GOOGLE, providerId: providerId)
+                }
+            }
+          }
+    }
+    
     private func navigateMainScreen() {
         DispatchQueue.main.async {[weak self] in
             let mainVC = MainVC()
@@ -107,15 +131,23 @@ final class SignInVM {
         }
     }
     
-    func handleKakaoSignIn(currentVC: UIViewController) {
-        // 로그인/회원가입 핸들러 시작 로딩 세팅
+    func handleSignIn(currentVC: UIViewController, method: Components.Schemas.InputCreateUser.providerPayload) {
         loading = true
         self.currentVC = currentVC
         
-        if(isAvailableKakaoTalkAuth) {
-            getKakaoTalkAuth()
-        } else {
-            getKakaoAccountAuth()
+        switch method {
+        case .KAKAO:
+            if(isAvailableKakaoTalkAuth) {
+                getKakaoTalkAuth()
+            } else {
+                getKakaoAccountAuth()
+            }
+        case .GOOGLE:
+            getGoogleAuth()
+        case .APPLE:
+            break
+        case .undocumented(_):
+            break
         }
     }
 }
