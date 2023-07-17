@@ -14,6 +14,8 @@
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7A962A616F060055FE4F /* Onboarding.swift */; };
 		FC4A7AB92A6448790055FE4F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FC4A7AB82A6448790055FE4F /* GoogleSignIn */; };
+		FC4A7AC42A65604B0055FE4F /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7AC32A65604B0055FE4F /* SocketService.swift */; };
+		FC4A7AC82A6561A60055FE4F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = FC4A7AC72A6561A60055FE4F /* SocketIO */; };
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
 		FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740D2A24D38700A642D7 /* MainVC.swift */; };
@@ -77,6 +79,7 @@
 		E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC4A7A962A616F060055FE4F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		FC4A7AC32A65604B0055FE4F /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		FC5974062A24D38700A642D7 /* Promise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Promise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5974092A24D38700A642D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC59740B2A24D38700A642D7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */,
+				FC4A7AC82A6561A60055FE4F /* SocketIO in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
 				FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */,
 				60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */,
@@ -269,6 +273,7 @@
 			children = (
 				FC5974432A24D5D000A642D7 /* APIService.swift */,
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
+				FC4A7AC32A65604B0055FE4F /* SocketService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				FCB991762A5B049200B82924 /* KakaoSDKCommon */,
 				FCB991782A5B049200B82924 /* KakaoSDKUser */,
 				FC4A7AB82A6448790055FE4F /* GoogleSignIn */,
+				FC4A7AC72A6561A60055FE4F /* SocketIO */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -409,6 +415,7 @@
 				FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
 				FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				FC4A7AC62A6561A60055FE4F /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -577,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC4A7AC42A65604B0055FE4F /* SocketService.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* UserMDL.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
@@ -1231,6 +1239,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		FC4A7AC62A6561A60055FE4F /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1270,6 +1286,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
+		};
+		FC4A7AC72A6561A60055FE4F /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC4A7AC62A6561A60055FE4F /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 		FCB991742A5B049200B82924 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
