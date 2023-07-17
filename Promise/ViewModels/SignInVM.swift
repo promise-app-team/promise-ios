@@ -25,10 +25,10 @@ final class SignInVM: NSObject {
         self.currentVC = currentVC
     }
     
-    private func getUserAuthToken(user: String, profileUrl: String, provider: Components.Schemas.InputCreateUser.providerPayload, providerId: String) async {
+    private func getUserAuthToken(username: String, profileUrl: String, provider: Components.Schemas.InputCreateUser.providerPayload, providerId: String) async {
     
         do {
-            let response = try await APIService.shared.client.login(.init(body: .json(Components.Schemas.InputCreateUser(user: user, profileUrl: profileUrl, provider: provider, providerId: providerId))))
+            let response = try await APIService.shared.client.login(.init(body: .json(Components.Schemas.InputCreateUser(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))))
             
             switch response {
             case .created(let createdResponse):
@@ -74,7 +74,7 @@ final class SignInVM: NSObject {
                 if let providerId = user?.id, let nickname = user?.kakaoAccount?.profile?.nickname, let profileUrl = user?.kakaoAccount?.profile?.profileImageUrl?.absoluteString {
                     
                     Task { [weak self] in
-                        await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .KAKAO, providerId: String(providerId))
+                        await self?.getUserAuthToken(username: nickname, profileUrl: profileUrl , provider: .KAKAO, providerId: String(providerId))
                     }
                 }
                 
@@ -124,7 +124,7 @@ final class SignInVM: NSObject {
             if let providerId = user.userID, let nickname = user.profile?.name, let profileUrl = user.profile?.imageURL(withDimension: 320)?.absoluteString {
                 
                 Task { [weak self] in
-                    await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .GOOGLE, providerId: providerId)
+                    await self?.getUserAuthToken(username: nickname, profileUrl: profileUrl , provider: .GOOGLE, providerId: providerId)
                 }
             }
         }
@@ -182,7 +182,7 @@ extension SignInVM: ASAuthorizationControllerDelegate {
             let profileUrl = ""
             
             Task { [weak self] in
-                await self?.getUserAuthToken(user: nickname, profileUrl: profileUrl , provider: .APPLE, providerId: providerId)
+                await self?.getUserAuthToken(username: nickname, profileUrl: profileUrl , provider: .APPLE, providerId: providerId)
             }
             
             if  let authorizationCode = appleIDCredential.authorizationCode,
