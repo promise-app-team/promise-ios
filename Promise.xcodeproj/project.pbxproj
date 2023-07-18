@@ -3,24 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FABF06B72A34DF0400D2B796 /* CommonModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */; };
-		FABF06B92A3756D900D2B796 /* ModalPresentationDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */; };
-		FABF06BB2A37578400D2B796 /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */; };
+		253F090BB2CCD6AB022D6707 /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F990FBE007BBF83D46D7ACC /* Pods_PromiseTests.framework */; };
+		2CF0070FE690D6CD2993A5B6 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93094DD7DB3EBBA540FEE8C /* Pods_Promise_PromiseUITests.framework */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
+		4A5EE2622A36BF8C005D5020 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */; };
+		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
+		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
+		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
+		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0262A263889002D8869 /* PrimaryButton.swift */; };
 		FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0282A263892002D8869 /* SecondaryButton.swift */; };
 		FAE2E02B2A26389C002D8869 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E02A2A26389C002D8869 /* DefaultButton.swift */; };
-		253F090BB2CCD6AB022D6707 /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F990FBE007BBF83D46D7ACC /* Pods_PromiseTests.framework */; };
-		2CF0070FE690D6CD2993A5B6 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93094DD7DB3EBBA540FEE8C /* Pods_Promise_PromiseUITests.framework */; };
-		4A5EE2622A36BF8C005D5020 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */; };
-		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
-		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
 		FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740D2A24D38700A642D7 /* ViewController.swift */; };
@@ -60,22 +59,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalViewController.swift; sourceTree = "<group>"; };
-		FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationDelegator.swift; sourceTree = "<group>"; };
-		FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
-		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
-		4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
-		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
-		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
-		FAE2E02A2A26389C002D8869 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		0A3632B624E2DECF95B6089C /* Pods-Promise.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (development).xcconfig"; sourceTree = "<group>"; };
 		24500539C9C898D0D2B80A23 /* Pods-Promise.release (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.release (development).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.release (development).xcconfig"; sourceTree = "<group>"; };
 		27272F867CC218F9515A0181 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A2B8B63FDAE5F3C3BB9DEAA /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
+		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
+		4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		5B0B3EF54AAD1C1D3C10C7C7 /* Pods-Promise.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.release (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.release (production).xcconfig"; sourceTree = "<group>"; };
 		6F740CB353CD141F81EB659D /* Pods-Promise-PromiseUITests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (production).xcconfig"; sourceTree = "<group>"; };
 		7EA3DD4BA384DDC3CD4E1B52 /* Pods-PromiseTests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (production).xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +78,12 @@
 		C433B2C20B59526EE7B23AA7 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		D53DDD8FAADE101F380C823B /* Pods-Promise-PromiseUITests.release (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (development).xcconfig"; sourceTree = "<group>"; };
 		E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
+		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
+		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
+		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
+		FAE2E02A2A26389C002D8869 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC5974062A24D38700A642D7 /* Promise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Promise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5974092A24D38700A642D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -142,14 +140,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FABF06B32A34D2B300D2B796 /* Modal */ = {
+		277CF968CAAFEBDB11FA930A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FABF06B62A34DF0400D2B796 /* CommonModalViewController.swift */,
-				FABF06B82A3756D900D2B796 /* ModalPresentationDelegator.swift */,
-				FABF06BA2A37578400D2B796 /* ModalPresentationController.swift */,
+				0A3632B624E2DECF95B6089C /* Pods-Promise.debug (development).xcconfig */,
+				E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */,
+				24500539C9C898D0D2B80A23 /* Pods-Promise.release (development).xcconfig */,
+				5B0B3EF54AAD1C1D3C10C7C7 /* Pods-Promise.release (production).xcconfig */,
+				27272F867CC218F9515A0181 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */,
+				6F740CB353CD141F81EB659D /* Pods-Promise-PromiseUITests.debug (production).xcconfig */,
+				D53DDD8FAADE101F380C823B /* Pods-Promise-PromiseUITests.release (development).xcconfig */,
+				904038D55983F60B4D80396D /* Pods-Promise-PromiseUITests.release (production).xcconfig */,
+				C433B2C20B59526EE7B23AA7 /* Pods-PromiseTests.debug (development).xcconfig */,
+				7EA3DD4BA384DDC3CD4E1B52 /* Pods-PromiseTests.debug (production).xcconfig */,
+				97335A963563ABCC6D3F222C /* Pods-PromiseTests.release (development).xcconfig */,
+				4A2B8B63FDAE5F3C3BB9DEAA /* Pods-PromiseTests.release (production).xcconfig */,
 			);
-			path = Modal;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
@@ -160,12 +167,39 @@
 			path = ToastMessage;
 			sourceTree = "<group>";
 		};
+		4A5EE2632A36D0AD005D5020 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				4A8D376E2A66D338002D63FF /* logo.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
 			isa = PBXGroup;
 			children = (
 				4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */,
 			);
 			path = Label;
+			sourceTree = "<group>";
+		};
+		916EC261F5758456505E3691 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */,
+				B93094DD7DB3EBBA540FEE8C /* Pods_Promise_PromiseUITests.framework */,
+				9F990FBE007BBF83D46D7ACC /* Pods_PromiseTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FABF06B32A34D2B300D2B796 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */,
+				FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */,
+			);
+			path = Modal;
 			sourceTree = "<group>";
 		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
@@ -188,43 +222,6 @@
 				FAE2E02A2A26389C002D8869 /* DefaultButton.swift */,
 			);
 			path = Buttons;
-			sourceTree = "<group>";
-		};
-		277CF968CAAFEBDB11FA930A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0A3632B624E2DECF95B6089C /* Pods-Promise.debug (development).xcconfig */,
-				E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */,
-				24500539C9C898D0D2B80A23 /* Pods-Promise.release (development).xcconfig */,
-				5B0B3EF54AAD1C1D3C10C7C7 /* Pods-Promise.release (production).xcconfig */,
-				27272F867CC218F9515A0181 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */,
-				6F740CB353CD141F81EB659D /* Pods-Promise-PromiseUITests.debug (production).xcconfig */,
-				D53DDD8FAADE101F380C823B /* Pods-Promise-PromiseUITests.release (development).xcconfig */,
-				904038D55983F60B4D80396D /* Pods-Promise-PromiseUITests.release (production).xcconfig */,
-				C433B2C20B59526EE7B23AA7 /* Pods-PromiseTests.debug (development).xcconfig */,
-				7EA3DD4BA384DDC3CD4E1B52 /* Pods-PromiseTests.debug (production).xcconfig */,
-				97335A963563ABCC6D3F222C /* Pods-PromiseTests.release (development).xcconfig */,
-				4A2B8B63FDAE5F3C3BB9DEAA /* Pods-PromiseTests.release (production).xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		4A5EE2632A36D0AD005D5020 /* Lottie */ = {
-			isa = PBXGroup;
-			children = (
-				4A8D376E2A66D338002D63FF /* logo.json */,
-			);
-			path = Lottie;
-			sourceTree = "<group>";
-		};
-		916EC261F5758456505E3691 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */,
-				B93094DD7DB3EBBA540FEE8C /* Pods_Promise_PromiseUITests.framework */,
-				9F990FBE007BBF83D46D7ACC /* Pods_PromiseTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FC5973FD2A24D38700A642D7 = {
@@ -441,7 +438,7 @@
 				};
 			};
 			buildConfigurationList = FC5974012A24D38700A642D7 /* Build configuration list for PBXProject "Promise" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -621,8 +618,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FABF06B92A3756D900D2B796 /* ModalPresentationDelegator.swift in Sources */,
-				FABF06BB2A37578400D2B796 /* ModalPresentationController.swift in Sources */,
 				FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* Model.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
@@ -639,7 +634,8 @@
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				4A5EE2622A36BF8C005D5020 /* LaunchScreenViewController.swift in Sources */,
 				FC5974412A24D5B500A642D7 /* Helper.swift in Sources */,
-				FABF06B72A34DF0400D2B796 /* CommonModalViewController.swift in Sources */,
+				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
+				FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,7 +671,7 @@
 		};
 		FCEAAB682A59DED60048192E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */;
+			productRef = FCEAAB672A59DED60048192E /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -832,7 +828,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -867,7 +863,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1312,7 +1308,7 @@
 			package = FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
 			productName = OpenAPIURLSession;
 		};
-		FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */ = {
+		FCEAAB672A59DED60048192E /* OpenAPIGenerator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
 			productName = "plugin:OpenAPIGenerator";
