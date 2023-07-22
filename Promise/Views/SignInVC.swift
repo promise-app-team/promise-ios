@@ -178,6 +178,7 @@ final class SignInVC: UIViewController {
         super.viewDidLoad()
         configureMainVIew()
         render()
+        WebSocketManager.shared.connect()
     }
     
     private func configureMainVIew() {

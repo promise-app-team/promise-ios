@@ -28,7 +28,7 @@ final class SignInVM: NSObject {
     private func getUserAuthToken(username: String, profileUrl: String, provider: Components.Schemas.InputCreateUser.providerPayload, providerId: String) async {
     
         do {
-            let response = try await APIService.shared.client.login(.init(body: .json(Components.Schemas.InputCreateUser(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))))
+            let response = try await APIService.shared.client.login(.init(body: .json(Components.Schemas.InputCreateUser(user: username, profileUrl: profileUrl, provider: provider, providerId: providerId))))
             
             switch response {
             case .created(let createdResponse):
