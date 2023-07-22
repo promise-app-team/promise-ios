@@ -15,7 +15,10 @@ class SettingsVC: UIViewController {
     }
     
     func makeNavigationBar() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor {
+            traitCollection in
+            return traitCollection.userInterfaceStyle == .dark ? .black : .white
+        }
 
         title = "설정"
         navigationController?.navigationBar.titleTextAttributes = [
