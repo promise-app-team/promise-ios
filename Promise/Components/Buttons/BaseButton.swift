@@ -9,62 +9,55 @@ import Foundation
 import UIKit
 
 open class BaseButton: UIButton {
+   
+    // MARK: - 버튼 타이틀
+    private var title: String = ""
     
     // MARK: - 백그라운드 색상
-    private var activeColor: UIColor = .black
-    private var inactiveColor: UIColor = .black.withAlphaComponent(0.7)
+    private var bgColor: UIColor = .black
+    private var disabledBgColor: UIColor = UIColor(hexCode: "#F2F2F2")
     
     // MARK: - 텍스트 색상
     private var fontColor: UIColor = .white
+    private var disabledFontColor: UIColor = UIColor(hexCode: "#CCCCCC")
+    
+    // MARK: - 테두리 색상
+    private var borderColor: UIColor = .black
+    private var disabledBorderColor: UIColor = UIColor(hexCode: "#F2F2F2")
     
     // MARK: - 모서리
-    private let cornerRadius: CGFloat = 6
+    private let cornerRadius: CGFloat = 20
     
     // MARK: - 스케일
     private let scaleValue = 0.96
     
+    // MARK: - 버튼 높이
+    private let height = 40
+    
+    // MARK: - 아이콘 이름
+    private var iconTitle = ""
+    
     // MARK: - 버튼 활성화
-    private var _isActive: Bool = true
-    public var isActive: Bool {
+    private var _isDisabled: Bool = false
+    public var isDisabled: Bool {
         get {
-            return _isActive
+            return _isDisabled
         }
         set {
-            _isActive = newValue
+            _isDisabled = newValue
             setupByActiveMode()
         }
     }
-    private var title: String = ""
     
-    // MARK: - 생성자
+    // MARK: - 초기화
     
-    // 코드로 구현할 때 필수로 구현해야하는 지정 생성자
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    // 스토리보드로 생성할 때 필수인 지정 생성자
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    convenience public init(title: String, frame: CGRect, isActive: Bool) {
-        self.init(frame: frame)
-        
+    open func initialize(title: String, bgColor: UIColor, borderColor: UIColor, fontColor: UIColor, iconTitle: String, disabled: Bool) {
         self.title = title
-        self.isActive = isActive
-        
-        setup()
-    }
-    
-    public init(title: String, frame: CGRect, activeColor: UIColor, inactiveColor: UIColor, fontColor: UIColor, isActive: Bool){
-        super.init(frame: frame)
-        
-        self.title = title
-        self.isActive = isActive
-        self.activeColor = activeColor
-        self.inactiveColor = inactiveColor
+        self.bgColor = bgColor
+        self.borderColor = borderColor
         self.fontColor = fontColor
+        self.iconTitle = iconTitle
+        self.isDisabled = disabled
         
         setup()
     }
@@ -73,16 +66,39 @@ open class BaseButton: UIButton {
     open func setup() {
         setupByActiveMode()
         
-        setTitle(self.title, for: .normal)
-        layer.cornerRadius = self.cornerRadius
-        titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        titleLabel?.font = UIFont.pretendard(style: .B1_R)
         
+        setTitle(self.title, for: .normal)
+        setTitleColor(self.fontColor, for: .normal)
+        setTitleColor(self.disabledFontColor, for: .disabled)
+        
+        layer.cornerRadius = self.cornerRadius
+        layer.borderWidth = 1
+        
+        if !iconTitle.isEmpty {
+            setImageOnBtn()
+        }
     }
     
     private func setupByActiveMode(){
-        setTitleColor(isActive ? self.fontColor : self.fontColor.withAlphaComponent(0.7), for: .normal)
-        backgroundColor = self.isActive ? self.activeColor : self.inactiveColor
-        isEnabled = self.isActive
+        backgroundColor = !self.isDisabled ? self.bgColor : self.disabledBgColor
+        layer.borderColor = !self.isDisabled ? self.borderColor.cgColor : self.disabledBorderColor.cgColor
+        isEnabled = !self.isDisabled
+    }
+    
+    private func setImageOnBtn(){
+        
+        
+        setImage(UIImage(systemName: iconTitle), for: .normal)
+        
+        // inset
+        let intervalSpacing = 6.0
+        let halfIntervalSpacing = intervalSpacing / 2
+        
+        //iOS15 이후부턴 Button Configuration 사용하면 됨...
+        self.contentEdgeInsets = .init(top: 0, left: halfIntervalSpacing, bottom: 0, right: halfIntervalSpacing)
+        self.imageEdgeInsets = .init(top: 0, left: -halfIntervalSpacing, bottom: 0, right: halfIntervalSpacing)
+        self.titleEdgeInsets = .init(top: 0, left: halfIntervalSpacing, bottom: 0, right: -halfIntervalSpacing)
     }
     
     // MARK: - Override: Touch Event
@@ -106,7 +122,7 @@ open class BaseButton: UIButton {
     }
     
     open func touchIn(){
-        if !isActive { return }
+        if isDisabled { return }
         
         UIView.animate(withDuration: 0.1, delay: 0, options: [.allowUserInteraction, .curveEaseIn], animations: {
             self.transform = .init(scaleX: self.scaleValue, y: self.scaleValue)
@@ -114,10 +130,11 @@ open class BaseButton: UIButton {
     }
     
     open func touchEnd(){
-        if !isActive { return }
+        if isDisabled { return }
         
         UIView.animate(withDuration: 0.1, delay: 0, options: [.allowUserInteraction, .curveEaseOut], animations: {
             self.transform = .identity
         })
     }
 }
+
