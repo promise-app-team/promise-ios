@@ -21,8 +21,9 @@ class SettingsVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [
                     .font: UIFont.systemFont(ofSize: 16, weight: .regular)]
 
-        // MARK: 이미지 색상 변경
+        // MARK: 네이게이션바 아이템 - 이미지 색상 변경
         let backButtonImage = UIImage(named: "Chevron left")?.withRenderingMode(.alwaysOriginal)
+        
         let backButton = UIBarButtonItem(image: backButtonImage, style: .plain, target: self, action: #selector(backBtnTapped))
         navigationItem.leftBarButtonItem = backButton
     }
