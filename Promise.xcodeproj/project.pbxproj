@@ -11,6 +11,7 @@
 		2CF0070FE690D6CD2993A5B6 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B93094DD7DB3EBBA540FEE8C /* Pods_Promise_PromiseUITests.framework */; };
 		4A5EE2622A36BF8C005D5020 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
+		4A93E6E22A6B674C007757A2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A93E6E12A6B674C007757A2 /* SettingsVC.swift */; };
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
@@ -58,6 +59,7 @@
 		4A2B8B63FDAE5F3C3BB9DEAA /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
+		4A93E6E12A6B674C007757A2 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		5B0B3EF54AAD1C1D3C10C7C7 /* Pods-Promise.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.release (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.release (production).xcconfig"; sourceTree = "<group>"; };
 		6F740CB353CD141F81EB659D /* Pods-Promise-PromiseUITests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (production).xcconfig"; sourceTree = "<group>"; };
 		7EA3DD4BA384DDC3CD4E1B52 /* Pods-PromiseTests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (production).xcconfig"; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				FC59740D2A24D38700A642D7 /* ViewController.swift */,
 				4A5EE2612A36BF8C005D5020 /* LaunchScreenViewController.swift */,
+				4A93E6E12A6B674C007757A2 /* SettingsVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A93E6E22A6B674C007757A2 /* SettingsVC.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* Model.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
@@ -599,7 +603,7 @@
 		};
 		FCEAAB682A59DED60048192E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */;
+			productRef = FCEAAB672A59DED60048192E /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1234,7 +1238,7 @@
 			package = FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
 			productName = OpenAPIURLSession;
 		};
-		FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */ = {
+		FCEAAB672A59DED60048192E /* OpenAPIGenerator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
 			productName = "plugin:OpenAPIGenerator";
