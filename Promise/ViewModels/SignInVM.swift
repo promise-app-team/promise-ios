@@ -13,55 +13,52 @@ import GoogleSignIn
 import AuthenticationServices
 
 final class SignInVM: NSObject {
-    var signInStatus: Bool = false
     var loading: Bool = false
     
     var currentVC: UIViewController?
     
-    private let userMDL = UserMDL()
     private let isAvailableKakaoTalkAuth: Bool = UserApi.isKakaoTalkLoginAvailable()
     
     init(currentVC: UIViewController? = nil) {
         self.currentVC = currentVC
     }
     
-    private func getUserAuthToken(username: String, profileUrl: String, provider: Components.Schemas.InputCreateUser.providerPayload, providerId: String) async {
-    
-        do {
-            let response = try await APIService.shared.client.login(.init(body: .json(Components.Schemas.InputCreateUser(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))))
+    private func getUserAuthToken(
+        username: String,
+        profileUrl: String,
+        provider: Components.Schemas.InputCreateUser.providerPayload,
+        providerId: String)
+    async {
+        
+        let result: Result<Components.Schemas.AuthToken, NetworkError> = await APIService.shared.fetch(.POST, "/auth/login", nil, Components.Schemas.InputCreateUser(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))
+        
+        switch result {
+        case .success(let token):
+            #if DEBUG
+            print("accessToken: ", token.accessToken)
+            print("refreshToken: ", token.refreshToken)
+            #endif
             
-            switch response {
-            case .created(let createdResponse):
-                switch createdResponse.body {
-                case .json(let token):
-                    #if DEBUG
-                    print("accessToken: ", token.accessToken)
-                    print("refreshToken: ", token.refreshToken)
-                    #endif
-                    
-                    UserService.shared.setAccessToken(token.accessToken)
-                    // TODO: refresh token 저장
-                    // TODO: userMDL에도 저장????
-                    
-                    // 로그인/회원가입 완료 후 loading 종료
-                    loading = false
-                    signInStatus = true // TODO: 임시
-                    
-                    // 로그인이 성공했으므로 메인 화면으로 이동
-                    navigateMainScreen()
-                }
-            case .badRequest(let error):
-                // TODO: 400일 때 badRequest 핸들러
-                print("회원가입/로그인 실패", error)
+            // 유저 세팅
+            let result = await UserService.shared.setUser(accessToken: token.accessToken, refreshToken: token.refreshToken)
+            if result {
+                // 로그인이 성공, 메인 화면으로 이동
+                navigateMainScreen()
+            }
+            
+            // 로그인 or 회원가입 프로세스가 끝났음(loading 종료)
+            loading = false
+
+        case .failure(let errorType):
+            switch errorType {
+            case .badRequest:
+                // TODO: Toast error.message
+                print("회원가입/로그인 실패")
                 break
             default:
-                print("예외 발생")
-                // 서버에서 정의하지 않은(명세에 정의되지 않은) 응답 케이스를 처리, undocumented로 처리해도 됨. 하지만 어떤 네트워크 상태 코드를 던질지 모르기 때문에 default에서 처리
+                // Other Error(Network, badUrl ...)
                 break
             }
-        } catch {
-            // TODO: 앱 서버에 회원가입 및 로그인 실패시 핸들러
-            print(error)
         }
     }
     

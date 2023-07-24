@@ -6,24 +6,72 @@
 //
 
 import Foundation
+import UIKit
+import JWTDecode
 
 final class UserService {
     static let shared = UserService()
     
-    private var userId: String? = nil
-    private var nickname: String? = nil
+    private let accessTokenKey = "accessToken"
+    private let refreshTokenKey = "refreshToken"
     
-    // TODO: accessToken이 set되거나 변경되면 userId, nickname 변경하는 옵저버 계산 속성으로 변경
-    private var accessToken: String? = nil
+    private var user: UserMDL? = nil
     
-    public func setAccessToken(_ accessToken: String) {
-        // class의 맴버에 저장
-        self.accessToken = accessToken
-        
-        // TODO: info.plist 혹은 keychain에 token 저장
+    func getUser() -> UserMDL? {
+        return user
     }
     
-    public func getAccessToken() -> String? {
-        return accessToken
+    func setUser(accessToken: String, refreshToken: String? = nil) async -> Bool {
+        UserService.shared.setAccessToken(accessToken)
+        UserService.shared.setRefreshToken(refreshToken)
+        
+        do {
+            let jwt = try decode(jwt: accessToken)
+            let userId = jwt.claim(name: "id").string
+            guard let userId = userId else { return false }
+            
+            let result: Result<Components.Schemas.User, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
+            
+            switch result {
+            case .success(let userInfo):
+                user = UserMDL(userId: userId, nickname: userInfo.username, profileUrl: userInfo.profileUrl)
+                return true
+            case .failure(let error):
+                print("Get user data error: ", error)
+            }
+        } catch {
+            print("User Info Setting Failed: ", error)
+        }
+        
+        return false
+    }
+    
+    func setAccessToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: accessTokenKey)
+    }
+    
+    func getAccessToken() -> String? {
+        return UserDefaults.standard.string(forKey: accessTokenKey)
+    }
+    
+    func setRefreshToken(_ token: String?) {
+        guard let token = token else { return }
+        UserDefaults.standard.set(token, forKey: refreshTokenKey)
+    }
+    
+    func getRefreshToken() -> String? {
+        return UserDefaults.standard.string(forKey: refreshTokenKey)
+    }
+    
+    // Clear Tokens
+    func clearTokens() {
+        UserDefaults.standard.removeObject(forKey: accessTokenKey)
+        UserDefaults.standard.removeObject(forKey: refreshTokenKey)
+    }
+    
+    func signOut(currentVC: UIViewController) {
+        clearTokens()
+        user = nil
+        currentVC.navigationController?.pushViewController(SignInVC(), animated: true)
     }
 }

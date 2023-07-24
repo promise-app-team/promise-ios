@@ -12,18 +12,26 @@ final class Onboarding {
     
     func ready(_ completion: @escaping (UIViewController) -> Void) {
         loading = true
-    
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) { [weak self] in
-            let token = UserService.shared.getAccessToken()
         
+        Task {
+            // Default Sleep for 3 seconds
+            try await Task.sleep(seconds: 3)
+            
+            let token = UserService.shared.getAccessToken()
             if let token = token, !token.isEmpty {
-                completion(MainVC())
-                self?.loading = false
-                return
+                _ = await UserService.shared.setUser(accessToken: token)
+                
+                DispatchQueue.main.async {
+                    completion(MainVC())
+                }
+                
+            } else {
+                DispatchQueue.main.async {
+                    completion(SignInVC())
+                }
             }
             
-            self?.loading = false
-            completion(SignInVC())
+            self.loading = false
         }
     }
 }
