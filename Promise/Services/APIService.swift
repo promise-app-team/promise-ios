@@ -58,10 +58,9 @@ final class APIService {
             // Step 5: http header setting
             request.setValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
             request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
-            //        if let token = UserService.shared.getAccessToken(), !token.isEmpty {
-            //            request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
-            //        }
-            request.setValue( "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJpYXQiOjE2OTAyMTU4MTUsImV4cCI6MTY5MDIxNjcxNX0.xTV5xWUgoavcvss5gHrgjJJe8sfCg6fSwFFhgPI5nF8", forHTTPHeaderField: "Authorization") // TODO: 임시
+            if let token = UserService.shared.getAccessToken(), !token.isEmpty {
+                request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
+            }
             
             // Step 6: http method setting
             request.httpMethod = method.rawValue
@@ -179,10 +178,9 @@ final class APIService {
         // Step 5: http header setting
         request.setValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
         request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
-//        if let token = UserService.shared.getAccessToken(), !token.isEmpty {
-//            request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
-//        }
-        request.setValue( "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJpYXQiOjE2OTAyMTU4MTUsImV4cCI6MTY5MDIxNjcxNX0.xTV5xWUgoavcvss5gHrgjJJe8sfCg6fSwFFhgPI5nF8", forHTTPHeaderField: "Authorization") // TODO: 임시
+        if let token = UserService.shared.getAccessToken(), !token.isEmpty {
+            request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
+        }
         
         
         // Step 6: http method setting
