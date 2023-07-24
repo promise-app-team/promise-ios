@@ -7,6 +7,8 @@
 
 import Foundation
 
-final class UserMDL {
-    
+struct UserMDL {
+    let userId: String
+    let nickname: String
+    let profileUrl: String
 }
