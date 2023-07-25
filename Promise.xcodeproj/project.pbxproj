@@ -16,10 +16,19 @@
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
 		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
+		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
+		FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */; };
+		FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */; };
+		FAD2BFCC2A6AF661009E6461 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */; };
+		FAD2BFCD2A6AF661009E6461 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC42A6AF661009E6461 /* Pretendard-Thin.otf */; };
+		FAD2BFCE2A6AF661009E6461 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC52A6AF661009E6461 /* Pretendard-ExtraBold.otf */; };
+		FAD2BFCF2A6AF661009E6461 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC62A6AF661009E6461 /* Pretendard-Medium.otf */; };
+		FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */; };
+		FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */; };
+		FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */; };
+		FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */; };
+		FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD62A6C2692009E6461 /* Button.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
-		FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0262A263889002D8869 /* PrimaryButton.swift */; };
-		FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0282A263892002D8869 /* SecondaryButton.swift */; };
-		FAE2E02B2A26389C002D8869 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E02A2A26389C002D8869 /* DefaultButton.swift */; };
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
 		FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740D2A24D38700A642D7 /* ViewController.swift */; };
@@ -80,10 +89,19 @@
 		E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
 		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
 		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
+		FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
+		FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		FAD2BFC42A6AF661009E6461 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		FAD2BFC52A6AF661009E6461 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		FAD2BFC62A6AF661009E6461 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
+		FAD2BFD62A6C2692009E6461 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
-		FAE2E0262A263889002D8869 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
-		FAE2E0282A263892002D8869 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
-		FAE2E02A2A26389C002D8869 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC5974062A24D38700A642D7 /* Promise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Promise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5974092A24D38700A642D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +220,22 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
+		FAD2BFC02A6AF5BA009E6461 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */,
+				FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */,
+				FAD2BFC52A6AF661009E6461 /* Pretendard-ExtraBold.otf */,
+				FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */,
+				FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */,
+				FAD2BFC62A6AF661009E6461 /* Pretendard-Medium.otf */,
+				FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */,
+				FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */,
+				FAD2BFC42A6AF661009E6461 /* Pretendard-Thin.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,9 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE2E0242A26385A002D8869 /* BaseButton.swift */,
-				FAE2E0262A263889002D8869 /* PrimaryButton.swift */,
-				FAE2E0282A263892002D8869 /* SecondaryButton.swift */,
-				FAE2E02A2A26389C002D8869 /* DefaultButton.swift */,
+				FAD2BFD62A6C2692009E6461 /* Button.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -227,6 +259,7 @@
 		FC5973FD2A24D38700A642D7 = {
 			isa = PBXGroup;
 			children = (
+				FAD2BFC02A6AF5BA009E6461 /* Font */,
 				4A5EE2632A36D0AD005D5020 /* Lottie */,
 				FC5974082A24D38700A642D7 /* Promise */,
 				FC59741F2A24D38800A642D7 /* PromiseTests */,
@@ -309,6 +342,8 @@
 			isa = PBXGroup;
 			children = (
 				FC5974402A24D5B500A642D7 /* Helper.swift */,
+				FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */,
+				FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -467,12 +502,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */,
+				FAD2BFCD2A6AF661009E6461 /* Pretendard-Thin.otf in Resources */,
+				FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */,
 				FC5974162A24D38800A642D7 /* LaunchScreen.storyboard in Resources */,
+				FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */,
+				FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */,
 				FCB9915B2A5A9D9E00B82924 /* openapi.json in Resources */,
 				FC5974132A24D38800A642D7 /* Assets.xcassets in Resources */,
+				FAD2BFCE2A6AF661009E6461 /* Pretendard-ExtraBold.otf in Resources */,
 				FC5974112A24D38700A642D7 /* Main.storyboard in Resources */,
+				FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */,
 				4A8D376F2A66D338002D63FF /* logo.json in Resources */,
 				FCEAAB622A59DE110048192E /* openapi-generator-config.yaml in Resources */,
+				FAD2BFCC2A6AF661009E6461 /* Pretendard-Light.otf in Resources */,
+				FAD2BFCF2A6AF661009E6461 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,17 +662,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE2E0292A263892002D8869 /* SecondaryButton.swift in Sources */,
+				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* Model.swift in Sources */,
 				FC5974472A24D5FD00A642D7 /* Resource.swift in Sources */,
-				FAE2E0272A263889002D8869 /* PrimaryButton.swift in Sources */,
+				FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */,
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* APIService.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* ViewController.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
-				FAE2E02B2A26389C002D8869 /* DefaultButton.swift in Sources */,
+				FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* ViewModel.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
