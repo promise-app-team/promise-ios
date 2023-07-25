@@ -8,6 +8,7 @@
 import UIKit
 import KakaoSDKCommon
 import UserNotifications
+import BackgroundTasks
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -16,15 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         
         // UIApplication.shared.registerForRemoteNotifications()
-        registerForPushNotifications()
-        pushNotiOnForeground()
+//        registerForPushNotifications()
+//        pushNotiOnForeground()
         
         // MARK: 카카오 SDK 초기화(v2부터 필수)
-        KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
+//        KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
         
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

@@ -13,6 +13,8 @@
 		4A5EE2622A36BF8C005D5020 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EE2612A36BF8C005D5020 /* LaunchVC.swift */; };
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		E77B789A2A6C070000D98796 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B78992A6C070000D98796 /* WebsocketService.swift */; };
+		E77B789C2A6C145300D98796 /* WebsocketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B789B2A6C145300D98796 /* WebsocketVC.swift */; };
+		E77B78A12A6E76F500D98796 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77B78A02A6E76F500D98796 /* LocationService.swift */; };
 		FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7A962A616F060055FE4F /* Onboarding.swift */; };
 		FC4A7AB92A6448790055FE4F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FC4A7AB82A6448790055FE4F /* GoogleSignIn */; };
 		FC4A7AC42A65604B0055FE4F /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7AC32A65604B0055FE4F /* SocketService.swift */; };
@@ -79,6 +81,8 @@
 		D53DDD8FAADE101F380C823B /* Pods-Promise-PromiseUITests.release (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (development).xcconfig"; sourceTree = "<group>"; };
 		E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
 		E77B78992A6C070000D98796 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
+		E77B789B2A6C145300D98796 /* WebsocketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketVC.swift; sourceTree = "<group>"; };
+		E77B78A02A6E76F500D98796 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC4A7A962A616F060055FE4F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FC4A7AC32A65604B0055FE4F /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
 				FC4A7AC32A65604B0055FE4F /* SocketService.swift */,
 				E77B78992A6C070000D98796 /* WebsocketService.swift */,
+				E77B78A02A6E76F500D98796 /* LocationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 				FC59740D2A24D38700A642D7 /* MainVC.swift */,
 				FCB9917D2A5B0FB200B82924 /* SignInVC.swift */,
 				4A5EE2612A36BF8C005D5020 /* LaunchVC.swift */,
+				E77B789B2A6C145300D98796 /* WebsocketVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -599,8 +605,10 @@
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* SignInVM.swift in Sources */,
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
+				E77B789C2A6C145300D98796 /* WebsocketVC.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				4A5EE2622A36BF8C005D5020 /* LaunchVC.swift in Sources */,
+				E77B78A12A6E76F500D98796 /* LocationService.swift in Sources */,
 				FC5974412A24D5B500A642D7 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -789,6 +797,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "허용점";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용점용";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -823,6 +833,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "허용점";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용점용";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -997,6 +1009,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "허용점";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용점용";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1125,6 +1139,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "허용점";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용점용";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

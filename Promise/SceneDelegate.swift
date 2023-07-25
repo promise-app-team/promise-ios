@@ -12,6 +12,8 @@ import GoogleSignIn
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController?
+    
+    let websocketVC = WebsocketVC()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -19,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         guard let window = window else { return }
         
         // MARK: create navigation controller with lanch vc
-        navigationController = UINavigationController(rootViewController: LaunchVC())
+        navigationController = UINavigationController(rootViewController: websocketVC)
         navigationController?.isNavigationBarHidden = true
         
         // MARK: set delegate to scene delegate
@@ -30,38 +32,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         window.makeKeyAndVisible() // MARK: visible navigation controllor with lanch vc
         
         // onboarding: check token, other...
-        let onboarding = Onboarding()
-        onboarding.ready { [weak self] startVC in
-            self?.navigationController?.pushViewController(startVC, animated: true)
-        }
+//        let onboarding = Onboarding()
+//        onboarding.ready { [weak self] startVC in
+//            self?.navigationController?.pushViewController(startVC, animated: true)
+//        }
     }
     
     // MARK: call after push animation and view did appear
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        
-        // MARK: launch vc pop after push animation with main vc for memory
-        if viewController is MainVC || viewController is SignInVC {
-            self.navigationController?.viewControllers = [viewController]
-            
-            // MARK: check success poped launch vc
-            DispatchQueue.main.async { [weak self] in
-                if let viewControllers = self?.navigationController?.viewControllers {
-                    print("Root VC in Navigation Controller Stack: ", viewControllers)
-                }
-            }
-        }
-    }
+//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+//        
+//        // MARK: launch vc pop after push animation with main vc for memory
+//        if viewController is MainVC || viewController is SignInVC {
+//            self.navigationController?.viewControllers = [viewController]
+//            
+//            // MARK: check success poped launch vc
+//            DispatchQueue.main.async { [weak self] in
+//                if let viewControllers = self?.navigationController?.viewControllers {
+//                    print("Root VC in Navigation Controller Stack: ", viewControllers)
+//                }
+//            }
+//        }
+//    }
     
     // MARK: 카카오 로그인을 위한 scene
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url {
-            if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                _ = AuthController.handleOpenUrl(url: url)
-                return
-            }
-            
-            _ = GIDSignIn.sharedInstance.handle(url)
-        }
+//        if let url = URLContexts.first?.url {
+//            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+//                _ = AuthController.handleOpenUrl(url: url)
+//                return
+//            }
+//
+//            _ = GIDSignIn.sharedInstance.handle(url)
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -91,7 +93,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         print("🔴백그라운드 진입")
-        WebSocketManager.shared.startBackgroundTask()
     }
 
 

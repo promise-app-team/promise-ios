@@ -8,6 +8,10 @@
 	<string>${API_URL}</string>
 	<key>APP_ENV</key>
 	<string>${APP_ENV}</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.promise-team.promise.websocket</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -62,5 +66,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>

@@ -9,23 +9,30 @@
 import UIKit
 import Starscream
 
-class WebSocketManager: WebSocketDelegate {
+extension Notification.Name {
+    static let receivedText = Notification.Name("receivedText")
+    static let receivedStatus = Notification.Name("receivedStatus")
+}
+
+class WebSocketService: WebSocketDelegate {
     
-    static let shared = WebSocketManager()
+    static let shared = WebSocketService()
     private var socket: WebSocket!
-    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-    private var timer: Timer?
 
-    private init() { }
+    private init() {}
+    
+    deinit {
+        print("manager 소멸")
+    }
 
-    func connect() {
+    func connect(to input: String) {
         guard var urlComponents = URLComponents(string: "http://ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080")
         else {
             print("urlComponents 생성 실패")
             return
         }
         
-        urlComponents.queryItems = [URLQueryItem(name: "to", value: "broadcast")]
+        urlComponents.queryItems = [URLQueryItem(name: "to", value: input)]
 
         // URLRequest 생성
         var request = URLRequest(url: urlComponents.url!)
@@ -36,12 +43,16 @@ class WebSocketManager: WebSocketDelegate {
         socket.delegate = self
         socket.connect()
     }
+    
+    func disconnect() {
+        socket?.disconnect()
+    }
 
-    func sendDataToServer() {
+    func sendDataToServer(message: String) {
         let jsonData: [String: Any] = [
             "event": "ping",
             "data": [
-                "⭐️데이터보내기": "⭐️성공!"
+                "client": "\(message)"
             ]
         ]
 
@@ -62,50 +73,21 @@ class WebSocketManager: WebSocketDelegate {
             return nil
         }
     }
-
-    func startBackgroundTask() {
-        // 백그라운드 작업 시작
-        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
-            self?.endBackgroundTask()
-        }
-
-        // 3초마다 sendDataToServerInBackground() 함수를 호출하는 Timer 설정
-        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(sendDataToServerInBackground), userInfo: nil, repeats: true)
-
-        // 10초 후에 작업 종료를 위해 Timer 추가
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { [weak self] in
-            print("🔴백그라운드 진입 10초후 종료")
-            self?.endBackgroundTask()
-        }
-    }
-
-    @objc func sendDataToServerInBackground() {
-        // 백그라운드에서 sendDataToServer() 함수 호출
-        print("🔴3초 단위 전송")
-        sendDataToServer()
-    }
-
-    func endBackgroundTask() {
-        // 타이머를 중지하고 백그라운드 작업 종료
-        timer?.invalidate()
-        timer = nil
-
-        if backgroundTask != .invalid {
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backgroundTask = .invalid
-        }
-    }
     
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected(let headers):
             client.write(string: "userName")
-            //          client.write(string: userName)
             print("⭐️⭐️⭐️websocket is connected: \(headers)")
+            NotificationCenter.default.post(name: .receivedStatus, object: nil, userInfo: ["message": "연결이 완료되었습니다.", "status": Status.connect])
+            
         case .disconnected(let reason, let code):
             print("⭐️⭐️⭐️websocket is disconnected: \(reason) with code: \(code)")
+            NotificationCenter.default.post(name: .receivedStatus, object: nil, userInfo: ["message": "연결 해제되었습니다.", "status": Status.disconnect])
+            
         case .text(let text):
             print("⭐️⭐️⭐️received text: \(text)")
+            NotificationCenter.default.post(name: .receivedText, object: nil, userInfo: ["text": text])
         case .binary(let data):
             print("⭐️⭐️⭐️Received data: \(data.count)")
         case .ping(_):
@@ -120,10 +102,14 @@ class WebSocketManager: WebSocketDelegate {
         case .reconnectSuggested(_):
             print("⭐️⭐️⭐️reconnectSuggested")
             break
+            
         case .cancelled:
             print("⭐️⭐️⭐️websocket is canclled")
+            NotificationCenter.default.post(name: .receivedStatus, object: nil, userInfo: ["message": "연결이 취소되었습니다.", "status": Status.disconnect])
+            
         case .error(let error):
             print("⭐️⭐️⭐️websocket is error = \(error!)")
+            NotificationCenter.default.post(name: .receivedStatus, object: nil, userInfo: ["message": "웹소켓 에러가 발생하였습니다.", "status": Status.disconnect])
         }
     }
 }
