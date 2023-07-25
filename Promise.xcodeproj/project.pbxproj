@@ -14,6 +14,8 @@
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
+		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
+		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
 		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
 		FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */; };
 		FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */; };
@@ -85,6 +87,8 @@
 		C433B2C20B59526EE7B23AA7 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		D53DDD8FAADE101F380C823B /* Pods-Promise-PromiseUITests.release (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (development).xcconfig"; sourceTree = "<group>"; };
 		E177F71CC126D883EEF342D5 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
+		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
+		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
 		FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
 		FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -207,6 +211,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FABF06B32A34D2B300D2B796 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */,
+				FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
 		FAD2BFC02A6AF5BA009E6461 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +239,7 @@
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FABF06B32A34D2B300D2B796 /* Modal */,
 				4AEBC3CF2A4A9171004E6EA5 /* Label */,
 				4A4719EE2A36F29200812B29 /* ToastMessage */,
 				FAE2E0232A26382D002D8869 /* Buttons */,
@@ -664,6 +678,8 @@
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				4A5EE2622A36BF8C005D5020 /* LaunchScreenViewController.swift in Sources */,
 				FC5974412A24D5B500A642D7 /* Helper.swift in Sources */,
+				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
+				FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,7 +872,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -891,7 +907,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
