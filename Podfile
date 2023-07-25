@@ -7,6 +7,8 @@ target 'Promise' do
   
   pod 'lottie-ios'
 
+  pod 'FloatingPanel'
+
   # Pods for Promise
 
   target 'PromiseTests' do
