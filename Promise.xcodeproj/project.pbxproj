@@ -31,6 +31,8 @@
 		FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */; };
 		FC41B25E2A781E6500C1C592 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B25D2A781E6500C1C592 /* Task.swift */; };
 		FC41B2602A781E8700C1C592 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B25F2A781E8700C1C592 /* LaunchVC.swift */; };
+		FC41B2652A78231500C1C592 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B2642A78231500C1C592 /* Fonts.swift */; };
+		FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B2672A78239A00C1C592 /* Lotties.swift */; };
 		FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7A962A616F060055FE4F /* Onboarding.swift */; };
 		FC4A7AB92A6448790055FE4F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FC4A7AB82A6448790055FE4F /* GoogleSignIn */; };
 		FC516E032A6D108400709F1E /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = FC516E022A6D108400709F1E /* JWTDecode */; };
@@ -116,6 +118,8 @@
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC41B25D2A781E6500C1C592 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		FC41B25F2A781E8700C1C592 /* LaunchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
+		FC41B2642A78231500C1C592 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		FC41B2672A78239A00C1C592 /* Lotties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lotties.swift; sourceTree = "<group>"; };
 		FC4A7A962A616F060055FE4F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FC5903282A76A76A00778305 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		FC5903292A76A76A00778305 /* openapi-generator-config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yml"; sourceTree = "<group>"; };
@@ -209,12 +213,12 @@
 			path = ToastMessage;
 			sourceTree = "<group>";
 		};
-		4A5EE2632A36D0AD005D5020 /* Lottie */ = {
+		4A5EE2632A36D0AD005D5020 /* Lotties */ = {
 			isa = PBXGroup;
 			children = (
 				4A8D376E2A66D338002D63FF /* logo.json */,
 			);
-			path = Lottie;
+			path = Lotties;
 			sourceTree = "<group>";
 		};
 		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
@@ -244,7 +248,7 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
-		FAD2BFC02A6AF5BA009E6461 /* Font */ = {
+		FAD2BFC02A6AF5BA009E6461 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */,
@@ -257,7 +261,7 @@
 				FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */,
 				FAD2BFC42A6AF661009E6461 /* Pretendard-Thin.otf */,
 			);
-			path = Font;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		FAE2E0212A26381A002D8869 /* Components */ = {
@@ -309,6 +313,8 @@
 		FC5903362A76B5EC00778305 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				FC41B2672A78239A00C1C592 /* Lotties.swift */,
+				FC41B2642A78231500C1C592 /* Fonts.swift */,
 				FC59033D2A76BA1400778305 /* Strings.swift */,
 				FC59033C2A76BA1400778305 /* XCImages.swift */,
 			);
@@ -417,8 +423,8 @@
 		FC5974452A24D5E100A642D7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FAD2BFC02A6AF5BA009E6461 /* Font */,
-				4A5EE2632A36D0AD005D5020 /* Lottie */,
+				FAD2BFC02A6AF5BA009E6461 /* Fonts */,
+				4A5EE2632A36D0AD005D5020 /* Lotties */,
 				FC5903352A76B59500778305 /* Strings */,
 				FC5903342A76B58B00778305 /* Images */,
 			);
@@ -757,6 +763,7 @@
 				FC41B2602A781E8700C1C592 /* LaunchVC.swift in Sources */,
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
+				FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* UserMDL.swift in Sources */,
 				FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */,
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
@@ -778,6 +785,7 @@
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
+				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
 				FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

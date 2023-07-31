@@ -51,7 +51,7 @@ final class SignInVC: UIViewController {
         button.backgroundColor = UIColor(red: 0.992, green: 0.925, blue: 0.314, alpha: 1)
         button.setTitle(L10n.SignIn.kakaoSignInButtonText, for: .normal)
         button.setTitleColor(UIColor(red: 0.243, green: 0.153, blue: 0.137, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 15)
+        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
         
         button.layer.cornerRadius = 20
         
@@ -70,7 +70,7 @@ final class SignInVC: UIViewController {
         button.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         button.setTitle(L10n.SignIn.googleSignInButtonText, for: .normal)
         button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 15)
+        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
         
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
@@ -91,7 +91,7 @@ final class SignInVC: UIViewController {
         button.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         button.setTitle(L10n.SignIn.appleSignInButtonText, for: .normal)
         button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
+        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
         
         button.layer.cornerRadius = 20
         
@@ -115,7 +115,7 @@ final class SignInVC: UIViewController {
         let label = UILabel()
         
         label.text = L10n.SignIn.mainDescription
-        label.font = UIFont(name: "Pretendard-Regular", size: 15)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 15)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
