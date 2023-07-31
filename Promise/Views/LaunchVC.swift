@@ -17,7 +17,7 @@ class LaunchVC: UIViewController {
     }()
 
     private lazy var logoImageView: UIImageView = {
-        let logoImage = UIImage(named: "promise_logo")
+        let logoImage = UIImage(named: "PromiseLogo")
         let imageView = UIImageView(image: logoImage)
         return imageView
     }()

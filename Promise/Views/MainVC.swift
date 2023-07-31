@@ -30,7 +30,7 @@ final class MainVC: UIViewController {
     private let mainPageLabel = {
         let label = UILabel()
         
-        label.text = "Main page"
+        label.text = L10n.Common.promise
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = UIColor(red: 1, green: 0.41, blue: 0.3, alpha: 1)
         label.numberOfLines = 0

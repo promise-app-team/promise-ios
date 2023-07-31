@@ -7,6 +7,26 @@
 
 import UIKit
 
+class SignInButtonWithLogoImage: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard let imageView = imageView, let titleLabel = titleLabel else { return }
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(
+            x: 12,
+            y: (frame.height - imageView.frame.height) / 2,
+            width: imageView.frame.width,
+            height: imageView.frame.height
+        )
+        
+        
+        let titleX = (bounds.width - titleLabel.bounds.width) / 2
+        let titleY = (bounds.height - titleLabel.bounds.height) / 2
+        titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleLabel.bounds.width, height: titleLabel.bounds.height)
+    }
+}
+
 final class SignInVC: UIViewController {
     private lazy var signInVM = SignInVM(currentVC: self)
     
@@ -18,7 +38,7 @@ final class SignInVC: UIViewController {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 16
         stackView.distribution = .fillEqually
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,139 +46,106 @@ final class SignInVC: UIViewController {
     }()
     
     private lazy var kakaoSignInButton: UIButton = {
-        let button = UIButton()
+        let button = SignInButtonWithLogoImage()
         
-        button.backgroundColor = UIColor(red: 0.996, green: 0.902, blue: 0.004, alpha: 1)
-        button.setTitle("Kakao", for: .normal)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.backgroundColor = UIColor(red: 0.992, green: 0.925, blue: 0.314, alpha: 1)
+        button.setTitle(L10n.SignIn.kakaoSignInButtonText, for: .normal)
+        button.setTitleColor(UIColor(red: 0.243, green: 0.153, blue: 0.137, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 15)
+        
+        button.layer.cornerRadius = 20
+        
+        let logoImage = Asset.kakaoLogo.image.resize(newSize: CGSize(width: 21.25, height: 20))
+        button.setImage(logoImage, for: .normal)
+        
         button.addTarget(self, action: #selector(onTapKakaoSignInButton), for: .touchUpInside)
-        
-        let shadowedButton = setShadow(button)
-        shadowedButton.translatesAutoresizingMaskIntoConstraints = false
-        return shadowedButton
+   
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var googleSignInButton: UIButton = {
-        let button = UIButton()
+        let button = SignInButtonWithLogoImage()
         
         button.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        button.setTitle("Google", for: .normal)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        button.setTitle(L10n.SignIn.googleSignInButtonText, for: .normal)
+        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 15)
+        
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+        button.layer.cornerRadius = 20
+        
+        let logoImage = Asset.googleLogo.image.resize(newSize: CGSize(width: 20, height: 20))
+        button.setImage(logoImage, for: .normal)
+        
         button.addTarget(self, action: #selector(onTapGoogleSignInButton), for: .touchUpInside)
         
-        let shadowedButton = setShadow(button, shouldCornerRadius: true)
-        shadowedButton.translatesAutoresizingMaskIntoConstraints = false
-        return shadowedButton
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var appleSignInButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        button.setTitle("Apple", for: .normal)
-        button.setTitleColor(UIColor(red: 0, green: 0, blue: 0.004, alpha: 1), for: .normal)
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        let button = SignInButtonWithLogoImage()
+        
+        button.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        button.setTitle(L10n.SignIn.appleSignInButtonText, for: .normal)
+        button.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
+        
+        button.layer.cornerRadius = 20
+        
+        let logoImage = Asset.appleLogo.image.resize(newSize: CGSize(width: 20, height: 20))
+        button.setImage(logoImage, for: .normal)
+        
         button.addTarget(self, action: #selector(onTapAppleSignInButton), for: .touchUpInside)
         
-        let shadowedButton = setShadow(button, shouldCornerRadius: true)
-        shadowedButton.translatesAutoresizingMaskIntoConstraints = false
-        return shadowedButton
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    private let guidanceLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = "로그인 수단 선택"
-        
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private var titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        // paragraphStyle.lineHeightMultiple = 1.42
-        paragraphStyle.lineSpacing = CGFloat(60 / 4)
-        
-        let text = "ㅗ프라인 약속은\n프로미스에서!"
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        attributedString.addAttributes([
-            .paragraphStyle: paragraphStyle,
-            .font: UIFont.systemFont(ofSize: 35, weight: .heavy),
-            .foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 1),
-        ], range: NSMakeRange(0, attributedString.length))
-        
-        attributedString.addAttribute(.foregroundColor, value: UIColor(red: 0/255, green: 192/255, blue: 135/255, alpha: 1), range: (text as NSString).range(of: "프로미스"))
-        
-        label.attributedText = attributedString
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private let logo: UIImageView = {
+        let imageView = UIImageView(image: Asset.promiseLogo.image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         
-        label.numberOfLines = 0
-        label.text = "만나기 전에 서로의 위치를 공유해보세요."
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        label.textColor = UIColor(red: 0.412, green: 0.412, blue: 0.412, alpha: 1)
+        label.text = L10n.SignIn.mainDescription
+        label.font = UIFont(name: "Pretendard-Regular", size: 15)
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private func setShadow(_ button: UIButton, shouldCornerRadius: Bool = false) -> UIButton {
-        button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
-        button.layer.shadowOpacity = 1
-        button.layer.shadowOffset = CGSize(width: 2, height: 2)
-        button.layer.shadowRadius = 2
-        
-        if(shouldCornerRadius) {
-            button.layer.cornerRadius = 12
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
-            
-            return button
-        }
-        
-        return button
-    }
-    
     private func setupAutoLayout() {
         let safeLayoutGuide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 158),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 29),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -29),
+            logo.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor, constant: 88),
+            logo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 84),
+            logo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -84),
         ])
         
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 29),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -29),
+            descriptionLabel.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 5),
+            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            guidanceLabel.bottomAnchor.constraint(equalTo: signInButtonsStackView.topAnchor, constant: -18),
-            guidanceLabel.centerXAnchor.constraint(equalTo: signInButtonsStackView.centerXAnchor)
+            kakaoSignInButton.heightAnchor.constraint(equalToConstant: 40),
+            googleSignInButton.heightAnchor.constraint(equalToConstant: 40),
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 40),
         ])
         
         NSLayoutConstraint.activate([
-            signInButtonsStackView.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -70),
-            signInButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            signInButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            signInButtonsStackView.heightAnchor.constraint(equalToConstant: 202),
+            signInButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 28),
+            signInButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28),
+            signInButtonsStackView.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -67),
         ])
     }
     
@@ -185,7 +172,7 @@ final class SignInVC: UIViewController {
     }
     
     private func render() {
-        [titleLabel, descriptionLabel, guidanceLabel, signInButtonsStackView].forEach { view.addSubview($0) }
+        [logo, descriptionLabel, signInButtonsStackView].forEach { view.addSubview($0) }
         setupAutoLayout()
     }
 }
