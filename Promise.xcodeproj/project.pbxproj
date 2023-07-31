@@ -318,8 +318,6 @@
 		FC5973FD2A24D38700A642D7 = {
 			isa = PBXGroup;
 			children = (
-				FAD2BFC02A6AF5BA009E6461 /* Font */,
-				4A5EE2632A36D0AD005D5020 /* Lottie */,
 				FC5974082A24D38700A642D7 /* Promise */,
 				FC59741F2A24D38800A642D7 /* PromiseTests */,
 				FC5974292A24D38800A642D7 /* PromiseUITests */,
@@ -419,6 +417,8 @@
 		FC5974452A24D5E100A642D7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FAD2BFC02A6AF5BA009E6461 /* Font */,
+				4A5EE2632A36D0AD005D5020 /* Lottie */,
 				FC5903352A76B59500778305 /* Strings */,
 				FC5903342A76B58B00778305 /* Images */,
 			);
