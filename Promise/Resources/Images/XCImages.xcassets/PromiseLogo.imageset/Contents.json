@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "promise_logo.png",
+      "filename" : "PromiseLogo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "promise_logo 1.png",
+      "filename" : "PromiseLogo 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "promise_logo 2.png",
+      "filename" : "PromiseLogo 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

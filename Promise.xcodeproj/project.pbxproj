@@ -33,6 +33,7 @@
 		FC41B2602A781E8700C1C592 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B25F2A781E8700C1C592 /* LaunchVC.swift */; };
 		FC41B2652A78231500C1C592 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B2642A78231500C1C592 /* Fonts.swift */; };
 		FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41B2672A78239A00C1C592 /* Lotties.swift */; };
+		FC41B2722A782A2900C1C592 /* XCImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC5974122A24D38800A642D7 /* XCImages.xcassets */; };
 		FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4A7A962A616F060055FE4F /* Onboarding.swift */; };
 		FC4A7AB92A6448790055FE4F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FC4A7AB82A6448790055FE4F /* GoogleSignIn */; };
 		FC516E032A6D108400709F1E /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = FC516E022A6D108400709F1E /* JWTDecode */; };
@@ -46,7 +47,6 @@
 		FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974092A24D38700A642D7 /* AppDelegate.swift */; };
 		FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740B2A24D38700A642D7 /* SceneDelegate.swift */; };
 		FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59740D2A24D38700A642D7 /* MainVC.swift */; };
-		FC5974132A24D38800A642D7 /* XCImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC5974122A24D38800A642D7 /* XCImages.xcassets */; };
 		FC5974212A24D38800A642D7 /* PromiseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5974202A24D38800A642D7 /* PromiseTests.swift */; };
 		FC59742B2A24D38800A642D7 /* PromiseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59742A2A24D38800A642D7 /* PromiseUITests.swift */; };
 		FC59742D2A24D38800A642D7 /* PromiseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59742C2A24D38800A642D7 /* PromiseUITestsLaunchTests.swift */; };
@@ -580,17 +580,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC41B2722A782A2900C1C592 /* XCImages.xcassets in Resources */,
 				FC59032D2A76A76A00778305 /* openapi.json in Resources */,
 				FC59034F2A76D08300778305 /* Localizable.strings in Resources */,
 				FC59032C2A76A76A00778305 /* openapi-generator-config.yml in Resources */,
 				FC59032B2A76A76A00778305 /* swiftgen.yml in Resources */,
-				FC5974132A24D38800A642D7 /* XCImages.xcassets in Resources */,
 				FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */,
 				FAD2BFCD2A6AF661009E6461 /* Pretendard-Thin.otf in Resources */,
 				FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */,
 				FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */,
 				FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */,
-				FC5974132A24D38800A642D7 /* XCImages.xcassets in Resources */,
 				FAD2BFCE2A6AF661009E6461 /* Pretendard-ExtraBold.otf in Resources */,
 				FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */,
 				4A8D376F2A66D338002D63FF /* logo.json in Resources */,
@@ -764,11 +763,9 @@
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
 				FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */,
-				FC59743E2A24D59A00A642D7 /* UserMDL.swift in Sources */,
 				FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */,
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* APIService.swift in Sources */,
-				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
