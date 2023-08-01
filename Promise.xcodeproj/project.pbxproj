@@ -14,6 +14,7 @@
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
+		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
 		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
 		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
@@ -134,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */,
+				E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
 				60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */,
 			);
@@ -405,6 +407,7 @@
 			packageProductDependencies = (
 				FCEAAB552A59DBF00048192E /* OpenAPIRuntime */,
 				FCEAAB592A59DC180048192E /* OpenAPIURLSession */,
+				E7B91DD22A78C73400426D81 /* SocketIO */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -485,6 +488,7 @@
 				FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
 				FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
+				E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1315,6 +1319,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
@@ -1342,6 +1354,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E7B91DD22A78C73400426D81 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
+		};
 		FCEAAB552A59DBF00048192E /* OpenAPIRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */;
