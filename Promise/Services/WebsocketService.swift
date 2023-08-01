@@ -16,6 +16,8 @@ extension Notification.Name {
 
 class WebSocketService: WebSocketDelegate {
     
+    var event: WebSocketEvent?
+    
     static let shared = WebSocketService()
     private var socket: WebSocket!
 
@@ -24,6 +26,7 @@ class WebSocketService: WebSocketDelegate {
     deinit {
         print("manager 소멸")
     }
+    
 
     func connect(to input: String) {
         guard var urlComponents = URLComponents(string: "http://ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080")
@@ -74,6 +77,7 @@ class WebSocketService: WebSocketDelegate {
         }
     }
     
+    
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected(let headers):
@@ -84,6 +88,8 @@ class WebSocketService: WebSocketDelegate {
         case .disconnected(let reason, let code):
             print("⭐️⭐️⭐️websocket is disconnected: \(reason) with code: \(code)")
             NotificationCenter.default.post(name: .receivedStatus, object: nil, userInfo: ["message": "연결 해제되었습니다.", "status": Status.disconnect])
+//            socket.connect()
+            print("👊👊👊disconnected👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊")
             
         case .text(let text):
             print("⭐️⭐️⭐️received text: \(text)")
@@ -98,9 +104,13 @@ class WebSocketService: WebSocketDelegate {
             break
         case .viabilityChanged(_):
             print("⭐️⭐️⭐️viabilityChanged")
+//            socket.connect()
+            print("👊👊viabilityChanged👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊")
             break
         case .reconnectSuggested(_):
             print("⭐️⭐️⭐️reconnectSuggested")
+//            socket.connect()
+            print("👊👊reconnectSuggested👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊👊")
             break
             
         case .cancelled:

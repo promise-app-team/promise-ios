@@ -176,7 +176,7 @@ class WebsocketVC: UIViewController {
         
         // configure CLLocation
         locationService.mgr.delegate = self
-        locationService.start()
+//        locationService.start()
         
         super.viewDidLoad()
         setupUI()
@@ -323,10 +323,12 @@ class WebsocketVC: UIViewController {
         let textWithoutSpace = toTextField.text?.replacingOccurrences(of: " ", with: "") ?? ""
         let clientID = textWithoutSpace != "" ? textWithoutSpace : "broadcast"
         WebSocketService.shared.connect(to: clientID)
+        locationService.start()
     }
     
     @objc func disconnectButtonTapped() {
         WebSocketService.shared.disconnect()
+        locationService.stop()
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -414,7 +416,9 @@ extension UITextField {
 
 extension WebsocketVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         var text = ""
+        
         switch UIApplication.shared.applicationState {
         case .active:
            text = "active"
@@ -425,9 +429,35 @@ extension WebsocketVC: CLLocationManagerDelegate {
         @unknown default:
             text = "unknown default"
         }
-            WebSocketService.shared.sendDataToServer(message: text)
+        
+        text.append("!!!!")
+        
+        WebSocketService.shared.sendDataToServer(message: text)
+    }
+        
+    
+    func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
+        
+        print("🔴🔴🔴🔴🔴🔴🔴🔴locationManagerDidPauseLocationUpdates")
+        
+        let textWithoutSpace = toTextField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+        let clientID = textWithoutSpace != "" ? textWithoutSpace : "broadcast"
+        WebSocketService.shared.connect(to: clientID)
+        
+        SocketService.shared.emitEvent(message: "🔴🔴🔴🔴🔴🔴🔴🔴locationManagerDidResumeLocationUpdates")
     }
     
+    func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
+        
+        print("🔴🔴🔴🔴🔴🔴🔴🔴locationManagerDidResumeLocationUpdates")
+        
+        let textWithoutSpace = toTextField.text?.replacingOccurrences(of: " ", with: "") ?? ""
+        let clientID = textWithoutSpace != "" ? textWithoutSpace : "broadcast"
+        WebSocketService.shared.connect(to: clientID)
+        
+        SocketService.shared.emitEvent(message: "🔴🔴🔴🔴🔴🔴🔴🔴locationManagerDidResumeLocationUpdates")
+    }
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("위치 요청 실패", error)
     }
