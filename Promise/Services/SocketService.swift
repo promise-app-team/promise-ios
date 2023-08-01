@@ -36,7 +36,7 @@ final class SocketService {
     
     // MARK: - Public function
     
-    func connectToServer() {
+    func connect() {
         
         socket.on(clientEvent: .connect) {data, _ in
             print("socket connected")
@@ -49,12 +49,12 @@ final class SocketService {
         socket.connect()
     }
     
-    func emitEvent(message: String) {
+    func emit(message: String) {
         
         socket.emit("emit: \(message)")
     }
     
-    func disconnectFromServer() {
+    func disconnect() {
         
         socket.disconnect()
     }
