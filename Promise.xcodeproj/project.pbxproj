@@ -60,6 +60,7 @@
 		FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB9917B2A5B0F3500B82924 /* UserService.swift */; };
 		FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB9917D2A5B0FB200B82924 /* SignInVC.swift */; };
 		FCE4F7412A7ABD1B0077F484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE4F73F2A7ABD1B0077F484 /* LaunchScreen.storyboard */; };
+		FCE4F7482A7AC5140077F484 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FCE4F7472A7AC5140077F484 /* Lottie */; };
 		FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB552A59DBF00048192E /* OpenAPIRuntime */; };
 		FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = FCEAAB592A59DC180048192E /* OpenAPIURLSession */; };
 /* End PBXBuildFile section */
@@ -159,6 +160,7 @@
 			files = (
 				FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
+				FCE4F7482A7AC5140077F484 /* Lottie in Frameworks */,
 				FC516E032A6D108400709F1E /* JWTDecode in Frameworks */,
 				FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */,
 				FCB991772A5B049200B82924 /* KakaoSDKCommon in Frameworks */,
@@ -481,6 +483,7 @@
 				FCB991782A5B049200B82924 /* KakaoSDKUser */,
 				FC4A7AB82A6448790055FE4F /* GoogleSignIn */,
 				FC516E022A6D108400709F1E /* JWTDecode */,
+				FCE4F7472A7AC5140077F484 /* Lottie */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -565,6 +568,7 @@
 				FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				FCE4F7462A7AC5140077F484 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1445,6 +1449,14 @@
 				minimumVersion = 2.15.0;
 			};
 		};
+		FCE4F7462A7AC5140077F484 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 		FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
@@ -1496,6 +1508,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		FCE4F7472A7AC5140077F484 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCE4F7462A7AC5140077F484 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		FCEAAB552A59DBF00048192E /* OpenAPIRuntime */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,7 +6,6 @@ target 'Promise' do
   use_frameworks!
 
   # Pods for Promise
-  pod 'lottie-ios'
   pod 'FloatingPanel'
   pod 'SwiftGen', '~> 6.0'
 
