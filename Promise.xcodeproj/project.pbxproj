@@ -731,13 +731,15 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Promise/openapi.json",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncurl ${API_DOC_URL} > ${SRCROOT}/Promise/openapi.json\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncurl ${API_DOC_URL} > ${DERIVED_FILE_DIR}/Promise/openapi.json\n";
 		};
 		FC59031A2A76A37300778305 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
