@@ -10,6 +10,13 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Common {
+    /// Localizable.strings
+    ///   Promise
+    /// 
+    ///   Created by dylan on 2023/07/31.
+    internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
+  }
   internal enum SignIn {
     /// Apple로 로그인
     internal static let appleSignInButtonText = L10n.tr("Localizable", "SignIn.appleSignInButtonText", fallback: "Apple로 로그인")
@@ -21,13 +28,6 @@ internal enum L10n {
     internal static let mainDescription = L10n.tr("Localizable", "SignIn.mainDescription", fallback: "만나기 전에 서로의 위치를 공유해 보세요")
     /// 로그인 수단 선택
     internal static let selectSignInMethodText = L10n.tr("Localizable", "SignIn.selectSignInMethodText", fallback: "로그인 수단 선택")
-  }
-  internal enum Common {
-    /// Localizable.strings
-    ///   Promise
-    /// 
-    ///   Created by dylan on 2023/07/31.
-    internal static let promise = L10n.tr("Localizable", "common.promise", fallback: "프로미스")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
