@@ -1,16 +1,20 @@
 PODS:
+  - FloatingPanel (2.6.3)
   - lottie-ios (4.2.0)
 
 DEPENDENCIES:
+  - FloatingPanel
   - lottie-ios
 
 SPEC REPOS:
   trunk:
+    - FloatingPanel
     - lottie-ios
 
 SPEC CHECKSUMS:
+  FloatingPanel: ff837f4a65b2a81716bf9bfb9e43c280627db993
   lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
 
-PODFILE CHECKSUM: 82ae1b935cd16f797b21acc606894f60ba4ccb47
+PODFILE CHECKSUM: b1fcfae8113186b916d7712647acb2d0e3ea092c
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
