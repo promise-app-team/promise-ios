@@ -28,6 +28,26 @@ public enum Config {
         return url
     }()
     
+    static var apiDocURL: URL = {
+        guard let url = Config.infoDictionary[Keys.apiDocUrl.rawValue] as? String else {
+            fatalError("API DOC URL not set in plist")
+        }
+        
+        guard let apiDocUrl = URL(string: url) else {
+            fatalError("API DOC URL is invalid")
+        }
+        
+        return apiDocUrl
+    }()
+    
+    static let kakaoNativeAppKey: String = {
+        guard let kakaoNativeAppKey = Config.infoDictionary[Keys.kakaoNativeAppKey.rawValue] as? String else {
+            fatalError("KAKAO NATIVE APP KEY not set in plist")
+        }
+        
+        return kakaoNativeAppKey
+    }()
+    
     static let appENV: String = {
         guard let appENV = Config.infoDictionary[Keys.appENV.rawValue] as? String else {
             fatalError("APP ENV not set in plist")
@@ -49,5 +69,7 @@ public enum Config {
     private enum Keys: String {
         case appENV = "APP_ENV"
         case apiURL = "API_URL"
+        case apiDocUrl = "API_DOC_URL" // MARK: Build Script에서 사용
+        case kakaoNativeAppKey = "KAKAO_NATIVE_APP_KEY"
     }
 }
