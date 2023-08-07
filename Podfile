@@ -5,12 +5,11 @@ target 'Promise' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Sourcery', '~> 2.0'
-
   # Pods for Promise
   pod 'lottie-ios'
   pod 'FloatingPanel'
   pod 'SwiftGen', '~> 6.0'
+  pod 'Sourcery', :subspecs => ['CLI-Only']
 
   target 'PromiseTests' do
     inherit! :search_paths
