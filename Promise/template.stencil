@@ -1,0 +1,11 @@
+// sourcery:file: Resources/Sourcery/promise_design_tokens.json
+
+{% for tokenSet in tokenSets %}
+  {% for tokenType, tokens in tokenSet %}
+    // {{ tokenType }}
+    {% for tokenName, tokenValue in tokens %}
+      let {{ tokenName }} = {{ tokenValue.value }}
+    {% endfor %}
+  {% endfor %}
+{% endfor %}
+
