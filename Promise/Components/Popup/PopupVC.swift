@@ -78,7 +78,7 @@ class PopupVC : UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         
         buttonStackView.addArrangedSubview(btn)
-    
+        
         return btn
     }()
     
@@ -90,14 +90,14 @@ class PopupVC : UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         
         buttonStackView.addArrangedSubview(btn)
-    
+        
         return btn
     }()
     
     func initialize(titleText: String,
-                     messageText: String,
-                     rightBtnTitle: String, rightBtnHandelr: @escaping (() -> Void),
-                     leftBtnTitle: String? = nil, leftBtnHandler: (() -> Void)? = nil) {
+                    messageText: String,
+                    rightBtnTitle: String, rightBtnHandelr: @escaping (() -> Void),
+                    leftBtnTitle: String? = nil, leftBtnHandler: (() -> Void)? = nil) {
         self.titleText = titleText
         self.messageText = messageText
         
@@ -115,8 +115,8 @@ class PopupVC : UIViewController {
     }
     
     func initialize(contentView: UIView,
-                     rightBtnTitle: String, rightBtnHandelr: @escaping (() -> Void),
-                     leftBtnTitle: String? = nil, leftBtnHandler: (() -> Void)? = nil) {
+                    rightBtnTitle: String, rightBtnHandelr: @escaping (() -> Void),
+                    leftBtnTitle: String? = nil, leftBtnHandler: (() -> Void)? = nil) {
         self.contentView = contentView
         self.rightBtnTitle = rightBtnTitle
         self.rightBtnAction = rightBtnHandelr
@@ -137,20 +137,44 @@ class PopupVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.modalPresentationStyle = .overFullScreen
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.backgroundTapped)))
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.containerView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+        self.containerStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
+            self.view.alpha = 1
+            self.containerView.transform = .identity
+            
+            self.containerStackView.transform = .identity
+            
+        }
+    }
+  
     @objc private func backgroundTapped(){
         close()
     }
     
     public func close(){
-        self.dismiss(animated: false)
+       
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.alpha = 0
+            self.containerView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+            self.containerStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+        }){(complete) in
+            self.dismiss(animated: false)
+            self.removeFromParent()
+        }
+        
     }
-
+    
     private func setupViews() {
+        view.alpha = 0
+        
         view.addSubview(containerView)
         containerView.addSubview(containerStackView)
         view.backgroundColor = .black.withAlphaComponent(0.2)
@@ -204,19 +228,19 @@ class PopupVC : UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 48),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -48),
             containerView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 48),
             containerView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -48),
-
+            
             containerStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
             containerStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
             containerStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
             containerStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-
+            
             buttonStackView.heightAnchor.constraint(equalToConstant: Button.Height),
             buttonStackView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor)
         ])
