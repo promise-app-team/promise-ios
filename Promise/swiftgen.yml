@@ -1,0 +1,28 @@
+input_dir: Resources/
+output_dir: Helpers/Generated/
+
+strings:
+  inputs:
+    - Strings/ko.lproj
+  outputs:
+    - templateName: structured-swift5
+      output: Strings.swift
+      
+fonts:
+  inputs: Fonts/
+  outputs:
+    templateName: swift5
+    output: Fonts.swift
+
+json:
+  inputs: Lotties/
+  outputs:
+    templateName: runtime-swift5
+    output: Lotties.swift
+
+xcassets:
+  inputs:
+    - Images/XCImages.xcassets
+  outputs:
+    - templateName: swift5
+      output: XCImages.swift

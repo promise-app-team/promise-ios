@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Promise
+
+  Created by dylan on 2023/07/31.
+  
+*/
+
+"common.promise" = "프로미스";
+"SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
+"SignIn.selectSignInMethodText" = "로그인 수단 선택";
+"SignIn.kakaoSignInButtonText" = "카카오로 로그인";
+"SignIn.googleSignInButtonText" = "구글로 로그인";
+"SignIn.appleSignInButtonText" = "Apple로 로그인";

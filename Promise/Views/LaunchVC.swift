@@ -8,14 +8,14 @@
 import UIKit
 import Lottie
 
-class LaunchScreenViewController: UIViewController {
+class LaunchVC: UIViewController {
     
     private lazy var launchScreenView: UIView = {
         let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = UIColor.white
         return view
     }()
-    
+
     private lazy var lottieAnimationView: LottieAnimationView = {
         let animationView = LottieAnimationView(name: "logo")
         return animationView
