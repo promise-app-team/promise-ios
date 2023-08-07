@@ -1,0 +1,350 @@
+{
+  "golbal": {
+    "fontFamilies": {
+      "pretendard": {
+        "value": "Pretendard",
+        "type": "fontFamilies"
+      }
+    },
+    "lineHeights": {
+      "0": {
+        "value": "150%",
+        "type": "lineHeights"
+      }
+    },
+    "fontWeights": {
+      "pretendard-0": {
+        "value": "Regular",
+        "type": "fontWeights"
+      },
+      "pretendard-1": {
+        "value": "Bold",
+        "type": "fontWeights"
+      }
+    },
+    "fontSize": {
+      "0": {
+        "value": "12",
+        "type": "fontSizes"
+      },
+      "1": {
+        "value": "16",
+        "type": "fontSizes"
+      },
+      "2": {
+        "value": "20",
+        "type": "fontSizes"
+      },
+      "3": {
+        "value": "24",
+        "type": "fontSizes"
+      }
+    },
+    "letterSpacing": {
+      "0": {
+        "value": "0%",
+        "type": "letterSpacing"
+      }
+    },
+    "paragraphSpacing": {
+      "0": {
+        "value": "0",
+        "type": "paragraphSpacing"
+      }
+    },
+    "H1": {
+      "B": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-1}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.3}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      },
+      "R": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-0}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.3}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      }
+    },
+    "H2": {
+      "B": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-1}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.2}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      },
+      "R": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-0}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.2}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      }
+    },
+    "Body": {
+      "B": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-1}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.1}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      },
+      "R": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-0}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.1}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      }
+    },
+    "Caption": {
+      "B": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-1}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.0}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      },
+      "R": {
+        "value": {
+          "fontFamily": "{fontFamilies.pretendard}",
+          "fontWeight": "{fontWeights.pretendard-0}",
+          "lineHeight": "{lineHeights.0}",
+          "fontSize": "{fontSize.0}",
+          "letterSpacing": "{letterSpacing.0}",
+          "paragraphSpacing": "{paragraphSpacing.0}",
+          "paragraphIndent": "{paragraphIndent.0}",
+          "textCase": "{textCase.none}",
+          "textDecoration": "{textDecoration.none}"
+        },
+        "type": "typography"
+      }
+    },
+    "textCase": {
+      "none": {
+        "value": "none",
+        "type": "textCase"
+      }
+    },
+    "textDecoration": {
+      "none": {
+        "value": "none",
+        "type": "textDecoration"
+      }
+    },
+    "paragraphIndent": {
+      "0": {
+        "value": "0px",
+        "type": "dimension"
+      }
+    },
+    "xs": {
+      "value": "4",
+      "type": "spacing"
+    },
+    "sm": {
+      "value": "8",
+      "type": "spacing"
+    },
+    "md": {
+      "value": "16",
+      "type": "spacing"
+    },
+    "lg": {
+      "value": "24",
+      "type": "spacing"
+    },
+    "xl": {
+      "value": "32",
+      "type": "spacing"
+    },
+    "xxl": {
+      "value": "40",
+      "type": "spacing"
+    },
+    "dimmed": {
+      "value": "#00000080",
+      "type": "color"
+    },
+    "Blue": {
+      "b_L90": {
+        "value": "#ebf4ff",
+        "type": "color"
+      },
+      "b_L50": {
+        "value": "#9cc9ff",
+        "type": "color"
+      },
+      "b_p": {
+        "value": "#3a94fe",
+        "type": "color"
+      },
+      "b_D10": {
+        "value": "#3485e5",
+        "type": "color"
+      }
+    },
+    "black": {
+      "0": {
+        "value": "#ffffff",
+        "type": "color"
+      },
+      "3": {
+        "value": "#f7f7f7",
+        "type": "color"
+      },
+      "10": {
+        "value": "#e5e5e5",
+        "type": "color"
+      },
+      "20": {
+        "value": "#cccccc",
+        "type": "color"
+      },
+      "50": {
+        "value": "#808080",
+        "type": "color"
+      },
+      "60": {
+        "value": "#666666",
+        "type": "color"
+      },
+      "70": {
+        "value": "#4d4d4d",
+        "type": "color"
+      },
+      "100": {
+        "value": "#000000",
+        "type": "color"
+      }
+    },
+    "Primary": {
+      "p_D30": {
+        "value": "#04866f",
+        "type": "color"
+      },
+      "p_D10": {
+        "value": "#05ac8e",
+        "type": "color"
+      },
+      "p_p": {
+        "value": "#06bf9e",
+        "type": "color"
+      },
+      "p_L50": {
+        "value": "#82dfcf",
+        "type": "color"
+      },
+      "p_L80": {
+        "value": "#cdf2ec",
+        "type": "color"
+      },
+      "p_L90": {
+        "value": "#e6f9f5",
+        "type": "color"
+      },
+      "p_L97": {
+        "value": "#f8fdfc",
+        "type": "color"
+      }
+    },
+    "Secondary": {
+      "s_D10": {
+        "value": "#e5b334",
+        "type": "color"
+      },
+      "s_p": {
+        "value": "#fec73a",
+        "type": "color"
+      },
+      "s_L50": {
+        "value": "#ffe39c",
+        "type": "color"
+      },
+      "s_L90": {
+        "value": "#fff9eb",
+        "type": "color"
+      },
+      "s_L97": {
+        "value": "#fffdf9",
+        "type": "color"
+      }
+    },
+    "Red": {
+      "r_D10": {
+        "value": "#e55e46",
+        "type": "color"
+      },
+      "r_p": {
+        "value": "#ff684e",
+        "type": "color"
+      },
+      "r_L50": {
+        "value": "#ffb3a6",
+        "type": "color"
+      },
+      "r_L90": {
+        "value": "#fff0ed",
+        "type": "color"
+      }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": [
+      "golbal"
+    ]
+  }
+}
