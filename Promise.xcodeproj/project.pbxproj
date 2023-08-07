@@ -228,14 +228,11 @@
 			sourceTree = "<group>";
 		};
 		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
-		4A951D6C2A80B00600BCD8BD /* Sourcery */ = {
 			isa = PBXGroup;
 			children = (
 				4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */,
-				4A951D6D2A80B01D00BCD8BD /* promise_design_tokens.json */,
 			);
 			path = Label;
-			path = Sourcery;
 			sourceTree = "<group>";
 		};
 		BE7B8FFC152A04501C6BBF11 /* Frameworks */ = {
