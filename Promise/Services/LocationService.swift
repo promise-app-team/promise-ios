@@ -14,7 +14,6 @@ class LocationService {
     private let manager = CLLocationManager()
     
     init() {
-        manager.requestAlwaysAuthorization()
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.allowsBackgroundLocationUpdates = true
         manager.pausesLocationUpdatesAutomatically = false
@@ -28,6 +27,7 @@ class LocationService {
     func startMonitoring(lat latitude: CLLocationDegrees, lon longitude: CLLocationDegrees, radius: CLLocationDistance, identifier: String) {
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = CLCircularRegion(center: center, radius: radius, identifier: identifier)
+        manager.startMonitoring(for: region)
     }
     
     func stop() {
