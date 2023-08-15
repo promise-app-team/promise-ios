@@ -29,6 +29,7 @@
 		FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD62A6C2692009E6461 /* Button.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */; };
+		FC4041762A8BAF7F0057E413 /* CreatePromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4041752A8BAF7F0057E413 /* CreatePromiseVC.swift */; };
 		FC40FC142A7FAF6D00B699F4 /* PromiseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC40FC132A7FAF6D00B699F4 /* PromiseListView.swift */; };
 		FC40FC172A7FB0AD00B699F4 /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC40FC162A7FB0AD00B699F4 /* MainVM.swift */; };
 		FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */; };
@@ -130,6 +131,7 @@
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
+		FC4041752A8BAF7F0057E413 /* CreatePromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePromiseVC.swift; sourceTree = "<group>"; };
 		FC40FC132A7FAF6D00B699F4 /* PromiseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListView.swift; sourceTree = "<group>"; };
 		FC40FC162A7FB0AD00B699F4 /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
 		FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseMDL.swift; sourceTree = "<group>"; };
@@ -311,6 +313,14 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		FC4041732A8BAF520057E413 /* CreatePromiseScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FC4041752A8BAF7F0057E413 /* CreatePromiseVC.swift */,
+			);
+			path = CreatePromiseScreen;
+			sourceTree = "<group>";
+		};
 		FC5903212A76A56C00778305 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +475,7 @@
 		FC5974482A24D60B00A642D7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FC4041732A8BAF520057E413 /* CreatePromiseScreen */,
 				FCE8C44B2A8A447A00E2B672 /* AccountScreen */,
 				FCE8C4472A8A445A00E2B672 /* NotificationScreen */,
 				FCFC00832A7BF9C2009D7BC7 /* OnboardingScreen */,
@@ -888,6 +899,7 @@
 				FCE8C4492A8A447200E2B672 /* NotificationVC.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
 				FC59033F2A76BA1400778305 /* Strings.swift in Sources */,
+				FC4041762A8BAF7F0057E413 /* CreatePromiseVC.swift in Sources */,
 				FC59033E2A76BA1400778305 /* XCImages.swift in Sources */,
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,

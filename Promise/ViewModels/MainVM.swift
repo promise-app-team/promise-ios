@@ -40,6 +40,13 @@ class MainVM: NSObject {
             self?.currentVC?.navigationController?.pushViewController(notificationVC, animated: true)
         }
     }
+    
+    func navigateCreatePromiseScreen() {
+        DispatchQueue.main.async {[weak self] in
+            let createPromiseVC = CreatePromiseVC()
+            self?.currentVC?.navigationController?.pushViewController(createPromiseVC, animated: true)
+        }
+    }
 }
 
 extension MainVM: UICollectionViewDataSource, UICollectionViewDelegate, FloatingPanelControllerDelegate {

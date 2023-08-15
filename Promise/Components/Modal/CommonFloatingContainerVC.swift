@@ -98,7 +98,7 @@ extension FloatingPanelController {
         
         surfaceView.grabberHandle.isHidden = false
         surfaceView.grabberHandle.barColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        surfaceView.grabberHandleSize = .init(width: 80, height: 5)
+        surfaceView.grabberHandleSize = .init(width: 80, height: 4)
         surfaceView.grabberHandlePadding = 16
     }
 }

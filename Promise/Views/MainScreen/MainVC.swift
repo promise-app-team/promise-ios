@@ -16,6 +16,8 @@ final class MainVC: UIViewController {
     private lazy var promiseAddButton = {
         let button = Button()
         button.initialize(title: L10n.Main.addNewPromise, style: .primary, iconTitle: Asset.circleOutlinePlusWhite.name)
+        
+        button.addTarget(self, action: #selector(onTapPromiseAddButton), for: .touchUpInside)
         return button
     }()
     
@@ -33,6 +35,10 @@ final class MainVC: UIViewController {
         promiseStatusViewController.readyToParent()
         promiseStatusViewController.show()
         
+    }
+    
+    @objc private func onTapPromiseAddButton() {
+        mainVM.navigateCreatePromiseScreen()
     }
     
     private func setupAutoLayout() {
