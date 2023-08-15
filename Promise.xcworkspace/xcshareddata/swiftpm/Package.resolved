@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit.git",
       "state" : {
-        "revision" : "84f6702500fb00476d74420c1a0df64cddd3993e",
-        "version" : "3.0.0-alpha.7"
+        "revision" : "e805233e54afd394937cecb0a28e575b3388f60f",
+        "version" : "3.0.0-alpha.9"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-generator",
       "state" : {
-        "revision" : "1c07b5d805dec7f0e12d402d3da3413d59309bb6",
-        "version" : "0.1.3"
+        "revision" : "0ae57b9d3728b288fa8d917ffb8cbda55b2598ea",
+        "version" : "0.1.8"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "e81f70f2a8b445224dc6b97d0c31ed0d190e04de",
-        "version" : "0.1.4"
+        "revision" : "b4c4ada9a79a34648d319a09f6b7de83eeac5c34",
+        "version" : "0.1.8"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-urlsession",
       "state" : {
-        "revision" : "12cece2055fa3dbd20729eaf561a12af7b6fca7a",
-        "version" : "0.1.1"
+        "revision" : "f6e6c2fc1011e0f20a5ea1a0a57ab388f9aebc4d",
+        "version" : "0.1.2"
       }
     },
     {
@@ -176,8 +176,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams.git",
       "state" : {
-        "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-        "version" : "4.0.6"
+        "revision" : "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+        "version" : "5.0.6"
       }
     }
   ],

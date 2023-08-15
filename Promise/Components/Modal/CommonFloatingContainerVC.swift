@@ -10,13 +10,15 @@ import FloatingPanel
 
 class CommonFloatingContainerVC : UIViewController {
     
-    static let minHeight: CGFloat = 200 // floating 뷰의 최소(tip,half 일 때의) 높이
+    static let minHeight: CGFloat = 270 // floating 뷰의 최소(tip,half 일 때의) 높이
     
-    private var fpc: FloatingPanelController!
+    var fpc: FloatingPanelController!
     var contentVC: CommonFloatingContentVC!
+    var currentVC: UIViewController!
     
-    init(contentViewController: CommonFloatingContentVC){
+    init(contentViewController: CommonFloatingContentVC, currentViewController: UIViewController){
         contentVC = contentViewController
+        currentVC = currentViewController
         
         super.init(nibName: nil, bundle: nil)
         
@@ -41,16 +43,34 @@ class CommonFloatingContainerVC : UIViewController {
         fpc.behavior = CustomFloatingPanelBehavior()
     }
     
-    func setDelegate(_ vc: FloatingPanelControllerDelegate) {
-        fpc.delegate = vc
+    func setDelegate(_ delegate: FloatingPanelControllerDelegate) {
+        fpc.delegate = delegate
     }
     
-    func addToParent(_ vc: UIViewController) {
-        fpc.addPanel(toParent: vc)
+    func addToParent() {
+        fpc.addPanel(toParent: currentVC)
+    }
+    
+    func readyToParent() {
+        currentVC.view.addSubview(fpc.view)
+        
+        fpc.view.frame = currentVC.view.bounds
+        fpc.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            fpc.view.topAnchor.constraint(equalTo: currentVC.view.topAnchor, constant: 0.0),
+            fpc.view.leftAnchor.constraint(equalTo: currentVC.view.leftAnchor, constant: 0.0),
+            fpc.view.rightAnchor.constraint(equalTo: currentVC.view.rightAnchor, constant: 0.0),
+            fpc.view.bottomAnchor.constraint(equalTo: currentVC.view.bottomAnchor, constant: 0.0),
+        ])
+        
+        currentVC.addChild(fpc)
     }
     
     func show() {
-        fpc.show()
+        fpc.show(animated: true) {
+            self.fpc.didMove(toParent: self.currentVC)
+        }
     }
     
     func dismiss() {
@@ -62,18 +82,24 @@ extension FloatingPanelController {
     func changePanelStyle() {
         let appearance = SurfaceAppearance()
         let shadow = SurfaceAppearance.Shadow()
-        shadow.color = UIColor.black
-        shadow.offset = CGSize(width: 0, height: -4.0)
-        shadow.opacity = 0.15
-        shadow.radius = 2
+        
+        shadow.color = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
+        shadow.offset = CGSize(width: 0, height: 0)
+        shadow.opacity = 1
+        shadow.radius = 16
+        
         appearance.shadows = [shadow]
-        appearance.cornerRadius = 15.0
+        appearance.cornerRadius = 20
         appearance.backgroundColor = .clear
         appearance.borderColor = .clear
         appearance.borderWidth = 0
         
-        surfaceView.grabberHandle.isHidden = false
         surfaceView.appearance = appearance
+        
+        surfaceView.grabberHandle.isHidden = false
+        surfaceView.grabberHandle.barColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+        surfaceView.grabberHandleSize = .init(width: 80, height: 5)
+        surfaceView.grabberHandlePadding = 16
     }
 }
 

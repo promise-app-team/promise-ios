@@ -8,7 +8,7 @@
 import UIKit
 import Lottie
 
-class LaunchVC: UIViewController {
+class OnboardingVC: UIViewController {
     
     private lazy var launchScreenView: UIView = {
         let view = UIView(frame: UIScreen.main.bounds)

@@ -17,6 +17,10 @@ internal enum L10n {
     ///   Created by dylan on 2023/07/31.
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
   }
+  internal enum Main {
+    /// 새 약속 추가
+    internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
+  }
   internal enum SignIn {
     /// Apple로 로그인
     internal static let appleSignInButtonText = L10n.tr("Localizable", "SignIn.appleSignInButtonText", fallback: "Apple로 로그인")
