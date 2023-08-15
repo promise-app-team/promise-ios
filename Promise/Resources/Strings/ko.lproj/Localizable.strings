@@ -13,3 +13,5 @@
 "SignIn.kakaoSignInButtonText" = "카카오로 로그인";
 "SignIn.googleSignInButtonText" = "구글로 로그인";
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
+
+"Main.addNewPromise" = "새 약속 추가";
