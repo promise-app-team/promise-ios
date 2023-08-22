@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
+		4AE21A8A2A9450A0001BE7A6 /* promise_design_tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AE21A892A9450A0001BE7A6 /* promise_design_tokens.json */; };
+		4AE21A8C2A9450AE001BE7A6 /* template.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 4AE21A8B2A9450AE001BE7A6 /* template.stencil */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
@@ -88,6 +90,8 @@
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
+		4AE21A892A9450A0001BE7A6 /* promise_design_tokens.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = promise_design_tokens.json; sourceTree = "<group>"; };
+		4AE21A8B2A9450AE001BE7A6 /* template.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = template.stencil; sourceTree = "<group>"; };
 		4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		578512A51520FB30B443D6FB /* Pods-PromiseTests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (production).xcconfig"; sourceTree = "<group>"; };
 		58C277C686336BB41689AE7B /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
@@ -226,6 +230,14 @@
 				4A8D376E2A66D338002D63FF /* logo.json */,
 			);
 			path = Lotties;
+			sourceTree = "<group>";
+		};
+		4AE21A882A9450A0001BE7A6 /* Sourcery */ = {
+			isa = PBXGroup;
+			children = (
+				4AE21A892A9450A0001BE7A6 /* promise_design_tokens.json */,
+			);
+			path = Sourcery;
 			sourceTree = "<group>";
 		};
 		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
@@ -378,6 +390,7 @@
 				FC5974172A24D38800A642D7 /* Info.plist */,
 				FCE4F73F2A7ABD1B0077F484 /* LaunchScreen.storyboard */,
 				FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */,
+				4AE21A8B2A9450AE001BE7A6 /* template.stencil */,
 				FC5903282A76A76A00778305 /* swiftgen.yml */,
 				FC59032A2A76A76A00778305 /* openapi.json */,
 				FC5903292A76A76A00778305 /* openapi-generator-config.yml */,
@@ -441,6 +454,7 @@
 		FC5974452A24D5E100A642D7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4AE21A882A9450A0001BE7A6 /* Sourcery */,
 				FAD2BFC02A6AF5BA009E6461 /* Fonts */,
 				4A5EE2632A36D0AD005D5020 /* Lotties */,
 				FC5903352A76B59500778305 /* Strings */,
@@ -606,6 +620,7 @@
 				FC59032C2A76A76A00778305 /* openapi-generator-config.yml in Resources */,
 				FC59032B2A76A76A00778305 /* swiftgen.yml in Resources */,
 				FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */,
+				4AE21A8A2A9450A0001BE7A6 /* promise_design_tokens.json in Resources */,
 				FAD2BFCD2A6AF661009E6461 /* Pretendard-Thin.otf in Resources */,
 				FCE4F7412A7ABD1B0077F484 /* LaunchScreen.storyboard in Resources */,
 				FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */,
@@ -615,6 +630,7 @@
 				FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */,
 				4A8D376F2A66D338002D63FF /* logo.json in Resources */,
 				FAD2BFCC2A6AF661009E6461 /* Pretendard-Light.otf in Resources */,
+				4AE21A8C2A9450AE001BE7A6 /* template.stencil in Resources */,
 				FAD2BFCF2A6AF661009E6461 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
