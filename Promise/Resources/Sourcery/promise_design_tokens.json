@@ -1,5 +1,5 @@
 {
-  "golbal": {
+  "global": {
     "fontFamilies": {
       "pretendard": {
         "value": "Pretendard",
@@ -344,7 +344,7 @@
   "$themes": [],
   "$metadata": {
     "tokenSetOrder": [
-      "golbal"
+      "global"
     ]
   }
 }
