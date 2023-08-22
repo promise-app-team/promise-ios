@@ -1,11 +1,20 @@
 // sourcery:file: Resources/Sourcery/promise_design_tokens.json
 
-{% for tokenSet in tokenSets %}
-  {% for tokenType, tokens in tokenSet %}
-    // {{ tokenType }}
-    {% for tokenName, tokenValue in tokens %}
-      let {{ tokenName }} = {{ tokenValue.value }}
-    {% endfor %}
-  {% endfor %}
-{% endfor %}
+import Foundation
 
+struct DesignTokens {
+    {% for category, values in global %}
+    struct {{ category }} {
+        {% for key, value in values %}
+        static let {{ key }}: TokenValue = TokenValue(value: "{{ value.value }}", type: .{{ value.type }})
+        {% endfor %}
+    }
+    {% endfor %}
+
+    let metadata: Metadata = Metadata(tokenSetOrder: [
+        {% for category in global %}
+        .{{ category }}
+        {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    ])
+}
