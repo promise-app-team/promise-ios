@@ -48,6 +48,7 @@ class HeaderSortPromiseList: UIStackView {
     
     func configureHeaderSortPromiseList() {
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         
         layer.cornerRadius = 8
         layer.borderWidth = 1
