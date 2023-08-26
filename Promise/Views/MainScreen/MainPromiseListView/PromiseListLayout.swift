@@ -16,25 +16,38 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
     // MARK: - Initializer
     override init() {
         super.init()
-        configureLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Override function
+    override func prepare() {
+        configureLayout()
+        super.prepare()
+    }
+    
     // MARK: - Private function
     private func configureLayout() {
         scrollDirection = .horizontal
-        minimumLineSpacing = 52
-        itemSize = CGSize(width: 250, height: 280)
-    }
-    
-    // MARK: - Override function
-    override func prepare() {
+        
         guard let collectionView = collectionView else {
             fatalError()
         }
+        
+        let unzoomedItemWidth: CGFloat = collectionView.frame.width - 80 // 80 = 좌 40 + 우 40
+        let unzoomedItemHeight: CGFloat = collectionView.frame.height
+        
+        let itemWidth = unzoomedItemWidth / (1 + zoomFactor)
+        let itemHeight = unzoomedItemHeight / (1 + zoomFactor)
+        
+        let leadingWidth = (collectionView.frame.width - itemWidth) / 2 // 약 40으로 계산됨(디바이스 넓이에 따라)
+    
+        minimumLineSpacing = leadingWidth * 2 / 3 // 2:3 비율에서 2에 해당
+        
+        // MARK: 아이템(약속 카드) 사이즈 설정
+        itemSize = CGSize(width: itemWidth, height: itemHeight)
         
         let verticalInsets = (
             collectionView.frame.height
@@ -56,8 +69,6 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
             bottom: verticalInsets,
             right: horizontalInsets
         )
-        
-        super.prepare()
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
