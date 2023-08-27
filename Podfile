@@ -4,10 +4,10 @@ platform :ios, '13.0'
 target 'Promise' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  
-  pod 'lottie-ios'
 
   # Pods for Promise
+  pod 'FloatingPanel'
+  pod 'SwiftGen', '~> 6.0'
 
   target 'PromiseTests' do
     inherit! :search_paths

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KakaoSDKCommon
 import UserNotifications
 
 @main
@@ -13,9 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        UIApplication.shared.registerForRemoteNotifications()
+        
+        // UIApplication.shared.registerForRemoteNotifications()
         registerForPushNotifications()
         pushNotiOnForeground()
+        
+        // MARK: 카카오 SDK 초기화(v2부터 필수)
+        KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
+        
         return true
     }
 
