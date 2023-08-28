@@ -50,7 +50,7 @@ class PopupVC : UIViewController {
         let label = UILabel()
         label.text = titleText
         label.textAlignment = .center
-        label.font = UIFont.pretendard(style: .H1_B)
+        label.font = UIFont.pretendard(style: .H2_B)
         label.numberOfLines = 0
         label.textColor = .black
         
