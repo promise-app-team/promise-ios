@@ -29,6 +29,7 @@ internal enum Asset {
   internal static let appleLogo = ImageAsset(name: "AppleLogo")
   internal static let googleLogo = ImageAsset(name: "GoogleLogo")
   internal static let kakaoLogo = ImageAsset(name: "KakaoLogo")
+  internal static let profile = ImageAsset(name: "profile")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
