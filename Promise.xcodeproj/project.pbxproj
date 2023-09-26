@@ -17,6 +17,8 @@
 		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
 		FA820AA02A82791F00AD571C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA820A9F2A82791E00AD571C /* UIViewController.swift */; };
 		FA8416192A9A40CE008CEBC1 /* PopupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8416182A9A40CE008CEBC1 /* PopupDelegate.swift */; };
+		FA931B102AB585A40053FC3B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B0F2AB585A40053FC3B /* TextField.swift */; };
+		FA931B132AB58E300053FC3B /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B122AB58E300053FC3B /* UITextField.swift */; };
 		FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C23092A72BE0A007573A6 /* PopupVC.swift */; };
 		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
 		FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */; };
@@ -108,6 +110,8 @@
 		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
 		FA820A9F2A82791E00AD571C /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		FA8416182A9A40CE008CEBC1 /* PopupDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupDelegate.swift; sourceTree = "<group>"; };
+		FA931B0F2AB585A40053FC3B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		FA931B122AB58E300053FC3B /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		FA9C23092A72BE0A007573A6 /* PopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVC.swift; sourceTree = "<group>"; };
 		FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
 		FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -248,6 +252,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA931B0E2AB5856D0053FC3B /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				FA931B0F2AB585A40053FC3B /* TextField.swift */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
 		FA9C23082A72B84C007573A6 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +297,7 @@
 		FAE2E0212A26381A002D8869 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FA931B0E2AB5856D0053FC3B /* TextField */,
 				FA9C23082A72B84C007573A6 /* Popup */,
 				FABF06B32A34D2B300D2B796 /* Modal */,
 				4AEBC3CF2A4A9171004E6EA5 /* Label */,
@@ -310,6 +323,7 @@
 				FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */,
 				FC41B25D2A781E6500C1C592 /* Task.swift */,
 				FA820A9F2A82791E00AD571C /* UIViewController.swift */,
+				FA931B122AB58E300053FC3B /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -787,6 +801,7 @@
 				FA820AA02A82791F00AD571C /* UIViewController.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* UserMDL.swift in Sources */,
 				FC41B2602A781E8700C1C592 /* LaunchVC.swift in Sources */,
+				FA931B102AB585A40053FC3B /* TextField.swift in Sources */,
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
 				FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */,
@@ -799,6 +814,7 @@
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
 				FC41B25E2A781E6500C1C592 /* Task.swift in Sources */,
+				FA931B132AB58E300053FC3B /* UITextField.swift in Sources */,
 				FA8416192A9A40CE008CEBC1 /* PopupDelegate.swift in Sources */,
 				FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
