@@ -8,10 +8,6 @@
 import Foundation
 import Starscream
 
-struct Constant {
-    static let serverURL = "http://ec2-43-202-89-111.ap-northeast-2.compute.amazonaws.com:8080"
-}
-
 typealias JsonData = [String: Any]
 
 final class WebsocketService {
@@ -66,7 +62,8 @@ final class WebsocketService {
     // MARK: - Private function
     
     private func generateURL(withQueryItems queryItems: [URLQueryItem]) -> URL? {
-        var urlComponents = URLComponents(string: Constant.serverURL)
+        let url = Config.apiURL
+        var urlComponents = URLComponents(string: url.absoluteString)
         urlComponents?.queryItems = queryItems
         
         return urlComponents?.url
