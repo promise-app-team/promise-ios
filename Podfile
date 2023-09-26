@@ -8,7 +8,8 @@ target 'Promise' do
   # Pods for Promise
   pod 'FloatingPanel'
   pod 'SwiftGen', '~> 6.0'
-
+  pod 'SwiftLint'
+  
   target 'PromiseTests' do
     inherit! :search_paths
     # Pods for testing
