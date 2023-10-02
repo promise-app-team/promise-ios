@@ -41,7 +41,7 @@ class CreatePromiseVC: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -24)
