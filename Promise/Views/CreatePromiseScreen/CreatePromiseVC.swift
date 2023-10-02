@@ -9,35 +9,87 @@ import Foundation
 import UIKit
 
 class CreatePromiseVC: UIViewController {
-    let screenTitle = {
-        let label = UILabel()
-        label.text = "약속 생성 화면을 구현해주세요."
-        label.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
-        label.textColor = .black
+    private lazy var createPromiseVM = CreatePromiseVM(currentVC: self)
+    
+    private lazy var headerView = CreatePromiseHeaderView(vm: createPromiseVM)
+    private lazy var formView = FormView(vm: createPromiseVM)
+    private lazy var createPromiseButton = {
+        let button = Button()
+        button.initialize(
+            title: L10n.CreatePromise.createPromiseButtonTitle,
+            style: .primary,
+            iconTitle: "",
+            disabled: true //TODO: 폼 입력 여부에 따라 활성화
+        )
         
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        button.addTarget(self, action: #selector(onTapCreatePromiseButton), for: .touchUpInside)
+        return button
     }()
     
+    @objc func onTapCreatePromiseButton() {
+        createPromiseVM.submit()
+    }
+    
     func setupAutoLayout() {
+        let safeLayoutGuide = view.safeAreaLayoutGuide
+        
         NSLayoutConstraint.activate([
-            screenTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            screenTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            headerView.heightAnchor.constraint(equalToConstant: 56),
+            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+        
+        NSLayoutConstraint.activate([
+            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -24)
+        ])
+        
+        NSLayoutConstraint.activate([
+            createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -20),
+            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + 3),
+        ])
+    }
+    
+    func assignOnVaildateForm() {
+        createPromiseVM.assignOnVaildateForm = { [weak self] isVaild in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                if(isVaild) {
+                    self.createPromiseButton.isDisabled = false
+                } else {
+                    self.createPromiseButton.isDisabled = true
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        assignOnVaildateForm()
         configureCreatePromiseVC()
         render()
     }
     
     func configureCreatePromiseVC() {
         view.backgroundColor = .white
+        KeyboardManager.shared.delegate = self
+        KeyboardManager.shared.registerVC(self)
     }
     
     func render() {
-        [screenTitle].forEach { view.addSubview($0) }
+        [
+            headerView,
+            formView,
+            createPromiseButton,
+        ].forEach { view.addSubview($0) }
         setupAutoLayout()
     }
 }
+
+extension CreatePromiseVC: KeyboardManagerDelegate {}

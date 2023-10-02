@@ -29,6 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         // MARK: set delegate to scene delegate
         navigationController?.delegate = self
         
+        if #available(iOS 13.0, *) {
+            window.overrideUserInterfaceStyle = .light // 라이트모드만 지원하기
+        //    self.window?.overrideUserInterfaceStyle = .dark // 다크모드만 지원하기
+        }
+        
         window.backgroundColor = .white // MARK: set default color
         window.rootViewController = navigationController // MARK: set root vc to navigation controllor with lanch vc
         window.makeKeyAndVisible() // MARK: visible navigation controllor with lanch vc

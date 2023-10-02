@@ -85,6 +85,7 @@ class FormTabMenuView: UIView {
     var rightButtonBottomConstraint: NSLayoutConstraint?
     
     @objc private func onTapLeft() {
+        KeyboardManager.shared.hideKeyboard()
         delegate?.onTapLeftButton()
         
         leftButtonTopConstraint?.constant = 1.5
@@ -107,6 +108,7 @@ class FormTabMenuView: UIView {
     }
     
     @objc private func onTapRight() {
+        KeyboardManager.shared.hideKeyboard()
         delegate?.onTapRightButton()
         
         self.leftButtonTopConstraint?.constant = 0
@@ -128,11 +130,22 @@ class FormTabMenuView: UIView {
         self.layoutIfNeeded()
     }
     
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        isUserInteractionEnabled = false
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        isUserInteractionEnabled = true
+    }
+    
     init(leftButtonTitle: String, rightButtonTitle: String) {
         self.leftButtonTitle = leftButtonTitle
         self.rightButtonTitle = rightButtonTitle
         super.init(frame: .null)
         configureFormTabMenuView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {

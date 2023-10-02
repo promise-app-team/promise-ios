@@ -11,6 +11,11 @@ import UIKit
 class FormPlaceView: UIView {
     var createPromiseVM: CreatePromiseVM
     
+    // mini 대응
+    var placeWrapperHeightConstraint: NSLayoutConstraint?
+    var selectPlaceButtonIconWidthConstraint: NSLayoutConstraint?
+    var selectPlaceButtonIconHeightConstraint: NSLayoutConstraint?
+    
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formPlaceLabel
@@ -21,10 +26,178 @@ class FormPlaceView: UIView {
         return label
     }()
     
+    private lazy var placeTypeWrapper = {
+        let formTabMenu = FormTabMenuView(
+            leftButtonTitle: L10n.CreatePromise.PlaceType.designation,
+            rightButtonTitle: L10n.CreatePromise.PlaceType.middle
+        )
+        
+        formTabMenu.delegate = self
+        formTabMenu.translatesAutoresizingMaskIntoConstraints = false
+        return formTabMenu
+    }()
+    
+    private let selectPlaceButtonIcon = {
+        let imageView = UIImageView(image: Asset.place.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let selectedPlace = {
+        let label = UILabel()
+        
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+        label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var selectPlaceButton = {
+        let stackView = UIStackView(arrangedSubviews: [selectPlaceButtonIcon, selectedPlace])
+        
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.alignment = .center
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        stackView.layer.borderWidth = 1
+        stackView.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+        stackView.layer.cornerRadius = 8
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapSelectPlaceButton))
+        stackView.isUserInteractionEnabled = true
+        stackView.addGestureRecognizer(tapGesture)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var middlePlaceGuidanceButton = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.text = L10n.CreatePromise.promiseMiddlePlaceGuidance
+        label.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+        
+        let imageView = UIImageView(image: Asset.questionMarkPrimary.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        let view = UIView()
+        view.backgroundColor = .white
+        
+        [label, imageView].forEach{ view.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 1),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
+            imageView.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 3)
+        ])
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapMiddlePlaceGuidanceButton))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapGesture)
+        
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var placeWrapper = {
+        let view = UIView()
+        [selectPlaceButton, middlePlaceGuidanceButton].forEach { view.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            selectPlaceButton.topAnchor.constraint(equalTo: view.topAnchor),
+            selectPlaceButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            selectPlaceButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            selectPlaceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            middlePlaceGuidanceButton.topAnchor.constraint(equalTo: view.topAnchor),
+            middlePlaceGuidanceButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2),
+            middlePlaceGuidanceButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            middlePlaceGuidanceButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    @objc private func onTapSelectPlaceButton(){
+        let placeSelectionVC = PlaceSelectionVC()
+        placeSelectionVC.delegate = self
+        createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
+    }
+    
+    @objc private func onTapMiddlePlaceGuidanceButton() {
+        // TODO: 팝업
+    }
+    
+    private func assignPlaceTypeDidChange() {
+        createPromiseVM.placeTypeDidChange = { [weak self] type in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                switch(type) {
+                case .STATIC:
+                    self.selectPlaceButton.isHidden = false
+                    self.middlePlaceGuidanceButton.isHidden = true
+                    
+                    self.selectPlaceButtonIconWidthConstraint?.constant = 20
+                    self.selectPlaceButtonIconHeightConstraint?.constant = 20
+                    self.placeWrapperHeightConstraint?.constant = 45
+                    
+                case .DYNAMIC:
+                    self.selectPlaceButton.isHidden = true
+                    self.middlePlaceGuidanceButton.isHidden = false
+                    
+                    self.selectPlaceButtonIconWidthConstraint?.constant = 0
+                    self.selectPlaceButtonIconHeightConstraint?.constant = 0
+                    self.placeWrapperHeightConstraint?.constant = 16
+                default:
+                    break
+                }
+                
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func assignPlaceDidChange() {
+        createPromiseVM.placeDidChange = { [weak self] place in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                // TODO: 주소 업데이트 시 UI 업데이트
+            }
+        }
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        isUserInteractionEnabled = false
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        isUserInteractionEnabled = true
+    }
+    
     init(vm: CreatePromiseVM) {
         createPromiseVM = vm
+        
         super.init(frame: .null)
+        
+        assignPlaceTypeDidChange()
+        assignPlaceDidChange()
         configureFormPlaceView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -34,13 +207,41 @@ class FormPlaceView: UIView {
     private func configureFormPlaceView() {
         translatesAutoresizingMaskIntoConstraints = false
         
-        [label].forEach { addSubview($0) }
+        placeWrapperHeightConstraint = placeWrapper.heightAnchor.constraint(equalToConstant: 45)
+        selectPlaceButtonIconWidthConstraint = selectPlaceButtonIcon.widthAnchor.constraint(equalToConstant: 20)
+        selectPlaceButtonIconHeightConstraint = selectPlaceButtonIcon.heightAnchor.constraint(equalToConstant: 20)
+        
+        NSLayoutConstraint.activate([
+            placeWrapperHeightConstraint!,
+            selectPlaceButtonIconWidthConstraint!,
+            selectPlaceButtonIconHeightConstraint!
+        ])
+        
+        [label, placeTypeWrapper, placeWrapper].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor),
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor)
+            
+            placeTypeWrapper.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            placeTypeWrapper.leadingAnchor.constraint(equalTo: leadingAnchor),
+            placeTypeWrapper.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            placeWrapper.topAnchor.constraint(equalTo: placeTypeWrapper.bottomAnchor, constant: 8),
+            placeWrapper.leadingAnchor.constraint(equalTo: leadingAnchor),
+            placeWrapper.trailingAnchor.constraint(equalTo: trailingAnchor),
+            placeWrapper.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+}
+
+extension FormPlaceView: FormTabMenuViewDelegate, PlaceSelectionDelegate {
+    func onTapLeftButton() {
+        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromise.destinationTypePayload.STATIC)
+    }
+    
+    func onTapRightButton() {
+        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromise.destinationTypePayload.DYNAMIC)
     }
 }

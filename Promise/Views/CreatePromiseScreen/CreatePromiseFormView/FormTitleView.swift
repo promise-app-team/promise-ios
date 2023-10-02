@@ -32,12 +32,12 @@ class FormTitleView: UIView {
         ]
         
         textField.attributedPlaceholder = NSAttributedString(
-            string: L10n.CreatePromise.promiseTItleInputPlaceholder,
+            string: L10n.CreatePromise.promiseTitleInputPlaceholder,
             attributes: placeholderAttributes
         )
         
-        textField.delegate = createPromiseVM
-        textField.addTarget(createPromiseVM, action: #selector(createPromiseVM.onChangedTitle), for: .editingChanged)
+        textField.delegate = self
+        textField.addTarget(self, action: #selector(onChangedTitle), for: .editingChanged)
         
         let container = UIStackView(arrangedSubviews: [textField])
         container.isLayoutMarginsRelativeArrangement = true
@@ -50,6 +50,23 @@ class FormTitleView: UIView {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
+    
+    @objc private func onChangedTitle(_ textField: UITextField) {
+        createPromiseVM.onChangedTitle(textField)
+    }
+    
+    private func updatePromiseTitleInput(isFocused: Bool) {
+        let animationColor = isFocused
+        ? UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+        : UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+        
+        let borderColorAnimation = CABasicAnimation(keyPath: "borderColor")
+        borderColorAnimation.fromValue = promiseTitleInput.layer.borderColor
+        borderColorAnimation.toValue = animationColor
+        borderColorAnimation.duration = 0.1
+        promiseTitleInput.layer.add(borderColorAnimation, forKey: "borderColor")
+        promiseTitleInput.layer.borderColor = animationColor
+    }
     
     init(vm: CreatePromiseVM) {
         createPromiseVM = vm
@@ -78,5 +95,20 @@ class FormTitleView: UIView {
             
             promiseTitleInput.heightAnchor.constraint(equalToConstant: 45)
         ])
+    }
+}
+
+extension FormTitleView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        updatePromiseTitleInput(isFocused: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updatePromiseTitleInput(isFocused: false)
     }
 }

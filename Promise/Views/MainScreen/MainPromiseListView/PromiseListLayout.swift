@@ -91,6 +91,8 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 if let cell = collectionView.cellForItem(at: attributes.indexPath) as? PromiseListCell {
                     cell.updateBorder(focusRatio: focusRatio)
                 }
+                
+                // 여기서 하면된다.
             }
         }
         

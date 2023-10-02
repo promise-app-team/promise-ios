@@ -13,23 +13,23 @@ class FormView: UIScrollView {
     
     private lazy var formTitleView = FormTitleView(vm: createPromiseVM)
     private lazy var formDateView = FormDateView(vm: createPromiseVM)
-    private lazy var formThemeView = FormThemeView(vm: createPromiseVM)
+    private lazy var formThemeCollectionView = FormThemeCollectionView(vm: createPromiseVM)
     private lazy var formPlaceView = FormPlaceView(vm: createPromiseVM)
-    private lazy var formshareLocationStartTimeView = FormShareLocationStartTimeView(vm: createPromiseVM)
-    private lazy var formshareLocationEndTimeView = FormShareLocationEndTimeView(vm: createPromiseVM)
+    private lazy var formShareLocationStartView = FormShareLocationStartView(vm: createPromiseVM)
+    private lazy var formShareLocationEndView = FormShareLocationEndView(vm: createPromiseVM)
     
     private lazy var formStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             formTitleView,
             formDateView,
-            formThemeView,
+            formThemeCollectionView,
             formPlaceView,
-            formshareLocationStartTimeView,
-            formshareLocationEndTimeView,
+            formShareLocationStartView,
+            formShareLocationEndView,
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 24
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView

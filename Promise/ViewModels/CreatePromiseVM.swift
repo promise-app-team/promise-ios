@@ -11,7 +11,93 @@ import UIKit
 class CreatePromiseVM: NSObject {
     var currentVC: UIViewController?
     
-    var form = PromiseForm(title: "", date: "") {
+    var title = "" {
+        didSet {
+            updateForm(keyPath: \.title, value: title)
+        }
+    }
+    
+    var dateDidChange: ((SelectionDate) -> Void)?
+    var date: SelectionDate? = nil {
+        didSet {
+            guard let date else { return }
+            dateDidChange?(date)
+            updateForm(keyPath: \.date, value: date)
+        }
+    }
+    
+    var themesLoading = false
+    var themesDidChange: (([SelectableTheme]) -> Void)?
+    var themes: [SelectableTheme] = [] {
+        didSet {
+            themesDidChange?(themes)
+            updateForm(keyPath: \.themes, value: themes)
+        }
+    }
+    
+    var placeTypeDidChange: ((Components.Schemas.InputCreatePromise.destinationTypePayload) -> Void)?
+    var placeType = Components.Schemas.InputCreatePromise.destinationTypePayload.STATIC {
+        didSet {
+            placeTypeDidChange?(placeType)
+            updateForm(keyPath: \.placeType, value: placeType)
+        }
+    }
+    
+    var placeDidChange: ((Components.Schemas.InputCreatePromise.destinationPayload) -> Void)?
+    var place = Components.Schemas.InputCreatePromise.destinationPayload(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571) {
+        didSet {
+            placeDidChange?(place)
+            updateForm(keyPath: \.place, value: place)
+        }
+    }
+    
+    var shareLocationStartTypeDidChange: ((Components.Schemas.InputCreatePromise.locationShareStartTypePayload) -> Void)?
+    var shareLocationStartType = Components.Schemas.InputCreatePromise.locationShareStartTypePayload.DISTANCE {
+        didSet {
+            shareLocationStartTypeDidChange?(shareLocationStartType)
+            updateForm(keyPath: \.shareLocationStartType, value: shareLocationStartType)
+        }
+    }
+    
+    let shareLocationStartBasedOnDistanceInfo = ShareLocationStartBasedOnDistanceInfo()
+    let shareLocationStartBasedOnTimeInfo = ShareLocationStartBasedOnTimeInfo()
+    
+    lazy var shareLocationStart = shareLocationStartBasedOnDistanceInfo.initialItem {
+        didSet {
+            switch(shareLocationStartType) {
+            case .DISTANCE:
+                if let originItem = shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStart.itemIndex) {
+                    updateForm(keyPath: \.shareLocationStart, value: originItem)
+                }
+            case .TIME:
+                if let originItem = shareLocationStartBasedOnTimeInfo.getOriginItem(at: shareLocationStart.itemIndex) {
+                    updateForm(keyPath: \.shareLocationStart, value: originItem)
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    let shareLocationEndInfo = ShareLocationEndInfo()
+    lazy var shareLocationEnd = shareLocationEndInfo.initialItem {
+        didSet {
+            if let originItem = shareLocationEndInfo.getOriginItem(at: shareLocationEnd.itemIndex) {
+                updateForm(keyPath: \.shareLocationEnd, value: originItem)
+            }
+        }
+    }
+    
+    lazy var form = PromiseForm(
+        title: title,
+        date: date,
+        themes: [],
+        placeType: placeType,
+        place: place,
+        shareLocationStartType: shareLocationStartType,
+        shareLocationStart: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStart.itemIndex)!,
+        shareLocationEnd: shareLocationEndInfo.getOriginItem(at: shareLocationEnd.itemIndex)!
+    ) {
         didSet {
             validateForm(form)
         }
@@ -21,16 +107,125 @@ class CreatePromiseVM: NSObject {
         self.currentVC = currentVC
     }
     
+    private func updateForm<T>(keyPath: WritableKeyPath<PromiseForm, T>, value: T) {
+        var newForm = self.form
+        newForm[keyPath: keyPath] = value
+        self.form = newForm
+    }
+    
+    var assignOnVaildateForm: ((Bool) -> Void)?
     private func validateForm(_ form: PromiseForm) {
-        print(form.title)
-    }
-    
-    @objc func onChangedTitle(_ textField: UITextField) {
-        self.form = PromiseForm(title: textField.text ?? "", date: form.date)
-    }
-    
-    @objc func onChangedDate(_ date: Date) {
+        guard !form.title.isEmpty else {
+            assignOnVaildateForm?(false)
+            return
+        }
         
+        guard let _ = form.date else {
+            assignOnVaildateForm?(false)
+            return
+        }
+        
+        let isExistSelectedThemes = !themes.filter{ $0.isSelected }.isEmpty
+        guard isExistSelectedThemes else {
+            assignOnVaildateForm?(false)
+            return
+        }
+        
+        if form.placeType == .STATIC,
+           let _ = form.place.city,
+           let _ = form.place.district,
+           let _ = form.place.address,
+           let _ = form.place.latitude,
+           let _ = form.place.longitude
+        {
+            assignOnVaildateForm?(true)
+            return
+        }
+        
+        assignOnVaildateForm?(true)
+    }
+    
+    func onChangedTitle(_ textField: UITextField) {
+        self.title = textField.text ?? ""
+    }
+    
+    func onChangedDate(_ date: SelectionDate) {
+        self.date = date
+    }
+    
+    func onChangeThemes(index: Int) {
+        self.themes[index].isSelected = !self.themes[index].isSelected
+    }
+    
+    func onChangedPlaceType(_ type: Components.Schemas.InputCreatePromise.destinationTypePayload) {
+        self.placeType = type
+    }
+    
+    func onChangedPlace(_ place: Components.Schemas.InputCreatePromise.destinationPayload) {
+        self.place = place
+    }
+    
+    func onChangedShareLocationStartType(_ type: Components.Schemas.InputCreatePromise.locationShareStartTypePayload) {
+        self.shareLocationStartType = type
+    }
+    
+    func onChangedShareLocationStart(shareLocationStart: SelectionItem) {
+        self.shareLocationStart = shareLocationStart
+    }
+    
+    func onChangedShareLocationEnd(shareLocationEnd: SelectionItem) {
+        self.shareLocationEnd = shareLocationEnd
+    }
+    
+    func submit() {
+        //TODO: 백엔드 확인후 DYNIMIC일 떄 약속 생성 처리 예정
+        //        var destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
+        //
+        //        switch(form.placeType) {
+        //        case .STATIC:
+        //            destination = form.place
+        //        case .DYNAMIC:
+        //            destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
+        //        default:
+        //            break
+        //        }
+        
+        let submitForm = Components.Schemas.InputCreatePromise(
+            title: form.title,
+            themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
+            promisedAt: form.date!.timeIntervalInSeconds,
+            destinationType: form.placeType,
+            destination: form.place,
+            locationShareStartType: form.shareLocationStartType,
+            locationShareStartValue: form.shareLocationStart,
+            locationShareEndType: Components.Schemas.InputCreatePromise.locationShareEndTypePayload.TIME,
+            locationShareEndValue: form.shareLocationEnd
+        )
+        
+        Task {
+            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promise", nil, submitForm)
+            
+            switch result {
+            case .success(_):
+                next()
+            case .failure(let errorType):
+                switch errorType {
+                case .badRequest:
+                    // TODO: 약속 생성 에러 핸들링
+                    break
+                default:
+                    // Other Error(Network, badUrl ...)
+                    break
+                }
+            }
+        }
+    }
+    
+    func next() {
+        DispatchQueue.main.async {[weak self] in
+            let completedCreatePromiseVC = CompletedCreatePromiseVC()
+            self?.currentVC?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+        }
     }
     
     func goBack() {
@@ -45,14 +240,27 @@ class CreatePromiseVM: NSObject {
         return dateFormatter.string(from: date)
     }
     
-    func getSupportedTheme() -> [String] {
-//        APIService.shared.fetch(.GET, "/promise/theme", Components.Schemas.)
-//        Components.Schemas.
+    func getSupportedTheme() async {
+        themesLoading = true
         
-        return [""]
+        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promise/themes")
+        
+        switch result {
+        case .success(let themes):
+            self.themes = themes.map { themeEntity in
+                return SelectableTheme(id: themeEntity.id, theme: themeEntity.theme, isSelected: false)
+            }
+        case .failure(let errorType):
+            switch errorType {
+            case .badRequest:
+                // TODO: 테마 에러 핸들링
+                break
+            default:
+                // Other Error(Network, badUrl ...)
+                break
+            }
+        }
+        
+        themesLoading = false
     }
-}
-
-extension CreatePromiseVM: UITextFieldDelegate {
-    
 }

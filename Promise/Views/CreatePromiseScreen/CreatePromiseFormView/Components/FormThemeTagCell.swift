@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class FormThemeTagCell: UICollectionViewCell {
-    static func cellSize(for themeEntity: SelectableThemeMDL) -> CGSize {
+    static func cellSize(for themeEntity: SelectableTheme) -> CGSize {
         let label = UILabel()
         
         label.text = themeEntity.theme
@@ -51,7 +51,7 @@ class FormThemeTagCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureFormThemeTagCell(with selectableTheme: SelectableThemeMDL) {
+    func configureFormThemeTagCell(with selectableTheme: SelectableTheme) {
         themeTag.text = selectableTheme.theme
         
         if(selectableTheme.isSelected) {

@@ -26,7 +26,7 @@ open class BaseButton: UIButton {
     private var disabledBorderColor: UIColor = UIColor(hexCode: "#F2F2F2")
     
     // MARK: - 모서리
-    private let cornerRadius: CGFloat = 20
+    private let cornerRadius: CGFloat = 18
     
     // MARK: - 스케일
     private let scaleValue = 0.96
