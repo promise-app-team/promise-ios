@@ -11,11 +11,102 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum Common {
+    /// 취소
+    internal static let cancel = L10n.tr("Localizable", "Common.cancel", fallback: "취소")
+    /// 확인
+    internal static let confirm = L10n.tr("Localizable", "Common.confirm", fallback: "확인")
+    /// 시간
+    internal static let hour = L10n.tr("Localizable", "Common.hour", fallback: "시간")
+    /// km
+    internal static let km = L10n.tr("Localizable", "Common.km", fallback: "km")
+    /// m
+    internal static let m = L10n.tr("Localizable", "Common.m", fallback: "m")
+    /// 분
+    internal static let minute = L10n.tr("Localizable", "Common.minute", fallback: "분")
     /// Localizable.strings
     ///   Promise
     /// 
     ///   Created by dylan on 2023/07/31.
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
+  }
+  internal enum CompletedCreatePromise {
+    /// 약속 생성 완료
+    internal static let headerTitle = L10n.tr("Localizable", "CompletedCreatePromise.headerTitle", fallback: "약속 생성 완료")
+    /// 생성된 약속은 메인화면과 약속 상세페이지에 있는
+    /// 공유 아이콘으로 초대할 수 있어요
+    internal static let mainDescription = L10n.tr("Localizable", "CompletedCreatePromise.mainDescription", fallback: "생성된 약속은 메인화면과 약속 상세페이지에 있는\n공유 아이콘으로 초대할 수 있어요")
+    /// 약속이 생성되었어요
+    /// 이제 참여자를 초대해 볼까요?
+    internal static let mainTitle = L10n.tr("Localizable", "CompletedCreatePromise.mainTitle", fallback: "약속이 생성되었어요\n이제 참여자를 초대해 볼까요?")
+    /// 약속 공유
+    internal static let shareButtonText = L10n.tr("Localizable", "CompletedCreatePromise.shareButtonText", fallback: "약속 공유")
+    internal enum MainDescription {
+      /// 메인화면과 약속 상세페이지에 있는
+      /// 공유 아이콘
+      internal static let highlight = L10n.tr("Localizable", "CompletedCreatePromise.MainDescription.highlight", fallback: "메인화면과 약속 상세페이지에 있는\n공유 아이콘")
+    }
+  }
+  internal enum CreatePromise {
+    /// 약속 생성
+    internal static let createPromiseButtonTitle = L10n.tr("Localizable", "CreatePromise.createPromiseButtonTitle", fallback: "약속 생성")
+    /// 약속 시간
+    internal static let formDateLabel = L10n.tr("Localizable", "CreatePromise.formDateLabel", fallback: "약속 시간")
+    /// 약속 장소
+    internal static let formPlaceLabel = L10n.tr("Localizable", "CreatePromise.formPlaceLabel", fallback: "약속 장소")
+    /// 위치 공유 종료 시간
+    internal static let formShareLocationEndTimeLabel = L10n.tr("Localizable", "CreatePromise.formShareLocationEndTimeLabel", fallback: "위치 공유 종료 시간")
+    /// 위치 공유 시작 시간
+    internal static let formShareLocationStartTimeLabel = L10n.tr("Localizable", "CreatePromise.formShareLocationStartTimeLabel", fallback: "위치 공유 시작 시간")
+    /// 약속 테마
+    internal static let formThemeLabel = L10n.tr("Localizable", "CreatePromise.formThemeLabel", fallback: "약속 테마")
+    /// 약속 제목
+    internal static let formTitleLabel = L10n.tr("Localizable", "CreatePromise.formTitleLabel", fallback: "약속 제목")
+    /// 새 약속 추가
+    internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.headerTitle", fallback: "새 약속 추가")
+    /// 중간 장소는 어떻게 설정되나요?
+    internal static let promiseMiddlePlaceGuidance = L10n.tr("Localizable", "CreatePromise.promiseMiddlePlaceGuidance", fallback: "중간 장소는 어떻게 설정되나요?")
+    /// 도로명, 지번, 건물명 검색
+    internal static let promisePlaceInputPlaceholder = L10n.tr("Localizable", "CreatePromise.promisePlaceInputPlaceholder", fallback: "도로명, 지번, 건물명 검색")
+    /// ex) 독서모임 1회차
+    internal static let promiseTitleInputPlaceholder = L10n.tr("Localizable", "CreatePromise.promiseTitleInputPlaceholder", fallback: "ex) 독서모임 1회차")
+    internal enum PlaceType {
+      /// 장소 지정
+      internal static let designation = L10n.tr("Localizable", "CreatePromise.PlaceType.designation", fallback: "장소 지정")
+      /// 중간 장소
+      internal static let middle = L10n.tr("Localizable", "CreatePromise.PlaceType.middle", fallback: "중간 장소")
+    }
+    internal enum ShareLocationEnd {
+      /// 후까지
+      internal static let itemSuffix = L10n.tr("Localizable", "CreatePromise.ShareLocationEnd.itemSuffix", fallback: "후까지")
+      /// 약속 날짜 자정까지
+      internal static let max = L10n.tr("Localizable", "CreatePromise.ShareLocationEnd.max", fallback: "약속 날짜 자정까지")
+      /// 위치 공유 종료 시간 선택
+      internal static let selectionLabel = L10n.tr("Localizable", "CreatePromise.ShareLocationEnd.selectionLabel", fallback: "위치 공유 종료 시간 선택")
+    }
+    internal enum ShareLocationStartType {
+      /// 거리 기준
+      internal static let basedOnDistance = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.basedOnDistance", fallback: "거리 기준")
+      /// 시간 기준
+      internal static let basedOnTime = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.basedOnTime", fallback: "시간 기준")
+      internal enum BaseOnDistance {
+        /// 약속 장소로부터
+        internal static let itemPrefix = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix", fallback: "약속 장소로부터")
+        /// 위치 공유 거리 선택
+        internal static let selectionLabel = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.BaseOnDistance.selectionLabel", fallback: "위치 공유 거리 선택")
+      }
+      internal enum BasedOnTime {
+        /// 약속 시간
+        internal static let itemPrefix = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix", fallback: "약속 시간")
+        /// 전부터
+        internal static let itemSuffix = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.BasedOnTime.itemSuffix", fallback: "전부터")
+        /// 위치 공유 시작 시간 선택
+        internal static let selectionLabel = L10n.tr("Localizable", "CreatePromise.ShareLocationStartType.BasedOnTime.selectionLabel", fallback: "위치 공유 시작 시간 선택")
+      }
+    }
+  }
+  internal enum Main {
+    /// 새 약속 추가
+    internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
   }
   internal enum SignIn {
     /// Apple로 로그인

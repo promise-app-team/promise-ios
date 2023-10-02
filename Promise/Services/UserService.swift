@@ -30,7 +30,7 @@ final class UserService {
             let userId = jwt.claim(name: "id").string
             guard let userId = userId else { return false }
             
-            let result: Result<Components.Schemas.User, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
+            let result: Result<Components.Schemas.UserEntity, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
             
             switch result {
             case .success(let userInfo):
