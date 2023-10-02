@@ -21,6 +21,12 @@ final class MainVC: UIViewController {
         return button
     }()
     
+    private let probee = {
+        let imageView = UIImageView(image: Asset.probee.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private lazy var promiseStatusViewArea = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +64,14 @@ final class MainVC: UIViewController {
             promiseListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             promiseListView.bottomAnchor.constraint(equalTo: promiseAddButton.topAnchor, constant: -16)
         ])
+        
+        NSLayoutConstraint.activate([
+            probee.widthAnchor.constraint(equalToConstant: 51),
+            probee.heightAnchor.constraint(equalToConstant: 35),
+            probee.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
+            probee.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 2),
+            
+        ])
 
         NSLayoutConstraint.activate([
             promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
@@ -80,6 +94,8 @@ final class MainVC: UIViewController {
         super.viewDidLoad()
         configureMainVC()
         render()
+        
+        print(UserService.shared.getAccessToken())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,6 +111,7 @@ final class MainVC: UIViewController {
         [
          headerView,
          promiseListView,
+         probee,
          promiseAddButton,
          promiseStatusViewArea,
         ].forEach { view.addSubview($0) }

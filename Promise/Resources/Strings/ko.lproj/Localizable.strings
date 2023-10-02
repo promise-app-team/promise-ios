@@ -6,12 +6,60 @@
   
 */
 
-"Common.promise" = "프로미스";
+// MARK: 규칙: [첫 문자 대문자].[첫 문자 대문자].[ ... 계속 ].[첫 문자 소문자]
 
+// MARK: Common
+"Common.promise" = "프로미스";
+"Common.km" = "km";
+"Common.m" = "m";
+"Common.hour" = "시간";
+"Common.minute" = "분";
+"Common.confirm" = "확인";
+"Common.cancel" = "취소";
+
+// MARK: SignInScreen
 "SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
 "SignIn.selectSignInMethodText" = "로그인 수단 선택";
 "SignIn.kakaoSignInButtonText" = "카카오로 로그인";
 "SignIn.googleSignInButtonText" = "구글로 로그인";
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
 
+// MARK: MainScreen
 "Main.addNewPromise" = "새 약속 추가";
+
+// MARK: CreatePromiseScreen
+"CreatePromise.headerTitle" = "새 약속 추가";
+"CreatePromise.createPromiseButtonTitle" = "약속 생성";
+"CreatePromise.formTitleLabel" = "약속 제목";
+"CreatePromise.formDateLabel" = "약속 시간";
+"CreatePromise.formThemeLabel" = "약속 테마";
+"CreatePromise.formPlaceLabel" = "약속 장소";
+"CreatePromise.formShareLocationStartTimeLabel" = "위치 공유 시작 시간";
+"CreatePromise.formShareLocationEndTimeLabel" = "위치 공유 종료 시간";
+"CreatePromise.promiseTitleInputPlaceholder" = "ex) 독서모임 1회차";
+
+"CreatePromise.PlaceType.designation" = "장소 지정";
+"CreatePromise.PlaceType.middle" = "중간 장소";
+
+"CreatePromise.promisePlaceInputPlaceholder" = "도로명, 지번, 건물명 검색";
+"CreatePromise.promiseMiddlePlaceGuidance" = "중간 장소는 어떻게 설정되나요?";
+
+"CreatePromise.ShareLocationStartType.basedOnDistance" = "거리 기준";
+"CreatePromise.ShareLocationStartType.basedOnTime" = "시간 기준";
+
+"CreatePromise.ShareLocationStartType.BaseOnDistance.selectionLabel" = "위치 공유 거리 선택";
+"CreatePromise.ShareLocationStartType.BasedOnTime.selectionLabel" = "위치 공유 시작 시간 선택";
+
+"CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix" = "약속 장소로부터";
+"CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix" = "약속 시간";
+"CreatePromise.ShareLocationStartType.BasedOnTime.itemSuffix" = "전부터";
+
+"CreatePromise.ShareLocationEnd.selectionLabel" = "위치 공유 종료 시간 선택";
+"CreatePromise.ShareLocationEnd.itemSuffix" = "후까지";
+"CreatePromise.ShareLocationEnd.max" = "약속 날짜 자정까지";
+
+"CompletedCreatePromise.headerTitle" = "약속 생성 완료";
+"CompletedCreatePromise.mainTitle" = "약속이 생성되었어요\n이제 참여자를 초대해 볼까요?";
+"CompletedCreatePromise.mainDescription" = "생성된 약속은 메인화면과 약속 상세페이지에 있는\n공유 아이콘으로 초대할 수 있어요";
+"CompletedCreatePromise.MainDescription.highlight" = "메인화면과 약속 상세페이지에 있는\n공유 아이콘";
+"CompletedCreatePromise.shareButtonText" = "약속 공유";
