@@ -6,29 +6,77 @@
 //
 
 import UIKit
+import KakaoSDKAuth
+import GoogleSignIn
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerDelegate {
     var window: UIWindow?
-
+    var navigationController: UINavigationController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
         guard let window = window else { return }
         
-        let launchViewController = LaunchScreenViewController()
-        window.rootViewController = launchViewController
-        window.makeKeyAndVisible()
+        // MARK: create navigation controller with lanch vc
+        navigationController = UINavigationController(rootViewController: OnboardingVC())
+        navigationController?.isNavigationBarHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            let mainViewController = ViewController()
-            window.rootViewController = mainViewController
+        // MARK: https://gyuios.tistory.com/147
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
+        // MARK: set delegate to scene delegate
+        navigationController?.delegate = self
+        
+        if #available(iOS 13.0, *) {
+            window.overrideUserInterfaceStyle = .light // 라이트모드만 지원하기
+        //    self.window?.overrideUserInterfaceStyle = .dark // 다크모드만 지원하기
+        }
+        
+        window.backgroundColor = .white // MARK: set default color
+        window.rootViewController = navigationController // MARK: set root vc to navigation controllor with lanch vc
+        window.makeKeyAndVisible() // MARK: visible navigation controllor with lanch vc
+        
+        // onboarding: check token, other...
+        let onboarding = Onboarding()
+        onboarding.ready { [weak self] startVC in
+            self?.navigationController?.pushViewController(startVC, animated: true)
         }
     }
-
-
+    
+    // MARK: call after push animation and view did appear
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        
+        // MARK: launch vc pop after push animation with main vc for memory
+        if viewController is MainVC || viewController is SignInVC {
+            self.navigationController?.viewControllers = [viewController]
+            
+            // MARK: check success poped launch vc
+            DispatchQueue.main.async { [weak self] in
+                if let viewControllers = self?.navigationController?.viewControllers {
+                    print("Root VC in Navigation Controller Stack: ", viewControllers)
+                }
+            }
+        }
+    }
+    
+    // MARK: https://gyuios.tistory.com/147
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return navigationController?.viewControllers.count ?? 0 > 1
+    }
+    
+    // MARK: 카카오 로그인을 위한 scene
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+                return
+            }
+            
+            _ = GIDSignIn.sharedInstance.handle(url)
+        }
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

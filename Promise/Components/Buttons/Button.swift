@@ -9,7 +9,7 @@ import UIKit
 
 class Button : BaseButton {
     
-    public static let Height: CGFloat = 40
+    public static let Height: CGFloat = 36
     
     enum Style {
         case primary
@@ -18,7 +18,6 @@ class Button : BaseButton {
     }
     
     // MARK: - 버튼 초기화
-    
     func initialize(title: String, style: Button.Style, iconTitle: String = "", disabled: Bool = false) {
         
         super.initialize(title: title,

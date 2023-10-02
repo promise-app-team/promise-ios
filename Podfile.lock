@@ -1,20 +1,20 @@
 PODS:
   - FloatingPanel (2.6.5)
-  - lottie-ios (4.2.0)
+  - SwiftGen (6.6.2)
 
 DEPENDENCIES:
   - FloatingPanel
-  - lottie-ios
+  - SwiftGen (~> 6.0)
 
 SPEC REPOS:
   trunk:
     - FloatingPanel
-    - lottie-ios
+    - SwiftGen
 
 SPEC CHECKSUMS:
   FloatingPanel: cd924b71f05f14586260e83b3b52edbf5eb73340
-  lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
+  SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
 
-PODFILE CHECKSUM: b1fcfae8113186b916d7712647acb2d0e3ea092c
+PODFILE CHECKSUM: 818a6f1f3d5b9107bf66bc426291a22bd91c6f7a
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
