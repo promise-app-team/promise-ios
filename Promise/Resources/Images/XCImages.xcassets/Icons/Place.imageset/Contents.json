@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ArrowBottom.png",
+      "filename" : "Place.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ArrowBottom 1.png",
+      "filename" : "Place 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ArrowBottom 2.png",
+      "filename" : "Place 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

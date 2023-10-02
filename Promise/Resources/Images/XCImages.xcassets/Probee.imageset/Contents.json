@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ArrowBottom.png",
+      "filename" : "Probee.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ArrowBottom 1.png",
+      "filename" : "Probee 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ArrowBottom 2.png",
+      "filename" : "Probee 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
