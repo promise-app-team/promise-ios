@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
-		4AEBAB022A9B4B9600FC775C /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBAB012A9B4B9600FC775C /* SettingsVC.swift */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		60F2833035E0A5BBF2E871CE /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EF4CEDA481E1A63442E76B1 /* Pods_Promise.framework */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
@@ -1111,7 +1110,6 @@
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* HeaderSortPromiseList.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
-				4AEBAB022A9B4B9600FC775C /* SettingsVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
 				FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */,
 				E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */,
