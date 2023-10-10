@@ -20,50 +20,80 @@ class AccountVC: UIViewController {
         imageView.image = UIImage(named: "profile")
         return imageView
     }()
-
+    
     //사용자 이름
     lazy var label: UILabel = {
         let label = UILabel()
         label.text = "김지수"
-        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.pretendard(style: .H1_B)
         label.textAlignment = .left
         return label
     }()
-
+    
     //프로필 수정 버튼
     lazy var button: Button = {
         let button = Button()
         button.initialize(title: "프로필 수정하기", style: .primary, iconTitle: "", disabled: false)
         return button
     }()
-
+    
     //사용자 이름과 버튼을 묶은 스택뷰
-    lazy var verticalStackView: UIStackView = {
+    lazy var labelBtnStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.label, self.button])
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 8
         return stackView
     }()
-
+    
     //프로필 사진과 스택뷰(사용자 이름, 버튼)를 묶은 스택뷰
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.imageView, self.verticalStackView])
+        let stackView = UIStackView(arrangedSubviews: [self.imageView, self.labelBtnStackView])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 16
+        stackView.backgroundColor = .white
         return stackView
     }()
-
+    
     //테이블 뷰
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.rowHeight = 96
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return tableView
+    }()
+    
+    //"앱 버전" 텍스트
+    lazy var appLabel: UILabel = {
+        let label = UILabel()
+        label.text = "앱 버전"
+        label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
+        label.font = UIFont.pretendard(style: .B1_R)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    //앱 버전
+    lazy var verLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1.0.0(3088)"
+        label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
+        label.font = UIFont.pretendard(style: .B1_R)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    //앱 버전 텍스트와 앱 버전을 묶은 스택뷰
+    lazy var appVerStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.appLabel, self.verLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
     }()
     
     override func viewDidLoad() {
@@ -77,12 +107,12 @@ class AccountVC: UIViewController {
    }
     
     func configureAccountVC() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
     }
     
     func render() {
-        [stackView, tableView].forEach { view.addSubview($0) }
-        [stackView, tableView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
+        [stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         setupAutoLayout()
     }
@@ -91,18 +121,25 @@ class AccountVC: UIViewController {
         NSLayoutConstraint.activate([
          imageView.widthAnchor.constraint(equalToConstant: 76),
          imageView.heightAnchor.constraint(equalToConstant: 76),
+         imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
          label.widthAnchor.constraint(equalToConstant: 253),
          label.heightAnchor.constraint(equalToConstant: 36),
          button.widthAnchor.constraint(equalToConstant: 253),
          button.heightAnchor.constraint(equalToConstant: 36),
-         verticalStackView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -24),
+         labelBtnStackView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -24),
          stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
          stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 103),
          stackView.heightAnchor.constraint(equalToConstant: 128),
-         tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 4),
+         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+         tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
          tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
          tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -393)])
+         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -393),
+         appLabel.widthAnchor.constraint(equalToConstant: 254),
+         appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
+         appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)])
+         
     }
     
 }
