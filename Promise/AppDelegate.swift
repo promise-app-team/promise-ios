@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // 앱이 foreground 상태일 때, 알림을 수신하면 자동 호출되는 함수.
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         print(#function)
-        completionHandler([.alert, .sound, .badge])
+        completionHandler([.sound, .badge, .banner, .list])
     }
 }
 

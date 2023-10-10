@@ -26,7 +26,7 @@ open class BaseButton: UIButton {
     private var disabledBorderColor: UIColor = UIColor(hexCode: "#F2F2F2")
     
     // MARK: - 모서리
-    private let cornerRadius: CGFloat = 20
+    private let cornerRadius: CGFloat = 18
     
     // MARK: - 스케일
     private let scaleValue = 0.96
@@ -75,6 +75,8 @@ open class BaseButton: UIButton {
         layer.cornerRadius = self.cornerRadius
         layer.borderWidth = 1
         
+        translatesAutoresizingMaskIntoConstraints = false
+        
         if !iconTitle.isEmpty {
             setImageOnBtn()
         }
@@ -89,7 +91,11 @@ open class BaseButton: UIButton {
     private func setImageOnBtn(){
         
         
-        setImage(UIImage(systemName: iconTitle), for: .normal)
+        if let image = UIImage(named: iconTitle)?.withRenderingMode(.alwaysOriginal) {
+            setImage(image, for: .normal)
+            setImage(image, for: .highlighted) // 터치 시 아이콘 색상이 바뀌는 것을 막기 위한 설정
+            setImage(image, for: .selected) // 선택된 상태에 대한 설정 (필요하다면)
+        }
         
         // inset
         let intervalSpacing = 6.0

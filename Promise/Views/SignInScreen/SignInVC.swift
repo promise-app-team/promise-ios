@@ -163,11 +163,11 @@ final class SignInVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMainVIew()
+        configureSignInVC()
         render()
     }
     
-    private func configureMainVIew() {
+    private func configureSignInVC() {
         view.backgroundColor = .white
     }
     

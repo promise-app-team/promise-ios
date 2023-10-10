@@ -50,7 +50,7 @@ class PopupVC : UIViewController {
         let label = UILabel()
         label.text = titleText
         label.textAlignment = .center
-        label.font = UIFont.pretendard(style: .H1_B)
+        label.font = UIFont.pretendard(style: .H2_B)
         label.numberOfLines = 0
         label.textColor = .black
         
@@ -64,9 +64,16 @@ class PopupVC : UIViewController {
         label.text = message
         label.textAlignment = .center
         label.font = UIFont.pretendard(style: .B1_R)
-        label.numberOfLines = 3
+        label.numberOfLines = 4
         label.textColor = .gray
         
+        let attrString = NSMutableAttributedString(string: label.text!)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        paragraphStyle.alignment = .center
+        attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+        label.attributedText = attrString
+   
         return label
     }()
     
@@ -193,7 +200,7 @@ class PopupVC : UIViewController {
             containerStackView.addArrangedSubview(contentView)
             
             if let lastView = containerStackView.subviews.last {
-                containerStackView.setCustomSpacing(24.0, after: lastView)
+                containerStackView.setCustomSpacing(16.0, after: lastView)
             }
 
             containerStackView.addArrangedSubview(buttonStackView)
@@ -215,7 +222,7 @@ class PopupVC : UIViewController {
             }
             
             if let lastView = containerStackView.subviews.last {
-                containerStackView.setCustomSpacing(24.0, after: lastView)
+                containerStackView.setCustomSpacing(16.0, after: lastView)
             }
 
             containerStackView.addArrangedSubview(buttonStackView)
@@ -231,15 +238,15 @@ class PopupVC : UIViewController {
         
         NSLayoutConstraint.activate([
             containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 48),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -48),
-            containerView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 48),
-            containerView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -48),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            containerView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 24),
+            containerView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -24),
             
-            containerStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            containerStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            containerStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
-            containerStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            containerStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 24),
+            containerStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 24),
+            containerStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24),
+            containerStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
             
             buttonStackView.heightAnchor.constraint(equalToConstant: Button.Height),
             buttonStackView.widthAnchor.constraint(equalTo: containerStackView.widthAnchor)
