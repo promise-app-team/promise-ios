@@ -122,12 +122,14 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.text = options[indexPath.row]
         cell.accessoryType = .disclosureIndicator // " > " 표시
         
-        //레이블 위, 아래 여백 설정
-        let topInset: CGFloat = 16
-        let bottomInset: CGFloat = 16
-        cell.contentView.layoutMargins = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
-        cell.contentView.preservesSuperviewLayoutMargins = false
-        
+        //레이블 위, 왼쪽 여백 설정
+        let leftInset: CGFloat = 24
+        if let label = cell.textLabel {
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: leftInset).isActive = true
+            label.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
+       }
+
         return cell
     }
     
