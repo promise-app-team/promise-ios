@@ -11,13 +11,23 @@ import UIKit
 class AccountVC: UIViewController {
     
     //프로필사진
-    lazy var imageView: UIImageView = {
+    lazy var userImage: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "profile")
+        return imageView
+    }()
+    
+    lazy var statusImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "Ellipse 3")
         return imageView
     }()
     
@@ -49,7 +59,7 @@ class AccountVC: UIViewController {
     
     //프로필 사진과 스택뷰(사용자 이름, 버튼)를 묶은 스택뷰
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.imageView, self.labelBtnStackView])
+        let stackView = UIStackView(arrangedSubviews: [self.userImage, self.labelBtnStackView])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 16
@@ -111,35 +121,39 @@ class AccountVC: UIViewController {
     }
     
     func render() {
-        [stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
-        [stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [statusImage, stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
+        [statusImage, stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        view.bringSubviewToFront(statusImage)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         setupAutoLayout()
     }
     
     func setupAutoLayout() {
         NSLayoutConstraint.activate([
-         imageView.widthAnchor.constraint(equalToConstant: 76),
-         imageView.heightAnchor.constraint(equalToConstant: 76),
-         imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-         label.widthAnchor.constraint(equalToConstant: 253),
-         label.heightAnchor.constraint(equalToConstant: 36),
-         button.widthAnchor.constraint(equalToConstant: 253),
-         button.heightAnchor.constraint(equalToConstant: 36),
-         labelBtnStackView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -24),
-         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-         stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 103),
-         stackView.heightAnchor.constraint(equalToConstant: 128),
-         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
-         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -393),
-         appLabel.widthAnchor.constraint(equalToConstant: 254),
-         appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
-         appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)])
-         
+            userImage.widthAnchor.constraint(equalToConstant: 76),
+            userImage.heightAnchor.constraint(equalToConstant: 76),
+            userImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            label.widthAnchor.constraint(equalToConstant: 253),
+            label.heightAnchor.constraint(equalToConstant: 36),
+            button.widthAnchor.constraint(equalToConstant: 253),
+            button.heightAnchor.constraint(equalToConstant: 36),
+            labelBtnStackView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -24),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 103),
+            stackView.heightAnchor.constraint(equalToConstant: 128),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            statusImage.widthAnchor.constraint(equalToConstant: 20),
+            statusImage.heightAnchor.constraint(equalToConstant: 20),
+            statusImage.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 86),
+            statusImage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 80),
+            tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -393),
+            appLabel.widthAnchor.constraint(equalToConstant: 254),
+            appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
+            appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)])
     }
     
 }
