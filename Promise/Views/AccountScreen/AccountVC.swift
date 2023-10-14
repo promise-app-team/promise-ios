@@ -52,7 +52,7 @@ class AccountVC: UIViewController {
     lazy var labelBtnStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.label, self.button])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.spacing = 8
         return stackView
     }()
