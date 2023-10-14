@@ -10,6 +10,13 @@ import UIKit
 
 class AccountVC: UIViewController {
     
+    //바탕뷰(회색)
+    let backgroundView: UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
+        return view
+    }()
+    
     //프로필사진
     lazy var userImage: UIImageView = {
         let imageView = UIImageView()
@@ -110,7 +117,7 @@ class AccountVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAccountVC()
-        render()        
+        render()
     }
        
    @objc private func backBtnTapped() {
@@ -124,12 +131,12 @@ class AccountVC: UIViewController {
     }
     
     func configureAccountVC() {
-        view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
+        view.backgroundColor = .white
     }
     
     func render() {
-        [statusImage, stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
-        [statusImage, stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [backgroundView, statusImage, stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
+        [backgroundView, statusImage, stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         view.bringSubviewToFront(statusImage)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         setupAutoLayout()
@@ -137,6 +144,10 @@ class AccountVC: UIViewController {
     
     func setupAutoLayout() {
         NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             userImage.widthAnchor.constraint(equalToConstant: 76),
             userImage.heightAnchor.constraint(equalToConstant: 76),
             userImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
