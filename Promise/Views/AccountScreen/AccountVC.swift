@@ -168,10 +168,13 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        //각 행에 텍스트와 ">" 표시 추가
         let options = ["지난 약속", "자주 묻는 질문", "환경설정", "로그아웃"]
         cell.textLabel?.text = options[indexPath.row]
-        cell.accessoryType = .disclosureIndicator // " > " 표시
+        
+        let imageView = UIImageView(image: UIImage(named: "Navigate next"))
+        imageView.frame = CGRect(x: 353, y: 20, width: 16, height: 16) // 원하는 크기 및 위치로 조정
+        
+        cell.accessoryView = imageView
         
         //레이블 위, 왼쪽 여백 설정
         let leftInset: CGFloat = 24
@@ -180,7 +183,6 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
             label.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: leftInset).isActive = true
             label.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
        }
-
         return cell
     }
     
