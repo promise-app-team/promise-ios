@@ -45,6 +45,7 @@ class AccountVC: UIViewController {
     lazy var button: Button = {
         let button = Button()
         button.initialize(title: "프로필 수정하기", style: .primary, iconTitle: "", disabled: false)
+        button.addTarget(self, action: #selector(profileEditButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -120,6 +121,12 @@ class AccountVC: UIViewController {
    @objc private func backBtnTapped() {
        print("뒤로가기 버튼")
    }
+    
+    @objc func profileEditButtonTapped() {
+        if let navigationController = navigationController {
+            navigationController.pushViewController(EditProfileVC(), animated: true)
+        }
+    }
     
     func configureAccountVC() {
         view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
@@ -199,15 +206,28 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
     
     //테이블뷰 각 행의 따른 페이지로 이동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var viewController: UIViewController;
         switch indexPath.row {
         case 0:
             // "지난 약속"
+            viewController = LastPromiseVC()
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(viewController, animated: true)
+            }
             break
         case 1:
             // "자주 묻는 질문"
+            let viewController = FAQVC()
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(viewController, animated: true)
+            }
             break
         case 2:
             // "환경설정"
+            let viewController = SettingsVC()
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(viewController, animated: true)
+            }
             break
         case 3:
             // "로그아웃"
