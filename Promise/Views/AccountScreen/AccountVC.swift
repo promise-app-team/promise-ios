@@ -110,6 +110,11 @@ class AccountVC: UIViewController {
         super.viewDidLoad()
         configureAccountVC()
         render()
+        
+        if #available(iOS 11.0, *) {
+                additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                view.backgroundColor = .white
+            }
     }
        
    @objc private func backBtnTapped() {
