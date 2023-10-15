@@ -1,5 +1,5 @@
 //
-//  MainHeaderView.swift
+//  NavigationView.swift
 //  Promise
 //
 //  Created by dylan on 2023/08/06.
@@ -8,24 +8,24 @@
 import Foundation
 import UIKit
 
-final class HeaderView: UIView {
+final class NavigationView: UIView {
     private var mainVM: MainVM
     
-    private lazy var navigation = HeaderNavigation(mainVM: mainVM)
-    private lazy var sortPromiseList = HeaderSortPromiseList(mainVM: mainVM)
+    private lazy var navigation = NavigationMenusView(mainVM: mainVM)
+    private lazy var sortPromiseList = SortPromiseListView(mainVM: mainVM)
     
     init(mainVM: MainVM) {
         self.mainVM = mainVM
         super.init(frame: .null)
         
-        configureHeaderView()
+        configureNavigationView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureHeaderView() {
+    private func configureNavigationView() {
         translatesAutoresizingMaskIntoConstraints = false
         
         [navigation, sortPromiseList].forEach { addSubview($0) }

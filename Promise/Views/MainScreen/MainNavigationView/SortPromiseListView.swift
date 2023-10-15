@@ -1,5 +1,5 @@
 //
-//  HeaderSort.swift
+//  SortPromiseListView.swift
 //  Promise
 //
 //  Created by dylan on 2023/08/04.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HeaderSortPromiseList: UIStackView {
+class SortPromiseListView: UIStackView {
     private var mainVM: MainVM
     
     let sortTitle = {
@@ -39,14 +39,14 @@ class HeaderSortPromiseList: UIStackView {
         self.mainVM = mainVM
         super.init(frame: .null)
         
-        configureHeaderSortPromiseList()
+        configureSortPromiseListView()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHeaderSortPromiseList() {
+    func configureSortPromiseListView() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
         

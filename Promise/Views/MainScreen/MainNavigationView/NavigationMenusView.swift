@@ -1,5 +1,5 @@
 //
-//  HeaderNavigation.swift
+//  NavigationMenusView.swift
 //  Promise
 //
 //  Created by dylan on 2023/08/14.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HeaderNavigation: UIStackView {
+class NavigationMenusView: UIStackView {
     private var mainVM: MainVM
     
     lazy var accountIcon = {
@@ -59,14 +59,14 @@ class HeaderNavigation: UIStackView {
         self.mainVM = mainVM
         super.init(frame: .null)
         
-        configureHeaderNavigation()
+        configureNavigationMenusView()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureHeaderNavigation() {
+    private func configureNavigationMenusView() {
         translatesAutoresizingMaskIntoConstraints = false
         
         axis = .horizontal
