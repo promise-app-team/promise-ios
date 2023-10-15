@@ -10,7 +10,7 @@ import UIKit
 final class MainVC: UIViewController {
     private lazy var mainVM = MainVM(currentVC: self)
         
-    private lazy var headerView = HeaderView(mainVM: mainVM)
+    private lazy var headerView = NavigationView(mainVM: mainVM)
     private lazy var promiseListView = PromiseListView(dataSource: mainVM, delegate: mainVM)
     
     private lazy var promiseAddButton = {
@@ -94,8 +94,6 @@ final class MainVC: UIViewController {
         super.viewDidLoad()
         configureMainVC()
         render()
-        
-        print(UserService.shared.getAccessToken())
     }
     
     override func viewDidAppear(_ animated: Bool) {
