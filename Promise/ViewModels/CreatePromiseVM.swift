@@ -178,24 +178,23 @@ class CreatePromiseVM: NSObject {
     }
     
     func submit() {
-        //TODO: 백엔드 확인후 DYNIMIC일 떄 약속 생성 처리 예정
-        //        var destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
-        //
-        //        switch(form.placeType) {
-        //        case .STATIC:
-        //            destination = form.place
-        //        case .DYNAMIC:
-        //            destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
-        //        default:
-        //            break
-        //        }
+        var destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
+        
+        switch(form.placeType) {
+        case .STATIC:
+            destination = form.place
+        case .DYNAMIC:
+            destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
+        default:
+            break
+        }
         
         let submitForm = Components.Schemas.InputCreatePromise(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.timeIntervalInSeconds,
             destinationType: form.placeType,
-            destination: form.place,
+            destination: destination,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStart,
             locationShareEndType: Components.Schemas.InputCreatePromise.locationShareEndTypePayload.TIME,
@@ -226,10 +225,6 @@ class CreatePromiseVM: NSObject {
             let completedCreatePromiseVC = CompletedCreatePromiseVC()
             self?.currentVC?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
         }
-    }
-    
-    func goBack() {
-        currentVC?.navigationController?.popViewController(animated: true)
     }
     
     func getTodayString() -> String {
