@@ -75,6 +75,16 @@ internal enum L10n {
       /// 중간 장소
       internal static let middle = L10n.tr("Localizable", "CreatePromise.PlaceType.middle", fallback: "중간 장소")
     }
+    internal enum PromiseMiddlePlaceGuidance {
+      /// 두명 이상의 약속 참여자가 출발지를 등록하면
+      /// 프로미스가 중간장소를 추천해 드려요.
+      /// 약속 시간 전까지 꼭 출발지를 등록해 주세요!
+      internal static let popupDescription = L10n.tr("Localizable", "CreatePromise.PromiseMiddlePlaceGuidance.popupDescription", fallback: "두명 이상의 약속 참여자가 출발지를 등록하면\n프로미스가 중간장소를 추천해 드려요.\n약속 시간 전까지 꼭 출발지를 등록해 주세요!")
+      internal enum PopupDescription {
+        /// 약속 시간 전까지 꼭 출발지를 등록해 주세요!
+        internal static let highlight = L10n.tr("Localizable", "CreatePromise.PromiseMiddlePlaceGuidance.PopupDescription.highlight", fallback: "약속 시간 전까지 꼭 출발지를 등록해 주세요!")
+      }
+    }
     internal enum ShareLocationEnd {
       /// 후까지
       internal static let itemSuffix = L10n.tr("Localizable", "CreatePromise.ShareLocationEnd.itemSuffix", fallback: "후까지")

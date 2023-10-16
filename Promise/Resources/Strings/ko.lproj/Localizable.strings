@@ -43,6 +43,8 @@
 
 "CreatePromise.promisePlaceInputPlaceholder" = "도로명, 지번, 건물명 검색";
 "CreatePromise.promiseMiddlePlaceGuidance" = "중간 장소는 어떻게 설정되나요?";
+"CreatePromise.PromiseMiddlePlaceGuidance.popupDescription" = "두명 이상의 약속 참여자가 출발지를 등록하면\n프로미스가 중간장소를 추천해 드려요.\n약속 시간 전까지 꼭 출발지를 등록해 주세요!";
+"CreatePromise.PromiseMiddlePlaceGuidance.PopupDescription.highlight" = "약속 시간 전까지 꼭 출발지를 등록해 주세요!";
 
 "CreatePromise.ShareLocationStartType.basedOnDistance" = "거리 기준";
 "CreatePromise.ShareLocationStartType.basedOnTime" = "시간 기준";
@@ -63,3 +65,4 @@
 "CompletedCreatePromise.mainDescription" = "생성된 약속은 메인화면과 약속 상세페이지에 있는\n공유 아이콘으로 초대할 수 있어요";
 "CompletedCreatePromise.MainDescription.highlight" = "메인화면과 약속 상세페이지에 있는\n공유 아이콘";
 "CompletedCreatePromise.shareButtonText" = "약속 공유";
+

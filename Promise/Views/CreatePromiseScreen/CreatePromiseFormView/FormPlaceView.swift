@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 class FormPlaceView: UIView {
     var createPromiseVM: CreatePromiseVM
@@ -109,6 +110,75 @@ class FormPlaceView: UIView {
         return view
     }()
     
+    let animatedMapImage = {
+        let lottieAnimationView = LottieAnimationView(name: "map")
+        lottieAnimationView.translatesAutoresizingMaskIntoConstraints = false
+        return lottieAnimationView
+    }()
+    
+    
+    private lazy var middlePlaceGuidancePopup = {
+        var fontSize = 16.0
+        let fullWidth = createPromiseVM.currentVC?.view.frame.width
+        if let fullWidth, fullWidth < 393 {
+            fontSize = 15.0
+        }
+        
+        let desiredLineHeight: CGFloat = 24.0
+        
+        let font = UIFont(font: FontFamily.Pretendard.regular, size: fontSize)!
+        let actualLineHeight = font.lineHeight
+        
+        let lineSpacing = desiredLineHeight - actualLineHeight
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        
+        let text = L10n.CreatePromise.PromiseMiddlePlaceGuidance.popupDescription
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        attributedString.addAttributes([
+            .paragraphStyle: paragraphStyle,
+            .font: font,
+            .foregroundColor: UIColor.black,
+        ], range: NSMakeRange(0, attributedString.length))
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont(font: FontFamily.Pretendard.bold, size: fontSize)!,
+            range: (text as NSString).range(of: L10n.CreatePromise.PromiseMiddlePlaceGuidance.PopupDescription.highlight)
+        )
+        
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.attributedText = attributedString
+        label.textAlignment = .center
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let view = UIView()
+        [animatedMapImage, label].forEach{ view.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            animatedMapImage.topAnchor.constraint(equalTo: view.topAnchor),
+            animatedMapImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            animatedMapImage.widthAnchor.constraint(equalToConstant: 200),
+            animatedMapImage.heightAnchor.constraint(equalToConstant: 200),
+            
+            label.topAnchor.constraint(equalTo: animatedMapImage.bottomAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        let popupVC = PopupVC()
+        popupVC.initialize(contentView: view, rightBtnTitle: L10n.Common.confirm) {
+            popupVC.close()
+        }
+        
+        return popupVC
+    }()
+    
     private lazy var placeWrapper = {
         let view = UIView()
         [selectPlaceButton, middlePlaceGuidanceButton].forEach { view.addSubview($0) }
@@ -136,7 +206,9 @@ class FormPlaceView: UIView {
     }
     
     @objc private func onTapMiddlePlaceGuidanceButton() {
-        // TODO: 팝업
+        createPromiseVM.currentVC?.present(middlePlaceGuidancePopup, animated: false) { [weak self] in
+            self?.animatedMapImage.play()
+        }
     }
     
     private func assignPlaceTypeDidChange() {
@@ -170,13 +242,14 @@ class FormPlaceView: UIView {
     }
     
     private func assignPlaceDidChange() {
-        createPromiseVM.placeDidChange = { [weak self] place in
-            guard let self else { return }
-            
-            DispatchQueue.main.async {
-                // TODO: 주소 업데이트 시 UI 업데이트
-            }
-        }
+//        createPromiseVM.placeDidChange = { [weak self] place in
+//            guard let self else { return }
+//
+//            DispatchQueue.main.async {
+//                // TODO: 주소 업데이트 시 UI 업데이트
+//
+//            }
+//        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {

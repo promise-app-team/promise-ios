@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "60ea4f82fba8b4cb21a75665a889e86ed4d81c6e",
-        "version" : "4.2.0"
+        "revision" : "3e7eb8281ff9ac67e64a3a58a80c0aa9fa388b04",
+        "version" : "4.3.3"
       }
     },
     {
@@ -84,7 +84,7 @@
     {
       "identity" : "socket.io-client-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/socketio/socket.io-client-swift",
+      "location" : "https://github.com/socketio/socket.io-client-swift.git",
       "state" : {
         "branch" : "master",
         "revision" : "a1ed825835a2d8c2555938e96557ccc05e4bebf3"
@@ -129,7 +129,7 @@
     {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-numerics",
+      "location" : "https://github.com/apple/swift-numerics.git",
       "state" : {
         "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
         "version" : "1.0.2"
