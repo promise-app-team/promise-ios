@@ -11,8 +11,10 @@ import UIKit
 class CreatePromiseVC: UIViewController {
     private lazy var createPromiseVM = CreatePromiseVM(currentVC: self)
     
-    private lazy var headerView = CreatePromiseHeaderView(vm: createPromiseVM)
+    private lazy var headerView = HeaderView(navigationController: createPromiseVM.currentVC?.navigationController, title: L10n.CreatePromise.headerTitle)
+    
     private lazy var formView = FormView(vm: createPromiseVM)
+    
     private lazy var createPromiseButton = {
         let button = Button()
         button.initialize(

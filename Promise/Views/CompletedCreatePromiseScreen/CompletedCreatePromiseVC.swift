@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class CompletedCreatePromiseVC: UIViewController {
-    private let headerView = CompletedCreatePromiseHeaderView()
+    private lazy var headerView = HeaderView(navigationController: self.navigationController, title: L10n.CompletedCreatePromise.headerTitle, isHiddenGoBackButton: true)
     
     private var mainTitle: UILabel = {
         let fontSize: CGFloat = 24.0
