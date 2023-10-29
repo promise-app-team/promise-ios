@@ -66,3 +66,11 @@
 "CompletedCreatePromise.MainDescription.highlight" = "메인화면과 약속 상세페이지에 있는\n공유 아이콘";
 "CompletedCreatePromise.shareButtonText" = "약속 공유";
 
+"Account.headerTitle" = "설정";
+"Account.editProfile" = "프로필 설정하기";
+"Account.lastPromise" = "지난 약속";
+"Account.faq" = "자주 묻는 질문";
+"Account.setting" = "환경설정";
+"Account.logout" = "로그아웃";
+"Account.appVer" = "앱 버전";
+

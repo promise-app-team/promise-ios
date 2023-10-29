@@ -20,7 +20,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     //헤더
      lazy var headerView: HeaderView = {
         let navigationController = self.navigationController
-        let title = "설정"
+        let title = L10n.Account.headerTitle
         let headerView = HeaderView(navigationController: navigationController, title: title)
         headerView.backgroundColor = .white
         return headerView
@@ -61,7 +61,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     //프로필 수정 버튼
     lazy var button: Button = {
         let button = Button()
-        button.initialize(title: "프로필 수정하기", style: .primary, iconTitle: "", disabled: false)
+        button.initialize(title: L10n.Account.editProfile, style: .primary, iconTitle: "", disabled: false)
         button.addTarget(self, action: #selector(profileEditButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -98,7 +98,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     //"앱 버전" 텍스트
     lazy var appLabel: UILabel = {
         let label = UILabel()
-        label.text = "앱 버전"
+        label.text = L10n.Account.appVer
         label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
         label.font = UIFont.pretendard(style: .B1_R)
         label.textAlignment = .left
@@ -198,7 +198,7 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let options = ["지난 약속", "자주 묻는 질문", "환경설정", "로그아웃"]
+        let options = [L10n.Account.lastPromise, L10n.Account.faq, L10n.Account.setting, L10n.Account.logout]
         cell.textLabel?.text = options[indexPath.row]
         
         let nextImgView = UIImageView(image: UIImage(named: "Navigate next"))
