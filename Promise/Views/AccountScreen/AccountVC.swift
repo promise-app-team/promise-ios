@@ -26,7 +26,6 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         return headerView
     }()
 
-    
     //프로필사진
     lazy var userImage: UIImageView = {
         let imageView = UIImageView()
@@ -203,8 +202,9 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
         
         let nextImgView = UIImageView(image: UIImage(named: "Navigate next"))
         nextImgView.frame = CGRect(x: 353, y: 20, width: 16, height: 16)
-        
         cell.accessoryView = nextImgView
+
+        cell.selectionStyle = .none
         
         //레이블 위, 왼쪽 여백 설정
         let leftInset: CGFloat = 24
