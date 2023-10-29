@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AccountVC: UIViewController {
+class AccountVC: UIViewController, HeaderViewDelegate {
     
     //바탕뷰(회색)
     let backgroundView: UIView = {
@@ -16,6 +16,16 @@ class AccountVC: UIViewController {
         view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
         return view
     }()
+    
+    //헤더
+     lazy var headerView: HeaderView = {
+        let navigationController = self.navigationController
+        let title = "설정"
+        let headerView = HeaderView(navigationController: navigationController, title: title)
+        headerView.backgroundColor = .white
+        return headerView
+    }()
+
     
     //프로필사진
     lazy var userImage: UIImageView = {
@@ -116,13 +126,10 @@ class AccountVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.delegate = self
         configureAccountVC()
         render()
     }
-       
-   @objc private func backBtnTapped() {
-       print("뒤로가기 버튼")
-   }
     
     @objc func profileEditButtonTapped() {
         if let navigationController = navigationController {
@@ -135,8 +142,8 @@ class AccountVC: UIViewController {
     }
     
     func render() {
-        [backgroundView, statusImage, stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
-        [backgroundView, statusImage, stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [backgroundView, headerView, statusImage, stackView, tableView, appVerStackView].forEach { view.addSubview($0) }
+        [backgroundView, headerView, statusImage, stackView, tableView, appVerStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         view.bringSubviewToFront(statusImage)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         setupAutoLayout()
@@ -148,6 +155,10 @@ class AccountVC: UIViewController {
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 56),
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             userImage.widthAnchor.constraint(equalToConstant: 76),
             userImage.heightAnchor.constraint(equalToConstant: 76),
             userImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
@@ -157,7 +168,7 @@ class AccountVC: UIViewController {
             button.heightAnchor.constraint(equalToConstant: 36),
             labelBtnStackView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -24),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 103),
+            stackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0),
             stackView.heightAnchor.constraint(equalToConstant: 128),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -168,10 +179,11 @@ class AccountVC: UIViewController {
             tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -393),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -376),
             appLabel.widthAnchor.constraint(equalToConstant: 254),
             appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
-            appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)])
+            appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
+        ])
     }
     
 }
@@ -189,10 +201,10 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
         let options = ["지난 약속", "자주 묻는 질문", "환경설정", "로그아웃"]
         cell.textLabel?.text = options[indexPath.row]
         
-        let imageView = UIImageView(image: UIImage(named: "Navigate next"))
-        imageView.frame = CGRect(x: 353, y: 20, width: 16, height: 16) // 원하는 크기 및 위치로 조정
+        let nextImgView = UIImageView(image: UIImage(named: "Navigate next"))
+        nextImgView.frame = CGRect(x: 353, y: 20, width: 16, height: 16)
         
-        cell.accessoryView = imageView
+        cell.accessoryView = nextImgView
         
         //레이블 위, 왼쪽 여백 설정
         let leftInset: CGFloat = 24
@@ -206,7 +218,6 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
     
     //각 행의 높이 설정
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // 각 행의 높이를 원하는 크기로 반환 (예: 96 포인트)
         return 56
     }
     
