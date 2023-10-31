@@ -178,7 +178,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
             tableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -376),
+            tableView.heightAnchor.constraint(equalToConstant: CGFloat(4 * 56)),//행 개수 * 행 높이
             appLabel.widthAnchor.constraint(equalToConstant: 254),
             appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
             appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
