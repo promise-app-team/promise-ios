@@ -9,9 +9,14 @@ import UIKit
 
 final class MainVC: UIViewController {
     private lazy var mainVM = MainVM(currentVC: self)
-        
+    
     private lazy var headerView = NavigationView(mainVM: mainVM)
-    private lazy var promiseListView = PromiseListView(dataSource: mainVM, delegate: mainVM)
+    
+    private lazy var promiseListView = {
+        let layout = PromiseListLayout()
+        layout.delegate = self
+        return PromiseListView(dataSource: mainVM, delegate: mainVM, layout: layout)
+    }()
     
     private lazy var promiseAddButton = {
         let button = Button()
@@ -72,7 +77,7 @@ final class MainVC: UIViewController {
             probee.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 2),
             
         ])
-
+        
         NSLayoutConstraint.activate([
             promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
@@ -107,13 +112,29 @@ final class MainVC: UIViewController {
     
     private func render() {
         [
-         headerView,
-         promiseListView,
-         probee,
-         promiseAddButton,
-         promiseStatusViewArea,
+            headerView,
+            promiseListView,
+            probee,
+            promiseAddButton,
+            promiseStatusViewArea,
         ].forEach { view.addSubview($0) }
         setupAutoLayout()
+    }
+}
+
+extension MainVC: PromiseListLayoutDelegate {
+    func updateFocusRatio(_ ratio: CGFloat) {
+        print("ratio: ", ratio)
+        
+        if(1 <= ratio) {
+            UIView.animate(withDuration: 0.3) {
+                self.probee.transform = CGAffineTransform(translationX: 0, y: 0)
+            }
+        } else {
+            UIView.animate(withDuration: 0.2) {
+                self.probee.transform = CGAffineTransform(translationX: 0, y: -10)
+            }
+        }
     }
 }
 
