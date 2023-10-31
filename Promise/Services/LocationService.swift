@@ -16,10 +16,7 @@ class LocationService {
     // MARK: - Public property
     
     var authorizationStatus: CLAuthorizationStatus {
-        if #available(iOS 14, *) {
-            return manager.authorizationStatus
-        }
-        return CLLocationManager.authorizationStatus()
+        return manager.authorizationStatus
     }
     
     // MARK: - Private property

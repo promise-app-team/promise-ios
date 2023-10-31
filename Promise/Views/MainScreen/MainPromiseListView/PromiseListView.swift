@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 final class PromiseListView: UICollectionView {
-    init(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
-        super.init(frame: .null, collectionViewLayout: PromiseListLayout())
+    init(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
+        super.init(frame: .null, collectionViewLayout: layout)
         
         self.dataSource = dataSource
         self.delegate = delegate

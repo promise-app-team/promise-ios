@@ -7,7 +7,12 @@
 
 import UIKit
 
+@objc protocol PromiseListLayoutDelegate: AnyObject {
+    @objc optional func updateFocusRatio(_ ratio: CGFloat)
+}
+
 final class PromiseListLayout: UICollectionViewFlowLayout {
+    weak var delegate: PromiseListLayoutDelegate?
     
     // MARK: - Private property
     private let activeDistance: CGFloat = 200
@@ -88,11 +93,11 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 attributes.zIndex = Int(zoom.rounded())
                 
                 let focusRatio = 1 - (distance.magnitude / activeDistance)
+                delegate?.updateFocusRatio?(focusRatio)
+                
                 if let cell = collectionView.cellForItem(at: attributes.indexPath) as? PromiseListCell {
                     cell.updateBorder(focusRatio: focusRatio)
                 }
-                
-                // 여기서 하면된다.
             }
         }
         
