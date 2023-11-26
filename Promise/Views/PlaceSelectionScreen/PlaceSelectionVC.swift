@@ -22,10 +22,11 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: - Private Property
     
-    private let headerView: HeaderView = {
-        let view = HeaderView(navigationController: nil, title: "약속장소 설정")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
+    private let textField: TextField = {
+        let textField = TextField()
+        textField.initialize(placeHolder: "도로명, 지번, 건물명 검색", showSearchIcon: true)
+        return textField
     }()
     
     private let screenTitle = {
@@ -33,8 +34,6 @@ class PlaceSelectionVC: UIViewController {
         label.text = "장소 선택 화면을 구현해주세요."
         label.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
         label.textColor = .black
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -66,6 +65,12 @@ class PlaceSelectionVC: UIViewController {
         delegate?.onDidHide?()
     }
     
+    // MARK: - Overide Function
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Private Function
     
     private func configureAccountVC() {
@@ -73,7 +78,10 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, screenTitle].forEach { view.addSubview($0) }
+        [headerView, textField, screenTitle].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         setupAutoLayout()
     }
     
@@ -83,6 +91,12 @@ class PlaceSelectionVC: UIViewController {
             headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 56),
+            
+            textField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            textField.heightAnchor.constraint(equalToConstant: 40),
+            
             screenTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             screenTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
