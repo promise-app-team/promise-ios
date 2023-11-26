@@ -22,7 +22,11 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: - Private Property
     
-    private let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
+    private lazy var headerView: HeaderView = {
+        let view = HeaderView(navigationController: nil, title: "약속장소 설정")
+        view.delegate = self
+        return view
+    }()
     private let textField: TextField = {
         let textField = TextField()
         textField.initialize(placeHolder: "도로명, 지번, 건물명 검색", showSearchIcon: true)
@@ -100,5 +104,13 @@ class PlaceSelectionVC: UIViewController {
             screenTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             screenTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+}
+
+// MARK: - HeaderViewDelegate
+
+extension PlaceSelectionVC: HeaderViewDelegate {
+    func onTapCustomBackAction() {
+        self.dismiss(animated: true)
     }
 }
