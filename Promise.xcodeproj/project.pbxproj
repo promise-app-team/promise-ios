@@ -39,6 +39,8 @@
 		FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */; };
 		FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC33565F2AA4A8C900C2CC6B /* Popover.swift */; };
 		FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3BE0612ACC493300CC7CB2 /* HeaderView.swift */; };
+		FC3CFD9B2AF7A1E100AAD420 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */; };
+		FC3CFDA02AF7C6A300AAD420 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */; };
 		FC4041762A8BAF7F0057E413 /* CreatePromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4041752A8BAF7F0057E413 /* CreatePromiseVC.swift */; };
 		FC40FC142A7FAF6D00B699F4 /* PromiseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC40FC132A7FAF6D00B699F4 /* PromiseListView.swift */; };
 		FC40FC172A7FB0AD00B699F4 /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC40FC162A7FB0AD00B699F4 /* MainVM.swift */; };
@@ -93,6 +95,7 @@
 		FCC4B62F2A9CEAF90003AD3C /* FormShareLocationEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC4B62E2A9CEAF90003AD3C /* FormShareLocationEndView.swift */; };
 		FCC4B6312A9CEB0D0003AD3C /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC4B6302A9CEB0D0003AD3C /* FormView.swift */; };
 		FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC690542A9E37090017D543 /* PromiseFormMDL.swift */; };
+		FCD160882B08742A0093FD30 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = FCD160872B08742A0093FD30 /* SkeletonView */; };
 		FCD552622ADC08B700C6869A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FCD552612ADC08B700C6869A /* Lottie */; };
 		FCD552732ADC271F00C6869A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = FCD552722ADC271F00C6869A /* Lottie */; };
 		FCE4F7412A7ABD1B0077F484 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCE4F73F2A7ABD1B0077F484 /* LaunchScreen.storyboard */; };
@@ -170,6 +173,8 @@
 		FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Promise.entitlements; sourceTree = "<group>"; };
 		FC33565F2AA4A8C900C2CC6B /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
 		FC3BE0612ACC493300CC7CB2 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		FC4041752A8BAF7F0057E413 /* CreatePromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePromiseVC.swift; sourceTree = "<group>"; };
 		FC40FC132A7FAF6D00B699F4 /* PromiseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListView.swift; sourceTree = "<group>"; };
 		FC40FC162A7FB0AD00B699F4 /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
@@ -246,6 +251,7 @@
 				E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
 				FC516E032A6D108400709F1E /* JWTDecode in Frameworks */,
+				FCD160882B08742A0093FD30 /* SkeletonView in Frameworks */,
 				FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */,
 				FCD552622ADC08B700C6869A /* Lottie in Frameworks */,
 				FCD552732ADC271F00C6869A /* Lottie in Frameworks */,
@@ -431,6 +437,8 @@
 				FA820A9F2A82791E00AD571C /* UIViewController.swift */,
 				FA931B122AB58E300053FC3B /* UITextField.swift */,
 				FCE8C44E2A8B787A00E2B672 /* UIColor.swift */,
+				FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */,
+				FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -756,6 +764,7 @@
 				FC4A7AB82A6448790055FE4F /* GoogleSignIn */,
 				FC516E022A6D108400709F1E /* JWTDecode */,
 				FCD552722ADC271F00C6869A /* Lottie */,
+				FCD160872B08742A0093FD30 /* SkeletonView */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -842,6 +851,7 @@
 				FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1090,6 +1100,7 @@
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,
 				FCB3AD612AC31A3B00219A25 /* FormTabMenuView.swift in Sources */,
 				FCE8C44F2A8B787A00E2B672 /* UIColor.swift in Sources */,
+				FC3CFD9B2AF7A1E100AAD420 /* UIImageView.swift in Sources */,
 				FCB3AD742AC97FBC00219A25 /* CompletedCreatePromiseVC.swift in Sources */,
 				FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */,
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
@@ -1104,6 +1115,7 @@
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
 				FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */,
 				E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */,
+				FC3CFDA02AF7C6A300AAD420 /* UIView.swift in Sources */,
 				FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */,
 				FC40FC142A7FAF6D00B699F4 /* PromiseListView.swift in Sources */,
 				FCB3AD5F2AC2E78D00219A25 /* PlaceSelectionVC.swift in Sources */,
@@ -1773,6 +1785,14 @@
 				minimumVersion = 2.15.0;
 			};
 		};
+		FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.30.4;
+			};
+		};
 		FCD552602ADC08B700C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -1794,7 +1814,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.4;
+				minimumVersion = 1.1.0;
 			};
 		};
 		FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
@@ -1802,7 +1822,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-generator";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.3;
+				minimumVersion = 1.1.0;
 			};
 		};
 		FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
@@ -1810,7 +1830,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.1;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1845,6 +1865,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		FCD160872B08742A0093FD30 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		FCD552612ADC08B700C6869A /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

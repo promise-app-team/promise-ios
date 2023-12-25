@@ -9,24 +9,44 @@ import Foundation
 import UIKit
 
 final class PromiseListView: UICollectionView {
-    init(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
+    private var mainVM: MainVM
+    
+    private func assignPromisesDidChange() {
+        mainVM.promisesDidChange = { [weak self] (_) in
+            DispatchQueue.main.async {
+                self?.reloadData()
+            }
+        }
+    }
+    
+    init(dataSource: UICollectionViewDataSource & MainVC, delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
+        self.mainVM = dataSource.mainVM
+        
         super.init(frame: .null, collectionViewLayout: layout)
         
         self.dataSource = dataSource
         self.delegate = delegate
         
+        register(PromiseListCell.self, forCellWithReuseIdentifier: "cell")
         decelerationRate = .fast
         contentInsetAdjustmentBehavior = .always
-        backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
-
         showsHorizontalScrollIndicator = false
         
-        register(PromiseListCell.self, forCellWithReuseIdentifier: "cell")
-        
-        translatesAutoresizingMaskIntoConstraints = false
+        configurePromiseListView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configurePromiseListView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
+        
+        Task {
+            assignPromisesDidChange()
+            await mainVM.getPromiseList()
+        }
     }
 }
