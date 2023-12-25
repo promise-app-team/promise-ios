@@ -12,7 +12,7 @@ struct PromiseForm {
     var date: SelectionDate?
     var themes: [SelectableTheme]
     var placeType: Components.Schemas.InputCreatePromise.destinationTypePayload
-    var place: Components.Schemas.InputCreatePromise.destinationPayload
+    var place: Components.Schemas.InputCreatePromise.destinationPayload?
     var shareLocationStartType: Components.Schemas.InputCreatePromise.locationShareStartTypePayload
     var shareLocationStart: Double
     var shareLocationEnd: Double

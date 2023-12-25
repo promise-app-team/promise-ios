@@ -10,7 +10,7 @@ import FloatingPanel
 
 class CommonFloatingContainerVC : UIViewController {
     
-    static let minHeight: CGFloat = 270 // floating 뷰의 최소(tip,half 일 때의) 높이
+    static var minHeight: CGFloat = 270 // floating 뷰의 최소(tip,half 일 때의) 높이
     
     var fpc: FloatingPanelController!
     var contentVC: CommonFloatingContentVC!

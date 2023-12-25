@@ -16,6 +16,9 @@
 "Common.minute" = "분";
 "Common.confirm" = "확인";
 "Common.cancel" = "취소";
+"Common.place" = "장소";
+"Common.host" = "생성자";
+"Common.attendees" = "참여자";
 
 // MARK: SignInScreen
 "SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
@@ -26,6 +29,11 @@
 
 // MARK: MainScreen
 "Main.addNewPromise" = "새 약속 추가";
+"Main.PromiseList.placeLabel" = "장소";
+"Main.PromiseList.hostLabel" = "생성자";
+"Main.PromiseList.attendeesLabel" = "참여자";
+"Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
+"Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.headerTitle" = "새 약속 추가";

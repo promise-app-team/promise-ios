@@ -44,7 +44,7 @@ class CreatePromiseVM: NSObject {
     }
     
     var placeDidChange: ((Components.Schemas.InputCreatePromise.destinationPayload) -> Void)?
-    var place = Components.Schemas.InputCreatePromise.destinationPayload(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571) {
+    var place = Components.Schemas.InputCreatePromise.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571)) {
         didSet {
             placeDidChange?(place)
             updateForm(keyPath: \.place, value: place)
@@ -73,8 +73,6 @@ class CreatePromiseVM: NSObject {
                 if let originItem = shareLocationStartBasedOnTimeInfo.getOriginItem(at: shareLocationStart.itemIndex) {
                     updateForm(keyPath: \.shareLocationStart, value: originItem)
                 }
-            default:
-                break
             }
         }
     }
@@ -132,11 +130,11 @@ class CreatePromiseVM: NSObject {
         }
         
         if form.placeType == .STATIC,
-           let _ = form.place.city,
-           let _ = form.place.district,
-           let _ = form.place.address,
-           let _ = form.place.latitude,
-           let _ = form.place.longitude
+           let _ = form.place?.value1.city,
+           let _ = form.place?.value1.district,
+           let _ = form.place?.value1.address,
+           let _ = form.place?.value1.latitude,
+           let _ = form.place?.value1.longitude
         {
             assignOnVaildateForm?(true)
             return
@@ -177,24 +175,13 @@ class CreatePromiseVM: NSObject {
         self.shareLocationEnd = shareLocationEnd
     }
     
-    func submit() {
-        var destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
-        
-        switch(form.placeType) {
-        case .STATIC:
-            destination = form.place
-        case .DYNAMIC:
-            destination = Components.Schemas.InputCreatePromise.destinationPayload(city: nil, district: nil, address: nil, latitude: nil, longitude: nil)
-        default:
-            break
-        }
-        
+    func submit(_ completion: @escaping ((Components.Schemas.OutputCreatePromise?) -> Void)) {
         let submitForm = Components.Schemas.InputCreatePromise(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.timeIntervalInSeconds,
             destinationType: form.placeType,
-            destination: destination,
+            destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStart,
             locationShareEndType: Components.Schemas.InputCreatePromise.locationShareEndTypePayload.TIME,
@@ -205,7 +192,8 @@ class CreatePromiseVM: NSObject {
             let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promise", nil, submitForm)
             
             switch result {
-            case .success(_):
+            case .success(let createdPromise):
+                completion(createdPromise)
                 next()
             case .failure(let errorType):
                 switch errorType {

@@ -29,7 +29,7 @@ class FormThemeCollectionView: UIView {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(FormThemeTagCell.self, forCellWithReuseIdentifier: "FormThemeTagCell")
+        collectionView.register(FormThemeTagCell.self, forCellWithReuseIdentifier: FormThemeTagCell.identifier)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -101,7 +101,7 @@ extension FormThemeCollectionView: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FormThemeTagCell", for: indexPath) as? FormThemeTagCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FormThemeTagCell.identifier, for: indexPath) as? FormThemeTagCell else {
             return UICollectionViewCell()
         }
         

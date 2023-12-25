@@ -124,7 +124,7 @@ class PopoverView: UIView {
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -paddingHorizontal)
         ])
         
-        backgroundColor = contentView.backgroundColor
+        backgroundColor = .clear
     }
     
     func show() {
