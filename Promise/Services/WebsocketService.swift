@@ -108,7 +108,7 @@ final class WebsocketService {
 extension WebsocketService: WebSocketDelegate {
     func didReceive(
         event: Starscream.WebSocketEvent,
-        client: Starscream.WebSocket
+        client: Starscream.WebSocketClient
     ){
         switch event {
         case .connected(let headers):
@@ -128,6 +128,8 @@ extension WebsocketService: WebSocketDelegate {
         case .error(let error):
             isConnected = false
             handleError(error)
+        default:
+            break
         }
     }
     

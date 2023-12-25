@@ -35,6 +35,7 @@ internal enum Asset {
   internal static let circleOutlinePlusWhite = ImageAsset(name: "CircleOutlinePlusWhite")
   internal static let notification = ImageAsset(name: "Notification")
   internal static let place = ImageAsset(name: "Place")
+  internal static let share = ImageAsset(name: "Share")
   internal static let questionMarkPrimary = ImageAsset(name: "questionMarkPrimary")
   internal static let probee = ImageAsset(name: "Probee")
   internal static let promiseLogo = ImageAsset(name: "PromiseLogo")

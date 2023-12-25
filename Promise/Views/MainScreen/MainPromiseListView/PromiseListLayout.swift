@@ -7,11 +7,18 @@
 
 import UIKit
 
+@objc protocol PromiseListLayoutDelegate: AnyObject {
+    @objc optional func updateFocusRatio(_ initFocusRatio: CGFloat, _ ratio: CGFloat)
+    @objc optional func focusedCellChanged(to indexPath: IndexPath)
+}
+
 final class PromiseListLayout: UICollectionViewFlowLayout {
+    weak var delegate: PromiseListLayoutDelegate?
     
     // MARK: - Private property
     private let activeDistance: CGFloat = 200
     private let zoomFactor: CGFloat = 0.25
+    private var initFocusRatio: CGFloat?
     
     // MARK: - Initializer
     override init() {
@@ -43,7 +50,7 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
         let itemHeight = unzoomedItemHeight / (1 + zoomFactor)
         
         let leadingWidth = (collectionView.frame.width - itemWidth) / 2 // 약 40으로 계산됨(디바이스 넓이에 따라)
-    
+        
         minimumLineSpacing = leadingWidth * 2 / 3 // 2:3 비율에서 2에 해당
         
         // MARK: 아이템(약속 카드) 사이즈 설정
@@ -88,11 +95,18 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 attributes.zIndex = Int(zoom.rounded())
                 
                 let focusRatio = 1 - (distance.magnitude / activeDistance)
+                
+                if initFocusRatio == nil {
+                    initFocusRatio = focusRatio
+                }
+                
+                if let initFocusRatio {
+                    delegate?.updateFocusRatio?(initFocusRatio, focusRatio)
+                }
+                
                 if let cell = collectionView.cellForItem(at: attributes.indexPath) as? PromiseListCell {
                     cell.updateBorder(focusRatio: focusRatio)
                 }
-                
-                // 여기서 하면된다.
             }
         }
         
@@ -118,6 +132,11 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
             if (itemHorizontalCenter - horizontalCenter).magnitude < offsetAdjustment.magnitude {
                 offsetAdjustment = itemHorizontalCenter - horizontalCenter
             }
+        }
+        
+        if let indexPath = rectAttributes.sorted(by: { abs($0.center.x - horizontalCenter) < abs($1.center.x - horizontalCenter) }).first?.indexPath {
+            // Delegate 메소드를 호출하도록 수정합니다.
+            delegate?.focusedCellChanged?(to: indexPath)
         }
         
         return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)

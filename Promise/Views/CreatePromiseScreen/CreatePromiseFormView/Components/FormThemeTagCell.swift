@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class FormThemeTagCell: UICollectionViewCell {
+    static let identifier = "FormThemeTagCell"
+
     static func cellSize(for themeEntity: SelectableTheme) -> CGSize {
         let label = UILabel()
         
@@ -16,7 +18,7 @@ class FormThemeTagCell: UICollectionViewCell {
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
         label.sizeToFit()
         
-        let cellSize = CGSize(width: label.frame.width + 16, height: 28) // 예시로 높이를 40으로 설정
+        let cellSize = CGSize(width: label.frame.width + 16, height: 28)
         return cellSize
     }
     
@@ -38,7 +40,6 @@ class FormThemeTagCell: UICollectionViewCell {
         super.init(frame: frame)
         addSubview(themeTag)
         
-        // AutoLayout 설정
         NSLayoutConstraint.activate([
             themeTag.topAnchor.constraint(equalTo: topAnchor),
             themeTag.bottomAnchor.constraint(equalTo: bottomAnchor),

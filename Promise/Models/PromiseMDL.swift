@@ -7,6 +7,23 @@
 
 import Foundation
 
-struct PromiseMDL {
+struct Host: Codable {
     
+}
+
+struct PromiseMDL: Codable {
+//    let id: Int
+//    let title: String
+//    let promisedAt: Int
+//    let host: Host
+//    
+////    let completedAt: Int
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case title
+//        case promisedAt
+//        case host
+////        case completedAt
+//    }
 }

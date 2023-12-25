@@ -84,8 +84,6 @@ class FormShareLocationStartView: UIView {
                 case .TIME:
                     self.shareLocationStartBasedOnDistanceInputButton.isHidden = true
                     self.shareLocationStartBasedOnTimeInputButton.isHidden = false
-                default:
-                    break
                 }
                 
                 self.layoutIfNeeded()
@@ -170,8 +168,6 @@ extension FormShareLocationStartView: FormTabMenuViewDelegate, FormShareLocation
             return "\(L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix) \(selectedItemText)"
         case .TIME:
             return "\(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix) \(selectedItemText)"
-        default:
-            return nil
         }
     }
 }

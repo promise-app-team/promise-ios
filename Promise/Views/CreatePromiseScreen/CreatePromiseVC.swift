@@ -8,7 +8,13 @@
 import Foundation
 import UIKit
 
+protocol CreatePromiseDelegate: AnyObject {
+    func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise)
+}
+
 class CreatePromiseVC: UIViewController {
+    weak var delegate: CreatePromiseDelegate?
+    
     private lazy var createPromiseVM = CreatePromiseVM(currentVC: self)
     
     private lazy var headerView = HeaderView(navigationController: createPromiseVM.currentVC?.navigationController, title: L10n.CreatePromise.headerTitle)
@@ -29,7 +35,10 @@ class CreatePromiseVC: UIViewController {
     }()
     
     @objc func onTapCreatePromiseButton() {
-        createPromiseVM.submit()
+        createPromiseVM.submit { [weak self] createdPromise in
+            guard let createdPromise else { return }
+            self?.delegate?.onDidCreatePromise(createdPromise: createdPromise)
+        }
     }
     
     func setupAutoLayout() {
