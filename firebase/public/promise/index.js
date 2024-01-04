@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var pathSegments = path.split('/');
 
         if (pathSegments[1] === 'promise') {
-            redirect();
+            setTimeout(() => redirect(), 500)
         }
     }
 });
