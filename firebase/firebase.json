@@ -13,6 +13,12 @@
         ]
       }
     ],
+    "rewrites": [
+      {
+        "source": "/promise/**",
+        "destination": "/promise/index.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
