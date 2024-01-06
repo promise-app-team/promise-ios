@@ -6,16 +6,17 @@
 //
 
 import UIKit
+import FloatingPanel
 
 final class MainVC: UIViewController {
-    private lazy var mainVM = MainVM(currentVC: self)
+    lazy var mainVM = MainVM(currentVC: self)
     
     private lazy var headerView = NavigationView(mainVM: mainVM)
     
     private lazy var promiseListView = {
         let layout = PromiseListLayout()
         layout.delegate = self
-        return PromiseListView(dataSource: mainVM, delegate: mainVM, layout: layout)
+        return PromiseListView(dataSource: self, delegate: self, layout: layout)
     }()
     
     private lazy var promiseAddButton = {
@@ -32,6 +33,75 @@ final class MainVC: UIViewController {
         return imageView
     }()
     
+    private let probeeGuidance = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        
+        let fontSize: CGFloat = 12.0
+        let text = L10n.Main.Probee.Guidance.share
+        let font = UIFont(font: FontFamily.Pretendard.regular, size: fontSize)!
+        
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        attributedString.addAttributes([
+            .paragraphStyle: paragraphStyle,
+            .font: font,
+            .foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 1),
+        ], range: NSMakeRange(0, attributedString.length))
+        
+        let textHighlight = L10n.Main.Probee.Guidance.Share.highlight
+        let highlightFont = UIFont(font: FontFamily.Pretendard.bold, size: fontSize)!
+        
+        attributedString.addAttribute(
+            .font,
+            value: highlightFont,
+            range: (text as NSString).range(of: textHighlight)
+        )
+        
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1),
+            range: (text as NSString).range(of: textHighlight)
+        )
+        
+        let insetLabel = InsetLabel()
+        
+        insetLabel.attributedText = attributedString
+        insetLabel.backgroundColor = .white
+        
+        insetLabel.topInset = 7
+        insetLabel.leftInset = 9
+        insetLabel.bottomInset = 7
+        insetLabel.rightInset = 9
+        
+        insetLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.03).cgColor
+        insetLabel.layer.shadowOpacity = 1
+        insetLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+        insetLabel.layer.shadowRadius = 16
+        
+        insetLabel.translatesAutoresizingMaskIntoConstraints = false
+        return insetLabel
+    }()
+    
+    private lazy var probeeWrap = {
+        let view = UIView()
+        
+        [probee, probeeGuidance].forEach { view.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            probee.topAnchor.constraint(equalTo: view.topAnchor),
+            probee.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            probee.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            probee.widthAnchor.constraint(equalToConstant: 51),
+            probee.heightAnchor.constraint(equalToConstant: 35),
+            
+            probeeGuidance.topAnchor.constraint(equalTo: view.topAnchor, constant: -4),
+            probeeGuidance.leadingAnchor.constraint(equalTo: probee.trailingAnchor, constant: 4)
+        ])
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var promiseStatusViewArea = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -39,13 +109,21 @@ final class MainVC: UIViewController {
     }()
     
     private let promiseStatusViewContent = PromiseStatusView()
-    private lazy var promiseStatusViewController = CommonFloatingContainerVC(contentViewController: promiseStatusViewContent, currentViewController: self)
+    
+    private lazy var promiseStatusViewController = {
+        let commonFloatingContainerVC = CommonFloatingContainerVC(contentViewController: promiseStatusViewContent, currentViewController: self)
+        
+        CommonFloatingContainerVC.minHeight = promiseStatusViewArea.frame.height
+        return commonFloatingContainerVC
+    }()
     
     private func showPromiseStatusView() {
-        promiseStatusViewController.setDelegate(mainVM)
-        promiseStatusViewController.readyToParent()
-        promiseStatusViewController.show()
-        
+        Task {
+            try await Task.sleep(seconds: 0.5)
+            promiseStatusViewController.setDelegate(self)
+            promiseStatusViewController.readyToParent()
+            promiseStatusViewController.show()
+        }
     }
     
     @objc private func onTapPromiseAddButton() {
@@ -67,31 +145,26 @@ final class MainVC: UIViewController {
             promiseListView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 40),
             promiseListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             promiseListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            promiseListView.bottomAnchor.constraint(equalTo: promiseAddButton.topAnchor, constant: -16)
+            promiseListView.heightAnchor.constraint(equalToConstant: 320)
         ])
         
         NSLayoutConstraint.activate([
-            probee.widthAnchor.constraint(equalToConstant: 51),
-            probee.heightAnchor.constraint(equalToConstant: 35),
-            probee.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
-            probee.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 2),
-            
+            probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
+            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 2),
         ])
         
         NSLayoutConstraint.activate([
+            promiseAddButton.topAnchor.constraint(equalTo: promiseListView.bottomAnchor, constant: 16),
             promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            promiseAddButton.bottomAnchor.constraint(equalTo: promiseStatusViewArea.topAnchor, constant: -24),
-            
             promiseAddButton.heightAnchor.constraint(equalToConstant: Button.Height),
         ])
         
         NSLayoutConstraint.activate([
+            promiseStatusViewArea.topAnchor.constraint(equalTo: promiseAddButton.bottomAnchor, constant: 24),
             promiseStatusViewArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             promiseStatusViewArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            promiseStatusViewArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            promiseStatusViewArea.heightAnchor.constraint(equalToConstant: 270)
+            promiseStatusViewArea.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -104,6 +177,37 @@ final class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showPromiseStatusView()
+        
+        if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId {
+            
+            if let index = mainVM.promises.firstIndex(where: { $0?.id == shouldFocusPromiseId }) {
+                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            }
+            
+            mainVM.shouldFocusPromiseId = nil
+        }
+        
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // probeeGuidance이 화면에 추가된 후에 그림자 경로를 업데이트
+        probeeGuidance.layer.shadowPath = UIBezierPath(
+            roundedRect: probeeGuidance.bounds,
+            cornerRadius: probeeGuidance.layer.cornerRadius
+        ).cgPath
+        
+        probeeGuidance.applyCornerRadii(
+            topLeft: 8,
+            topRight: 8,
+            bottomLeft: 4,
+            bottomRight: 8,
+            borderColor: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
+            borderWidth: 1
+        )
+        
     }
     
     private func configureMainVC() {
@@ -114,7 +218,7 @@ final class MainVC: UIViewController {
         [
             headerView,
             promiseListView,
-            probee,
+            probeeWrap,
             promiseAddButton,
             promiseStatusViewArea,
         ].forEach { view.addSubview($0) }
@@ -122,19 +226,59 @@ final class MainVC: UIViewController {
     }
 }
 
-extension MainVC: PromiseListLayoutDelegate {
-    func updateFocusRatio(_ ratio: CGFloat) {
-        print("ratio: ", ratio)
-        
-        if(1 <= ratio) {
-            UIView.animate(withDuration: 0.3) {
-                self.probee.transform = CGAffineTransform(translationX: 0, y: 0)
-            }
-        } else {
-            UIView.animate(withDuration: 0.2) {
-                self.probee.transform = CGAffineTransform(translationX: 0, y: -10)
+extension MainVC: PromiseListLayoutDelegate, FloatingPanelControllerDelegate,  UICollectionViewDataSource, UICollectionViewDelegate, APIServiceDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return mainVM.promises.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PromiseListCell
+        let promise = mainVM.promises[indexPath.row]
+        cell.configureCell(with: promise)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let promiseCell = cell as? PromiseListCell {
+            // 첫 번째로 표시되는 셀에 테두리 적용
+            if indexPath.row == 0 {
+                promiseCell.updateBorder(focusRatio: 1)
             }
         }
     }
+    
+    func updateFocusRatio(_ initRatio: CGFloat, _ ratio: CGFloat) {
+        if(initRatio <= ratio) {
+            UIView.animate(withDuration: 0.3) {
+                self.probeeWrap.transform = CGAffineTransform(translationX: 0, y: 0)
+            }
+            
+            UIView.animate(withDuration: 0.3, delay: 2) {
+                self.probeeGuidance.layer.opacity = 1
+            }
+            
+        } else {
+            UIView.animate(withDuration: 0.2) {
+                self.probeeWrap.transform = CGAffineTransform(translationX: 0, y: -(ratio * 10))
+                self.probeeGuidance.layer.opacity = 0
+            }
+        }
+    }
+    
+    func focusedCellChanged(to indexPath: IndexPath) {
+        let promise = mainVM.promises[indexPath.row]
+        guard let promise else {
+            probeeGuidance.isHidden = true
+            return
+        }
+        
+        let isEmptyAttendees = promise.attendees.isEmpty
+        let isOwner = promise.host.username == UserService.shared.getUser()?.nickname
+        let shouldShowProbeeGuidance = isOwner && isEmptyAttendees
+        
+        probeeGuidance.isHidden = !shouldShowProbeeGuidance
+    }
 }
+
+
 

@@ -232,8 +232,6 @@ class FormPlaceView: UIView {
                     self.selectPlaceButtonIconWidthConstraint?.constant = 0
                     self.selectPlaceButtonIconHeightConstraint?.constant = 0
                     self.placeWrapperHeightConstraint?.constant = 16
-                default:
-                    break
                 }
                 
                 self.layoutIfNeeded()

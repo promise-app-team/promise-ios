@@ -27,10 +27,14 @@ internal enum L10n {
     internal static let setting = L10n.tr("Localizable", "Account.setting", fallback: "환경설정")
   }
   internal enum Common {
+    /// 참여자
+    internal static let attendees = L10n.tr("Localizable", "Common.attendees", fallback: "참여자")
     /// 취소
     internal static let cancel = L10n.tr("Localizable", "Common.cancel", fallback: "취소")
     /// 확인
     internal static let confirm = L10n.tr("Localizable", "Common.confirm", fallback: "확인")
+    /// 생성자
+    internal static let host = L10n.tr("Localizable", "Common.host", fallback: "생성자")
     /// 시간
     internal static let hour = L10n.tr("Localizable", "Common.hour", fallback: "시간")
     /// km
@@ -39,6 +43,8 @@ internal enum L10n {
     internal static let m = L10n.tr("Localizable", "Common.m", fallback: "m")
     /// 분
     internal static let minute = L10n.tr("Localizable", "Common.minute", fallback: "분")
+    /// 장소
+    internal static let place = L10n.tr("Localizable", "Common.place", fallback: "장소")
     /// Localizable.strings
     ///   Promise
     /// 
@@ -133,6 +139,24 @@ internal enum L10n {
   internal enum Main {
     /// 새 약속 추가
     internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
+    internal enum Probee {
+      internal enum Guidance {
+        /// 공유 아이콘으로 약속에 초대할 수 있어요!
+        internal static let share = L10n.tr("Localizable", "Main.Probee.Guidance.share", fallback: "공유 아이콘으로 약속에 초대할 수 있어요!")
+        internal enum Share {
+          /// 공유 아이콘
+          internal static let highlight = L10n.tr("Localizable", "Main.Probee.Guidance.Share.highlight", fallback: "공유 아이콘")
+        }
+      }
+    }
+    internal enum PromiseList {
+      /// 참여자
+      internal static let attendeesLabel = L10n.tr("Localizable", "Main.PromiseList.attendeesLabel", fallback: "참여자")
+      /// 생성자
+      internal static let hostLabel = L10n.tr("Localizable", "Main.PromiseList.hostLabel", fallback: "생성자")
+      /// 장소
+      internal static let placeLabel = L10n.tr("Localizable", "Main.PromiseList.placeLabel", fallback: "장소")
+    }
   }
   internal enum SignIn {
     /// Apple로 로그인

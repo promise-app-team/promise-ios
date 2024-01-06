@@ -31,10 +31,35 @@ struct ErrorResponse {
     let statusCode: Int
 }
 
-final class APIService {
+protocol APIServiceDelegate: AnyObject {
+    func onLoading(path: String?, isLoading: Bool)
+}
+
+extension APIServiceDelegate {
+    func onLoading(path: String?, isLoading: Bool) {
+        #if DEBUG
+        print("==========================================================")
+        print("API End Point: [\(path ?? "/")] is loading? \(isLoading)")
+        print("==========================================================")
+        #endif
+    }
+}
+
+final class APIService: NSObject {
     static let shared = APIService()
+    weak var delegate: APIServiceDelegate?
     
     func fetch<Response: Decodable>(_ method: HttpMethod, _ path: String? = nil, _ params: [String: String]? = nil , _ body: Encodable? = nil) async -> Result<Response, NetworkError> {
+        
+        // MARK: async fetch는 내부 모든 컨텍스트(토큰 만료로 인한 갱신 및 리패치 포함)가 모두 끝날때까지 기다리게 설계됨.
+        // MARK: 즉, defer의 호출은 쿼리 호출이 모두 완료(혹은 중간에 중단)되었다는 것을 보장함.
+        // fetch 함수 시작 loading -> true
+        delegate?.onLoading(path: path, isLoading: true)
+        // fetch 함수의 종료(반환)시 loading -> false
+        defer {
+            delegate?.onLoading(path: path, isLoading: false)
+        }
+        
         do {
             var url = Config.apiURL
             
@@ -80,7 +105,7 @@ final class APIService {
                 // Other handle http methods
             }
             
-            // Step 7: resume url session task
+            // Step 8: resume url session task
             let (data, response) = try await URLSession.shared.data(for: request)
             
             if (response as? HTTPURLResponse)?.statusCode == 401 {
@@ -127,21 +152,21 @@ final class APIService {
                 reRequest.setValue( "Bearer \(updatedAccessToken)", forHTTPHeaderField: "Authorization")
                 
                 let (data, response) = try await URLSession.shared.data(for: reRequest)
-
+                
                 guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
                     return .failure(.badRequest(data))
                 }
-
+                
                 guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
                     return .failure(.decodingError)
                 }
-
+                
                 return .success(parsedData)
             } catch {
                 return .failure(.networkError(error))
             }
             
-        // MARK: 리프레시 토큰도 만료돼서 갱신을 못하는 경우(로그인을 다시 해야함)
+            // MARK: 리프레시 토큰도 만료돼서 갱신을 못하는 경우(로그인을 다시 해야함)
         case .failure:
             // TODO: 로그인 화면으로 이동
             return .failure(.notAuthenticated)
@@ -202,7 +227,7 @@ final class APIService {
             // Ohter handle http methods
         }
         
-        // Step 7: resume url session task
+        // Step 8: resume url session task
         URLSession.shared.dataTask(with: request) {(data, response, error) in
             guard error == nil, let data = data, let response = response as? HTTPURLResponse else {
                 completion(.failure(.networkError(error)))
@@ -280,7 +305,7 @@ final class APIService {
                     }.resume()
                 }
                 
-            // MARK: 리프레시 토큰도 만료돼서 갱신을 못하는 경우(로그인을 다시 해야함)
+                // MARK: 리프레시 토큰도 만료돼서 갱신을 못하는 경우(로그인을 다시 해야함)
             case .failure:
                 // TODO: 로그인 화면으로 이동
                 completion(.failure(.notAuthenticated))

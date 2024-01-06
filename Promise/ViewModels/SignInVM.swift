@@ -160,8 +160,6 @@ final class SignInVM: NSObject {
         case .APPLE:
             getAppleAuth()
             break
-        case .undocumented(_):
-            break
         }
     }
 }
