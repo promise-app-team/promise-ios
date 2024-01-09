@@ -36,6 +36,8 @@ class PlaceSelectionVC: UIViewController {
         return textField
     }()
     
+    private let tipView = PlaceSelectionTipView()
+    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
@@ -80,7 +82,10 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, textField].forEach { view.addSubview($0) }
+        [headerView, textField, tipView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         setupAutoLayout()
     }
     
@@ -95,6 +100,11 @@ class PlaceSelectionVC: UIViewController {
             textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             textField.heightAnchor.constraint(equalToConstant: 40),
+            
+            tipView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            tipView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
