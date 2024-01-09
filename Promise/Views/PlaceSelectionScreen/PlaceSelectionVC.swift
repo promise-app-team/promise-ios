@@ -23,15 +23,17 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: Private Property
     
-    private let textField: UITextField = {
-        let textField = UITextField()
-        return textField
-    }()
-    
     private lazy var headerView: HeaderView = {
         let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
         headerView.delegate = self
         return headerView
+    }()
+    
+    private lazy var textField: TextField = {
+        let textField = TextField()
+        textField.initialize(placeHolder: "도로명, 지번, 건물명 검색", showSearchIcon: true)
+        textField.delegate = self
+        return textField
     }()
     
     // MARK: View Life Cycle
@@ -45,6 +47,7 @@ class PlaceSelectionVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.onWillShow?()
+        let _ = textField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +65,14 @@ class PlaceSelectionVC: UIViewController {
         delegate?.onDidHide?()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        if textField.isFirstResponder {
+            let _ = textField.resignFirstResponder()
+        }
+    }
+    
     // MARK: Private Function
     
     private func configureAccountVC() {
@@ -69,7 +80,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView].forEach { view.addSubview($0) }
+        [headerView, textField].forEach { view.addSubview($0) }
         setupAutoLayout()
     }
     
@@ -79,6 +90,11 @@ class PlaceSelectionVC: UIViewController {
             headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 56),
+            
+            textField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            textField.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
 }
@@ -91,3 +107,13 @@ extension PlaceSelectionVC: HeaderViewDelegate {
         dismiss(animated: true)
     }
 }
+
+// MARK: UITextFieldDelegate
+
+extension PlaceSelectionVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print(textField.text)
+        return true
+    }
+}
+
