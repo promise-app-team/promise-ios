@@ -9,6 +9,8 @@ import UIKit
 
 final class PlaceSelectionTipStackView: UIStackView {
     
+    // MARK: Private Property
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)

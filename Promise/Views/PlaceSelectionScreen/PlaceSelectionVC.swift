@@ -38,6 +38,14 @@ class PlaceSelectionVC: UIViewController {
     
     private let tipView = PlaceSelectionTipView()
     
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(PlaceSelectionTableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
+    }()
+    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
@@ -82,7 +90,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, textField, tipView].forEach {
+        [headerView, textField, tipView, tableView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -104,7 +112,12 @@ class PlaceSelectionVC: UIViewController {
             tipView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
             tipView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
@@ -122,7 +135,7 @@ extension PlaceSelectionVC: HeaderViewDelegate {
 
 extension PlaceSelectionVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print(textField.text)
+        print("input: ", textField.text)
         return true
     }
 }

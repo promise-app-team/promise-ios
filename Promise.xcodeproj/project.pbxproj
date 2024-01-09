@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */; };
 		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
+		2B7DE4622B4D258300127DAA /* PlaceSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */; };
+		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
@@ -133,6 +135,8 @@
 /* Begin PBXFileReference section */
 		2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipView.swift; sourceTree = "<group>"; };
 		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
+		2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
@@ -311,6 +315,14 @@
 				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
 			);
 			path = PlaceSelectionTipView;
+			sourceTree = "<group>";
+		};
+		2B7DE4602B4D257000127DAA /* PlaceSelectionTableView */ = {
+			isa = PBXGroup;
+			children = (
+				2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */,
+			);
+			path = PlaceSelectionTableView;
 			sourceTree = "<group>";
 		};
 		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
@@ -637,8 +649,10 @@
 		FCB3AD5C2AC2E75700219A25 /* PlaceSelectionScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2B7DE4602B4D257000127DAA /* PlaceSelectionTableView */,
 				2B7DE4392B4CE4D700127DAA /* PlaceSelectionTipView */,
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
+				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
 			);
 			path = PlaceSelectionScreen;
 			sourceTree = "<group>";
@@ -1075,6 +1089,7 @@
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
 				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
+				2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
 				FC40FC1B2A7FB6F600B699F4 /* NavigationView.swift in Sources */,
@@ -1111,6 +1126,7 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
+				2B7DE4622B4D258300127DAA /* PlaceSelectionTableViewCell.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,
