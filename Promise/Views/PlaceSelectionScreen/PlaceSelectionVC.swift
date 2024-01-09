@@ -16,24 +16,25 @@ import UIKit
 }
 
 class PlaceSelectionVC: UIViewController {
+    
+    // MARK: Public Property
+    
     weak var delegate: PlaceSelectionDelegate?
     
-    let screenTitle = {
-        let label = UILabel()
-        label.text = "장소 선택 화면을 구현해주세요."
-        label.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 15)
-        label.textColor = .black
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    // MARK: Private Property
+    
+    private let textField: UITextField = {
+        let textField = UITextField()
+        return textField
     }()
     
-    func setupAutoLayout() {
-        NSLayoutConstraint.activate([
-            screenTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            screenTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
+    private lazy var headerView: HeaderView = {
+        let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
+        headerView.delegate = self
+        return headerView
+    }()
+    
+    // MARK: View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +62,32 @@ class PlaceSelectionVC: UIViewController {
         delegate?.onDidHide?()
     }
     
-    func configureAccountVC() {
+    // MARK: Private Function
+    
+    private func configureAccountVC() {
         view.backgroundColor = .white
     }
     
-    func render() {
-        [screenTitle].forEach { view.addSubview($0) }
+    private func render() {
+        [headerView].forEach { view.addSubview($0) }
         setupAutoLayout()
+    }
+    
+    private func setupAutoLayout() {
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 56),
+        ])
+    }
+}
+
+// MARK: HeaderViewDelegate
+
+extension PlaceSelectionVC: HeaderViewDelegate {
+    
+    func onTapCustomBackAction() {
+        dismiss(animated: true)
     }
 }
