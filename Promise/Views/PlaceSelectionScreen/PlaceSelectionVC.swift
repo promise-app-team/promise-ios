@@ -17,9 +17,30 @@ import UIKit
 
 class PlaceSelectionVC: UIViewController {
     
+    enum SearchStatus {
+        case beforeSearch, searching, fail, success
+    }
+    
     // MARK: Public Property
     
     weak var delegate: PlaceSelectionDelegate?
+    
+    var status: SearchStatus = .beforeSearch {
+        didSet {
+            switch self.status {
+            case .beforeSearch:
+                tipView.isHidden = false
+                tableView.isHidden = true
+            case .searching:
+                break
+            case .fail:
+                break
+            case .success:
+                tipView.isHidden = true
+                tableView.isHidden = false
+            }
+        }
+    }
     
     // MARK: Private Property
     
@@ -40,6 +61,8 @@ class PlaceSelectionVC: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.isHidden = true
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PlaceSelectionTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -84,6 +107,10 @@ class PlaceSelectionVC: UIViewController {
     }
     
     // MARK: Private Function
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        _ = textField.resignFirstResponder()
+    }
     
     private func configureAccountVC() {
         view.backgroundColor = .white
@@ -135,8 +162,9 @@ extension PlaceSelectionVC: HeaderViewDelegate {
 
 extension PlaceSelectionVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("input: ", textField.text)
+        textField.resignFirstResponder()
+        print("input: ", textField.text ?? "")
+        status = .success
         return true
     }
 }
-

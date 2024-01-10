@@ -26,9 +26,9 @@ class PlaceSelectionTableViewCell: UITableViewCell {
     
     private lazy var addressIconLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
         label.text = addressType == .streetName ? "도로명" : "지번"
-        label.widthAnchor.constraint(equalToConstant: 15).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 33).isActive = true
         return label
     }()
     

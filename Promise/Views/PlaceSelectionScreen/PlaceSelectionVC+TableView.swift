@@ -7,15 +7,6 @@
 
 import UIKit
 
-// MARK: UITableViewDelegate
-
-extension PlaceSelectionVC: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("cell touched")
-    }
-}
-
 // MARK: UITableViewDataSource
 
 extension PlaceSelectionVC: UITableViewDataSource {
@@ -31,6 +22,15 @@ extension PlaceSelectionVC: UITableViewDataSource {
         cell.updateNameLabel(newText: "스트롱밧데리")
         cell.updateAddressLabel(newText: "서울 중랑구 신내로 193 지하1층 코어스트롱")
         return cell
+    }
+}
+
+// MARK: UITableViewDelegate
+
+extension PlaceSelectionVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
