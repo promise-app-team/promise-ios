@@ -42,6 +42,8 @@ class PlaceSelectionVC: UIViewController {
         }
     }
     
+    var place: KakaoPlaceMDL?
+    
     // MARK: Private Property
     
     private lazy var headerView: HeaderView = {
@@ -50,7 +52,7 @@ class PlaceSelectionVC: UIViewController {
         return headerView
     }()
     
-    private lazy var textField: TextField = {
+    lazy var textField: TextField = {
         let textField = TextField()
         textField.initialize(placeHolder: "도로명, 지번, 건물명 검색", showSearchIcon: true)
         textField.delegate = self
@@ -59,7 +61,7 @@ class PlaceSelectionVC: UIViewController {
     
     private let tipView = PlaceSelectionTipView()
     
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.isHidden = true
         
@@ -100,17 +102,12 @@ class PlaceSelectionVC: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
         if textField.isFirstResponder {
             let _ = textField.resignFirstResponder()
         }
     }
     
     // MARK: Private Function
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        _ = textField.resignFirstResponder()
-    }
     
     private func configureAccountVC() {
         view.backgroundColor = .white
@@ -155,16 +152,6 @@ extension PlaceSelectionVC: HeaderViewDelegate {
     
     func onTapCustomBackAction() {
         dismiss(animated: true)
-    }
-}
-
-// MARK: UITextFieldDelegate
-
-extension PlaceSelectionVC: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        print("input: ", textField.text ?? "")
-        status = .success
-        return true
+        
     }
 }
