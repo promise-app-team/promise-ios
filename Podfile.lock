@@ -1,20 +1,28 @@
 PODS:
   - FloatingPanel (2.6.5)
+  - NMapsGeometry (1.0.1)
+  - NMapsMap (3.17.0):
+    - NMapsGeometry
   - SwiftGen (6.6.2)
 
 DEPENDENCIES:
   - FloatingPanel
+  - NMapsMap
   - SwiftGen (~> 6.0)
 
 SPEC REPOS:
   trunk:
     - FloatingPanel
+    - NMapsGeometry
+    - NMapsMap
     - SwiftGen
 
 SPEC CHECKSUMS:
   FloatingPanel: cd924b71f05f14586260e83b3b52edbf5eb73340
+  NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
+  NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
 
-PODFILE CHECKSUM: 818a6f1f3d5b9107bf66bc426291a22bd91c6f7a
+PODFILE CHECKSUM: d623097740946bcea683b10e60e2f6391f82493a
 
 COCOAPODS: 1.12.0

@@ -15,13 +15,13 @@ extension PlaceSelectionVC: UITextFieldDelegate {
             let userInput = textField.text,
             textField.text != ""
         else {
-            status = .beforeSearch
+            viewState = .idle
             return false
         }
         
         textField.resignFirstResponder()
         searchPlace(of: userInput)
-        status = .success
+        viewState = .searchResult
         return true
     }
     

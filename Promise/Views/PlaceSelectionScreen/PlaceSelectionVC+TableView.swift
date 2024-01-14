@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NMapsMap
 
 // MARK: UITableViewDataSource
 
@@ -31,7 +32,29 @@ extension PlaceSelectionVC: UITableViewDataSource {
 extension PlaceSelectionVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
+        print("didSelectRowAt")
+        
+        
+        guard
+            let latString = place?.documents?[indexPath.row].y,
+            let lonString = place?.documents?[indexPath.row].x,
+            let lat = Double(latString),
+            let lon = Double(lonString)
+        else {
+            print("fail to transfer")
+            print(place?.documents?[indexPath.row].y, place?.documents?[indexPath.row].x)
+            return
+        }
+        print("1")
+        viewState = .map
+        print("2")
+        // MARK: - deallocate error
+        DispatchQueue.main.async {
+//            self.mapView.latitude = lat
+//            self.mapView.longitude = lo
+        }
+        print("3")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
