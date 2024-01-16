@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (isIOS) {
         const path = window.location.pathname;
-        const link = `https://global-song-391605.web.app/${path}`;
+        const link = `https://global-song-391605.web.app${path}`;
         
         assignGetPromiseBtnHandler(link)
 
