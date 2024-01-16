@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "aasa",
     "public": "public",
     "appAssociation": "NONE",
     "headers": [
@@ -13,12 +14,17 @@
         ]
       }
     ],
-    "rewrites": [
+    "redirects": [
       {
-        "source": "/promise/**",
-        "destination": "/promise/index.html"
+        "source": "/share/:id",
+        "destination": "https://preview-b2bfd.web.app/:id",
+        "type": 301
       }
     ],
+    "rewrites": [{
+      "regex": "/[0-9a-zA-Z]+",
+      "destination": "/store/index.html"
+    }],
     "ignore": [
       "firebase.json",
       "**/.*",
