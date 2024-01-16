@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", function() {
     if (isIOS) {
         const path = window.location.pathname;
         const link = `https://global-song-391605.web.app/${path}`;
+        
+        assignGetPromiseBtnHandler(link)
 
         const isKakaoTalk = isKakaoTalkInAppBrowser();
         if(isKakaoTalk) {
             window.location.href = 'kakaotalk://web/openExternal?url='+encodeURIComponent(link);
             return;
         }
-        
-        assignGetPromiseBtnHandler(link)
     }
 });
 
