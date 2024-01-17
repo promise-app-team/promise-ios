@@ -28,7 +28,7 @@ final class MainVC: UIViewController {
     }()
     
     private let probee = {
-        let imageView = UIImageView(image: Asset.probee.image)
+        let imageView = UIImageView(image: Asset.probeeAll.image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -150,7 +150,7 @@ final class MainVC: UIViewController {
         
         NSLayoutConstraint.activate([
             probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
-            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 2),
+            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 3),
         ])
         
         NSLayoutConstraint.activate([
