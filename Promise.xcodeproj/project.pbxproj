@@ -13,6 +13,7 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
+		D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -145,6 +146,10 @@
 		ADFDB7C0C4B339F6E5621D18 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
+		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
+		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
+		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
 		E05ABACA1B55DE44E538CD23 /* Pods-Promise-PromiseUITests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (production).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (production).xcconfig"; sourceTree = "<group>"; };
 		E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PromiseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7B91DD82A78D47100426D81 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
@@ -336,6 +341,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D48FEC9B2B57E73800C43516 /* GuideAttendeeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */,
+			);
+			path = GuideAttendeeScreen;
+			sourceTree = "<group>";
+		};
 		FA931B0E2AB5856D0053FC3B /* TextField */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +509,9 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
+				D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */,
+				D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */,
+				D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */,
 				FCB3AD522ABF1E8400219A25 /* Constants */,
 				FAE2E0212A26381A002D8869 /* Components */,
 				FC5974482A24D60B00A642D7 /* Views */,
@@ -592,6 +608,7 @@
 		FC5974482A24D60B00A642D7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D48FEC9B2B57E73800C43516 /* GuideAttendeeScreen */,
 				FCB3AD5C2AC2E75700219A25 /* PlaceSelectionScreen */,
 				FC4041732A8BAF520057E413 /* CreatePromiseScreen */,
 				FCB3AD722AC97F6300219A25 /* CompletedCreatePromiseScreen */,
@@ -1084,6 +1101,7 @@
 				FCE8C4492A8A447200E2B672 /* NotificationVC.swift in Sources */,
 				FCB3AD702AC845B000219A25 /* KeyboardManager.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
+				D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */,
 				FC59033F2A76BA1400778305 /* Strings.swift in Sources */,
 				FCC4B6312A9CEB0D0003AD3C /* FormView.swift in Sources */,
 				FCC4B62D2A9CEAE90003AD3C /* FormShareLocationStartView.swift in Sources */,
@@ -1299,7 +1317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseDebug (development).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1307,6 +1325,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1333,7 +1353,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseRelease (development).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1341,6 +1361,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1507,7 +1529,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseDebug (production).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1515,6 +1537,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1643,6 +1667,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

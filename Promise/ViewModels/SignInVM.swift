@@ -42,13 +42,21 @@ final class SignInVM: NSObject {
             // 유저 세팅
             let result = await UserService.shared.setUser(accessToken: token.accessToken, refreshToken: token.refreshToken)
             if result {
-                // 로그인이 성공, 메인 화면으로 이동
+                // 로그인 or 회원가입 프로세스가 끝났음(loading 종료)
+                loading = false
+                
+                // MARK: 로그인 성공, 초대받은 약속 아이디가 있다면 참여자 플로우
+                if let invitedPromiseId = UserService.shared.invitedPromiseId {
+                    navigateGuideAttendeeScreen(promiseId: invitedPromiseId)
+                    
+                    // 약속 참여 플로우 진입 이후 리셋
+                    UserService.shared.invitedPromiseId = nil
+                    break
+                }
+                
+                // MARK: 로그인이 성공, 메인 화면으로 이동
                 navigateMainScreen()
             }
-            
-            // 로그인 or 회원가입 프로세스가 끝났음(loading 종료)
-            loading = false
-
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
@@ -142,6 +150,13 @@ final class SignInVM: NSObject {
         DispatchQueue.main.async {[weak self] in
             let mainVC = MainVC()
             self?.currentVC?.navigationController?.pushViewController(mainVC, animated: true)
+        }
+    }
+    
+    private func navigateGuideAttendeeScreen(promiseId: String) {
+        DispatchQueue.main.async {[weak self] in
+            let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
+            self?.currentVC?.navigationController?.pushViewController(guideAttendeeVC, animated: true)
         }
     }
     

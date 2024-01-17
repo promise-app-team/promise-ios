@@ -40,17 +40,61 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         window.rootViewController = navigationController // MARK: set root vc to navigation controllor with lanch vc
         window.makeKeyAndVisible() // MARK: visible navigation controllor with lanch vc
         
+        
+        // 유니버설 링크를 통해 앱이 시작되었는지 확인
+        var invitedPromiseId: String? = nil
+        if let userActivity = connectionOptions.userActivities.first {
+            if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+                if let url = userActivity.webpageURL {
+                    let path = url.path
+                    
+                    let regex = try! NSRegularExpression(pattern: "^/(share/)?([^/]+)(/|$)", options: [])
+                    let nsRange = NSRange(path.startIndex..<path.endIndex, in: path)
+                    
+                    if let match = regex.firstMatch(in: path, options: [], range: nsRange) {
+                        let promiseId = (path as NSString).substring(with: match.range(at: 2))
+                        invitedPromiseId = promiseId
+                    }
+                }
+            }
+        }
+        
         // onboarding: check token, other...
         let onboarding = Onboarding()
-        onboarding.ready { [weak self] startVC in
+        onboarding.ready(invitedPromiseId: invitedPromiseId) { [weak self] startVC in
             self?.navigationController?.pushViewController(startVC, animated: true)
+        }
+    }
+    
+    // MARK: 앱이 iOS 메모리에 올라가있는 상태에서 Universal link를 클릭해서 메모리에 있는 앱이 포커스된 경우 실행됨.
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
+            let path = url.path
+            
+            let regex = try! NSRegularExpression(pattern: "^/(share/)?([^/]+)(/|$)", options: [])
+            let nsRange = NSRange(path.startIndex..<path.endIndex, in: path)
+            
+            if let match = regex.firstMatch(in: path, options: [], range: nsRange) {
+                let promiseId = (path as NSString).substring(with: match.range(at: 2))
+                
+                // TODO: 약속이 존재하는지 한번 확인하는 것도 있으면 좋을것 같음.
+                
+                if let user = UserService.shared.getUser() {
+                    // MARK: 로그인 상태, 바로 참여 화면으로 이동.
+                    let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
+                    self.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                } else {
+                    // MARK: 로그인 전, UserService 싱글톤 객체에 저장.
+                    UserService.shared.invitedPromiseId = promiseId
+                }
+            }
         }
     }
     
     // MARK: call after push animation and view did appear
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         // MARK: launch vc pop after push animation with main vc for memory
-        if viewController is MainVC || viewController is SignInVC {
+        if viewController is MainVC || viewController is SignInVC || viewController is GuideAttendeeVC {
             self.navigationController?.viewControllers = [viewController]
             
             // MARK: check success poped launch vc

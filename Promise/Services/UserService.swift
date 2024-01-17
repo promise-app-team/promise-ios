@@ -17,6 +17,8 @@ final class UserService {
     
     private var user: UserMDL? = nil
     
+    public var invitedPromiseId: String? = nil
+    
     func getUser() -> UserMDL? {
         return user
     }

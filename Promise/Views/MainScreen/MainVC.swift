@@ -176,14 +176,17 @@ final class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // MARK: 하단 약속 상태 뷰 오픈
         showPromiseStatusView()
         
+        // MARK: 약속 추가시 mainVM에 shouldFocusPromiseId를 넣고 있는데 있다면 포커스 스크롤
         if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId {
             
             if let index = mainVM.promises.firstIndex(where: { $0?.id == shouldFocusPromiseId }) {
                 promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
             }
             
+            // 포커스 스크롤 동작 후에 리셋
             mainVM.shouldFocusPromiseId = nil
         }
         

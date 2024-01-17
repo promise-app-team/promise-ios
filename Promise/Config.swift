@@ -48,6 +48,14 @@ public enum Config {
         return kakaoNativeAppKey
     }()
     
+    static let universalLinkDomain: String = {
+        guard let universalLinkDomain = Config.infoDictionary[Keys.universalLinkDomain.rawValue] as? String else {
+            fatalError("UNIVEFRSAL LINK DOMAIN not set in plist")
+        }
+        
+        return universalLinkDomain
+    }()
+    
     static let appENV: String = {
         guard let appENV = Config.infoDictionary[Keys.appENV.rawValue] as? String else {
             fatalError("APP ENV not set in plist")
@@ -71,5 +79,6 @@ public enum Config {
         case apiURL = "API_URL"
         case apiDocUrl = "API_DOC_URL" // MARK: Build Script에서 사용
         case kakaoNativeAppKey = "KAKAO_NATIVE_APP_KEY"
+        case universalLinkDomain = "UNIVERSAL_LINK_DOMAIN"
     }
 }

@@ -38,6 +38,12 @@ class CreatePromiseVC: UIViewController {
         createPromiseVM.submit { [weak self] createdPromise in
             guard let createdPromise else { return }
             self?.delegate?.onDidCreatePromise(createdPromise: createdPromise)
+            
+            DispatchQueue.main.async {
+                let completedCreatePromiseVC = CompletedCreatePromiseVC()
+                completedCreatePromiseVC.createdPromiseId = Int(createdPromise.id)
+                self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+            }
         }
     }
     

@@ -81,10 +81,14 @@ class PromiseListCell: UICollectionViewCell {
     private var isOwner = false {
         didSet {
             if(isOwner) {
-                self.shareButton.isHidden = !isOwner
+                self.shareButton.isHidden = false
+            } else {
+                self.shareButton.isHidden = true
+                self.shareUrl = nil
             }
         }
     }
+    private var shareUrl: URL? = nil
     
     private lazy var shareButton = {
         let imageView = UIImageView(image: Asset.share.image)
@@ -309,7 +313,17 @@ class PromiseListCell: UICollectionViewCell {
     }()
     
     @objc private func onTapShareButton() {
-        // TODO: 공유버튼 클릭시 핸들러 링크와 유니버셜 링크와 함께 공유 열기
+        guard let shareUrl else { return }
+        guard let topVC = parentViewController() else { return }
+        
+        // UIActivityViewController 초기화
+        let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
+        
+        // iPad에서는 popover로 표시해야 할 수 있음
+        activityViewController.popoverPresentationController?.sourceView = self
+        
+        // UIActivityViewController 표시
+        topVC.present(activityViewController, animated: true, completion: nil)
     }
     
     private func assignThemesToTaggedThemes(with themes: [String]) {
@@ -404,6 +418,12 @@ class PromiseListCell: UICollectionViewCell {
         contentView.hideSkeleton(transition: .crossDissolve(0.25))
         
         assignThemesToTaggedThemes(with: promise.themes)
+        
+        // 공유 링크 세팅
+        let sharePromiseId = Int(promise.id)
+        if(sharePromiseId != 0) {
+            self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
+        }
         
         // TimeInterval을 Date 객체로 변환
         let date = Date(timeIntervalSince1970: Double(promise.promisedAt))

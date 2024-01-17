@@ -194,7 +194,6 @@ class CreatePromiseVM: NSObject {
             switch result {
             case .success(let createdPromise):
                 completion(createdPromise)
-                next()
             case .failure(let errorType):
                 switch errorType {
                 case .badRequest:
@@ -205,13 +204,6 @@ class CreatePromiseVM: NSObject {
                     break
                 }
             }
-        }
-    }
-    
-    func next() {
-        DispatchQueue.main.async {[weak self] in
-            let completedCreatePromiseVC = CompletedCreatePromiseVC()
-            self?.currentVC?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
         }
     }
     

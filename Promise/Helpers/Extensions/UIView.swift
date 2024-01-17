@@ -62,5 +62,17 @@ extension UIView {
         self.layer.sublayers?.removeAll(where: { $0 is CAShapeLayer })
         self.layer.addSublayer(borderLayer)
     }
+    
+    func parentViewController<T: UIViewController>() -> T? {
+        var responder: UIResponder? = self
+        while let currentResponder = responder {
+            if let viewController = currentResponder as? T {
+                return viewController
+            }
+            responder = currentResponder.next
+        }
+        
+        return nil
+    }
 }
 

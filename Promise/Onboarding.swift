@@ -10,7 +10,7 @@ import UIKit
 final class Onboarding {
     var loading = false
     
-    func ready(_ completion: @escaping (UIViewController) -> Void) {
+    func ready(invitedPromiseId: String?, _ completion: @escaping (UIViewController) -> Void) {
         loading = true
         
         Task {
@@ -22,11 +22,21 @@ final class Onboarding {
                 _ = await UserService.shared.setUser(accessToken: token)
                 
                 DispatchQueue.main.async {
-                    completion(MainVC())
+                    // MARK: 기존 로그인 성공, 초대받은 약속 아이디가 있다면 참여자 플로우
+                    if let invitedPromiseId {
+                        completion(GuideAttendeeVC(promiseId: invitedPromiseId))
+                    } else {
+                        completion(MainVC())
+                    }
                 }
                 
             } else {
                 DispatchQueue.main.async {
+                    if let invitedPromiseId {
+                        // MARK: 초대받은 약속 아이디가 있다면 싱글톤 UserSercie에 우선 저장후 로그인 성공후 이동
+                        UserService.shared.invitedPromiseId = invitedPromiseId
+                    }
+                    
                     completion(SignInVC())
                 }
             }
