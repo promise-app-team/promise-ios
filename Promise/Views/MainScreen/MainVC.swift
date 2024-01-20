@@ -9,6 +9,9 @@ import UIKit
 import FloatingPanel
 
 final class MainVC: UIViewController {
+    // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
+    private let invitedPromiseId: String?
+    
     lazy var mainVM = MainVM(currentVC: self)
     
     private lazy var headerView = NavigationView(mainVM: mainVM)
@@ -117,6 +120,10 @@ final class MainVC: UIViewController {
         return commonFloatingContainerVC
     }()
     
+    private func showAttendPopUp() {
+        // TODO: 팝업 오픈
+    }
+    
     private func showPromiseStatusView() {
         Task {
             try await Task.sleep(seconds: 0.5)
@@ -130,42 +137,13 @@ final class MainVC: UIViewController {
         mainVM.navigateCreatePromiseScreen()
     }
     
-    private func setupAutoLayout() {
-        let safeLayoutGuide = view.safeAreaLayoutGuide
-        
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            headerView.heightAnchor.constraint(equalToConstant: 8 + 8 + 36)
-        ])
-        
-        NSLayoutConstraint.activate([
-            promiseListView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 40),
-            promiseListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            promiseListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            promiseListView.heightAnchor.constraint(equalToConstant: 320)
-        ])
-        
-        NSLayoutConstraint.activate([
-            probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
-            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 3),
-        ])
-        
-        NSLayoutConstraint.activate([
-            promiseAddButton.topAnchor.constraint(equalTo: promiseListView.bottomAnchor, constant: 16),
-            promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            promiseAddButton.heightAnchor.constraint(equalToConstant: Button.Height),
-        ])
-        
-        NSLayoutConstraint.activate([
-            promiseStatusViewArea.topAnchor.constraint(equalTo: promiseAddButton.bottomAnchor, constant: 24),
-            promiseStatusViewArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            promiseStatusViewArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            promiseStatusViewArea.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+    init(invitedPromiseId: String? = nil) {
+        self.invitedPromiseId = invitedPromiseId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -176,6 +154,9 @@ final class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // MARK: invitedPromiseId가 있으면(MainVC 초기화시 inject되면) 참여 팝업을 띄워줌
+        showAttendPopUp()
+        
         // MARK: 하단 약속 상태 뷰 오픈
         showPromiseStatusView()
         
@@ -226,6 +207,44 @@ final class MainVC: UIViewController {
             promiseStatusViewArea,
         ].forEach { view.addSubview($0) }
         setupAutoLayout()
+    }
+    
+    private func setupAutoLayout() {
+        let safeLayoutGuide = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            headerView.heightAnchor.constraint(equalToConstant: 8 + 8 + 36)
+        ])
+        
+        NSLayoutConstraint.activate([
+            promiseListView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 40),
+            promiseListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            promiseListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            promiseListView.heightAnchor.constraint(equalToConstant: 320)
+        ])
+        
+        NSLayoutConstraint.activate([
+            probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
+            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 3),
+        ])
+        
+        NSLayoutConstraint.activate([
+            promiseAddButton.topAnchor.constraint(equalTo: promiseListView.bottomAnchor, constant: 16),
+            promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            promiseAddButton.heightAnchor.constraint(equalToConstant: Button.Height),
+        ])
+        
+        NSLayoutConstraint.activate([
+            promiseStatusViewArea.topAnchor.constraint(equalTo: promiseAddButton.bottomAnchor, constant: 24),
+            promiseStatusViewArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            promiseStatusViewArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            promiseStatusViewArea.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }
 

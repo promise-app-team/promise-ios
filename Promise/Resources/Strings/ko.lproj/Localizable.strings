@@ -74,3 +74,20 @@
 "CompletedCreatePromise.MainDescription.highlight" = "메인화면과 약속 상세페이지에 있는\n공유 아이콘";
 "CompletedCreatePromise.shareButtonText" = "약속 공유";
 
+// MARK: GuideAttendeeScreen
+"GuideAttendee.directAttend" = "바로 참여하기";
+"GuideAttendee.attend" = "약속하러 가기";
+
+"GuideAttendee.title1" = "GPS 공유로\n서로의 위치를 알 수 있어요";
+"GuideAttendee.title2" = "출발지와 경로를 기반으로\n중간위치를 알 수 있어요";
+"GuideAttendee.title3" = "안전하게 내 위치를 공유해요";
+
+"GuideAttendee.Title1.bulletPoint1" = "•  약속한 사람이 어디까지 왔는지!";
+"GuideAttendee.Title1.bulletPoint2" = "•  내가 약속장소에 언제 도착하는지!";
+
+"GuideAttendee.Title2.bulletPoint1" = "•  어디서 만날지 고민이라면 중간에서 만나요";
+"GuideAttendee.Title2.bulletPoint2" = "•  중간위치 주변 장소를 추천 받아요!";
+
+"GuideAttendee.Title3.bulletPoint1" = "•  GPS 정보는 어디에도 저장하지 않아요!";
+"GuideAttendee.Title3.bulletPoint2" = "•  위치를 공유할 시점을 정할 수 있어요!";
+"GuideAttendee.Title3.bulletPoint3" = "•  모두가 만났으면 위치 공유는 종료돼요!";
