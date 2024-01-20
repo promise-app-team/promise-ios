@@ -47,7 +47,7 @@ final class SignInVM: NSObject {
                 
                 // MARK: 로그인 성공, 초대받은 약속 아이디가 있다면 참여자 플로우
                 if let invitedPromiseId = UserService.shared.invitedPromiseId {
-                    navigateGuideAttendeeScreen(promiseId: invitedPromiseId)
+                    processOnAttendee(promiseId: invitedPromiseId)
                     
                     // 약속 참여 플로우 진입 이후 리셋
                     UserService.shared.invitedPromiseId = nil
@@ -153,10 +153,21 @@ final class SignInVM: NSObject {
         }
     }
     
-    private func navigateGuideAttendeeScreen(promiseId: String) {
+    private func processOnAttendee(promiseId: String) {
         DispatchQueue.main.async {[weak self] in
-            let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
-            self?.currentVC?.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+            let hasSeenGuideAttendee = UserDefaults.standard.bool(forKey: UserDefaultConstants.Attendee.HAS_SEEN_GUIDE_ATTENDEE)
+            if hasSeenGuideAttendee {
+                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 true면 메인화면으로 이동, promiseId injection
+                
+                let mainVC = MainVC(invitedPromiseId: promiseId)
+                self?.currentVC?.navigationController?.pushViewController(mainVC, animated: true)
+                
+            } else {
+                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 false면 참여자 가이드 화면으로 이동, promiseId injection
+                
+                let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
+                self?.currentVC?.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+            }
         }
     }
     

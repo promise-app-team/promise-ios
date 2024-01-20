@@ -81,10 +81,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
                 
                 if let user = UserService.shared.getUser() {
                     // MARK: 로그인 상태, 바로 참여 화면으로 이동.
-                    let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
-                    self.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                    
+                    let hasSeenGuideAttendee = UserDefaults.standard.bool(forKey: UserDefaultConstants.Attendee.HAS_SEEN_GUIDE_ATTENDEE)
+                    if hasSeenGuideAttendee {
+                        // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 true면 메인화면으로 이동, promiseId injection
+                        
+                        let mainVC = MainVC(invitedPromiseId: promiseId)
+                        self.navigationController?.pushViewController(mainVC, animated: true)
+                        
+                    } else {
+                        // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 false면 참여자 가이드 화면으로 이동, promiseId injection
+                        
+                        let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
+                        self.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                        
+                    }
                 } else {
                     // MARK: 로그인 전, UserService 싱글톤 객체에 저장.
+                    
                     UserService.shared.invitedPromiseId = promiseId
                 }
             }

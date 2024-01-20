@@ -17,6 +17,9 @@
 		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
 		D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */; };
+		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
+		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
+		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -77,7 +80,7 @@
 		FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7B5CE92A2E1EA5002FC94E /* Config.swift */; };
 		FC8924882ADEB3DE0027F601 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = FC8924872ADEB3DE0027F601 /* map.json */; };
 		FCA944052AAE0EED0015CB46 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA944042AAE0EED0015CB46 /* InsetLabel.swift */; };
-		FCB3AD552ABF1F1100219A25 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD542ABF1F1100219A25 /* Promise.swift */; };
+		FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */; };
 		FCB3AD5F2AC2E78D00219A25 /* PlaceSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */; };
 		FCB3AD612AC31A3B00219A25 /* FormTabMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD602AC31A3B00219A25 /* FormTabMenuView.swift */; };
 		FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD642AC3304B00219A25 /* FormShareLocationSelectionInputView.swift */; };
@@ -153,6 +156,9 @@
 		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselView.swift; path = ../../../../../../Desktop/GuideAttendeeCarouselView/CarouselView.swift; sourceTree = "<group>"; };
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselPageControl.swift; path = ../../../../../../Desktop/GuideAttendeeCarouselView/CarouselPageControl.swift; sourceTree = "<group>"; };
 		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
+		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
+		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
+		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
 		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
 		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
@@ -221,7 +227,7 @@
 		FC7B5CE92A2E1EA5002FC94E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		FC8924872ADEB3DE0027F601 /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		FCA944042AAE0EED0015CB46 /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
-		FCB3AD542ABF1F1100219A25 /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
+		FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConstants.swift; sourceTree = "<group>"; };
 		FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionVC.swift; sourceTree = "<group>"; };
 		FCB3AD602AC31A3B00219A25 /* FormTabMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTabMenuView.swift; sourceTree = "<group>"; };
 		FCB3AD642AC3304B00219A25 /* FormShareLocationSelectionInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormShareLocationSelectionInputView.swift; sourceTree = "<group>"; };
@@ -650,7 +656,10 @@
 		FCB3AD522ABF1E8400219A25 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				FCB3AD542ABF1F1100219A25 /* Promise.swift */,
+				FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */,
+				D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */,
+				D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */,
+				D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1105,10 +1114,12 @@
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* APIService.swift in Sources */,
 				FCC4B62B2A9CEAB60003AD3C /* FormPlaceView.swift in Sources */,
+				D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
+				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
@@ -1144,8 +1155,9 @@
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* SignInVM.swift in Sources */,
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
+				D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */,
 				FCC4B6272A9CEA940003AD3C /* FormDateView.swift in Sources */,
-				FCB3AD552ABF1F1100219A25 /* Promise.swift in Sources */,
+				FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,

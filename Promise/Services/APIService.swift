@@ -45,8 +45,10 @@ extension APIServiceDelegate {
     }
 }
 
-final class APIService: NSObject {
+final class APIService {
+    private init() {}
     static let shared = APIService()
+    
     weak var delegate: APIServiceDelegate?
     
     func fetch<Response: Decodable>(_ method: HttpMethod, _ path: String? = nil, _ params: [String: String]? = nil , _ body: Encodable? = nil) async -> Result<Response, NetworkError> {

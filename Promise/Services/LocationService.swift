@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-class LocationService {
+final class LocationService {
     
     // MARK: - Static property
     

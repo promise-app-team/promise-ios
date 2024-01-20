@@ -139,6 +139,9 @@ extension GuideAttendeeVC: CarouselViewDelegate {
     }
     
     func onTapAttendPromiseButton() {
+        // MARK: 캐러셀의 마지막 가이드에 나타나는 버튼을 클릭했을때 로컬스토리지에 가이드를 봤다는 플래그 저장
+        UserDefaults.standard.set(true, forKey: UserDefaultConstants.Attendee.HAS_SEEN_GUIDE_ATTENDEE)
+        
         let mainVC = MainVC(invitedPromiseId: promiseId)
         navigationController?.pushViewController(mainVC, animated: true)
     }

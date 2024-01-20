@@ -10,7 +10,7 @@ import FloatingPanel
 
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
-    private let invitedPromiseId: String?
+    private var invitedPromiseId: String?
     
     lazy var mainVM = MainVM(currentVC: self)
     
@@ -122,6 +122,7 @@ final class MainVC: UIViewController {
     
     private func showAttendPopUp() {
         // TODO: 팝업 오픈
+        ToastView(message: invitedPromiseId ?? "nil").showToast()
     }
     
     private func showPromiseStatusView() {
@@ -155,7 +156,13 @@ final class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // MARK: invitedPromiseId가 있으면(MainVC 초기화시 inject되면) 참여 팝업을 띄워줌
-        showAttendPopUp()
+        if let invitedPromiseId = self.invitedPromiseId {
+            showAttendPopUp()
+            
+            // 참여 팝업 이후 리셋
+            self.invitedPromiseId = nil
+        }
+        
         
         // MARK: 하단 약속 상태 뷰 오픈
         showPromiseStatusView()
