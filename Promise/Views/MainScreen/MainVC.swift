@@ -10,7 +10,7 @@ import FloatingPanel
 
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
-    private var invitedPromiseId: String?
+    var invitedPromise: Components.Schemas.OutputPromiseListItem?
     
     lazy var mainVM = MainVM(currentVC: self)
     
@@ -120,9 +120,41 @@ final class MainVC: UIViewController {
         return commonFloatingContainerVC
     }()
     
-    private func showAttendPopUp() {
-        // TODO: 팝업 오픈
-        ToastView(message: invitedPromiseId ?? "nil").showToast()
+    // MARK: handler
+    
+    public func showInvitationPopUp(promise: Components.Schemas.OutputPromiseListItem? = nil) {
+        if let promise {
+            InvitationPopUp(invitedPromise: promise, currentVC: self).showInvitationPopUp()
+            return
+        }
+        
+        if let invitedPromise = self.invitedPromise {
+            InvitationPopUp(invitedPromise: invitedPromise, currentVC: self).showInvitationPopUp()
+            
+            // 참여 팝업 이후 리셋
+            self.invitedPromise = nil
+        }
+    }
+    
+    public func focusPromiseById(id: String? = nil) {
+        if let id {
+            if let index = mainVM.promises.firstIndex(where: { $0?.pid == id }) {
+                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            }
+            
+            return
+        }
+        
+        
+        if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
+            
+            if let index = mainVM.promises.firstIndex(where: { $0?.pid == shouldFocusPromiseId }) {
+                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            }
+            
+            // 포커스 스크롤 동작 후에 리셋
+            mainVM.shouldFocusPromiseId = nil
+        }
     }
     
     private func showPromiseStatusView() {
@@ -138,9 +170,12 @@ final class MainVC: UIViewController {
         mainVM.navigateCreatePromiseScreen()
     }
     
-    init(invitedPromiseId: String? = nil) {
-        self.invitedPromiseId = invitedPromiseId
+    // MARK: initialize
+    
+    init(invitedPromise: Components.Schemas.OutputPromiseListItem? = nil, shouldFocusPromiseId: String? = nil) {
+        self.invitedPromise = invitedPromise
         super.init(nibName: nil, bundle: nil)
+        mainVM.shouldFocusPromiseId = shouldFocusPromiseId
     }
     
     required init?(coder: NSCoder) {
@@ -155,30 +190,10 @@ final class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // MARK: invitedPromiseId가 있으면(MainVC 초기화시 inject되면) 참여 팝업을 띄워줌
-        if let invitedPromiseId = self.invitedPromiseId {
-            showAttendPopUp()
-            
-            // 참여 팝업 이후 리셋
-            self.invitedPromiseId = nil
-        }
         
-        
-        // MARK: 하단 약속 상태 뷰 오픈
+        showInvitationPopUp()
         showPromiseStatusView()
-        
-        // MARK: 약속 추가시 mainVM에 shouldFocusPromiseId를 넣고 있는데 있다면 포커스 스크롤
-        if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId {
-            
-            if let index = mainVM.promises.firstIndex(where: { $0?.id == shouldFocusPromiseId }) {
-                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
-            }
-            
-            // 포커스 스크롤 동작 후에 리셋
-            mainVM.shouldFocusPromiseId = nil
-        }
-        
-        
+        focusPromiseById()
     }
     
     override func viewDidLayoutSubviews() {

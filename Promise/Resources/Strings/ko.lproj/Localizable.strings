@@ -16,6 +16,8 @@
 "Common.minute" = "분";
 "Common.confirm" = "확인";
 "Common.cancel" = "취소";
+"Common.attend" = "참여";
+"Common.refuse" = "거절";
 "Common.place" = "장소";
 "Common.host" = "생성자";
 "Common.attendees" = "참여자";
@@ -91,3 +93,11 @@
 "GuideAttendee.Title3.bulletPoint1" = "•  GPS 정보는 어디에도 저장하지 않아요!";
 "GuideAttendee.Title3.bulletPoint2" = "•  위치를 공유할 시점을 정할 수 있어요!";
 "GuideAttendee.Title3.bulletPoint3" = "•  모두가 만났으면 위치 공유는 종료돼요!";
+
+// MARK: Tagged Notification
+"TaggedNotification.invitedToPromise" = "띵동! 약속에 초대 받았어요";
+"TaggedNotification.middlePlaceWarning" = "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요";
+
+// MARK: Invitation Pop Up
+"InvitationPopUp.startLocationPlaceholder" = "출발지를 등록해 주세요";
+"InvitationPopUp.middlePlaceWarning" = "참여자들의 중간장소로 지정됩니다";

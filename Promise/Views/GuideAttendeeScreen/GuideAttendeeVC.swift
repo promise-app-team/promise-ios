@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class GuideAttendeeVC: UIViewController {
-    let promiseId: String
+    let promise: Components.Schemas.OutputPromiseListItem
     
     private lazy var directAttendPromiseButton = {
         let label = UILabel()
@@ -81,14 +81,14 @@ class GuideAttendeeVC: UIViewController {
     // MARK: handler
     
     @objc private func onTapDirectAttendPromiseButton() {
-        let mainVC = MainVC(invitedPromiseId: promiseId)
+        let mainVC = MainVC(invitedPromise: promise)
         navigationController?.pushViewController(mainVC, animated: true)
     }
     
     // MARK: initialize
     
-    init(promiseId: String) {
-        self.promiseId = promiseId
+    init(promise: Components.Schemas.OutputPromiseListItem) {
+        self.promise = promise
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -140,9 +140,9 @@ extension GuideAttendeeVC: CarouselViewDelegate {
     
     func onTapAttendPromiseButton() {
         // MARK: 캐러셀의 마지막 가이드에 나타나는 버튼을 클릭했을때 로컬스토리지에 가이드를 봤다는 플래그 저장
-        UserDefaults.standard.set(true, forKey: UserDefaultConstants.Attendee.HAS_SEEN_GUIDE_ATTENDEE)
+        AttendanceHelper().setHasSeenGuideAttendee()
         
-        let mainVC = MainVC(invitedPromiseId: promiseId)
+        let mainVC = MainVC(invitedPromise: promise)
         navigationController?.pushViewController(mainVC, animated: true)
     }
 }

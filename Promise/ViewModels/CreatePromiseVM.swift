@@ -189,7 +189,7 @@ class CreatePromiseVM: NSObject {
         )
         
         Task {
-            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promise", nil, submitForm)
+            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promises", nil, submitForm)
             
             switch result {
             case .success(let createdPromise):
@@ -218,7 +218,7 @@ class CreatePromiseVM: NSObject {
     func getSupportedTheme() async {
         themesLoading = true
         
-        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promise/themes")
+        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
         
         switch result {
         case .success(let themes):

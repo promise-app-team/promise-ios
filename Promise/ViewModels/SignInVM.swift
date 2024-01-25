@@ -34,6 +34,7 @@ final class SignInVM: NSObject {
         
         switch result {
         case .success(let token):
+            
             #if DEBUG
             print("accessToken: ", token.accessToken)
             print("refreshToken: ", token.refreshToken)
@@ -49,14 +50,15 @@ final class SignInVM: NSObject {
                 if let invitedPromiseId = UserService.shared.invitedPromiseId {
                     processOnAttendee(promiseId: invitedPromiseId)
                     
-                    // 약속 참여 플로우 진입 이후 리셋
+                    // MARK: 약속 참여 플로우 진입 이후 리셋
                     UserService.shared.invitedPromiseId = nil
                     break
                 }
                 
-                // MARK: 로그인이 성공, 메인 화면으로 이동
+                // MARK: 로그인이 성공, 초대로 진입하지 않음, 메인 화면으로 이동
                 navigateMainScreen()
             }
+            
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
@@ -146,27 +148,45 @@ final class SignInVM: NSObject {
         authorizationController.performRequests()
     }
     
-    private func navigateMainScreen() {
+    private func navigateMainScreen(shouldFocusPromiseId: String? = nil) {
         DispatchQueue.main.async {[weak self] in
-            let mainVC = MainVC()
+            let mainVC = MainVC(shouldFocusPromiseId: shouldFocusPromiseId)
             self?.currentVC?.navigationController?.pushViewController(mainVC, animated: true)
         }
     }
     
+    // MARK: promiseId가 반드시 있는 경우에만 실행.
     private func processOnAttendee(promiseId: String) {
         DispatchQueue.main.async {[weak self] in
-            let hasSeenGuideAttendee = UserDefaults.standard.bool(forKey: UserDefaultConstants.Attendee.HAS_SEEN_GUIDE_ATTENDEE)
-            if hasSeenGuideAttendee {
-                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 true면 메인화면으로 이동, promiseId injection
+            Task {
+                let attendanceHelper = AttendanceHelper()
                 
-                let mainVC = MainVC(invitedPromiseId: promiseId)
-                self?.currentVC?.navigationController?.pushViewController(mainVC, animated: true)
+                let (isAbleToAttend, promise) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
                 
-            } else {
-                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 false면 참여자 가이드 화면으로 이동, promiseId injection
+                if isAbleToAttend {
+                    
+                    let hasSeenGuideAttendee = AttendanceHelper().checkHasSeenGuideAttendee()
+                    if hasSeenGuideAttendee {
+                        // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 true면 메인화면으로 이동, promiseId injection
+                        
+                        let mainVC = MainVC(invitedPromise: promise)
+                        self?.currentVC?.navigationController?.pushViewController(mainVC, animated: true)
+                        
+                    } else {
+                        // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 false면 참여자 가이드 화면으로 이동, promiseId injection
+                        
+                        if let promise {
+                            let guideAttendeeVC = GuideAttendeeVC(promise: promise)
+                            self?.currentVC?.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                        }
+                        
+                    }
+                    
+                    return
+                }
                 
-                let guideAttendeeVC = GuideAttendeeVC(promiseId: promiseId)
-                self?.currentVC?.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                // MARK: 참여 불가능한 상태(초대된 약속이 내가 만든 약속인 경우), 메인 이동 후 해당 약속으로 포커스를 위해 shouldFocusPromiseId injection
+                self?.navigateMainScreen(shouldFocusPromiseId: promiseId)
             }
         }
     }

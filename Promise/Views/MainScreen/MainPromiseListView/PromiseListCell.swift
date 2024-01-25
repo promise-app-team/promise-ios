@@ -420,8 +420,8 @@ class PromiseListCell: UICollectionViewCell {
         assignThemesToTaggedThemes(with: promise.themes)
         
         // 공유 링크 세팅
-        let sharePromiseId = Int(promise.id)
-        if(sharePromiseId != 0) {
+        let sharePromiseId = promise.pid
+        if(!sharePromiseId.isEmpty) {
             self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
         }
         

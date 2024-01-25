@@ -41,7 +41,7 @@ class CreatePromiseVC: UIViewController {
             
             DispatchQueue.main.async {
                 let completedCreatePromiseVC = CompletedCreatePromiseVC()
-                completedCreatePromiseVC.createdPromiseId = Int(createdPromise.id)
+                completedCreatePromiseVC.createdPromiseId = Int(createdPromise.pid)
                 self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
             }
         }

@@ -12,7 +12,7 @@ class MainVM: NSObject {
     var currentVC: MainVC?
     
     // 데이터 소스에 필요한 데이터, 예를 들어, 프로미스 목록 등
-    var shouldFocusPromiseId: Double?
+    var shouldFocusPromiseId: String?
 //    var onLoadingHandlerForGettingPromises: ((Bool) -> Void)?
     var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]) -> Void)?
     var promises: [Components.Schemas.OutputPromiseListItem?] = [] {
@@ -30,7 +30,7 @@ class MainVM: NSObject {
     
     
     func getPromiseList() async {
-        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promise/list")
+        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises")
         
         switch result {
         case .success(let promises):
@@ -76,7 +76,7 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
     func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise) {
         
         Task {
-            shouldFocusPromiseId = createdPromise.id
+            shouldFocusPromiseId = createdPromise.pid
             await getPromiseList()
         }
     }

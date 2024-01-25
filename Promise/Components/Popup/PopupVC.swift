@@ -9,6 +9,8 @@ import UIKit
 
 class PopupVC : UIViewController {
     
+    var isPresented = false
+    
     private var titleText: String?
     private var messageText: String?
     private var contentView: UIView?
@@ -19,7 +21,9 @@ class PopupVC : UIViewController {
     private var rightBtnAction: (() -> Void)?
     private var leftBtnAction: (() -> Void)?
     
-    private lazy var containerView: UIView = {
+    var disableBackgroundTap = false
+    
+    lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
@@ -73,7 +77,7 @@ class PopupVC : UIViewController {
         paragraphStyle.alignment = .center
         attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         label.attributedText = attrString
-   
+        
         return label
     }()
     
@@ -121,20 +125,24 @@ class PopupVC : UIViewController {
         makeConstraints()
     }
     
-    func initialize(contentView: UIView,
-                    rightBtnTitle: String, rightBtnHandelr: @escaping (() -> Void),
-                    leftBtnTitle: String? = nil, leftBtnHandler: (() -> Void)? = nil) {
+    func initialize(
+        contentView: UIView,
+        leftBtnTitle: String? = nil,
+        leftBtnHandler: (() -> Void)? = nil,
+        rightBtnTitle: String,
+        rightBtnHandelr: @escaping (() -> Void))
+    {
         self.contentView = contentView
         self.rightBtnTitle = rightBtnTitle
         self.rightBtnAction = rightBtnHandelr
         self.leftBtnTitle = leftBtnTitle
         self.leftBtnAction = leftBtnHandler
         
-        self.rightBtn.addTarget(self, action: #selector(rightBtnTapped), for: .touchUpInside)
-        
         if leftBtnHandler != nil {
             self.leftBtn?.addTarget(self, action: #selector(leftBtnTapped), for: .touchUpInside)
         }
+        
+        self.rightBtn.addTarget(self, action: #selector(rightBtnTapped), for: .touchUpInside)
         
         setupViews()
         addSubviews()
@@ -161,13 +169,24 @@ class PopupVC : UIViewController {
             
         }
     }
-  
-    @objc private func backgroundTapped(){
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.isPresented = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.isPresented = false
+    }
+    
+    @objc private func backgroundTapped() {
+        if disableBackgroundTap { return }
         close()
     }
     
-    public func close(){
-       
+    public func close(completion: @escaping () -> Void = {}){
+        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.alpha = 0
             self.containerView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
@@ -175,6 +194,7 @@ class PopupVC : UIViewController {
         }){(complete) in
             self.dismiss(animated: false)
             self.removeFromParent()
+            completion()
         }
         
     }
@@ -189,7 +209,7 @@ class PopupVC : UIViewController {
     
     private func addSubviews() {
         view.addSubview(containerStackView)
-
+        
         if let contentView = contentView {
             
             let backgroundView = UIView()
@@ -202,7 +222,7 @@ class PopupVC : UIViewController {
             if let lastView = containerStackView.subviews.last {
                 containerStackView.setCustomSpacing(16.0, after: lastView)
             }
-
+            
             containerStackView.addArrangedSubview(buttonStackView)
             
             backgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -210,13 +230,14 @@ class PopupVC : UIViewController {
                 backgroundView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor),
                 backgroundView.topAnchor.constraint(equalTo: containerStackView.topAnchor),
                 backgroundView.trailingAnchor.constraint(equalTo: containerStackView.trailingAnchor),
-                backgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
+                backgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            ])
             
         } else {
             if let titleLabel = titleLabel {
                 containerStackView.addArrangedSubview(titleLabel)
             }
-
+            
             if let messageLabel = messageLabel {
                 containerStackView.addArrangedSubview(messageLabel)
             }
@@ -224,13 +245,13 @@ class PopupVC : UIViewController {
             if let lastView = containerStackView.subviews.last {
                 containerStackView.setCustomSpacing(16.0, after: lastView)
             }
-
+            
             containerStackView.addArrangedSubview(buttonStackView)
         }
-
+        
         
     }
-
+    
     private func makeConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerStackView.translatesAutoresizingMaskIntoConstraints = false

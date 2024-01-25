@@ -11,6 +11,8 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum Common {
+    /// 참여
+    internal static let attend = L10n.tr("Localizable", "Common.attend", fallback: "참여")
     /// 참여자
     internal static let attendees = L10n.tr("Localizable", "Common.attendees", fallback: "참여자")
     /// 취소
@@ -34,6 +36,8 @@ internal enum L10n {
     /// 
     ///   Created by dylan on 2023/07/31.
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
+    /// 거절
+    internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
   }
   internal enum CompletedCreatePromise {
     /// 약속 생성 완료
@@ -154,6 +158,12 @@ internal enum L10n {
       internal static let bulletPoint3 = L10n.tr("Localizable", "GuideAttendee.Title3.bulletPoint3", fallback: "•  모두가 만났으면 위치 공유는 종료돼요!")
     }
   }
+  internal enum InvitationPopUp {
+    /// 참여자들의 중간장소로 지정됩니다
+    internal static let middlePlaceWarning = L10n.tr("Localizable", "InvitationPopUp.middlePlaceWarning", fallback: "참여자들의 중간장소로 지정됩니다")
+    /// 출발지를 등록해 주세요
+    internal static let startLocationPlaceholder = L10n.tr("Localizable", "InvitationPopUp.startLocationPlaceholder", fallback: "출발지를 등록해 주세요")
+  }
   internal enum Main {
     /// 새 약속 추가
     internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
@@ -187,6 +197,12 @@ internal enum L10n {
     internal static let mainDescription = L10n.tr("Localizable", "SignIn.mainDescription", fallback: "만나기 전에 서로의 위치를 공유해 보세요")
     /// 로그인 수단 선택
     internal static let selectSignInMethodText = L10n.tr("Localizable", "SignIn.selectSignInMethodText", fallback: "로그인 수단 선택")
+  }
+  internal enum TaggedNotification {
+    /// 띵동! 약속에 초대 받았어요
+    internal static let invitedToPromise = L10n.tr("Localizable", "TaggedNotification.invitedToPromise", fallback: "띵동! 약속에 초대 받았어요")
+    /// 모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요
+    internal static let middlePlaceWarning = L10n.tr("Localizable", "TaggedNotification.middlePlaceWarning", fallback: "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
