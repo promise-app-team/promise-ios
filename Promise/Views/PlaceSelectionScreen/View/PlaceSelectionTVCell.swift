@@ -35,6 +35,7 @@ class PlaceSelectionTableViewCell: UITableViewCell {
     private let addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         return label
     }()
     

@@ -52,7 +52,13 @@ extension PlaceSelectionVC: UITableViewDelegate {
         let marker = NMFMarker()
         marker.position = position
         self.marker = marker
-        marker.mapView = naverMapView.mapView
+        
+        let placeName = place?.documents?[indexPath.row].placeName
+        let roadAddress = place?.documents?[indexPath.row].roadAddressName
+        let regionAddress = place?.documents?[indexPath.row].addressName
+        confirmView.updateTitleLabel(placeName)
+        confirmView.updateAddressLabel(roadAddress, regionAddress)
+        
         viewState = .map
     }
     
@@ -61,6 +67,6 @@ extension PlaceSelectionVC: UITableViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        _ = textField.resignFirstResponder()
+        _ = searchTextField.resignFirstResponder()
     }
 }

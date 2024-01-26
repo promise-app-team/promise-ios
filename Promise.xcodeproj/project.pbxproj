@@ -11,6 +11,8 @@
 		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
 		2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */; };
 		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
+		2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */; };
+		2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */; };
 		2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */; };
 		2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
@@ -139,6 +141,8 @@
 		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
 		2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTVCell.swift; sourceTree = "<group>"; };
 		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
+		2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAddressStackView.swift; sourceTree = "<group>"; };
+		2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionConfirmView.swift; sourceTree = "<group>"; };
 		2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceMDL.swift; sourceTree = "<group>"; };
 		2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TextField.swift"; sourceTree = "<group>"; };
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
@@ -312,12 +316,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		2B9895322B638B24006AE27E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		2BBA01982B4E8ABA00B1039A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */,
 				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
 				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
+				2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -650,6 +663,7 @@
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
 				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
 				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
+				2B9895322B638B24006AE27E /* Components */,
 				2BBA01982B4E8ABA00B1039A /* View */,
 			);
 			path = PlaceSelectionScreen;
@@ -1102,6 +1116,8 @@
 				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
+				2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */,
+				2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
 				2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,

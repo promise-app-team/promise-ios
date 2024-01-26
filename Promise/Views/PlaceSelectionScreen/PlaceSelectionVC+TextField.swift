@@ -8,20 +8,28 @@
 import UIKit
 
 extension PlaceSelectionVC: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        guard
-            let userInput = textField.text,
-            textField.text != ""
-        else {
-            viewState = .idle
-            return false
+        switch textField {
+        case searchTextField:
+            guard
+                let userInput = textField.text,
+                textField.text != ""
+            else {
+                viewState = .idle
+                return false
+            }
+            
+            searchPlace(of: userInput)
+            viewState = .resultList
+        case confirmView.addressTextField:
+            print("this")
+        default:
+            break
         }
         
         textField.resignFirstResponder()
-        searchPlace(of: userInput)
-        viewState = .resultList
+        
         return true
     }
     

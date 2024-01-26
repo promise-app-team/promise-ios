@@ -33,6 +33,7 @@ class PlaceSelectionVC: UIViewController {
                     self.tipView.isHidden = false
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = true
+                    self.confirmView.isHidden = true
                 }
                 marker = nil
             case .searching:
@@ -44,12 +45,14 @@ class PlaceSelectionVC: UIViewController {
                     self.tipView.isHidden = true
                     self.tableView.isHidden = false
                     self.naverMapView.isHidden = true
+                    self.confirmView.isHidden = true
                 }
             case .map:
                 DispatchQueue.main.async {
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = false
+                    self.confirmView.isHidden = false
                 }
             case .none:
                 break
@@ -74,7 +77,7 @@ class PlaceSelectionVC: UIViewController {
         return headerView
     }()
     
-    lazy var textField: TextField = {
+    lazy var searchTextField: TextField = {
         let textField = TextField()
         textField.initialize(placeHolder: "도로명, 지번, 건물명 검색", showSearchIcon: true)
         textField.delegate = self
@@ -104,6 +107,8 @@ class PlaceSelectionVC: UIViewController {
         return naverMapView
     }()
     
+    let confirmView = PlaceSelectionConfirmView()
+    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
@@ -111,12 +116,64 @@ class PlaceSelectionVC: UIViewController {
         configureAccountVC()
         render()
         viewState = .idle
+        confirmView.configureAddressTextfieldDelegate(self)
+        
+        addKeyboardNotification()
+    }
+    
+    
+    private func addKeyboardNotification() {
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(keyboardWillShow),
+          name: UIResponder.keyboardWillShowNotification,
+          object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+          self,
+          selector: #selector(keyboardWillHide),
+          name: UIResponder.keyboardWillHideNotification,
+          object: nil
+        )
+      }
+    
+    func isKeyboardVisible() -> Bool {
+        return view.window?.frame.origin.y ?? 0 < 0
+    }
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard
+            confirmView.addressTextField.isFirstResponder
+        else {
+            return
+        }
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+          let keybaordRectangle = keyboardFrame.cgRectValue
+          let keyboardHeight = keybaordRectangle.height
+//          confirmView.frame.origin.y -= keyboardHeight
+            // view가 아닌 confirmView 만 올라가게 해야함
+          view.frame.origin.y -= keyboardHeight
+        }
+    }
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard
+            confirmView.addressTextField.isFirstResponder
+        else {
+            return
+        }
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keybaordRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keybaordRectangle.height
+//            confirmView.frame.origin.y += keyboardHeight
+            view.frame.origin.y += keyboardHeight
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.onWillShow?()
-        let _ = textField.becomeFirstResponder()
+        let _ = searchTextField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,8 +193,11 @@ class PlaceSelectionVC: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        if textField.isFirstResponder {
-            let _ = textField.resignFirstResponder()
+        if searchTextField.isFirstResponder {
+            let _ = searchTextField.resignFirstResponder()
+        }
+        else if confirmView.addressTextField.isFirstResponder {
+            let _ = confirmView.addressTextField.resignFirstResponder()
         }
     }
     
@@ -148,7 +208,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, textField, tipView, tableView, naverMapView].forEach {
+        [headerView, searchTextField, tipView, tableView, naverMapView, confirmView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -162,25 +222,30 @@ class PlaceSelectionVC: UIViewController {
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 56),
             
-            textField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
-            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            textField.heightAnchor.constraint(equalToConstant: 40),
+            searchTextField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            searchTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            searchTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            searchTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            tipView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            tipView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
             tipView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            naverMapView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
-            naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            naverMapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            naverMapView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
+            naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            naverMapView.bottomAnchor.constraint(equalTo: confirmView.topAnchor),
             
-            tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            tableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            confirmView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            confirmView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            confirmView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            confirmView.heightAnchor.constraint(equalToConstant: 300),
         ])
     }
 }
