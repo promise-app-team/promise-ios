@@ -18,48 +18,38 @@ import NMapsMap
 class PlaceSelectionVC: UIViewController {
     
     enum SearchStatus {
-        case idle, searching, searchFail, searchResult, map
+        case idle, searching, searchFail, resultList, map
     }
     
     // MARK: Public Property
     
     weak var delegate: PlaceSelectionDelegate?
     
-//    var viewState: SearchStatus = .map {
     var viewState: SearchStatus! {
         didSet {
             switch self.viewState {
             case .idle:
-                tipView.isHidden = false
-                tableView.isHidden = true
-//                mapView.isHidden = true
                 DispatchQueue.main.async {
-                    self.mapView.isHidden = true
+                    self.tipView.isHidden = false
+                    self.tableView.isHidden = true
+                    self.naverMapView.isHidden = true
                 }
             case .searching:
                 break
             case .searchFail:
                 break
-            case .searchResult:
-                tipView.isHidden = true
-                tableView.isHidden = false
-//                mapView.isHidden = true
+            case .resultList:
                 DispatchQueue.main.async {
-                    self.mapView.isHidden = true
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = false
+                    self.naverMapView.isHidden = true
                 }
             case .map:
-                print("->.map")
-//                tipView.isHidden = true
-//                tableView.isHidden = true
-//                mapView.isHidden = false
-                DispatchQueue.main.async {
-                    print("dispatchqueue")
+//                DispatchQueue.main.async {
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
-                    self.mapView.isHidden = false
-                    self.mapView.forceRefresh()
-                    self.mapView.reloadInputViews()
-                }
+                    self.naverMapView.isHidden = false
+//                }
             case .none:
                 break
             }
@@ -95,7 +85,7 @@ class PlaceSelectionVC: UIViewController {
         return tableView
     }()
     
-    let mapView: NMFMapView = {
+    let naverMapView: NMFNaverMapView = {
         let naverMapView = NMFNaverMapView()
         naverMapView.showCompass = true
         naverMapView.showZoomControls = true
@@ -103,10 +93,7 @@ class PlaceSelectionVC: UIViewController {
         let mapView =  naverMapView.mapView
         mapView.latitude = 37.4222864409138
         mapView.longitude = 126.687581340746
-        
-//        mapView.isHidden = true
-//        return mapView
-        return naverMapView.mapView
+        return naverMapView
     }()
     
     // MARK: View Life Cycle
@@ -116,7 +103,6 @@ class PlaceSelectionVC: UIViewController {
         configureAccountVC()
         render()
         viewState = .idle
-//        viewState = .map
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,7 +140,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, textField, tipView, tableView, mapView].forEach {
+        [headerView, textField, tipView, tableView, naverMapView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -178,10 +164,10 @@ class PlaceSelectionVC: UIViewController {
             tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            mapView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
-            mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            naverMapView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            naverMapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             tableView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -197,14 +183,9 @@ extension PlaceSelectionVC: HeaderViewDelegate {
     
     func onTapCustomBackAction() {
         if viewState == .map {
-            viewState = .searchResult
+            viewState = .resultList
         } else {
             dismiss(animated: true)
         }
     }
-}
-
-extension UIViewController {
-    
-
 }

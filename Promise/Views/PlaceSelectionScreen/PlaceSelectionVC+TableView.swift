@@ -11,7 +11,6 @@ import NMapsMap
 // MARK: UITableViewDataSource
 
 extension PlaceSelectionVC: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return place?.documents?.count ?? 0
     }
@@ -30,11 +29,8 @@ extension PlaceSelectionVC: UITableViewDataSource {
 // MARK: UITableViewDelegate
 
 extension PlaceSelectionVC: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-        print("didSelectRowAt")
-        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         guard
             let latString = place?.documents?[indexPath.row].y,
@@ -42,19 +38,18 @@ extension PlaceSelectionVC: UITableViewDelegate {
             let lat = Double(latString),
             let lon = Double(lonString)
         else {
-            print("fail to transfer")
-            print(place?.documents?[indexPath.row].y, place?.documents?[indexPath.row].x)
+            print("didSelectRowAt: fail to transfer")
+            
+            // x,y 없는 경우 사용자 알림 필요
+            
             return
         }
-        print("1")
+        
+        let position = NMGLatLng(lat: lat, lng: lon)
+        let cameraUpdate = NMFCameraUpdate(scrollTo: position)
+        naverMapView.mapView.moveCamera(cameraUpdate)
+        
         viewState = .map
-        print("2")
-        // MARK: - deallocate error
-        DispatchQueue.main.async {
-//            self.mapView.latitude = lat
-//            self.mapView.longitude = lo
-        }
-        print("3")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

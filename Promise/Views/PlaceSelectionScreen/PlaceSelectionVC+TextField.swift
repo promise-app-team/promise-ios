@@ -21,7 +21,7 @@ extension PlaceSelectionVC: UITextFieldDelegate {
         
         textField.resignFirstResponder()
         searchPlace(of: userInput)
-        viewState = .searchResult
+        viewState = .resultList
         return true
     }
     
