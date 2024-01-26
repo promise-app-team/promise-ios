@@ -49,6 +49,10 @@ extension PlaceSelectionVC: UITableViewDelegate {
         let cameraUpdate = NMFCameraUpdate(scrollTo: position)
         naverMapView.mapView.moveCamera(cameraUpdate)
         
+        let marker = NMFMarker()
+        marker.position = position
+        self.marker = marker
+        marker.mapView = naverMapView.mapView
         viewState = .map
     }
     

@@ -34,6 +34,7 @@ class PlaceSelectionVC: UIViewController {
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = true
                 }
+                marker = nil
             case .searching:
                 break
             case .searchFail:
@@ -45,14 +46,21 @@ class PlaceSelectionVC: UIViewController {
                     self.naverMapView.isHidden = true
                 }
             case .map:
-//                DispatchQueue.main.async {
+                DispatchQueue.main.async {
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = false
-//                }
+                }
             case .none:
                 break
             }
+        }
+    }
+    
+    var marker: NMFMarker? = nil {
+        didSet {
+            oldValue?.mapView = nil
+            marker?.mapView = naverMapView.mapView
         }
     }
     

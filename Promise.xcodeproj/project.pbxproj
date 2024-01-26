@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */; };
 		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
-		2B7DE4622B4D258300127DAA /* PlaceSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */; };
+		2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */; };
 		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
 		2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */; };
 		2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */; };
@@ -19,7 +19,6 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
-		E744344B2B522031004B5C6C /* PlaceSelectionMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E744344A2B522031004B5C6C /* PlaceSelectionMapVC.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -138,7 +137,7 @@
 /* Begin PBXFileReference section */
 		2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipView.swift; sourceTree = "<group>"; };
 		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
-		2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTVCell.swift; sourceTree = "<group>"; };
 		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
 		2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceMDL.swift; sourceTree = "<group>"; };
 		2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TextField.swift"; sourceTree = "<group>"; };
@@ -160,7 +159,6 @@
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E05ABACA1B55DE44E538CD23 /* Pods-Promise-PromiseUITests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (production).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (production).xcconfig"; sourceTree = "<group>"; };
 		E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PromiseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E744344A2B522031004B5C6C /* PlaceSelectionMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionMapVC.swift; sourceTree = "<group>"; };
 		E7B91DD82A78D47100426D81 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
 		E7B91E0A2A7D156400426D81 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
@@ -314,28 +312,12 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		2B7DE4392B4CE4D700127DAA /* PlaceSelectionTipView */ = {
-			isa = PBXGroup;
-			children = (
-				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
-				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
-			);
-			path = PlaceSelectionTipView;
-			sourceTree = "<group>";
-		};
-		2B7DE4602B4D257000127DAA /* PlaceSelectionTableView */ = {
-			isa = PBXGroup;
-			children = (
-				2B7DE4612B4D258300127DAA /* PlaceSelectionTableViewCell.swift */,
-			);
-			path = PlaceSelectionTableView;
-			sourceTree = "<group>";
-		};
 		2BBA01982B4E8ABA00B1039A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2B7DE4602B4D257000127DAA /* PlaceSelectionTableView */,
-				2B7DE4392B4CE4D700127DAA /* PlaceSelectionTipView */,
+				2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */,
+				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
+				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -665,11 +647,10 @@
 		FCB3AD5C2AC2E75700219A25 /* PlaceSelectionScreen */ = {
 			isa = PBXGroup;
 			children = (
-				2BBA01982B4E8ABA00B1039A /* View */,
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
-				E744344A2B522031004B5C6C /* PlaceSelectionMapVC.swift */,
 				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
 				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
+				2BBA01982B4E8ABA00B1039A /* View */,
 			);
 			path = PlaceSelectionScreen;
 			sourceTree = "<group>";
@@ -1144,10 +1125,9 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
-				2B7DE4622B4D258300127DAA /* PlaceSelectionTableViewCell.swift in Sources */,
+				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
-				E744344B2B522031004B5C6C /* PlaceSelectionMapVC.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,
 				FCB3AD612AC31A3B00219A25 /* FormTabMenuView.swift in Sources */,
 				FCE8C44F2A8B787A00E2B672 /* UIColor.swift in Sources */,
