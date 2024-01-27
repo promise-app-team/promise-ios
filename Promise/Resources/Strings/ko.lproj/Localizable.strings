@@ -101,3 +101,5 @@
 // MARK: Invitation Pop Up
 "InvitationPopUp.startLocationPlaceholder" = "출발지를 등록해 주세요";
 "InvitationPopUp.middlePlaceWarning" = "참여자들의 중간장소로 지정됩니다";
+"InvitationPopUp.IsNotAbleToPromise.title" = "참여할 수 없는 약속입니다";
+"InvitationPopUp.IsNotAbleToPromise.description" = "약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.";

@@ -88,7 +88,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
                     
                     Task {
                         
-                        let (isAbleToAttend, promise) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
+                        let (isAbleToAttend, promise, error) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
                         
                         if (isAbleToAttend) {
                             // MARK: 로그인 상태, 참여 가이드 화면 or 메인화면에서 참여 팝업.
@@ -167,6 +167,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
                                 let mainVC = MainVC(shouldFocusPromiseId: promiseId)
                                 self.navigationController?.pushViewController(mainVC, animated: true)
                                 
+                            }
+                            
+                            // MARK: 로그인 상태, 참여할 수 없는 상태, 약속 자체가 없거나 약속 정보를 가져오는데 실패한 경우
+                            if let error {
+                                try await Task.sleep(seconds: 0.5)
+                                navigationController?.visibleViewController?.showPopUp(
+                                    title: L10n.InvitationPopUp.IsNotAbleToPromise.title,
+                                    message: L10n.InvitationPopUp.IsNotAbleToPromise.description
+                                )
                             }
                             
                         }

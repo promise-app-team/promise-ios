@@ -30,7 +30,7 @@ struct AttendanceHelper {
     }
     
     // MARK: 로그인 이후 메모리에 User Data가 있어야 함수가 제대로 동작함.
-    func checkAbleToAttend(promiseId: String) async -> (Bool, Components.Schemas.OutputPromiseListItem?) {
+    func checkAbleToAttend(promiseId: String) async -> (Bool, Components.Schemas.OutputPromiseListItem?, error: NetworkError?) {
         let result: Result<Components.Schemas.OutputPromiseListItem, NetworkError> = await APIService.shared.fetch(.GET, "/promises/\(promiseId)")
         
         switch result {
@@ -38,21 +38,21 @@ struct AttendanceHelper {
             if let user = UserService.shared.getUser() {
                 let userId = user.userId
                 if(userId == String(Int(promise.host.id))) {
-                    return (false, promise)
+                    return (false, promise, nil)
                 }
                 
-                return (true, promise)
+                return (true, promise, nil)
             }
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
-                return (false, nil)
+                return (false, nil, errorType)
             default:
                 // Other Error(Network, badUrl ...)
-                return (false, nil)
+                return (false, nil, errorType)
             }
         }
         
-        return (false, nil)
+        return (false, nil, nil)
     }
 }

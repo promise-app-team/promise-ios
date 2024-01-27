@@ -42,7 +42,7 @@ final class Onboarding {
                         Task {
                             let attendanceHelper = AttendanceHelper()
                             
-                            let (isAbleToAttend, promise) = await attendanceHelper.checkAbleToAttend(promiseId: invitedPromiseId)
+                            let (isAbleToAttend, promise, error) = await attendanceHelper.checkAbleToAttend(promiseId: invitedPromiseId)
                             
                             if isAbleToAttend {
                                 // MARK: 기존 로그인 성공, 초대받은 약속 아이디가 있다면 최초 참여자 플로우
@@ -64,8 +64,17 @@ final class Onboarding {
                                 
                             } else {
                                 // MARK: 기존 로그인 성공, 초대장에 참여가 불가능한 상태일때(해당 초대장이 내 약속일 경우)
+                                let mainVC = MainVC(shouldFocusPromiseId: invitedPromiseId)
+                                completion(mainVC)
                                 
-                                completion(MainVC(shouldFocusPromiseId: invitedPromiseId))
+                                // MARK: 기존 로그인 성공, 초대장에 참여가 불가능한 상태인데(약속이 없거나 약속 정보를 불러오는데 실패한 경우)
+                                if let error {
+                                    try await Task.sleep(seconds: 0.5)
+                                    mainVC.showPopUp(
+                                        title: L10n.InvitationPopUp.IsNotAbleToPromise.title,
+                                        message: L10n.InvitationPopUp.IsNotAbleToPromise.description
+                                    )
+                                }
                             }
                         }
                         

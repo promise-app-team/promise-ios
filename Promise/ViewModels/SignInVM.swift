@@ -161,7 +161,7 @@ final class SignInVM: NSObject {
             Task {
                 let attendanceHelper = AttendanceHelper()
                 
-                let (isAbleToAttend, promise) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
+                let (isAbleToAttend, promise, _) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
                 
                 if isAbleToAttend {
                     

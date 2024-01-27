@@ -11,6 +11,7 @@ import FloatingPanel
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
     var invitedPromise: Components.Schemas.OutputPromiseListItem?
+    var isNotAbleToInvitedPromise: Bool = false
     
     lazy var mainVM = MainVM(currentVC: self)
     
@@ -172,7 +173,10 @@ final class MainVC: UIViewController {
     
     // MARK: initialize
     
-    init(invitedPromise: Components.Schemas.OutputPromiseListItem? = nil, shouldFocusPromiseId: String? = nil) {
+    init(
+        invitedPromise: Components.Schemas.OutputPromiseListItem? = nil,
+        shouldFocusPromiseId: String? = nil
+    ) {
         self.invitedPromise = invitedPromise
         super.init(nibName: nil, bundle: nil)
         mainVM.shouldFocusPromiseId = shouldFocusPromiseId
