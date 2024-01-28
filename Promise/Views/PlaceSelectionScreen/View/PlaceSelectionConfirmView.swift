@@ -40,6 +40,12 @@ final class PlaceSelectionConfirmView: UIView {
         return textField
     }()
     
+    let confirmButton: Button = {
+        let btn = Button()
+        btn.initialize(title: "완료", style: .primary)
+        return btn
+    }()
+    
     // MARK: Initializer
     
     var mytextfield = UITextField()
@@ -80,7 +86,7 @@ final class PlaceSelectionConfirmView: UIView {
     // MARK: Private Function
     
     private func render() {
-        [titleLabel, roadAddressView, regionAddressView, detailLabel, addressTextField].forEach {
+        [titleLabel, roadAddressView, regionAddressView, detailLabel, addressTextField, confirmButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
@@ -105,6 +111,11 @@ final class PlaceSelectionConfirmView: UIView {
             addressTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             addressTextField.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             addressTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            confirmButton.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 24),
+            confirmButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            confirmButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            confirmButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
