@@ -8,9 +8,18 @@
 import Foundation
 import UIKit
 
+protocol InvitationPopUpDelegate: NSObject {
+    func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem)
+    func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError)
+    func onLoadingAttendPromise()
+}
+
 class InvitationPopUp {
+    weak var delegate: InvitationPopUpDelegate?
     
     // properties
+    
+    private var popupVC: PopupVC?
     
     private let invitedPromise: Components.Schemas.OutputPromiseListItem
     private let currentVC: UIViewController
@@ -73,12 +82,12 @@ class InvitationPopUp {
         let label = UILabel()
         
         // TimeInterval을 Date 객체로 변환
-        let date = Date(timeIntervalSince1970: Double(invitedPromise.promisedAt))
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
         
-        label.text = dateFormatter.string(from: date)
+        label.text = dateFormatter.string(from: invitedPromise.promisedAt)
         label.textColor =  UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         let font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
@@ -166,7 +175,7 @@ class InvitationPopUp {
     
     private lazy var host = {
         let label = UILabel()
-    
+        
         label.text = invitedPromise.host.username
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
         label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
@@ -405,8 +414,37 @@ class InvitationPopUp {
     
     // handler
     
-    private func onTapInviteButton() {
-        // TODO: 약속 참여!
+    private func onTapAttendButton() {
+        self.popupVC?.close(completion: {
+            Task { [weak self] in
+                guard let targetPromise = self?.invitedPromise else { return }
+                
+                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attend")
+                
+                switch result {
+                case .success:
+                    
+                    self?.delegate?.onSuccessAttendPromise(promise: targetPromise)
+                    
+                case .failure(let errorType):
+                    
+                    switch errorType {
+                    case .badRequest(let error):
+                        
+                        self?.delegate?.onFailureAttendPromise(targetPromise: targetPromise, error: error)
+                        
+                    default:
+                        
+                        // Other Error(Network, badUrl ...)
+                        break
+                    }
+                    
+                }
+                
+            }
+        })
+        
+        
     }
     
     @objc private func onTapStartLocationButton() {
@@ -424,23 +462,43 @@ class InvitationPopUp {
 
 extension InvitationPopUp {
     public func showInvitationPopUp() {
+        APIService.shared.delegate = self
         
         DispatchQueue.main.async {
             let popupVC = PopupVC()
+            self.popupVC = popupVC
+            
             popupVC.disableBackgroundTap = true
             popupVC.containerView.backgroundColor = UIColor(red: 1, green: 0.992, blue: 0.976, alpha: 1)
-            popupVC.initialize(contentView: self.invitationContent,
-                               leftBtnTitle: L10n.Common.refuse,
-                               leftBtnHandler: {popupVC.close()},
-                               rightBtnTitle: L10n.Common.attend,
-                               rightBtnHandelr: self.onTapInviteButton
-            )
             
+            popupVC.initialize(
+                contentView: self.invitationContent,
+                leftBtnTitle: L10n.Common.refuse,
+                leftBtnHandler: {
+                    popupVC.close()
+                    self.popupVC = nil
+                },
+                rightBtnTitle: L10n.Common.attend,
+                rightBtnHandelr: self.onTapAttendButton
+            )
             
             self.currentVC.present(popupVC, animated: false) {
                 self.line.addDashedBorder()
             }
         }
         
+    }
+}
+
+extension InvitationPopUp: APIServiceDelegate {
+    func onLoading(path: String?, isLoading: Bool) {
+        switch(path) {
+        case "/promises/\(invitedPromise.pid)/attend":
+            if(isLoading) {
+                self.delegate?.onLoadingAttendPromise()
+            }
+        default:
+            break
+        }
     }
 }

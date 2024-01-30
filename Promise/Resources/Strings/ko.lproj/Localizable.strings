@@ -30,6 +30,7 @@
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
 
 // MARK: MainScreen
+"Main.emptyPromisesTitle" = "아직 약속이 없어요\n새 약속을 추가해 보세요";
 "Main.addNewPromise" = "새 약속 추가";
 "Main.PromiseList.placeLabel" = "장소";
 "Main.PromiseList.hostLabel" = "생성자";
@@ -103,3 +104,7 @@
 "InvitationPopUp.middlePlaceWarning" = "참여자들의 중간장소로 지정됩니다";
 "InvitationPopUp.IsNotAbleToPromise.title" = "참여할 수 없는 약속입니다";
 "InvitationPopUp.IsNotAbleToPromise.description" = "약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.";
+"InvitationPopUp.IsFailedAttendPromise.title" = "약속에 참여할 수 없습니다";
+"InvitationPopUp.IsFailedAttendPromise.description" = "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.";
+
+"InvitationPopUp.Toast.successAttendPromise" = "약속에 참여했어요!";

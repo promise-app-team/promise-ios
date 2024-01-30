@@ -179,7 +179,7 @@ class CreatePromiseVM: NSObject {
         let submitForm = Components.Schemas.InputCreatePromise(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
-            promisedAt: form.date!.timeIntervalInSeconds,
+            promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
             destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,

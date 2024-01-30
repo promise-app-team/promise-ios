@@ -17,9 +17,9 @@ extension UIViewController {
         let popupVC = PopupVC()
         popupVC.initialize(titleText: title,
                            messageText: message,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandler ?? {popupVC.close()},
-                           leftBtnTitle: cancelBtnExist ? "취소" : nil,
+                           leftBtnTitle: cancelBtnExist ? L10n.Common.cancel : nil,
                            leftBtnHandler: cancelBtnExist ? { popupVC.close() } : nil)
         
         present(popupVC, animated: false, completion: nil)
@@ -35,7 +35,7 @@ extension UIViewController {
         let popupVC = PopupVC()
         popupVC.initialize(titleText: title,
                            messageText: message,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandler ?? { popupVC.close() },
                            leftBtnTitle: leftBtnTitle,
                            leftBtnHandler: leftBtnHandler)
@@ -48,14 +48,14 @@ extension UIViewController {
         rightBtnTitle: String? = nil,
         rightBtnHandler: (() -> Void)? = nil,
         cancelBtnExist: Bool = false,
-        cancelBtnTitle: String = "취소"
+        cancelBtnTitle: String = L10n.Common.cancel
     ) {
         
         let popupVC = PopupVC()
         popupVC.initialize(contentView: contentView,
                            leftBtnTitle: cancelBtnExist ? cancelBtnTitle : nil,
                            leftBtnHandler: cancelBtnExist ? { popupVC.close() } : nil,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandler ?? {popupVC.close()}
         )
         
@@ -73,7 +73,7 @@ extension UIViewController {
         popupVC.initialize(contentView: contentView,
                            leftBtnTitle: leftBtnTitle,
                            leftBtnHandler: leftBtnHandler,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandelr ?? { popupVC.close() })
         
         present(popupVC, animated: false, completion: nil)

@@ -13,7 +13,7 @@ final class Onboarding {
     func ready(invitedPromiseId: String?, _ completion: @escaping (UIViewController) -> Void) {
         loading = true
         
-#if DEBUG
+        #if DEBUG
         // UserDefaults에 저장된 모든 키와 값 출력(시스템에서 자동으로 추가된 것 제외, 직접 추가한 것만 출력)
         print("============ UserDefaults ============")
         for key in UserDefaultConstants.allKeys {
@@ -24,7 +24,7 @@ final class Onboarding {
             }
         }
         print("======================================")
-#endif
+        #endif
         
         
         Task {
@@ -68,7 +68,7 @@ final class Onboarding {
                                 completion(mainVC)
                                 
                                 // MARK: 기존 로그인 성공, 초대장에 참여가 불가능한 상태인데(약속이 없거나 약속 정보를 불러오는데 실패한 경우)
-                                if let error {
+                                if let _ = error {
                                     try await Task.sleep(seconds: 0.5)
                                     mainVC.showPopUp(
                                         title: L10n.InvitationPopUp.IsNotAbleToPromise.title,

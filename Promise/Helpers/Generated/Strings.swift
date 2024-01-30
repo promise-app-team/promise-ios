@@ -163,16 +163,30 @@ internal enum L10n {
     internal static let middlePlaceWarning = L10n.tr("Localizable", "InvitationPopUp.middlePlaceWarning", fallback: "참여자들의 중간장소로 지정됩니다")
     /// 출발지를 등록해 주세요
     internal static let startLocationPlaceholder = L10n.tr("Localizable", "InvitationPopUp.startLocationPlaceholder", fallback: "출발지를 등록해 주세요")
+    internal enum IsFailedAttendPromise {
+      /// 서버 문제로 약속 참여에 실패했습니다.
+      /// 관리자에게 문의해주세요.
+      internal static let description = L10n.tr("Localizable", "InvitationPopUp.IsFailedAttendPromise.description", fallback: "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.")
+      /// 약속에 참여할 수 없습니다
+      internal static let title = L10n.tr("Localizable", "InvitationPopUp.IsFailedAttendPromise.title", fallback: "약속에 참여할 수 없습니다")
+    }
     internal enum IsNotAbleToPromise {
       /// 약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.
       internal static let description = L10n.tr("Localizable", "InvitationPopUp.IsNotAbleToPromise.description", fallback: "약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.")
       /// 참여할 수 없는 약속입니다
       internal static let title = L10n.tr("Localizable", "InvitationPopUp.IsNotAbleToPromise.title", fallback: "참여할 수 없는 약속입니다")
     }
+    internal enum Toast {
+      /// 약속에 참여했어요!
+      internal static let successAttendPromise = L10n.tr("Localizable", "InvitationPopUp.Toast.successAttendPromise", fallback: "약속에 참여했어요!")
+    }
   }
   internal enum Main {
     /// 새 약속 추가
     internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
+    /// 아직 약속이 없어요
+    /// 새 약속을 추가해 보세요
+    internal static let emptyPromisesTitle = L10n.tr("Localizable", "Main.emptyPromisesTitle", fallback: "아직 약속이 없어요\n새 약속을 추가해 보세요")
     internal enum Probee {
       internal enum Guidance {
         /// 공유 아이콘으로 약속에 초대할 수 있어요!

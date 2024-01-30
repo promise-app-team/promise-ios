@@ -11,7 +11,7 @@ import OpenAPIURLSession
 
 enum NetworkError: Error {
     case badUrl
-    case badRequest(Data?)
+    case badRequest(BadRequestError)
     case networkError(Error?)
     case decodingError
     case encodeingError
@@ -24,12 +24,19 @@ enum HttpMethod: String {
     // Ohter http methods
 }
 
+struct BadRequestError {
+    let data: Data?
+    let errorResponse: ErrorResponse?
+}
+
 // TODO: 서버 에러 메시지
-struct ErrorResponse {
+struct ErrorResponse: Decodable {
     let message: String
     let error: String
     let statusCode: Int
 }
+
+struct EmptyResponse: Decodable {}
 
 protocol APIServiceDelegate: AnyObject {
     func onLoading(path: String?, isLoading: Bool)
@@ -50,6 +57,12 @@ final class APIService {
     static let shared = APIService()
     
     weak var delegate: APIServiceDelegate?
+    
+    let decoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
     
     func fetch<Response: Decodable>(_ method: HttpMethod, _ path: String? = nil, _ params: [String: String]? = nil , _ body: Encodable? = nil) async -> Result<Response, NetworkError> {
         
@@ -115,10 +128,20 @@ final class APIService {
             }
             
             guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                return .failure(.badRequest(data))
+                
+                if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                    return .failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse)))
+                }
+
+                return .failure(.badRequest(BadRequestError(data: data, errorResponse: nil)))
+                
             }
             
-            guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
+            if data.isEmpty, Response.self == EmptyResponse.self {
+                return .success(EmptyResponse() as! Response)
+            }
+            
+            guard let parsedData = try? self.decoder.decode(Response.self, from: data) else {
                 return .failure(.decodingError)
             }
             
@@ -156,10 +179,20 @@ final class APIService {
                 let (data, response) = try await URLSession.shared.data(for: reRequest)
                 
                 guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                    return .failure(.badRequest(data))
+                    
+                    if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                        return .failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse)))
+                    }
+
+                    return .failure(.badRequest(BadRequestError(data: data, errorResponse: nil)))
+        
                 }
                 
-                guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
+                if data.isEmpty, Response.self == EmptyResponse.self {
+                    return .success(EmptyResponse() as! Response)
+                }
+                
+                guard let parsedData = try? self.decoder.decode(Response.self, from: data) else {
                     return .failure(.decodingError)
                 }
                 
@@ -242,11 +275,23 @@ final class APIService {
             }
             
             guard (200...299).contains(response.statusCode) else {
-                completion(.failure(.badRequest(data)))
+                
+                if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                    completion(.failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse))))
+                    return
+                }
+                
+                completion(.failure(.badRequest(BadRequestError(data: data, errorResponse: nil))))
+                return
+                
+            }
+            
+            if data.isEmpty, Response.self == EmptyResponse.self {
+                completion(.success(EmptyResponse() as! Response))
                 return
             }
             
-            guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
+            guard let parsedData = try? self.decoder.decode(Response.self, from: data) else {
                 completion(.failure(.decodingError))
                 return
             }
@@ -293,11 +338,21 @@ final class APIService {
                         }
                         
                         guard (200...299).contains(response.statusCode) else {
-                            completion(.failure(.badRequest(data)))
+                            if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                                completion(.failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse))))
+                                return
+                            }
+                            
+                            completion(.failure(.badRequest(BadRequestError(data: data, errorResponse: nil))))
                             return
                         }
                         
-                        guard let parsedData = try? JSONDecoder().decode(Response.self, from: data) else {
+                        if data.isEmpty, Response.self == EmptyResponse.self {
+                            completion(.success(EmptyResponse() as! Response))
+                            return
+                        }
+                        
+                        guard let parsedData = try? self.decoder.decode(Response.self, from: data) else {
                             completion(.failure(.decodingError))
                             return
                         }

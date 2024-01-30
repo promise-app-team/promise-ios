@@ -185,7 +185,7 @@ class PopupVC : UIViewController {
         close()
     }
     
-    public func close(completion: @escaping () -> Void = {}){
+    public func close(completion: @escaping () -> Void = {}) {
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.alpha = 0

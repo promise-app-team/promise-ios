@@ -14,6 +14,12 @@ final class NavigationView: UIView {
     private lazy var navigation = NavigationMenusView(mainVM: mainVM)
     private lazy var sortPromiseList = SortPromiseListView(mainVM: mainVM)
     
+    var disabledSortPromiseList: Bool = true {
+        didSet {
+            sortPromiseList.disabled = disabledSortPromiseList
+        }
+    }
+    
     init(mainVM: MainVM) {
         self.mainVM = mainVM
         super.init(frame: .null)
