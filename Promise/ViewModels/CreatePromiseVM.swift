@@ -179,7 +179,7 @@ class CreatePromiseVM: NSObject {
         let submitForm = Components.Schemas.InputCreatePromise(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
-            promisedAt: form.date!.timeIntervalInSeconds,
+            promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
             destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,
@@ -189,12 +189,11 @@ class CreatePromiseVM: NSObject {
         )
         
         Task {
-            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promise", nil, submitForm)
+            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promises", nil, submitForm)
             
             switch result {
             case .success(let createdPromise):
                 completion(createdPromise)
-                next()
             case .failure(let errorType):
                 switch errorType {
                 case .badRequest:
@@ -205,13 +204,6 @@ class CreatePromiseVM: NSObject {
                     break
                 }
             }
-        }
-    }
-    
-    func next() {
-        DispatchQueue.main.async {[weak self] in
-            let completedCreatePromiseVC = CompletedCreatePromiseVC()
-            self?.currentVC?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
         }
     }
     
@@ -226,7 +218,7 @@ class CreatePromiseVM: NSObject {
     func getSupportedTheme() async {
         themesLoading = true
         
-        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promise/themes")
+        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
         
         switch result {
         case .success(let themes):

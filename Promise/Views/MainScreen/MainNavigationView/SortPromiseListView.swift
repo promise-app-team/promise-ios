@@ -11,19 +11,36 @@ import UIKit
 class SortPromiseListView: UIStackView {
     private var mainVM: MainVM
     
+    var disabled: Bool = true {
+        didSet {
+            guard disabled else {
+                layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+                sortTitle.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                sortIcon.image = Asset.arrowDown.image
+                
+                return
+            }
+            
+            layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+            sortTitle.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            sortIcon.image = Asset.arrowDownLight.image
+        }
+    }
+    
     let sortTitle = {
         let label = UILabel()
-        label.text = "약속시간 빠른순" // TODO: 모달에서 선택한 텍스트로 변경
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
         
+        label.text = "약속시간 빠른순" // TODO: 모달에서 선택한 텍스트로 변경
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     // TODO: 모달 열리면 반대 방향 아이콘으로 변경
     let sortIcon = {
-        let imageView = UIImageView(image: Asset.arrowDown.image)
+        let imageView = UIImageView(image: Asset.arrowDownLight.image)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -52,7 +69,7 @@ class SortPromiseListView: UIStackView {
         
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
         
         isLayoutMarginsRelativeArrangement = true
         layoutMargins = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 12)

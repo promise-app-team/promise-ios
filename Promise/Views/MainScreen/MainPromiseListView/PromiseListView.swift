@@ -11,14 +11,6 @@ import UIKit
 final class PromiseListView: UICollectionView {
     private var mainVM: MainVM
     
-    private func assignPromisesDidChange() {
-        mainVM.promisesDidChange = { [weak self] (_) in
-            DispatchQueue.main.async {
-                self?.reloadData()
-            }
-        }
-    }
-    
     init(dataSource: UICollectionViewDataSource & MainVC, delegate: UICollectionViewDelegate, layout: UICollectionViewLayout) {
         self.mainVM = dataSource.mainVM
         
@@ -41,12 +33,6 @@ final class PromiseListView: UICollectionView {
     
     private func configurePromiseListView() {
         translatesAutoresizingMaskIntoConstraints = false
-        
         backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
-        
-        Task {
-            assignPromisesDidChange()
-            await mainVM.getPromiseList()
-        }
     }
 }

@@ -13,38 +13,14 @@ import SkeletonView
 class AttendeeCell: UICollectionViewCell {
     static let identifier = "AttendeeCell"
     
-    private let attendeeProfileImage: UIImageView = {
+    private lazy var attendeeProfileImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = imageView.frame.size.height / 2
+        imageView.layer.cornerRadius = contentView.frame.size.height / 2
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .red
         return imageView
-    }()
-    
-    // TODO: 임시
-    private let attendeeTitle = {
-        let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    // TODO: 임시
-    private lazy var attendeeTitleWrap = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
-        view.layer.cornerRadius = 18
-        
-        view.addSubview(attendeeTitle)
-        NSLayoutConstraint.activate([
-            attendeeTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            attendeeTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     override init(frame: CGRect) {
@@ -57,22 +33,23 @@ class AttendeeCell: UICollectionViewCell {
     }
     
     private func configureAttendeeCell() {
-        contentView.addSubview(attendeeTitleWrap)
+        contentView.addSubview(attendeeProfileImage)
         
         NSLayoutConstraint.activate([
-            attendeeTitleWrap.topAnchor.constraint(equalTo: contentView.topAnchor),
-            attendeeTitleWrap.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            attendeeTitleWrap.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            attendeeTitleWrap.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            attendeeProfileImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            attendeeProfileImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            attendeeProfileImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            attendeeProfileImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
     
     func configureAttendeeCell(with attendee: Components.Schemas.Attendee) {
-        // TODO:
-        // attendeeProfileImage.load(url: <#T##URL#>)
+        guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
+            // TODO: 이미지 url이 없을 경우 디폴트 이미지
+            return
+        }
         
-        // 임시:
-        attendeeTitle.text = attendee.username
+        attendeeProfileImage.load(url: imageUrl)
     }
 }
 
@@ -81,10 +58,14 @@ class PromiseListCell: UICollectionViewCell {
     private var isOwner = false {
         didSet {
             if(isOwner) {
-                self.shareButton.isHidden = !isOwner
+                self.shareButton.isHidden = false
+            } else {
+                self.shareButton.isHidden = true
+                self.shareUrl = nil
             }
         }
     }
+    private var shareUrl: URL? = nil
     
     private lazy var shareButton = {
         let imageView = UIImageView(image: Asset.share.image)
@@ -309,7 +290,17 @@ class PromiseListCell: UICollectionViewCell {
     }()
     
     @objc private func onTapShareButton() {
-        // TODO: 공유버튼 클릭시 핸들러 링크와 유니버셜 링크와 함께 공유 열기
+        guard let shareUrl else { return }
+        guard let topVC = parentViewController() else { return }
+        
+        // UIActivityViewController 초기화
+        let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
+        
+        // iPad에서는 popover로 표시해야 할 수 있음
+        activityViewController.popoverPresentationController?.sourceView = self
+        
+        // UIActivityViewController 표시
+        topVC.present(activityViewController, animated: true, completion: nil)
     }
     
     private func assignThemesToTaggedThemes(with themes: [String]) {
@@ -405,12 +396,18 @@ class PromiseListCell: UICollectionViewCell {
         
         assignThemesToTaggedThemes(with: promise.themes)
         
+        // 공유 링크 세팅
+        let sharePromiseId = promise.pid
+        if(!sharePromiseId.isEmpty) {
+            self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
+        }
+        
         // TimeInterval을 Date 객체로 변환
-        let date = Date(timeIntervalSince1970: Double(promise.promisedAt))
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
-        promisedAt.text = dateFormatter.string(from: date)
+        
+        promisedAt.text = dateFormatter.string(from: promise.promisedAt)
         
         title.text = promise.title
         
@@ -419,26 +416,11 @@ class PromiseListCell: UICollectionViewCell {
         }
         
         host.text = promise.host.username
+        
         attendeesCount.text = "(\(promise.attendees.count))"
+        attendees = promise.attendees
         
-        // attendees = promise.attendees
-        // TODO: 임시
-        attendees = [
-            Components.Schemas.Attendee(id: 1, username: "프"),
-            Components.Schemas.Attendee(id: 2, username: "로"),
-            Components.Schemas.Attendee(id: 3, username: "미"),
-            Components.Schemas.Attendee(id: 4, username: "스"),
-            Components.Schemas.Attendee(id: 5, username: "참"),
-            Components.Schemas.Attendee(id: 6, username: "여"),
-            Components.Schemas.Attendee(id: 7, username: "자"),
-            Components.Schemas.Attendee(id: 8, username: "들"),
-            Components.Schemas.Attendee(id: 9, username: "임"),
-            Components.Schemas.Attendee(id: 10, username: "시")
-        ]
-        
-        //TODO: username은 조금 애매하다... userId로 비교하는게 좋을듯
-        // 서버에 host의 userId도 요청후에 UserService의 userId와 비교
-        isOwner = promise.host.username == UserService.shared.getUser()?.nickname
+        isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
         if(isOwner && promise.attendees.count == 0) {
             //TODO: 프로비 가이드 툴팁 show!!
         }

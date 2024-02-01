@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct PromiseConstants {
+    private init() {}
+}

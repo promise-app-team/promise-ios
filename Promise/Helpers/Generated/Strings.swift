@@ -11,6 +11,8 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
   internal enum Common {
+    /// 참여
+    internal static let attend = L10n.tr("Localizable", "Common.attend", fallback: "참여")
     /// 참여자
     internal static let attendees = L10n.tr("Localizable", "Common.attendees", fallback: "참여자")
     /// 취소
@@ -34,6 +36,8 @@ internal enum L10n {
     /// 
     ///   Created by dylan on 2023/07/31.
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
+    /// 거절
+    internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
   }
   internal enum CompletedCreatePromise {
     /// 약속 생성 완료
@@ -120,9 +124,69 @@ internal enum L10n {
       }
     }
   }
+  internal enum GuideAttendee {
+    /// 약속하러 가기
+    internal static let attend = L10n.tr("Localizable", "GuideAttendee.attend", fallback: "약속하러 가기")
+    /// 바로 참여하기
+    internal static let directAttend = L10n.tr("Localizable", "GuideAttendee.directAttend", fallback: "바로 참여하기")
+    /// GPS 공유로
+    /// 서로의 위치를 알 수 있어요
+    internal static let title1 = L10n.tr("Localizable", "GuideAttendee.title1", fallback: "GPS 공유로\n서로의 위치를 알 수 있어요")
+    /// 출발지와 경로를 기반으로
+    /// 중간위치를 알 수 있어요
+    internal static let title2 = L10n.tr("Localizable", "GuideAttendee.title2", fallback: "출발지와 경로를 기반으로\n중간위치를 알 수 있어요")
+    /// 안전하게 내 위치를 공유해요
+    internal static let title3 = L10n.tr("Localizable", "GuideAttendee.title3", fallback: "안전하게 내 위치를 공유해요")
+    internal enum Title1 {
+      /// •  약속한 사람이 어디까지 왔는지!
+      internal static let bulletPoint1 = L10n.tr("Localizable", "GuideAttendee.Title1.bulletPoint1", fallback: "•  약속한 사람이 어디까지 왔는지!")
+      /// •  내가 약속장소에 언제 도착하는지!
+      internal static let bulletPoint2 = L10n.tr("Localizable", "GuideAttendee.Title1.bulletPoint2", fallback: "•  내가 약속장소에 언제 도착하는지!")
+    }
+    internal enum Title2 {
+      /// •  어디서 만날지 고민이라면 중간에서 만나요
+      internal static let bulletPoint1 = L10n.tr("Localizable", "GuideAttendee.Title2.bulletPoint1", fallback: "•  어디서 만날지 고민이라면 중간에서 만나요")
+      /// •  중간위치 주변 장소를 추천 받아요!
+      internal static let bulletPoint2 = L10n.tr("Localizable", "GuideAttendee.Title2.bulletPoint2", fallback: "•  중간위치 주변 장소를 추천 받아요!")
+    }
+    internal enum Title3 {
+      /// •  GPS 정보는 어디에도 저장하지 않아요!
+      internal static let bulletPoint1 = L10n.tr("Localizable", "GuideAttendee.Title3.bulletPoint1", fallback: "•  GPS 정보는 어디에도 저장하지 않아요!")
+      /// •  위치를 공유할 시점을 정할 수 있어요!
+      internal static let bulletPoint2 = L10n.tr("Localizable", "GuideAttendee.Title3.bulletPoint2", fallback: "•  위치를 공유할 시점을 정할 수 있어요!")
+      /// •  모두가 만났으면 위치 공유는 종료돼요!
+      internal static let bulletPoint3 = L10n.tr("Localizable", "GuideAttendee.Title3.bulletPoint3", fallback: "•  모두가 만났으면 위치 공유는 종료돼요!")
+    }
+  }
+  internal enum InvitationPopUp {
+    /// 참여자들의 중간장소로 지정됩니다
+    internal static let middlePlaceWarning = L10n.tr("Localizable", "InvitationPopUp.middlePlaceWarning", fallback: "참여자들의 중간장소로 지정됩니다")
+    /// 출발지를 등록해 주세요
+    internal static let startLocationPlaceholder = L10n.tr("Localizable", "InvitationPopUp.startLocationPlaceholder", fallback: "출발지를 등록해 주세요")
+    internal enum IsFailedAttendPromise {
+      /// 서버 문제로 약속 참여에 실패했습니다.
+      /// 관리자에게 문의해주세요.
+      internal static let description = L10n.tr("Localizable", "InvitationPopUp.IsFailedAttendPromise.description", fallback: "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.")
+      /// 약속에 참여할 수 없습니다
+      internal static let title = L10n.tr("Localizable", "InvitationPopUp.IsFailedAttendPromise.title", fallback: "약속에 참여할 수 없습니다")
+    }
+    internal enum IsNotAbleToPromise {
+      /// 약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.
+      internal static let description = L10n.tr("Localizable", "InvitationPopUp.IsNotAbleToPromise.description", fallback: "약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.")
+      /// 참여할 수 없는 약속입니다
+      internal static let title = L10n.tr("Localizable", "InvitationPopUp.IsNotAbleToPromise.title", fallback: "참여할 수 없는 약속입니다")
+    }
+    internal enum Toast {
+      /// 약속에 참여했어요!
+      internal static let successAttendPromise = L10n.tr("Localizable", "InvitationPopUp.Toast.successAttendPromise", fallback: "약속에 참여했어요!")
+    }
+  }
   internal enum Main {
     /// 새 약속 추가
     internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
+    /// 아직 약속이 없어요
+    /// 새 약속을 추가해 보세요
+    internal static let emptyPromisesTitle = L10n.tr("Localizable", "Main.emptyPromisesTitle", fallback: "아직 약속이 없어요\n새 약속을 추가해 보세요")
     internal enum Probee {
       internal enum Guidance {
         /// 공유 아이콘으로 약속에 초대할 수 있어요!
@@ -153,6 +217,12 @@ internal enum L10n {
     internal static let mainDescription = L10n.tr("Localizable", "SignIn.mainDescription", fallback: "만나기 전에 서로의 위치를 공유해 보세요")
     /// 로그인 수단 선택
     internal static let selectSignInMethodText = L10n.tr("Localizable", "SignIn.selectSignInMethodText", fallback: "로그인 수단 선택")
+  }
+  internal enum TaggedNotification {
+    /// 띵동! 약속에 초대 받았어요
+    internal static let invitedToPromise = L10n.tr("Localizable", "TaggedNotification.invitedToPromise", fallback: "띵동! 약속에 초대 받았어요")
+    /// 모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요
+    internal static let middlePlaceWarning = L10n.tr("Localizable", "TaggedNotification.middlePlaceWarning", fallback: "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
