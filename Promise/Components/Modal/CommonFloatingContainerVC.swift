@@ -41,6 +41,11 @@ class CommonFloatingContainerVC : UIViewController {
         fpc.track(scrollView: contentVC.fullView)
         fpc.layout = CustomFloatingPanelLayout()
         fpc.behavior = CustomFloatingPanelBehavior()
+        
+        // 완전히 컨텐츠 크기(높이)가 고정되어 길게 스크롤시 뒤가 보이는 경우 방지
+        // 길게 끌어올려도 컨텐츠의 높이가 유연하게 늘어나도록 설정
+        // 단, 컨텐츠는 Auto Layout Constrains으로 view 크기만큼으로 설정해야함.
+        fpc.contentMode = .fitToBounds
     }
     
     func setDelegate(_ delegate: FloatingPanelControllerDelegate) {
