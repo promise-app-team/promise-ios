@@ -8,7 +8,7 @@
 import UIKit
 import FloatingPanel
 
-class CommonFloatingContainerVC : UIViewController {
+class CommonFloatingContainerVC: UIViewController {
     
     static var minHeight: CGFloat = 270 // floating 뷰의 최소(tip,half 일 때의) 높이
     
@@ -16,9 +16,9 @@ class CommonFloatingContainerVC : UIViewController {
     var contentVC: CommonFloatingContentVC!
     var currentVC: UIViewController!
     
-    init(contentViewController: CommonFloatingContentVC, currentViewController: UIViewController){
-        contentVC = contentViewController
-        currentVC = currentViewController
+    init(contentVC: CommonFloatingContentVC, currentVC: UIViewController){
+        self.contentVC = contentVC
+        self.currentVC = currentVC
         
         super.init(nibName: nil, bundle: nil)
         
@@ -31,7 +31,6 @@ class CommonFloatingContainerVC : UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     private func setupFPC(){

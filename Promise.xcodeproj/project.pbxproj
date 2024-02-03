@@ -13,6 +13,8 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
+		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
+		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
 		D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA522B5A36BD00ED707D /* CarouselCell.swift */; };
 		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
@@ -158,6 +160,8 @@
 		D459FA522B5A36BD00ED707D /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
+		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
+		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
 		D474E0672B5E974700CD6033 /* InvitationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationPopUp.swift; sourceTree = "<group>"; };
 		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
 		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
@@ -747,6 +751,8 @@
 		FCE8C4552A8B92E500E2B672 /* MainPromiseStatusView */ = {
 			isa = PBXGroup;
 			children = (
+				D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */,
+				D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */,
 				FCE8C4562A8B931300E2B672 /* PromiseStatusView.swift */,
 			);
 			path = MainPromiseStatusView;
@@ -1146,6 +1152,7 @@
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
 				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
 				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
+				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
@@ -1170,6 +1177,7 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
+				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,

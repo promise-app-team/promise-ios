@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class CommonFloatingContentVC : UIViewController {
+class CommonFloatingContentVC: UIViewController {
     
     var smallViewHeightConstraint: NSLayoutConstraint!
     let smallviewHeight: CGFloat = CommonFloatingContainerVC.minHeight
     
-    lazy var smallView: UIView = {
+    lazy var halfView: UIView = {
         let view = UIView()
         return view
     }()
@@ -29,20 +29,20 @@ class CommonFloatingContentVC : UIViewController {
     }
     
     private func setViewLayout(){
-        view.addSubview(smallView)
+        view.addSubview(halfView)
         view.addSubview(fullView)
         
-        smallView.translatesAutoresizingMaskIntoConstraints = false
+        halfView.translatesAutoresizingMaskIntoConstraints = false
         fullView.translatesAutoresizingMaskIntoConstraints = false
         
-        smallViewHeightConstraint = smallView.heightAnchor.constraint(equalToConstant: smallviewHeight)
+        smallViewHeightConstraint = halfView.heightAnchor.constraint(equalToConstant: smallviewHeight)
         smallViewHeightConstraint.isActive = true
         
         NSLayoutConstraint.activate([
-            smallView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            smallView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            smallView.topAnchor.constraint(equalTo: view.topAnchor),
-            smallView.bottomAnchor.constraint(equalTo: fullView.topAnchor),
+            halfView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            halfView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            halfView.topAnchor.constraint(equalTo: view.topAnchor),
+            halfView.bottomAnchor.constraint(equalTo: fullView.topAnchor),
             
             fullView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             fullView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -51,11 +51,29 @@ class CommonFloatingContentVC : UIViewController {
         ])
     }
     
+}
+
+extension CommonFloatingContentVC {
+    public func hideHalfView() {
+        
+    }
+    
+    public func showHalfView() {
+        
+    }
+    
+    public func hideFullView() {
+        
+    }
+    
+    public func showFullView() {
+        
+    }
+    
     public func updateHalfViewHeight(height: CGFloat) {
         smallViewHeightConstraint.constant = height
         
         view.setNeedsLayout()
         view.layoutIfNeeded()
     }
-    
 }

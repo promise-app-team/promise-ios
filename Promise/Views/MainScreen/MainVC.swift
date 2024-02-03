@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FloatingPanel
 
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
@@ -128,11 +127,8 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private let promiseStatusViewContent = PromiseStatusView()
-    
-    private lazy var promiseStatusViewController = {
-        let commonFloatingContainerVC = CommonFloatingContainerVC(contentViewController: promiseStatusViewContent, currentViewController: self)
-        
+    private lazy var promiseStatusView = {
+        let commonFloatingContainerVC = PromiseStatusView(parentVC: self, vm: mainVM)
         CommonFloatingContainerVC.minHeight = promiseStatusViewArea.frame.height
         return commonFloatingContainerVC
     }()
@@ -200,9 +196,7 @@ final class MainVC: UIViewController {
     private func showPromiseStatusView() {
         Task {
             try await Task.sleep(seconds: 0.5)
-            promiseStatusViewController.setDelegate(self)
-            promiseStatusViewController.readyToParent()
-            promiseStatusViewController.show()
+            promiseStatusView.show()
         }
     }
     
@@ -331,7 +325,7 @@ final class MainVC: UIViewController {
             
             promiseListEmptyView.isHidden = false
             
-            promiseStatusViewController.dismiss()
+            promiseStatusView.dismiss()
             return
         }
         
@@ -368,10 +362,6 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
             }
         }
     }
-    
-}
-
-extension MainVC: FloatingPanelControllerDelegate {
     
 }
 
