@@ -44,19 +44,18 @@ class PromiseStatusView: CommonFloatingContainerVC {
 
 extension PromiseStatusView: FloatingPanelControllerDelegate {
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
-        guard let contentVC = fpc.contentViewController as? CommonFloatingContentVC else {
+        guard let _ = fpc.contentViewController as? CommonFloatingContentVC else {
             return
         }
         
         switch fpc.state {
         case .full:
             // 패널이 전체 화면일 때 컨텐츠 변경
-            UIView.animate(withDuration: 0.3) {
-                promiseStatusContent.updateHalfViewHeight(0)
-            }
+            self.promiseStatusContent.updateHalfViewHeight(height: 0)
+            
         case .half:
             // 패널이 반 화면일 때 컨텐츠 변경
-            break;
+            self.promiseStatusContent.updateHalfViewHeight(height: CommonFloatingContainerVC.minHeight)
         case .tip:
             // 패널이 최소 상태일 때 컨텐츠 변경
             break;

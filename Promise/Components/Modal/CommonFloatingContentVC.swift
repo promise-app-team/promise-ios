@@ -10,8 +10,8 @@ import UIKit
 
 class CommonFloatingContentVC: UIViewController {
     
-    var smallViewHeightConstraint: NSLayoutConstraint!
-    let smallviewHeight: CGFloat = CommonFloatingContainerVC.minHeight
+    var halfViewHeightConstraint: NSLayoutConstraint!
+    let halfViewHeight: CGFloat = CommonFloatingContainerVC.minHeight
     
     lazy var halfView: UIView = {
         let view = UIView()
@@ -35,8 +35,8 @@ class CommonFloatingContentVC: UIViewController {
         halfView.translatesAutoresizingMaskIntoConstraints = false
         fullView.translatesAutoresizingMaskIntoConstraints = false
         
-        smallViewHeightConstraint = halfView.heightAnchor.constraint(equalToConstant: smallviewHeight)
-        smallViewHeightConstraint.isActive = true
+        halfViewHeightConstraint = halfView.heightAnchor.constraint(equalToConstant: halfViewHeight)
+        halfViewHeightConstraint.isActive = true
         
         NSLayoutConstraint.activate([
             halfView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -54,26 +54,11 @@ class CommonFloatingContentVC: UIViewController {
 }
 
 extension CommonFloatingContentVC {
-    public func hideHalfView() {
-        
-    }
-    
-    public func showHalfView() {
-        
-    }
-    
-    public func hideFullView() {
-        
-    }
-    
-    public func showFullView() {
-        
-    }
-    
     public func updateHalfViewHeight(height: CGFloat) {
-        smallViewHeightConstraint.constant = height
-        
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) {
+            self.halfViewHeightConstraint.constant = height
+            self.view.layoutIfNeeded() // 레이아웃을 즉시 업데이트
+            // self.view.setNeedsLayout // 레이아웃 업데이트 예약(다음 사이클에서 레이아웃 업데이트)
+        }
     }
 }
