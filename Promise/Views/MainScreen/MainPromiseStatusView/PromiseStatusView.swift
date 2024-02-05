@@ -51,11 +51,11 @@ extension PromiseStatusView: FloatingPanelControllerDelegate {
         switch fpc.state {
         case .full:
             // 패널이 전체 화면일 때 컨텐츠 변경
-            self.promiseStatusContent.updateHalfViewHeight(height: 0)
+            self.promiseStatusContent.updateHalfViewHeight(height: 0, opacity: 0)
             
         case .half:
             // 패널이 반 화면일 때 컨텐츠 변경
-            self.promiseStatusContent.updateHalfViewHeight(height: CommonFloatingContainerVC.minHeight)
+            self.promiseStatusContent.updateHalfViewHeight(height: CommonFloatingContainerVC.minHeight, opacity: 1)
         case .tip:
             // 패널이 최소 상태일 때 컨텐츠 변경
             break;

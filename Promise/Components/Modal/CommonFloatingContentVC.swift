@@ -54,9 +54,10 @@ class CommonFloatingContentVC: UIViewController {
 }
 
 extension CommonFloatingContentVC {
-    public func updateHalfViewHeight(height: CGFloat) {
+    public func updateHalfViewHeight(height: CGFloat, opacity: Float) {
         UIView.animate(withDuration: 0.3) {
             self.halfViewHeightConstraint.constant = height
+            self.halfView.layer.opacity = opacity
             self.view.layoutIfNeeded() // 레이아웃을 즉시 업데이트
             // self.view.setNeedsLayout // 레이아웃 업데이트 예약(다음 사이클에서 레이아웃 업데이트)
         }
