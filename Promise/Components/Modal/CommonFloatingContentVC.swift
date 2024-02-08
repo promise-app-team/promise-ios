@@ -46,7 +46,6 @@ class CommonFloatingContentVC: UIViewController {
             
             fullView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             fullView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-             
             fullView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }

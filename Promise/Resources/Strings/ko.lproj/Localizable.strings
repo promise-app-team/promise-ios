@@ -30,7 +30,8 @@
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
 
 // MARK: MainScreen
-"Main.emptyPromisesTitle" = "아직 약속이 없어요\n새 약속을 추가해 보세요";
+"Main.emptyPromisesTitle" = "초대받은 약속이 있나요?";
+"Main.emptyPromisesDescription" = "초대받은 약속이 있다면\n공유된 링크를 다시 눌러주세요";
 "Main.addNewPromise" = "새 약속 추가";
 "Main.PromiseList.placeLabel" = "장소";
 "Main.PromiseList.hostLabel" = "생성자";
@@ -108,3 +109,14 @@
 "InvitationPopUp.IsFailedAttendPromise.description" = "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.";
 
 "InvitationPopUp.Toast.successAttendPromise" = "약속에 참여했어요!";
+
+// MARK: PromiseStatusView/PromiseStatusWithUserView
+"PromiseStatusWithUserView.Label.departureLocation" = "내 출발지";
+"PromiseStatusWithUserView.Label.userStatus" = "내 현재 상태";
+"PromiseStatusWithUserView.Label.userSharingState" = "내 위치공유 상태";
+
+"PromiseStatusWithUserView.departureLocationPlaceholder" = "약속시간 전까지 꼭 출발지를 설정해주세요";
+
+"PromiseStatusWithUserView.Tag.notStart" = "출발 전";
+"PromiseStatusWithUserView.Tag.sharingOn" = "내 위치공유가 켜져있어요";
+

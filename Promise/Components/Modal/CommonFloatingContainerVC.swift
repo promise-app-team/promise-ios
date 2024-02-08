@@ -16,6 +16,8 @@ class CommonFloatingContainerVC: UIViewController {
     var contentVC: CommonFloatingContentVC!
     var currentVC: UIViewController!
     
+    var isPresented = false
+    
     init(contentVC: CommonFloatingContentVC, currentVC: UIViewController){
         self.contentVC = contentVC
         self.currentVC = currentVC
@@ -74,11 +76,14 @@ class CommonFloatingContainerVC: UIViewController {
     func show() {
         fpc.show(animated: true) {
             self.fpc.didMove(toParent: self.currentVC)
+            self.isPresented = true
         }
     }
     
     func dismiss() {
-        fpc.dismiss(animated: true)
+        fpc.dismiss(animated: true) {
+            self.isPresented = false
+        }
     }
 }
 

@@ -11,6 +11,12 @@ final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
     var invitedPromise: Components.Schemas.OutputPromiseListItem?
     
+    private var probeeGuidanceTask: Task<Void, Never>? = nil
+    private var shouldShowProbeeGuidance = false
+    private var isFlyingProbee = false
+    
+    private var focusRatioInfo: (CGFloat?, CGFloat?, IndexPath?)
+    
     lazy var mainVM = MainVM(currentVC: self)
     
     private lazy var headerView = NavigationView(mainVM: mainVM)
@@ -53,7 +59,7 @@ final class MainVC: UIViewController {
     private let probeeGuidance = {
         let paragraphStyle = NSMutableParagraphStyle()
         
-        let fontSize: CGFloat = 12.0
+        let fontSize: CGFloat = adjustedValue(12, .width)
         let text = L10n.Main.Probee.Guidance.share
         let font = UIFont(font: FontFamily.Pretendard.regular, size: fontSize)!
         
@@ -85,15 +91,16 @@ final class MainVC: UIViewController {
         insetLabel.attributedText = attributedString
         insetLabel.backgroundColor = .white
         
-        insetLabel.topInset = 7
-        insetLabel.leftInset = 9
-        insetLabel.bottomInset = 7
-        insetLabel.rightInset = 9
+        insetLabel.topInset = adjustedValue(7, .height)
+        insetLabel.leftInset = adjustedValue(9, .width)
+        insetLabel.bottomInset = adjustedValue(7, .height)
+        insetLabel.rightInset = adjustedValue(9, .width)
         
         insetLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.03).cgColor
         insetLabel.layer.shadowOpacity = 1
         insetLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
         insetLabel.layer.shadowRadius = 16
+        insetLabel.layer.opacity = 0
         
         insetLabel.translatesAutoresizingMaskIntoConstraints = false
         return insetLabel
@@ -108,11 +115,11 @@ final class MainVC: UIViewController {
             probee.topAnchor.constraint(equalTo: view.topAnchor),
             probee.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             probee.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            probee.widthAnchor.constraint(equalToConstant: 51),
-            probee.heightAnchor.constraint(equalToConstant: 35),
+            probee.widthAnchor.constraint(equalToConstant: adjustedValue(51, .width)),
+            probee.heightAnchor.constraint(equalToConstant: adjustedValue(35, .height)),
             
-            probeeGuidance.topAnchor.constraint(equalTo: view.topAnchor, constant: -4),
-            probeeGuidance.leadingAnchor.constraint(equalTo: probee.trailingAnchor, constant: 4)
+            probeeGuidance.topAnchor.constraint(equalTo: view.topAnchor, constant: -adjustedValue(4, .height)),
+            probeeGuidance.leadingAnchor.constraint(equalTo: probee.trailingAnchor)
         ])
         
         view.isHidden = true
@@ -127,11 +134,7 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private lazy var promiseStatusView = {
-        let commonFloatingContainerVC = PromiseStatusView(parentVC: self, vm: mainVM)
-        CommonFloatingContainerVC.minHeight = promiseStatusViewArea.frame.height
-        return commonFloatingContainerVC
-    }()
+    private var promiseStatusView: PromiseStatusView? = nil
     
     // MARK: handler
     
@@ -158,7 +161,9 @@ final class MainVC: UIViewController {
         
         if let id {
             if let index = mainVM.promises?.firstIndex(where: { $0?.pid == id }) {
-                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+                let indexPath = IndexPath(item: index, section: 0)
+                promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                focusedCellChanged(to: indexPath)
             }
             
             return
@@ -168,7 +173,9 @@ final class MainVC: UIViewController {
         if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
             
             if let index = mainVM.promises?.firstIndex(where: { $0?.pid == shouldFocusPromiseId }) {
-                promiseListView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+                let indexPath = IndexPath(item: index, section: 0)
+                promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                focusedCellChanged(to: indexPath)
             }
             
             // 포커스 스크롤 동작 후에 리셋
@@ -194,9 +201,16 @@ final class MainVC: UIViewController {
     }
     
     private func showPromiseStatusView() {
+        if let isPresentedPromiseStatusView = promiseStatusView?.isPresented, isPresentedPromiseStatusView {
+            return
+        }
+        
         Task {
             try await Task.sleep(seconds: 0.5)
-            promiseStatusView.show()
+            
+            CommonFloatingContainerVC.minHeight = promiseStatusViewArea.frame.height
+            self.promiseStatusView = PromiseStatusView(parentVC: self, vm: mainVM)
+            self.promiseStatusView?.show()
         }
     }
     
@@ -278,7 +292,7 @@ final class MainVC: UIViewController {
             headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 8 + 8 + 36),
+            headerView.heightAnchor.constraint(equalToConstant: adjustedValue(68, .height)),
         ])
         
         NSLayoutConstraint.activate([
@@ -289,26 +303,26 @@ final class MainVC: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            promiseListView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 40),
+            promiseListView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: adjustedValue(46, .height)),
             promiseListView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             promiseListView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            promiseListView.heightAnchor.constraint(equalToConstant: 320)
+            promiseListView.heightAnchor.constraint(equalToConstant: adjustedValue(338, .height))
         ])
         
         NSLayoutConstraint.activate([
-            probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: 60),
-            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: 3),
+            probeeWrap.leadingAnchor.constraint(equalTo: promiseListView.leadingAnchor, constant: adjustedValue(60, .width)),
+            probeeWrap.bottomAnchor.constraint(equalTo: promiseListView.topAnchor, constant: adjustedValue(3, .height)),
         ])
         
         NSLayoutConstraint.activate([
-            promiseAddButton.topAnchor.constraint(equalTo: promiseListView.bottomAnchor, constant: 16),
-            promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            promiseAddButton.topAnchor.constraint(equalTo: promiseListView.bottomAnchor, constant: adjustedValue(16, .height)),
+            promiseAddButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(40, .width)),
+            promiseAddButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(40, .width)),
             promiseAddButton.heightAnchor.constraint(equalToConstant: Button.Height),
         ])
         
         NSLayoutConstraint.activate([
-            promiseStatusViewArea.topAnchor.constraint(equalTo: promiseAddButton.bottomAnchor, constant: 24),
+            promiseStatusViewArea.topAnchor.constraint(equalTo: promiseAddButton.bottomAnchor, constant: adjustedValue(38, .height)),
             promiseStatusViewArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             promiseStatusViewArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             promiseStatusViewArea.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -322,10 +336,8 @@ final class MainVC: UIViewController {
             promiseStatusViewArea.isHidden = true
             promiseAddButton.isHidden = true
             headerView.disabledSortPromiseList = true
-            
             promiseListEmptyView.isHidden = false
-            
-            promiseStatusView.dismiss()
+            promiseStatusView?.dismiss()
             return
         }
         
@@ -335,9 +347,7 @@ final class MainVC: UIViewController {
         promiseStatusViewArea.isHidden = false
         promiseAddButton.isHidden = false
         headerView.disabledSortPromiseList = false
-        
         promiseListEmptyView.isHidden = true
-        
         showPromiseStatusView()
     }
 }
@@ -348,54 +358,85 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PromiseListCell
+        
         let promise = mainVM.promises?[indexPath.row]
-        cell.configureCell(with: promise)
+        cell.configureCell(with: promise, at: indexPath)
+        
+        // MARK: 최초에 한 번만 실행 cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
+        if indexPath.row == 0, let initFocusRatio = focusRatioInfo.0, let focusRatio = focusRatioInfo.1, initFocusRatio == focusRatio {
+            focusedCellChanged(to: indexPath)
+            cell.updateBorder(focusRatio: focusRatio)
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let promiseCell = cell as? PromiseListCell {
-            // 첫 번째로 표시되는 셀에 테두리 적용
-            if indexPath.row == 0 {
-                promiseCell.updateBorder(focusRatio: 1)
-            }
-        }
+        
     }
     
 }
 
 extension MainVC: PromiseListLayoutDelegate {
-    func updateFocusRatio(_ initRatio: CGFloat, _ ratio: CGFloat) {
-        if(initRatio <= ratio) {
+    func updateFocusRatio(_ initFocusRatio: CGFloat, _ focusRatio: CGFloat, _ indexPath: IndexPath) {
+        self.focusRatioInfo = (initFocusRatio, focusRatio, indexPath)
+        
+        // MARK: for probee
+        if(initFocusRatio <= focusRatio) {
+            // MARK: 포커스 완료시, 프로비가 앉는 경우
+            
             UIView.animate(withDuration: 0.3) {
                 self.probeeWrap.transform = CGAffineTransform(translationX: 0, y: 0)
+            } completion: { _ in
+                self.isFlyingProbee = false
+                
+                self.probeeGuidanceTask?.cancel()
+                self.probeeGuidanceTask = Task {
+                    do {
+                        try await Task.sleep(seconds: 2)
+                        
+                        if self.shouldShowProbeeGuidance, !self.isFlyingProbee {
+                            UIView.animate(withDuration: 0.3) {
+                                self.probeeGuidance.layer.opacity = 1
+                            }
+                        }
+                        
+                    } catch {
+                        // Task가 취소되어 sleep이 중단될 경우 처리
+                    }
+                }
             }
-            
-            UIView.animate(withDuration: 0.3, delay: 2) {
-                self.probeeGuidance.layer.opacity = 1
-            }
+
             
         } else {
+            // MARK: 프로비가 날아다니는 경우
+            
             UIView.animate(withDuration: 0.2) {
-                self.probeeWrap.transform = CGAffineTransform(translationX: 0, y: -(ratio * 10))
+                self.probeeWrap.transform = CGAffineTransform(translationX: 0, y: -(focusRatio * 10))
                 self.probeeGuidance.layer.opacity = 0
+                self.isFlyingProbee = true
+                self.probeeGuidanceTask?.cancel()
             }
+            
         }
+        
     }
     
     func focusedCellChanged(to indexPath: IndexPath) {
         let promise = mainVM.promises?[indexPath.row]
-        guard let promise else {
-            probeeGuidance.isHidden = true
-            return
-        }
+        guard let promise else { return }
         
         let isEmptyAttendees = promise.attendees.isEmpty
-        let isOwner = promise.host.username == UserService.shared.getUser()?.nickname
-        let shouldShowProbeeGuidance = isOwner && isEmptyAttendees
+        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
         
-        probeeGuidance.isHidden = !shouldShowProbeeGuidance
+        // MARK: for promise status
+        self.promiseStatusView?.updatePromiseStatus(with: promise)
+        
+        // MARK: for probee
+        self.shouldShowProbeeGuidance = isOwner && isEmptyAttendees
+        
     }
 }
 

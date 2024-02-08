@@ -12,9 +12,12 @@ import FloatingPanel
 class PromiseStatusView: CommonFloatingContainerVC {
     // MARK: properties
     private let parentVC: UIViewController
+    
     private let mainVM: MainVM
     
     private let promiseStatusContent: CommonFloatingContentVC
+    private let promiseStatusWithUserView: PromiseStatusWithUserView
+    private let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
     
     // MARK: initialize
     
@@ -22,12 +25,14 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.parentVC = parentVC
         self.mainVM = vm
         
-        let contentVC = CommonFloatingContentVC()
-        contentVC.halfView = PromiseStatusWithUserView(vm: mainVM)
-        contentVC.fullView = PromiseStatusWithAllAttendeesView(vm: mainVM)
-        self.promiseStatusContent = contentVC
+        self.promiseStatusContent = CommonFloatingContentVC()
+        self.promiseStatusWithUserView = PromiseStatusWithUserView(vm: mainVM)
+        self.promiseStatusWithAllAttendeesView = PromiseStatusWithAllAttendeesView(vm: mainVM)
         
-        super.init(contentVC: promiseStatusContent, currentVC: parentVC)
+        self.promiseStatusContent.halfView = PromiseStatusWithUserView(vm: mainVM)
+        self.promiseStatusContent.fullView = PromiseStatusWithAllAttendeesView(vm: mainVM)
+        
+        super.init(contentVC: self.promiseStatusContent, currentVC: parentVC)
         
         configure()
     }
@@ -62,5 +67,12 @@ extension PromiseStatusView: FloatingPanelControllerDelegate {
         default:
             break
         }
+    }
+}
+
+extension PromiseStatusView {
+    public func updatePromiseStatus(with promise: Components.Schemas.OutputPromiseListItem) {
+        promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
+        promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
     }
 }

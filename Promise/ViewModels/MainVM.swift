@@ -29,7 +29,7 @@ class MainVM: NSObject {
     
     
     func getPromiseList() async {
-        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises")
+        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
         
         switch result {
         case .success(let promises):

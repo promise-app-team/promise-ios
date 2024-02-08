@@ -41,3 +41,9 @@ class PromiseStatusWithAllAttendeesView: UIScrollView {
         ])
     }
 }
+
+extension PromiseStatusWithAllAttendeesView {
+    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.OutputPromiseListItem) {
+        // TODO: 
+    }
+}

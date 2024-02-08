@@ -170,7 +170,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
                             }
                             
                             // MARK: 로그인 상태, 참여할 수 없는 상태, 약속 자체가 없거나 약속 정보를 가져오는데 실패한 경우
-                            if let error {
+                            if let _ = error {
                                 try await Task.sleep(seconds: 0.5)
                                 navigationController?.visibleViewController?.showPopUp(
                                     title: L10n.InvitationPopUp.IsNotAbleToPromise.title,

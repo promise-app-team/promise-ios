@@ -31,7 +31,7 @@ class SortPromiseListView: UIStackView {
         let label = UILabel()
         
         label.text = "약속시간 빠른순" // TODO: 모달에서 선택한 텍스트로 변경
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +45,8 @@ class SortPromiseListView: UIStackView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         return imageView
@@ -72,7 +72,12 @@ class SortPromiseListView: UIStackView {
         layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
         
         isLayoutMarginsRelativeArrangement = true
-        layoutMargins = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 12)
+        layoutMargins = UIEdgeInsets(
+            top: adjustedValue(6, .height),
+            left: adjustedValue(16, .width),
+            bottom: adjustedValue(6, .height),
+            right: adjustedValue(12, .width)
+        )
 
         
         axis = .horizontal
