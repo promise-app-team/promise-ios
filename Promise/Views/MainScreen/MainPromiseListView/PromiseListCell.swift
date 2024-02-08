@@ -437,7 +437,7 @@ class PromiseListCell: UICollectionViewCell {
         host.text = promise.host.username
         
         attendeesCount.text = "(\(promise.attendees.count))"
-        attendees = promise.attendees + promise.attendees + promise.attendees
+        attendees = promise.attendees
         
         self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }

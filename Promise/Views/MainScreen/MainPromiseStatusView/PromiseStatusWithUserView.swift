@@ -188,6 +188,6 @@ class PromiseStatusWithUserView: UIView {
 
 extension PromiseStatusWithUserView {
     public func updatePromiseStatusWithUser(with promise: Components.Schemas.OutputPromiseListItem) {
-        print("promise")
+        
     }
 }
