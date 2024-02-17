@@ -75,9 +75,10 @@ class PromiseListCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height))
         ])
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapShareButton))
-        imageView.addGestureRecognizer(tapGesture)
-        imageView.isUserInteractionEnabled = true
+        // TODO:
+        // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapShareButton))
+        // imageView.addGestureRecognizer(tapGesture)
+        //imageView.isUserInteractionEnabled = true
         
         let view = UIView()
         view.addSubview(imageView)
@@ -93,7 +94,10 @@ class PromiseListCell: UICollectionViewCell {
             view.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height))
         ])
         
-        view.layer.zPosition = 1
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapShareButton))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        // view.layer.zPosition = 1
         
         view.isHidden = true
         
@@ -344,6 +348,13 @@ class PromiseListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //    override func prepareForReuse() {
+    //        super.prepareForReuse()
+    //        // attendees 데이터를 초기화하거나 관련 뷰를 초기 상태로 설정
+    //        attendees = []
+    //        attendeesView.reloadData() // 내부 UICollectionView
+    //    }
+    
     private func configureCell() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = adjustedValue(20, .width)
@@ -368,7 +379,7 @@ class PromiseListCell: UICollectionViewCell {
             
             themesScrollWrap.topAnchor.constraint(equalTo: contentView.topAnchor, constant: adjustedValue(22, .height)),
             themesScrollWrap.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
-            themesScrollWrap.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
+            themesScrollWrap.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor),
             themesScrollWrap.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height)),
             
             promisedAt.topAnchor.constraint(equalTo: themesScrollWrap.bottomAnchor, constant: adjustedValue(6, .height)),
@@ -438,6 +449,9 @@ class PromiseListCell: UICollectionViewCell {
         
         attendeesCount.text = "(\(promise.attendees.count))"
         attendees = promise.attendees
+        
+        // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
+        attendeesView.reloadData()
         
         self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }

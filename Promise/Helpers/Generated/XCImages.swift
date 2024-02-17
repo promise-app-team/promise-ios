@@ -50,6 +50,8 @@ internal enum Asset {
   internal static let placeThinRed = ImageAsset(name: "PlaceThinRed")
   internal static let questionMarkPrimary = ImageAsset(name: "QuestionMarkPrimary")
   internal static let share = ImageAsset(name: "Share")
+  internal static let statusOff = ImageAsset(name: "StatusOff")
+  internal static let statusOn = ImageAsset(name: "StatusOn")
   internal static let probee = ImageAsset(name: "Probee")
   internal static let probeeAll = ImageAsset(name: "ProbeeAll")
   internal static let promiseLogo = ImageAsset(name: "PromiseLogo")

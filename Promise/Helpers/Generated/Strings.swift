@@ -207,6 +207,14 @@ internal enum L10n {
       /// 장소
       internal static let placeLabel = L10n.tr("Localizable", "Main.PromiseList.placeLabel", fallback: "장소")
     }
+    internal enum SortPromiseList {
+      /// 약속시간 늦은순
+      internal static let dateTimeLateOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeLateOrder", fallback: "약속시간 늦은순")
+      /// 약속시간 빠른순
+      internal static let dateTimeQuickOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeQuickOrder", fallback: "약속시간 빠른순")
+      /// 정렬 선택
+      internal static let selectOrder = L10n.tr("Localizable", "Main.SortPromiseList.selectOrder", fallback: "정렬 선택")
+    }
   }
   internal enum PromiseStatusWithUserView {
     /// 약속시간 전까지 꼭 출발지를 설정해주세요

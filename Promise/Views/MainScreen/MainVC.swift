@@ -427,6 +427,7 @@ extension MainVC: PromiseListLayoutDelegate {
     func focusedCellChanged(to indexPath: IndexPath) {
         let promise = mainVM.promises?[indexPath.row]
         guard let promise else { return }
+        mainVM.currentFocusedPromise = promise
         
         let isEmptyAttendees = promise.attendees.isEmpty
         let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId

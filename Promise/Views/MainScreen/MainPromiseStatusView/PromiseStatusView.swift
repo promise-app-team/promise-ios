@@ -26,11 +26,12 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.mainVM = vm
         
         self.promiseStatusContent = CommonFloatingContentVC()
+        
         self.promiseStatusWithUserView = PromiseStatusWithUserView(vm: mainVM)
         self.promiseStatusWithAllAttendeesView = PromiseStatusWithAllAttendeesView(vm: mainVM)
         
-        self.promiseStatusContent.halfView = PromiseStatusWithUserView(vm: mainVM)
-        self.promiseStatusContent.fullView = PromiseStatusWithAllAttendeesView(vm: mainVM)
+        self.promiseStatusContent.halfView = self.promiseStatusWithUserView
+        self.promiseStatusContent.fullView = self.promiseStatusWithAllAttendeesView
         
         super.init(contentVC: self.promiseStatusContent, currentVC: parentVC)
         

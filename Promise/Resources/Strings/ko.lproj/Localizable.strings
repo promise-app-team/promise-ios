@@ -39,6 +39,11 @@
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
 
+"Main.SortPromiseList.selectOrder" = "정렬 선택";
+"Main.SortPromiseList.dateTimeQuickOrder" = "약속시간 빠른순";
+"Main.SortPromiseList.dateTimeLateOrder" = "약속시간 늦은순";
+
+
 // MARK: CreatePromiseScreen
 "CreatePromise.headerTitle" = "새 약속 추가";
 "CreatePromise.createPromiseButtonTitle" = "약속 생성";

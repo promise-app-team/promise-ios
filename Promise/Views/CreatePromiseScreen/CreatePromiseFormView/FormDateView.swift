@@ -38,7 +38,7 @@ class FormDateView: UIView {
         datePicker.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
         
         datePicker.addTarget(self, action: #selector(onSelectedDateAndTime), for: .valueChanged)
-        datePicker.minimumDate = Date()
+        datePicker.minimumDate = Date() // TODO: 현재부터 10분 후로 변경
 
         return datePicker
     }()

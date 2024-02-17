@@ -11,9 +11,9 @@ import UIKit
 class MainVM: NSObject {
     var currentVC: MainVC?
     
-    // 데이터 소스에 필요한 데이터, 예를 들어, 프로미스 목록 등
-    var shouldFocusPromiseId: String?
+    var currentFocusedPromise: Components.Schemas.OutputPromiseListItem?
     
+    var shouldFocusPromiseId: String?
     var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]?) -> Void)?
     var promises: [Components.Schemas.OutputPromiseListItem?]? {
         didSet {
@@ -27,17 +27,103 @@ class MainVM: NSObject {
         APIService.shared.delegate = self
     }
     
+    func sortedPromises(
+        with willBeSortedPromises: [Components.Schemas.OutputPromiseListItem?],
+        by order: SortPromiseListEnum = .dateTimeQuickOrder
+    ) -> [Components.Schemas.OutputPromiseListItem?] {
+        
+        // MARK: nil, [nil], [promise] 경우 early return
+        guard willBeSortedPromises.count > 1 else {
+            return willBeSortedPromises
+        }
+        
+        switch order {
+        case .dateTimeQuickOrder:
+            
+            return willBeSortedPromises.sorted {
+                guard let next = $0, let before = $1 else { return false }
+                return next.promisedAt < before.promisedAt
+            }
+            
+        case .dateTimeLateOrder:
+            
+            return willBeSortedPromises.sorted {
+                guard let next = $0, let before = $1 else { return false }
+                return next.promisedAt > before.promisedAt
+            }
+            
+        default:
+            
+            return willBeSortedPromises
+        }
+    }
+    
     
     func getPromiseList() async {
         let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
         
         switch result {
         case .success(let promises):
-            self.promises = promises
+            self.promises = sortedPromises(with: promises)
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
                 // TODO: 약속 리스트 에러 핸들링
+                break
+            default:
+                // Other Error(Network, badUrl ...)
+                break
+            }
+        }
+    }
+    
+    func getDepartureLoaction(
+        id: String,
+        onSuccess: @escaping ((Components.Schemas.OutputStartLocation) -> Void),
+        onFailure: @escaping ((BadRequestError?) -> Void)
+    ) {
+        
+        Task {
+            let result: Result<Components.Schemas.OutputStartLocation ,NetworkError> = await APIService.shared.fetch(
+                .GET,
+                "/promises/\(id)/start-location"
+            )
+            
+            switch result {
+            case .success(let departureLoaction):
+                onSuccess(departureLoaction)
+            case .failure(let errorType):
+                switch errorType {
+                case .badRequest(let error):
+                    onFailure(error)
+                    break
+                default:
+                    // Other Error(Network, badUrl ...)
+                    onFailure(nil)
+                    break
+                }
+            }
+        }
+        
+    }
+    
+    func editDepartureLoaction(with: Components.Schemas.InputUpdateUserStartLocation, onSuccess: @escaping (() -> Void)) async {
+        guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
+        
+        let result: Result<EmptyResponse ,NetworkError> = await APIService.shared.fetch(
+            .POST,
+            "/promises/\(id)/start-location",
+            nil,
+            with
+        )
+        
+        switch result {
+        case .success:
+            onSuccess()
+        case .failure(let errorType):
+            switch errorType {
+            case .badRequest:
+                
                 break
             default:
                 // Other Error(Network, badUrl ...)
@@ -124,5 +210,14 @@ extension MainVM: InvitationPopUpDelegate {
     
     func onLoadingAttendPromise() {
         // TODO: 추후 로딩 UI가 있으면 좋을 것 같음.
+    }
+}
+
+extension MainVM: SortPromiseListViewDelegate {
+    func onSelected(order: SortPromiseListEnum) {
+        guard let promises, promises.count > 1 else { return }
+        let sortedPromises = sortedPromises(with: promises, by: order)
+        self.promises = sortedPromises
+        currentVC?.focusPromiseById(id: sortedPromises[0]?.pid)
     }
 }
