@@ -63,6 +63,7 @@ extension PromiseStatusView: FloatingPanelControllerDelegate {
             self.promiseStatusContent.updateHalfViewHeight(height: CommonFloatingContainerVC.minHeight, opacity: 1)
         case .tip:
             // 패널이 최소 상태일 때 컨텐츠 변경
+            self.promiseStatusContent.updateHalfViewHeight(height: CommonFloatingContainerVC.minHeight, opacity: 1)
             break;
         default:
             break

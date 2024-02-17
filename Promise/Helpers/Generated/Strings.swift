@@ -206,6 +206,12 @@ internal enum L10n {
       internal static let hostLabel = L10n.tr("Localizable", "Main.PromiseList.hostLabel", fallback: "생성자")
       /// 장소
       internal static let placeLabel = L10n.tr("Localizable", "Main.PromiseList.placeLabel", fallback: "장소")
+      internal enum DynamicPlace {
+        /// 두 명 이상 출발지를 설정해주세요
+        internal static let placeholder = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholder", fallback: "두 명 이상 출발지를 설정해주세요")
+        /// 중간 장소를 확인해주세요
+        internal static let requestConfirm = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.requestConfirm", fallback: "중간 장소를 확인해주세요")
+      }
     }
     internal enum SortPromiseList {
       /// 약속시간 늦은순

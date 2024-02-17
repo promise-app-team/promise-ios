@@ -33,11 +33,17 @@
 "Main.emptyPromisesTitle" = "초대받은 약속이 있나요?";
 "Main.emptyPromisesDescription" = "초대받은 약속이 있다면\n공유된 링크를 다시 눌러주세요";
 "Main.addNewPromise" = "새 약속 추가";
+
 "Main.PromiseList.placeLabel" = "장소";
 "Main.PromiseList.hostLabel" = "생성자";
 "Main.PromiseList.attendeesLabel" = "참여자";
+
+"Main.PromiseList.DynamicPlace.placeholder" = "두 명 이상 출발지를 설정해주세요";
+"Main.PromiseList.DynamicPlace.requestConfirm" = "중간 장소를 확인해주세요";
+
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
+
 
 "Main.SortPromiseList.selectOrder" = "정렬 선택";
 "Main.SortPromiseList.dateTimeQuickOrder" = "약속시간 빠른순";

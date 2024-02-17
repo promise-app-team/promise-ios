@@ -441,8 +441,15 @@ class PromiseListCell: UICollectionViewCell {
         
         title.text = promise.title
         
-        if let destination = promise.destination {
-            place.text = destination.value1.address
+        switch promise.destinationType {
+        case .DYNAMIC:
+            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+        case .STATIC:
+            if let destination = promise.destination {
+                place.text = destination.value1.address
+                place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            }
         }
         
         host.text = promise.host.username
