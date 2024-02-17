@@ -37,7 +37,6 @@ final class NavigationView: UIView {
     }
     
     private func configure() {
-        layer.zPosition = 1
         translatesAutoresizingMaskIntoConstraints = false
         
         [navigation, sortPromiseListView].forEach { addSubview($0) }

@@ -11,8 +11,7 @@ import FloatingPanel
 
 class PromiseStatusView: CommonFloatingContainerVC {
     // MARK: properties
-    private let parentVC: UIViewController
-    
+    private let mainVC: MainVC
     private let mainVM: MainVM
     
     private let promiseStatusContent: CommonFloatingContentVC
@@ -21,8 +20,8 @@ class PromiseStatusView: CommonFloatingContainerVC {
     
     // MARK: initialize
     
-    init(parentVC: UIViewController, vm: MainVM) {
-        self.parentVC = parentVC
+    init(vc: MainVC, vm: MainVM) {
+        self.mainVC = vc
         self.mainVM = vm
         
         self.promiseStatusContent = CommonFloatingContentVC()
@@ -33,7 +32,7 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.promiseStatusContent.halfView = self.promiseStatusWithUserView
         self.promiseStatusContent.fullView = self.promiseStatusWithAllAttendeesView
         
-        super.init(contentVC: self.promiseStatusContent, currentVC: parentVC)
+        super.init(contentVC: self.promiseStatusContent, currentVC: vc)
         
         configure()
     }

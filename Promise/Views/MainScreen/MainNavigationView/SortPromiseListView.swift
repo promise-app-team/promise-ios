@@ -215,6 +215,8 @@ class SortPromiseListView: UIView {
 
 extension SortPromiseListView: PopoverViewDelegate {
     func onWillShow() {
+        self.superview?.layer.zPosition = 1
+        
         UIView.animate(withDuration: 0.2) {
             self.sortIcon.transform = CGAffineTransform(rotationAngle: .pi)
             self.layer.borderColor = UIColor(red: 0.022, green: 0.75, blue: 0.619, alpha: 1).cgColor
@@ -224,6 +226,8 @@ extension SortPromiseListView: PopoverViewDelegate {
     }
     
     func onWillHide() {
+        self.superview?.layer.zPosition = 0
+        
         UIView.animate(withDuration: 0.2) {
             self.sortIcon.transform = CGAffineTransform(rotationAngle: -(.pi * 2))
             self.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor

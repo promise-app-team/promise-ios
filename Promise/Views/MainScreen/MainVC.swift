@@ -209,7 +209,7 @@ final class MainVC: UIViewController {
             try await Task.sleep(seconds: 0.5)
             
             CommonFloatingContainerVC.minHeight = promiseStatusViewArea.frame.height
-            self.promiseStatusView = PromiseStatusView(parentVC: self, vm: mainVM)
+            self.promiseStatusView = PromiseStatusView(vc: self, vm: mainVM)
             self.promiseStatusView?.show()
         }
     }
