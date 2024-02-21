@@ -361,7 +361,9 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PromiseListCell
         
-        let promise = mainVM.promises?[indexPath.row]
+        guard let promises = mainVM.promises else { return cell }
+        
+        let promise = promises[indexPath.row]
         cell.configureCell(with: promise, at: indexPath)
         
         // MARK: 최초에 한 번만 실행 cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
@@ -431,8 +433,10 @@ extension MainVC: PromiseListLayoutDelegate {
     }
     
     func focusedCellChanged(to indexPath: IndexPath) {
-        let promise = mainVM.promises?[indexPath.row]
+        guard let promises = mainVM.promises else { return }
+        let promise = promises[indexPath.row]
         guard let promise else { return }
+        
         mainVM.currentFocusedPromise = promise
         
         let isEmptyAttendees = promise.attendees.isEmpty

@@ -30,26 +30,58 @@ class PromiseListEmptyView: UIView {
     }()
     
     private lazy var emptyPromisesWrap = {
-        let label = UILabel()
-        label.numberOfLines = 0
+        let title = UILabel()
+        title.numberOfLines = 0
         
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 20)
-        label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
-        label.textAlignment = .center
+        title.font = UIFont(font: FontFamily.Pretendard.regular, size: 20)
+        title.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.26
         
-        label.attributedText = NSMutableAttributedString(
+        title.attributedText = NSMutableAttributedString(
             string: L10n.Main.emptyPromisesTitle,
             attributes: [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle
             ]
         )
         
+        let description = UILabel()
+        description.numberOfLines = 0
+        
+        description.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        description.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
+        
+        
+        description.attributedText = NSMutableAttributedString(
+            string: L10n.Main.emptyPromisesDescription,
+            attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle
+            ]
+        )
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        description.translatesAutoresizingMaskIntoConstraints = false
+        
+        let emptyTextWrapper = UIView()
+        [title, description].forEach{ emptyTextWrapper.addSubview($0) }
+        NSLayoutConstraint.activate([
+            title.topAnchor.constraint(equalTo: emptyTextWrapper.topAnchor),
+            title.leadingAnchor.constraint(equalTo: emptyTextWrapper.leadingAnchor),
+            title.trailingAnchor.constraint(equalTo: emptyTextWrapper.trailingAnchor),
+            
+            description.topAnchor.constraint(equalTo: title.bottomAnchor, constant: adjustedValue(4, .height)),
+            description.centerXAnchor.constraint(equalTo: emptyTextWrapper.centerXAnchor),
+            description.bottomAnchor.constraint(equalTo: emptyTextWrapper.bottomAnchor)
+        ])
+        
+        // MARK: 정렬은 view에 추가된 이후에 가능(부모를 기준으로 정렬하기 때문)
+        title.textAlignment = .center
+        description.textAlignment = .center
+        
         let stackView = UIStackView(arrangedSubviews: [
             emptyPromisesImage,
-            label
+            emptyTextWrapper
         ])
         
         stackView.axis = .vertical
