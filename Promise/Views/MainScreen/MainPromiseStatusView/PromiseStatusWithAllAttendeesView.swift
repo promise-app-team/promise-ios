@@ -204,26 +204,43 @@ class PromiseStatusWithAllAttendeesView: UIView {
         leaveLabel.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         
-        [editLabel, delegateLabel, leaveLabel, cancelButton].forEach{ view.addSubview($0) }
-        NSLayoutConstraint.activate([
-            editLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(26, .height)),
-            editLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            delegateLabel.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-            delegateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            leaveLabel.topAnchor.constraint(equalTo: delegateLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-            leaveLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            cancelButton.topAnchor.constraint(equalTo: leaveLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
-            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
-            cancelButton.heightAnchor.constraint(equalToConstant: Button.Height)
-        ])
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: adjustedValue(238, .height)).isActive = true
         view.backgroundColor = .white
+        
+        if isOwner {
+            view.heightAnchor.constraint(equalToConstant: adjustedValue(234, .height)).isActive = true
+            
+            [editLabel, delegateLabel, leaveLabel, cancelButton].forEach{ view.addSubview($0) }
+            NSLayoutConstraint.activate([
+                editLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(26, .height)),
+                editLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+                delegateLabel.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: adjustedValue(18, .height)),
+                delegateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+                leaveLabel.topAnchor.constraint(equalTo: delegateLabel.bottomAnchor, constant: adjustedValue(18, .height)),
+                leaveLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+                cancelButton.topAnchor.constraint(equalTo: leaveLabel.bottomAnchor, constant: adjustedValue(18, .height)),
+                cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+                cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+                cancelButton.heightAnchor.constraint(equalToConstant: Button.Height)
+            ])
+            
+        } else {
+            view.heightAnchor.constraint(equalToConstant: adjustedValue(154, .height)).isActive = true
+            
+            [leaveLabel, cancelButton].forEach{ view.addSubview($0) }
+            NSLayoutConstraint.activate([
+                leaveLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(26, .height)),
+                leaveLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                
+                cancelButton.topAnchor.constraint(equalTo: leaveLabel.bottomAnchor, constant: adjustedValue(18, .height)),
+                cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+                cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+                cancelButton.heightAnchor.constraint(equalToConstant: Button.Height)
+            ])
+        }
         
         return view
     }()
