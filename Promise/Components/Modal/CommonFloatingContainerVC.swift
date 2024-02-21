@@ -10,7 +10,7 @@ import FloatingPanel
 
 class CommonFloatingContainerVC: UIViewController {
     
-    static var minHeight: CGFloat = 270 // floating 뷰의 최소(tip,half 일 때의) 높이
+    static var minHeight: CGFloat = adjustedHeight(270) // floating 뷰의 최소(tip,half 일 때의) 높이
     
     var fpc: FloatingPanelController!
     var contentVC: CommonFloatingContentVC!
@@ -39,9 +39,14 @@ class CommonFloatingContainerVC: UIViewController {
         fpc = FloatingPanelController()
         fpc.changePanelStyle() // panel 스타일 변경 (대신 bar UI가 사라지므로 따로 넣어주어야함)
         fpc.set(contentViewController: contentVC) // floating panel에 삽입할 것
-        fpc.track(scrollView: contentVC.fullView)
+        
+        // fpc.track(scrollView: contentVC.contentContainer)
+        
         fpc.layout = CustomFloatingPanelLayout()
         fpc.behavior = CustomFloatingPanelBehavior()
+        
+        // MARK: default delegate
+        setDelegate(contentVC)
         
         // 완전히 컨텐츠 크기(높이)가 고정되어 길게 스크롤시 뒤가 보이는 경우 방지
         // 길게 끌어올려도 컨텐츠의 높이가 유연하게 늘어나도록 설정

@@ -22,6 +22,10 @@
 "Common.host" = "생성자";
 "Common.attendees" = "참여자";
 
+"Common.MoreMenu.editPromise" = "약속 수정";
+"Common.MoreMenu.delegatePromise" = "약속 위임";
+"Common.MoreMenu.leavePromise" = "약속 나가기";
+
 // MARK: SignInScreen
 "SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
 "SignIn.selectSignInMethodText" = "로그인 수단 선택";
@@ -131,3 +135,5 @@
 "PromiseStatusWithUserView.Tag.notStart" = "출발 전";
 "PromiseStatusWithUserView.Tag.sharingOn" = "내 위치공유가 켜져있어요";
 
+// MARK: PromiseStatusView/PromiseStatusWithAllAttendeesView
+"PromiseStatusWithAllAttendeesView.Header.title" = "약속 상세";

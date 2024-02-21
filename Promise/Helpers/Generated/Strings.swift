@@ -38,6 +38,14 @@ internal enum L10n {
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
     /// 거절
     internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
+    internal enum MoreMenu {
+      /// 약속 위임
+      internal static let delegatePromise = L10n.tr("Localizable", "Common.MoreMenu.delegatePromise", fallback: "약속 위임")
+      /// 약속 수정
+      internal static let editPromise = L10n.tr("Localizable", "Common.MoreMenu.editPromise", fallback: "약속 수정")
+      /// 약속 나가기
+      internal static let leavePromise = L10n.tr("Localizable", "Common.MoreMenu.leavePromise", fallback: "약속 나가기")
+    }
   }
   internal enum CompletedCreatePromise {
     /// 약속 생성 완료
@@ -220,6 +228,12 @@ internal enum L10n {
       internal static let dateTimeQuickOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeQuickOrder", fallback: "약속시간 빠른순")
       /// 정렬 선택
       internal static let selectOrder = L10n.tr("Localizable", "Main.SortPromiseList.selectOrder", fallback: "정렬 선택")
+    }
+  }
+  internal enum PromiseStatusWithAllAttendeesView {
+    internal enum Header {
+      /// 약속 상세
+      internal static let title = L10n.tr("Localizable", "PromiseStatusWithAllAttendeesView.Header.title", fallback: "약속 상세")
     }
   }
   internal enum PromiseStatusWithUserView {

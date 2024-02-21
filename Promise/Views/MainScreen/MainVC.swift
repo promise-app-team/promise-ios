@@ -365,9 +365,15 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.configureCell(with: promise, at: indexPath)
         
         // MARK: 최초에 한 번만 실행 cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
-        if indexPath.row == 0, let initFocusRatio = focusRatioInfo.0, let focusRatio = focusRatioInfo.1, initFocusRatio == focusRatio {
+        if indexPath.row == 0,
+           let initFocusRatio = focusRatioInfo.0,
+           let focusRatio = focusRatioInfo.1,
+           initFocusRatio == focusRatio
+        {
             focusedCellChanged(to: indexPath)
             cell.updateBorder(focusRatio: focusRatio)
+        } else {
+            cell.updateBorder(focusRatio: 0)
         }
         
         return cell
@@ -432,7 +438,7 @@ extension MainVC: PromiseListLayoutDelegate {
         let isEmptyAttendees = promise.attendees.isEmpty
         let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
         
-        // MARK: for promise status
+        // MARK: for promise status (is not called init mount)
         self.promiseStatusView?.updatePromiseStatus(with: promise)
         
         // MARK: for probee

@@ -15,6 +15,15 @@ class PromiseStatusWithUserView: UIView {
     
     // MARK: subviews
     
+    private let spacingView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: adjustedValue(32, .height)).isActive = true
+        view.backgroundColor = .white
+        view.layer.zPosition = 1
+        return view
+    }()
+    
     private let departureLocationLabel = {
         let label = UILabel()
         
@@ -47,6 +56,19 @@ class PromiseStatusWithUserView: UIView {
         return imageView
     }()
     
+    private lazy var userStatusLabelWrapper = {
+        let stackView = UIStackView(arrangedSubviews: [
+            userStatusLabel,
+            userStatusLight
+        ])
+        
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     private let userSharingStateLabel = {
         let label = UILabel()
         
@@ -66,6 +88,19 @@ class PromiseStatusWithUserView: UIView {
         imageView.heightAnchor.constraint(equalToConstant: adjustedValue(16, .height)).isActive = true
         
         return imageView
+    }()
+    
+    private lazy var userSharingStateLabelWrapper = {
+        let stackView = UIStackView(arrangedSubviews: [
+            userSharingStateLabel,
+            userSharingStateLight
+        ])
+        
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     private let departureLocation = {
@@ -109,7 +144,7 @@ class PromiseStatusWithUserView: UIView {
 
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 4
+        stackView.spacing = adjustedValue(4, .width)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapDepartureLocationLabel))
         stackView.isUserInteractionEnabled = true
@@ -122,14 +157,14 @@ class PromiseStatusWithUserView: UIView {
     private let userStatusTaggedLabel = {
         let insetLabel = InsetLabel()
         
-        insetLabel.topInset = 3
-        insetLabel.bottomInset = 3
-        insetLabel.leftInset = 8
-        insetLabel.rightInset = 8
+        insetLabel.topInset = adjustedValue(3, .height)
+        insetLabel.bottomInset = adjustedValue(3, .height)
+        insetLabel.leftInset = adjustedValue(8, .width)
+        insetLabel.rightInset = adjustedValue(8, .width)
         
         // Placeholder
         insetLabel.text = L10n.PromiseStatusWithUserView.Tag.notStart
-        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         insetLabel.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         insetLabel.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
         
@@ -144,19 +179,19 @@ class PromiseStatusWithUserView: UIView {
     private let userSharingStateTaggedLabel = {
         let insetLabel = InsetLabel()
         
-        insetLabel.topInset = 3
-        insetLabel.bottomInset = 3
-        insetLabel.leftInset = 8
-        insetLabel.rightInset = 8
+        insetLabel.topInset = adjustedValue(3, .height)
+        insetLabel.bottomInset = adjustedValue(3, .height)
+        insetLabel.leftInset = adjustedValue(8, .width)
+        insetLabel.rightInset = adjustedValue(8, .width)
         
         // Placeholder
         insetLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOn
-        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         insetLabel.textColor = UIColor(red: 0.02, green: 0.675, blue: 0.557, alpha: 1)
         insetLabel.backgroundColor = UIColor(red: 0.902, green: 0.976, blue: 0.961, alpha: 1)
         
         insetLabel.layer.masksToBounds = true
-        insetLabel.layer.cornerRadius = 9
+        insetLabel.layer.cornerRadius = adjustedValue(9, .width)
         insetLabel.sizeToFit()
         
         insetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -186,6 +221,8 @@ class PromiseStatusWithUserView: UIView {
     }
     
     private func configure() {
+        
+        backgroundColor = .white
         
         if let id = mainVM.currentFocusedPromise?.pid {
             mainVM.getDepartureLoaction(id: id) { location in
@@ -218,13 +255,12 @@ class PromiseStatusWithUserView: UIView {
     
     private func render() {
         [
+            spacingView,
             departureLocationLabel,
             departureLocationWrapper,
-            userStatusLabel,
-            userStatusLight,
+            userStatusLabelWrapper,
             userStatusTaggedLabel,
-            userSharingStateLabel,
-            userSharingStateLight,
+            userSharingStateLabelWrapper,
             userSharingStateTaggedLabel
         ].forEach { addSubview($0) }
         
@@ -233,30 +269,28 @@ class PromiseStatusWithUserView: UIView {
     
     private func setupAutoLayout() {
         NSLayoutConstraint.activate([
-            departureLocationLabel.topAnchor.constraint(equalTo: topAnchor, constant: adjustedValue(36, .height)),
-            departureLocationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            spacingView.topAnchor.constraint(equalTo: topAnchor),
+            spacingView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            spacingView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            departureLocationWrapper.topAnchor.constraint(equalTo: departureLocationLabel.bottomAnchor, constant: adjustedValue(6, .height)),
+            departureLocationLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            departureLocationLabel.bottomAnchor.constraint(equalTo: departureLocationWrapper.topAnchor, constant: -adjustedValue(8, .height)),
+            
             departureLocationWrapper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
             departureLocationWrapper.trailingAnchor.constraint(equalTo: trailingAnchor, constant: adjustedValue(-24, .width)),
+            departureLocationWrapper.bottomAnchor.constraint(equalTo: userStatusLabelWrapper.topAnchor, constant: -adjustedValue(17, .height)),
             
-            userStatusLabel.topAnchor.constraint(equalTo: departureLocationWrapper.bottomAnchor, constant: adjustedValue(18, .height)),
-            userStatusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userStatusLabelWrapper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userStatusLabelWrapper.bottomAnchor.constraint(equalTo: userStatusTaggedLabel.topAnchor, constant: -adjustedValue(11, .height)),
             
-            userStatusLight.leadingAnchor.constraint(equalTo: userStatusLabel.trailingAnchor),
-            userStatusLight.centerYAnchor.constraint(equalTo: userStatusLabel.centerYAnchor),
-            
-            userStatusTaggedLabel.topAnchor.constraint(equalTo: userStatusLabel.bottomAnchor, constant: adjustedValue(12, .height)),
             userStatusTaggedLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userStatusTaggedLabel.bottomAnchor.constraint(equalTo: userSharingStateLabelWrapper.topAnchor, constant: -adjustedValue(17, .height)),
             
-            userSharingStateLabel.topAnchor.constraint(equalTo: userStatusTaggedLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-            userSharingStateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userSharingStateLabelWrapper.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userSharingStateLabelWrapper.bottomAnchor.constraint(equalTo: userSharingStateTaggedLabel.topAnchor, constant: -adjustedValue(11, .height)),
             
-            userSharingStateLight.leadingAnchor.constraint(equalTo: userSharingStateLabel.trailingAnchor),
-            userSharingStateLight.centerYAnchor.constraint(equalTo: userSharingStateLabel.centerYAnchor),
-            
-            userSharingStateTaggedLabel.topAnchor.constraint(equalTo: userSharingStateLabel.bottomAnchor, constant: adjustedValue(12, .height)),
             userSharingStateTaggedLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            userSharingStateTaggedLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -adjustedValue(45, .height))
         ])
     }
 }

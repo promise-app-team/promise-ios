@@ -10,8 +10,8 @@ import UIKit
 import SkeletonView
 
 
-class AttendeeCell: UICollectionViewCell {
-    static let identifier = "AttendeeCell"
+class AttendeeCellForCard: UICollectionViewCell {
+    static let identifier = "AttendeeCellForCard"
     
     private lazy var attendeeProfileImage: UIImageView = {
         let imageView = UIImageView()
@@ -24,14 +24,14 @@ class AttendeeCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureAttendeeCell()
+        configure()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureAttendeeCell() {
+    private func configure() {
         contentView.addSubview(attendeeProfileImage)
         
         NSLayoutConstraint.activate([
@@ -42,7 +42,7 @@ class AttendeeCell: UICollectionViewCell {
         ])
     }
     
-    func configureAttendeeCell(with attendee: Components.Schemas.Attendee) {
+    func configureAttendeeCellForCard(with attendee: Components.Schemas.Attendee) {
         guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
             // TODO: 이미지 url이 없을 경우 디폴트 이미지
             return
@@ -74,11 +74,6 @@ class PromiseListCell: UICollectionViewCell {
             imageView.widthAnchor.constraint(equalToConstant: adjustedValue(20, .width)),
             imageView.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height))
         ])
-        
-        // TODO:
-        // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapShareButton))
-        // imageView.addGestureRecognizer(tapGesture)
-        //imageView.isUserInteractionEnabled = true
         
         let view = UIView()
         view.addSubview(imageView)
@@ -306,7 +301,7 @@ class PromiseListCell: UICollectionViewCell {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(AttendeeCell.self, forCellWithReuseIdentifier: AttendeeCell.identifier)
+        collectionView.register(AttendeeCellForCard.self, forCellWithReuseIdentifier: AttendeeCellForCard.identifier)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -481,12 +476,12 @@ extension PromiseListCell: UICollectionViewDataSource, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttendeeCell.identifier, for: indexPath) as? AttendeeCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttendeeCellForCard.identifier, for: indexPath) as? AttendeeCellForCard else {
             return UICollectionViewCell()
         }
         
         let attendee = attendees[indexPath.row]
-        cell.configureAttendeeCell(with: attendee)
+        cell.configureAttendeeCellForCard(with: attendee)
         return cell
     }
     
