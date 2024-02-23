@@ -20,6 +20,7 @@
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
 		D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474E0672B5E974700CD6033 /* InvitationPopUp.swift */; };
 		D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */; };
+		D492BE842B88557D00F6269A /* MapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D492BE832B88557D00F6269A /* MapHelper.swift */; };
 		D4968B962B737772009C6014 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B952B737772009C6014 /* UIFont.swift */; };
 		D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B972B7377CD009C6014 /* LayoutHelper.swift */; };
 		D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497715E2B5FF860005DF103 /* AttendanceHelper.swift */; };
@@ -165,6 +166,7 @@
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
 		D474E0672B5E974700CD6033 /* InvitationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationPopUp.swift; sourceTree = "<group>"; };
 		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
+		D492BE832B88557D00F6269A /* MapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelper.swift; sourceTree = "<group>"; };
 		D4968B952B737772009C6014 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		D4968B972B7377CD009C6014 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 				D497715E2B5FF860005DF103 /* AttendanceHelper.swift */,
 				D4968B972B7377CD009C6014 /* LayoutHelper.swift */,
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
+				D492BE832B88557D00F6269A /* MapHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1158,6 +1161,7 @@
 				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
 				D4968B962B737772009C6014 /* UIFont.swift in Sources */,
+				D492BE842B88557D00F6269A /* MapHelper.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
 				FC41B25E2A781E6500C1C592 /* Task.swift in Sources */,

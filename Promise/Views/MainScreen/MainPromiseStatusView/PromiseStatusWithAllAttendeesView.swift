@@ -79,6 +79,9 @@ class PromiseStatusWithAllAttendeesView: UIView {
         }
     }
     
+    private let mapHelper = MapHelper()
+    private var mapDefaultZoomLevel: Double = 16
+    
     private lazy var promiseDestinationMarker = {
         let maker = NMFMarker()
         maker.iconImage = NMF_MARKER_IMAGE_RED
@@ -86,38 +89,32 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return maker
     }()
     
-//    private lazy var userLocationMarker = {
-//        let maker = NMFMarker()
-//        maker.iconImage = NMF_MARKER_IMAGE_BLUE
-//        maker.mapView = map
-//        return maker
-//    }()
+    private lazy var userLocationMarker = {
+        let maker = NMFMarker()
+        maker.iconImage = NMF_MARKER_IMAGE_BLUE
+        maker.mapView = map
+        return maker
+    }()
     
     private var userLocation: CLLocation? {
         didSet {
             guard let userLocation else { return }
+            mapHelper.animateMarker(marker: userLocationMarker, to: NMGLatLng(lat: userLocation.coordinate.latitude, lng: userLocation.coordinate.longitude), duration: 0.5, animationEffect: .easeIn)
             
-            map.locationOverlay.location = NMGLatLng(
-                lat: userLocation.coordinate.latitude,
-                lng: userLocation.coordinate.longitude
-            )
-
-//
-//            // 마커 위치 업데이트
-//            userLocationMarker.position = NMGLatLng(
-//                lat: userLocation.coordinate.latitude,
-//                lng: userLocation.coordinate.longitude
-//            )
-//            
-//            // 지도에 마커를 다시 추가하여 위치를 업데이트
-//            userLocationMarker.mapView = map
+            
+            // 지도에 마커를 다시 추가하여 위치를 업데이트
+//             userLocationMarker.mapView = map
         }
     }
     
     private var authorizationStatus: CLAuthorizationStatus? {
         didSet {
             if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
-                setUserLocationOnMap()
+                // MARK: 인증 상태가 바뀌어 위치정보가 업데이트 되면 userLocation이 있기 때문에 실행 가능
+                setUserLocationMarkerOnMap()
+                
+                // MARK: 내장 location overlay 세팅
+                // setUserLocationOverlayOnMap()
             }
         }
     }
@@ -346,9 +343,15 @@ class PromiseStatusWithAllAttendeesView: UIView {
     
     private lazy var map = {
         let mapView = NMFMapView()
-        mapView.isIndoorMapEnabled = true
-        mapView.positionMode = NMFMyPositionMode.compass
+        
+        mapView.isIndoorMapEnabled = true // 실내 지도 활성화(역사 내부 지도 등)
         mapView.touchDelegate = self
+        mapView.zoomLevel = mapDefaultZoomLevel
+        
+        // MARK: NMFMapView 내장 locationOverlay 사용 할 때
+        // mapView.locationOverlay.hidden = false
+        // mapView.positionMode = NMFMyPositionMode.compass
+        
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
@@ -616,6 +619,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         }
     }
     
+    
     @objc private func onTapFocusMyLoaction() {
         guard let location = userLocation else { return }
         focusMapOnLocation(location: location)
@@ -665,7 +669,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         map.moveCamera(cameraUpdate)
     }
     
-    private func setDestinationOnMap(destination: Components.Schemas.OutputDestination?) {
+    private func setDestinationMarkerOnMap(destination: Components.Schemas.OutputDestination?) {
         guard let destination else { return }
 
         promiseDestinationMarker.position = NMGLatLng(
@@ -682,7 +686,19 @@ class PromiseStatusWithAllAttendeesView: UIView {
         
     }
     
-    private func setUserLocationOnMap() {
+    // MARK: userlocation이 있어야 마커 등록 가능
+    private func setUserLocationMarkerOnMap() {
+        guard let location = userLocation else { return }
+        
+        userLocationMarker.position = NMGLatLng(
+            lat: location.coordinate.latitude,
+            lng: location.coordinate.longitude
+        )
+        
+        userLocationMarker.mapView = map
+    }
+    
+    private func setUserLocationOverlayOnMap() {
         let user = UserService.shared.getUser()
         if let profileUrl = user?.profileUrl, let imageUrl = URL(string: profileUrl) {
             
@@ -725,11 +741,16 @@ class PromiseStatusWithAllAttendeesView: UIView {
         }
     }
     
+    // MARK: self 초기화 시 실행됨
     private func setPromiseStatusForMap(with promise: Components.Schemas.OutputPromiseListItem) {
-        setUserLocationOnMap()
-        setDestinationOnMap(destination: promise.destination?.value1)
+        
+        setDestinationMarkerOnMap(destination: promise.destination?.value1)
+        
+        // MARK: 내장 location overlay 세팅
+        // setUserLocationOverlayOnMap()
     }
     
+    // MARK: self 초기화 시 실행됨
     private func setPromiseDetailInfo(with promise: Components.Schemas.OutputPromiseListItem) {
         // TimeInterval을 Date 객체로 변환
         let dateFormatter = DateFormatter()
@@ -861,7 +882,7 @@ extension PromiseStatusWithAllAttendeesView: UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: adjustedValue(attendeesViewHeight, .width), height: adjustedValue(attendeesViewHeight, .height))
     }
-//    
+
 //    // 섹션당 상하 간격 설정
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 //        return adjustedValue(8, .height)
