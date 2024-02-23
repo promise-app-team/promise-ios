@@ -79,6 +79,49 @@ class PromiseStatusWithAllAttendeesView: UIView {
         }
     }
     
+    private lazy var promiseDestinationMarker = {
+        let maker = NMFMarker()
+        maker.iconImage = NMF_MARKER_IMAGE_RED
+        maker.mapView = map
+        return maker
+    }()
+    
+//    private lazy var userLocationMarker = {
+//        let maker = NMFMarker()
+//        maker.iconImage = NMF_MARKER_IMAGE_BLUE
+//        maker.mapView = map
+//        return maker
+//    }()
+    
+    private var userLocation: CLLocation? {
+        didSet {
+            guard let userLocation else { return }
+            
+            map.locationOverlay.location = NMGLatLng(
+                lat: userLocation.coordinate.latitude,
+                lng: userLocation.coordinate.longitude
+            )
+
+//
+//            // 마커 위치 업데이트
+//            userLocationMarker.position = NMGLatLng(
+//                lat: userLocation.coordinate.latitude,
+//                lng: userLocation.coordinate.longitude
+//            )
+//            
+//            // 지도에 마커를 다시 추가하여 위치를 업데이트
+//            userLocationMarker.mapView = map
+        }
+    }
+    
+    private var authorizationStatus: CLAuthorizationStatus? {
+        didSet {
+            if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+                setUserLocationOnMap()
+            }
+        }
+    }
+    
     // MARK: subviews
     
     let spacingView = {
@@ -246,7 +289,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     }()
     
     
-    lazy var header = {
+    private lazy var header = {
         let view = UIView()
         
         [headerTitle, menuWrapper].forEach { view.addSubview($0) }
@@ -301,8 +344,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return view
     }()
     
-    let map = {
+    private lazy var map = {
         let mapView = NMFMapView()
+        mapView.isIndoorMapEnabled = true
+        mapView.positionMode = NMFMyPositionMode.compass
+        mapView.touchDelegate = self
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
@@ -571,7 +617,8 @@ class PromiseStatusWithAllAttendeesView: UIView {
     }
     
     @objc private func onTapFocusMyLoaction() {
-        print(#function)
+        guard let location = userLocation else { return }
+        focusMapOnLocation(location: location)
     }
     
     @objc private func onTapShareButton() {
@@ -612,6 +659,77 @@ class PromiseStatusWithAllAttendeesView: UIView {
         CommonModalManager.shared.dismiss()
     }
     
+    private func focusMapOnLocation(location: CLLocation) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+        cameraUpdate.animation = .linear
+        map.moveCamera(cameraUpdate)
+    }
+    
+    private func setDestinationOnMap(destination: Components.Schemas.OutputDestination?) {
+        guard let destination else { return }
+
+        promiseDestinationMarker.position = NMGLatLng(
+            lat: destination.latitude,
+            lng: destination.longitude
+        )
+        
+        promiseDestinationMarker.mapView = map
+        
+        focusMapOnLocation(location: CLLocation(
+            latitude: destination.latitude,
+            longitude: destination.longitude
+        ))
+        
+    }
+    
+    private func setUserLocationOnMap() {
+        let user = UserService.shared.getUser()
+        if let profileUrl = user?.profileUrl, let imageUrl = URL(string: profileUrl) {
+            
+            Task {
+                do {
+                    let (data, _) = try await URLSession.shared.data(from: imageUrl)
+                    guard let image = UIImage(data: data) else {
+                        // TODO: 데이터로 이미지 변환 실패, fallback image
+                        return
+                    }
+                    
+                    guard let resizedImage = image
+                        .resize(newSize: CGSize(width: adjustedWidth(36), height: adjustedHeight(36)))
+                        .withRoundedCorners(radius: adjustedWidth(18), borderWidth: 5, borderColor: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1))
+                    else {
+                        // TODO: 이미지 리사이즈 및 레이어 변환 실패, fallback image
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.map.locationOverlay.hidden = false
+                        
+                        self.map.locationOverlay.icon = NMFOverlayImage(image: resizedImage)
+                        self.map.locationOverlay.anchor = CGPoint(x: 0.5, y: 1)
+                        
+                        self.map.locationOverlay.subIcon = NMFOverlayImage(image: Asset.subMarkerPrimary.image)
+                        self.map.locationOverlay.subIconWidth = adjustedWidth(36)
+                        self.map.locationOverlay.subIconHeight = adjustedWidth(20)
+                        self.map.locationOverlay.subAnchor = CGPoint(x: 0.5, y: 0.65)
+                        
+                        self.map.locationOverlay.circleColor = UIColor.clear
+                        self.map.locationOverlay.circleRadius = 0
+                    }
+                    
+                } catch {
+                    // TODO: 이미지 요청 실패, fallback image
+                }
+            }
+            
+        }
+    }
+    
+    private func setPromiseStatusForMap(with promise: Components.Schemas.OutputPromiseListItem) {
+        setUserLocationOnMap()
+        setDestinationOnMap(destination: promise.destination?.value1)
+    }
+    
     private func setPromiseDetailInfo(with promise: Components.Schemas.OutputPromiseListItem) {
         // TimeInterval을 Date 객체로 변환
         let dateFormatter = DateFormatter()
@@ -640,6 +758,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
                 place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
             }
         }
+        
         
         host.text = promise.host.username
         
@@ -670,6 +789,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         
         if let initialPromise = mainVM.currentFocusedPromise {
             setPromiseDetailInfo(with: initialPromise)
+            setPromiseStatusForMap(with: initialPromise)
         }
     }
     
@@ -711,6 +831,15 @@ extension PromiseStatusWithAllAttendeesView {
     public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.OutputPromiseListItem) {
         setPromiseDetailInfo(with: promise)
     }
+    
+    public func updateUserLocation(location: CLLocation) {
+        userLocation = location
+    }
+    
+    public func updateAuthorizationStatus(status: CLAuthorizationStatus) {
+        authorizationStatus = status
+    }
+    
 }
 
 extension PromiseStatusWithAllAttendeesView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -752,4 +881,8 @@ extension PromiseStatusWithAllAttendeesView: UICollectionViewDataSource, UIColle
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        
 //    }
+}
+
+extension PromiseStatusWithAllAttendeesView: NMFMapViewTouchDelegate {
+    
 }

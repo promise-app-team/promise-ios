@@ -134,6 +134,7 @@
 
 "PromiseStatusWithUserView.Tag.notStart" = "출발 전";
 "PromiseStatusWithUserView.Tag.sharingOn" = "내 위치공유가 켜져있어요";
+"PromiseStatusWithUserView.Tag.sharingOff" = "내 위치공유가 꺼져있어요";
 
 // MARK: PromiseStatusView/PromiseStatusWithAllAttendeesView
 "PromiseStatusWithAllAttendeesView.Header.title" = "약속 상세";

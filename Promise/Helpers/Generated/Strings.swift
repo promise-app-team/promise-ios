@@ -250,6 +250,8 @@ internal enum L10n {
     internal enum Tag {
       /// 출발 전
       internal static let notStart = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.notStart", fallback: "출발 전")
+      /// 내 위치공유가 꺼져있어요
+      internal static let sharingOff = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.sharingOff", fallback: "내 위치공유가 꺼져있어요")
       /// 내 위치공유가 켜져있어요
       internal static let sharingOn = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.sharingOn", fallback: "내 위치공유가 켜져있어요")
     }

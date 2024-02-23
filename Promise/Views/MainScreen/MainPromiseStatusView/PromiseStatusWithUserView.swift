@@ -13,6 +13,29 @@ class PromiseStatusWithUserView: UIView {
     
     let mainVM: MainVM
     
+    private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
+        didSet {
+            if isEnabledLocationServiceOnDevice {
+                DispatchQueue.main.async { [weak self] in
+                    self?.userSharingStateLight.image = Asset.statusOn.image
+                    
+                    self?.userSharingStateTaggedLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOn
+                    self?.userSharingStateTaggedLabel.textColor = UIColor(red: 0.02, green: 0.675, blue: 0.557, alpha: 1)
+                    self?.userSharingStateTaggedLabel.backgroundColor = UIColor(red: 0.902, green: 0.976, blue: 0.961, alpha: 1)
+                }
+                
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.userSharingStateLight.image = Asset.statusOff.image
+                    
+                    self?.userSharingStateTaggedLabel.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+                    self?.userSharingStateTaggedLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOff
+                    self?.userSharingStateTaggedLabel.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
+                }
+            }
+        }
+    }
+    
     // MARK: subviews
     
     private let spacingView = {
@@ -80,8 +103,11 @@ class PromiseStatusWithUserView: UIView {
         return label
     }()
     
-    private let userSharingStateLight = {
-        let imageView = UIImageView(image:Asset.statusOn.image)
+    private lazy var userSharingStateLight = {
+        let imageView = UIImageView(
+            image: isEnabledLocationServiceOnDevice ? Asset.statusOn.image : Asset.statusOff.image
+        )
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         imageView.widthAnchor.constraint(equalToConstant: adjustedValue(16, .width)).isActive = true
@@ -176,7 +202,7 @@ class PromiseStatusWithUserView: UIView {
         return insetLabel
     }()
     
-    private let userSharingStateTaggedLabel = {
+    private lazy var userSharingStateTaggedLabel = {
         let insetLabel = InsetLabel()
         
         insetLabel.topInset = adjustedValue(3, .height)
@@ -185,10 +211,17 @@ class PromiseStatusWithUserView: UIView {
         insetLabel.rightInset = adjustedValue(8, .width)
         
         // Placeholder
-        insetLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOn
         insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
-        insetLabel.textColor = UIColor(red: 0.02, green: 0.675, blue: 0.557, alpha: 1)
-        insetLabel.backgroundColor = UIColor(red: 0.902, green: 0.976, blue: 0.961, alpha: 1)
+        
+        if isEnabledLocationServiceOnDevice {
+            insetLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOn
+            insetLabel.textColor = UIColor(red: 0.02, green: 0.675, blue: 0.557, alpha: 1)
+            insetLabel.backgroundColor = UIColor(red: 0.902, green: 0.976, blue: 0.961, alpha: 1)
+        } else {
+            insetLabel.text = L10n.PromiseStatusWithUserView.Tag.sharingOff
+            insetLabel.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+            insetLabel.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
+        }
         
         insetLabel.layer.masksToBounds = true
         insetLabel.layer.cornerRadius = adjustedValue(9, .width)
@@ -296,6 +329,10 @@ class PromiseStatusWithUserView: UIView {
 }
 
 extension PromiseStatusWithUserView {
+    public func updateStateForLocationServiceOnDevice(isEnabled: Bool) {
+        isEnabledLocationServiceOnDevice = isEnabled
+    }
+    
     public func updatePromiseStatusWithUser(with promise: Components.Schemas.OutputPromiseListItem) {
         let id = promise.pid
         

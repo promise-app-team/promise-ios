@@ -27,6 +27,7 @@
 		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
+		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -171,6 +172,7 @@
 		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
 		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
+		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
 		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
 		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				E7B91E0A2A7D156400426D81 /* LocationService.swift */,
 				E7B91DD82A78D47100426D81 /* WebsocketService.swift */,
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
+				D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1187,6 +1190,7 @@
 				FCB3AD742AC97FBC00219A25 /* CompletedCreatePromiseVC.swift in Sources */,
 				FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */,
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
+				D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* SignInVM.swift in Sources */,
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
 				D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */,
@@ -1397,8 +1401,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1433,8 +1437,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1609,8 +1613,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1739,8 +1743,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

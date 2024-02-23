@@ -9,7 +9,12 @@ import Foundation
 import UIKit
 import FloatingPanel
 
+@objc protocol CommonFloatingContentVCDelegate: AnyObject {
+    @objc optional func floatingPanelDidChangeState(_ fpc: FloatingPanelController)
+}
+
 class CommonFloatingContentVC: UIViewController {
+    weak var delegate: CommonFloatingContentVCDelegate?
     
     let halfViewHeight: CGFloat = CommonFloatingContainerVC.minHeight
     var halfViewHeightConstraint: NSLayoutConstraint!
@@ -102,6 +107,8 @@ extension CommonFloatingContentVC: FloatingPanelControllerDelegate {
         guard let _ = fpc.contentViewController as? CommonFloatingContentVC else {
             return
         }
+        
+        delegate?.floatingPanelDidChangeState?(fpc)
 
         switch fpc.state {
         case .full:
@@ -110,7 +117,6 @@ extension CommonFloatingContentVC: FloatingPanelControllerDelegate {
                 self.halfViewHeightConstraint.constant = 0
                 self.view.layoutIfNeeded()
             }
-            break;
         case .half:
             // 패널이 반 화면일 때 컨텐츠 변경
             UIView.animate(withDuration: 0.15) {

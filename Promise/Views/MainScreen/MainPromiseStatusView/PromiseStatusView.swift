@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import CoreLocation
+import FloatingPanel
 
 class PromiseStatusView: CommonFloatingContainerVC {
     // MARK: properties
@@ -16,6 +18,27 @@ class PromiseStatusView: CommonFloatingContainerVC {
     private let promiseStatusContent: CommonFloatingContentVC
     private let promiseStatusWithUserView: PromiseStatusWithUserView
     private let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
+    
+    private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
+        didSet {
+            promiseStatusWithUserView.updateStateForLocationServiceOnDevice(isEnabled: isEnabledLocationServiceOnDevice)
+        }
+    }
+    
+    private var userLocation: CLLocation? = nil {
+        didSet {
+            guard let location = userLocation else { return }
+            promiseStatusWithAllAttendeesView.updateUserLocation(location: location)
+        }
+    }
+    
+    private var authorizationStatus = LocationService.shared.authorizationStatus {
+        didSet {
+            if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+                promiseStatusWithAllAttendeesView.updateAuthorizationStatus(status: authorizationStatus)
+            }
+        }
+    }
     
     // MARK: initialize
     
@@ -42,6 +65,8 @@ class PromiseStatusView: CommonFloatingContainerVC {
     
     private func configure() {
         self.readyToParent()
+        LocationService.shared.delegate = self
+        self.promiseStatusContent.delegate = self
     }
 }
 
@@ -49,6 +74,39 @@ extension PromiseStatusView {
     public func updatePromiseStatus(with promise: Components.Schemas.OutputPromiseListItem) {
         promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
         promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
+    }
+}
+
+extension PromiseStatusView: LocationServiceDelegate {
+    func onDidChangeAuthorization(manager: CLLocationManager) {
+        userLocation = manager.location
+        authorizationStatus = manager.authorizationStatus
+    }
+    
+    func onDidChangeLocationServiceOnDeivce(isEnabled: Bool) {
+        isEnabledLocationServiceOnDevice = isEnabled
+    }
+    
+    func onDidUpdatedUserLocation(location: CLLocation) {
+        userLocation = location
+    }
+}
+
+extension PromiseStatusView: CommonFloatingContentVCDelegate {
+    func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
+        switch fpc.state {
+        case .full:
+            
+            LocationService.shared.start()
+            
+            break;
+        case .half:
+            break;
+        case .tip:
+            break;
+        default:
+            break
+        }
     }
 }
 
