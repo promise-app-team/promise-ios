@@ -10,6 +10,8 @@ import UIKit
 
 class AccountVC: UIViewController, HeaderViewDelegate {
     
+    private lazy var signInVM = SignInVM(currentVC: self)
+    
     //바탕뷰(회색)
     let backgroundView: UIView = {
        let view = UIView()
@@ -248,6 +250,7 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
             break
         case 3:
             // "로그아웃"
+            UserService.shared.signOut(currentVC: self)
             break
         default:
             break

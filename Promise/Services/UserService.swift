@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import JWTDecode
+import KakaoSDKUser
+import GoogleSignIn
 
 final class UserService {
     static let shared = UserService()
@@ -15,7 +17,7 @@ final class UserService {
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
     
-    private var user: UserMDL? = nil
+    public var user: UserMDL? = nil
     
     func getUser() -> UserMDL? {
         return user
@@ -34,7 +36,7 @@ final class UserService {
             
             switch result {
             case .success(let userInfo):
-                user = UserMDL(userId: userId, nickname: userInfo.username, profileUrl: userInfo.profileUrl)
+                user = UserMDL(userId: userId, nickname: userInfo.username, profileUrl: userInfo.profileUrl, loginMethod: userInfo.provider?.rawValue)
                 return true
             case .failure(let error):
                 print("Get user data error: ", error)
@@ -69,7 +71,40 @@ final class UserService {
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)
     }
     
+    private func logoutKakao(currentVC: UIViewController) {
+        UserApi.shared.logout { error in
+            if let error = error {
+                print("Kakao logout error:", error)
+            } else {
+                print("Kakao logout success")
+                currentVC.navigationController?.pushViewController(SignInVC(), animated: true)
+            }
+        }
+    }
+    
+    private func logoutGoogle() {
+        GIDSignIn.sharedInstance.signOut()
+        print("Google logout success")
+    }
+    
     func signOut(currentVC: UIViewController) {
+        
+        if let loginMethod = user?.loginMethod {
+            switch loginMethod {
+            case "kakao":
+                logoutKakao(currentVC: currentVC)
+                break
+            case "google":
+                 logoutGoogle()
+                break
+            case "apple":
+                // logoutApple()
+                break
+            default:
+                break
+            }
+        }
+        
         clearTokens()
         user = nil
         currentVC.navigationController?.pushViewController(SignInVC(), animated: true)
