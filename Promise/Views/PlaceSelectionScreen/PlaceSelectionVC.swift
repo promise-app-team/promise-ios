@@ -8,11 +8,20 @@
 import UIKit
 import NMapsMap
 
-@objc protocol PlaceSelectionDelegate: AnyObject {
+@objc protocol PlaceSelectionDelegate: AnyObject{
     @objc optional func onWillShow()
     @objc optional func onWillHide()
     @objc optional func onDidShow()
     @objc optional func onDidHide()
+}
+protocol PlaceSelectionDataDelegate: AnyObject {
+    func handlePlaceResult(place: PlaceSelection)
+}
+
+struct PlaceSelection {
+    var name: String = "주소"
+    var lat: Double = 37.565643683342
+    var lon: Double = 126.95524147826
 }
 
 class PlaceSelectionVC: UIViewController {
@@ -24,6 +33,7 @@ class PlaceSelectionVC: UIViewController {
     // MARK: Public Property
     
     weak var delegate: PlaceSelectionDelegate?
+    weak var dataDelegate: PlaceSelectionDataDelegate?
     
     var viewState: SearchStatus! {
         didSet {
@@ -71,6 +81,8 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: Private Property
     
+    var currentPlace = PlaceSelection()
+    
     private lazy var headerView: HeaderView = {
         let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
         headerView.delegate = self
@@ -107,7 +119,16 @@ class PlaceSelectionVC: UIViewController {
         return naverMapView
     }()
     
-    let confirmView = PlaceSelectionConfirmView()
+    lazy var confirmView: PlaceSelectionConfirmView = {
+        let view = PlaceSelectionConfirmView()
+        view.handleTappedConfirmButton = {
+            print("tapped confirm button")
+            self.currentPlace.name = "\(view.titleLabel.text ?? "") \(view.addressTextField.text ?? "")"
+            self.dataDelegate?.handlePlaceResult(place: self.currentPlace)
+            self.dismiss(animated: true)
+        }
+        return view
+    }()
     
     // MARK: View Life Cycle
     
@@ -119,6 +140,27 @@ class PlaceSelectionVC: UIViewController {
         confirmView.configureAddressTextfieldDelegate(self)
         
         addKeyboardNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        delegate?.onWillShow?()
+        let _ = searchTextField.becomeFirstResponder()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        delegate?.onDidShow?()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.onWillHide?()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.onDidHide?()
     }
     
     
@@ -168,27 +210,6 @@ class PlaceSelectionVC: UIViewController {
 //            confirmView.frame.origin.y += keyboardHeight
             view.frame.origin.y += keyboardHeight
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        delegate?.onWillShow?()
-        let _ = searchTextField.becomeFirstResponder()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        delegate?.onDidShow?()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        delegate?.onWillHide?()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate?.onDidHide?()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

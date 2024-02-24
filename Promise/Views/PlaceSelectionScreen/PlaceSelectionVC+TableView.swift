@@ -60,6 +60,10 @@ extension PlaceSelectionVC: UITableViewDelegate {
         confirmView.updateAddressLabel(roadAddress, regionAddress)
         
         viewState = .map
+        
+        currentPlace.name = placeName ?? "placeName"
+        currentPlace.lat = lat
+        currentPlace.lon = lon
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

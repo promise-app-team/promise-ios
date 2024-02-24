@@ -8,14 +8,18 @@
 import UIKit
 
 protocol PlaceSelectionConfirmViewTextFieldDelegate: UIViewController {
-    func PlaceSelectionConfirmViewTextFieldDelegate()
+    func placeSelectionConfirmViewTextFieldDelegate()
 }
 
 final class PlaceSelectionConfirmView: UIView {
     
     weak var textFieldDelegate: PlaceSelectionConfirmViewTextFieldDelegate?
     
-    private let titleLabel: UILabel = {
+    var handleTappedConfirmButton: (()->())?
+    
+    // MARK: - Views
+    
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "주소"
         label.font = UIFont(font: FontFamily.Pretendard.bold, size: 16)
@@ -43,8 +47,13 @@ final class PlaceSelectionConfirmView: UIView {
     let confirmButton: Button = {
         let btn = Button()
         btn.initialize(title: "완료", style: .primary)
+        btn.addTarget(nil, action: #selector(confirmButtonTapped), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func confirmButtonTapped() {
+        handleTappedConfirmButton?()
+    }
     
     // MARK: Initializer
     
