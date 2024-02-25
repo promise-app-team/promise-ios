@@ -16,8 +16,8 @@ class NavigationMenusView: UIStackView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         imageView.contentMode = .scaleAspectFit
@@ -34,8 +34,8 @@ class NavigationMenusView: UIStackView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         imageView.contentMode = .scaleAspectFit

@@ -8,6 +8,7 @@ target 'Promise' do
   # Pods for Promise
   pod 'FloatingPanel'
   pod 'SwiftGen', '~> 6.0'
+  pod 'NMapsMap'
 
   target 'PromiseTests' do
     inherit! :search_paths

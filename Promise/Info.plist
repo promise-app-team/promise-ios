@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.</string>
 	<key>API_DOC_URL</key>
 	<string>${API_DOC_URL}</string>
 	<key>API_URL</key>
@@ -30,6 +26,16 @@
 				<string>com.googleusercontent.apps.882948941624-cd2vl08k9k9ctbt7ghm0bboo3ji7kea3</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>promise</string>
+			</array>
+		</dict>
 	</array>
 	<key>GIDClientID</key>
 	<string>${GOOGLE_CLIENT_ID}</string>
@@ -42,23 +48,25 @@
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 	</array>
-	<key>UIAppFonts</key>
-    <array>
-        <string>Pretendard-Black.otf</string>
-        <string>Pretendard-Bold.otf</string>
-        <string>Pretendard-ExtraBold.otf</string>
-        <string>Pretendard-ExtraLight.otf</string>
-        <string>Pretendard-Light.otf</string>
-        <string>Pretendard-Medium.otf</string>
-        <string>Pretendard-Regular.otf</string>
-        <string>Pretendard-SemiBold.otf</string>
-        <string>Pretendard-Thin.otf</string>
-    </array>
+	<key>NMFClientId</key>
+	<string>${NAVER_CLIENT_ID}</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Black.otf</string>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-ExtraBold.otf</string>
+		<string>Pretendard-ExtraLight.otf</string>
+		<string>Pretendard-Light.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Pretendard-Thin.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -80,5 +88,7 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>UNIVERSAL_LINK_DOMAIN</key>
+	<string>${UNIVERSAL_LINK_DOMAIN}</string>
 </dict>
 </plist>

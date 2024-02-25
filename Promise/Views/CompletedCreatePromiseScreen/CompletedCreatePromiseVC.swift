@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class CompletedCreatePromiseVC: UIViewController {
+    var createdPromiseId: Int?
+    
     private lazy var headerView = HeaderView(navigationController: self.navigationController, title: L10n.CompletedCreatePromise.headerTitle, isHiddenGoBackButton: true)
     
     private var mainTitle: UILabel = {
@@ -200,7 +202,18 @@ class CompletedCreatePromiseVC: UIViewController {
     }
     
     @objc private func onTapShareButton() {
+        guard let createdPromiseId else { return }
+        let shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(createdPromiseId)")
+        guard let shareUrl else { return }
         
+        // UIActivityViewController 초기화
+        let activityViewController = UIActivityViewController(activityItems: [shareUrl], applicationActivities: nil)
+
+        // iPad에서는 popover로 표시해야 할 수 있음
+        activityViewController.popoverPresentationController?.sourceView = self.view
+
+        // UIActivityViewController 표시
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

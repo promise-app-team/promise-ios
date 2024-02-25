@@ -1,0 +1,17 @@
+{
+    "applinks": {
+	"apps":[],
+        "details": [
+            {
+                "appIDs": [
+                    "DQNSTQBH74.com.promise-team.promise"
+                ],
+                "components": [
+                    {
+                        "/": "*"
+                    }
+                ]
+            }
+        ]
+    }
+}

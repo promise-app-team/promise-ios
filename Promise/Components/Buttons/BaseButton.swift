@@ -26,13 +26,13 @@ open class BaseButton: UIButton {
     private var disabledBorderColor: UIColor = UIColor(hexCode: "#F2F2F2")
     
     // MARK: - 모서리
-    private let cornerRadius: CGFloat = 18
+    private let cornerRadius: CGFloat = adjustedHeight(20)
     
     // MARK: - 스케일
     private let scaleValue = 0.96
     
     // MARK: - 버튼 높이
-    private let height = 40
+    private let height = adjustedHeight(40)
     
     // MARK: - 아이콘 이름
     private var iconTitle = ""
@@ -66,11 +66,12 @@ open class BaseButton: UIButton {
     open func setup() {
         setupByActiveMode()
         
-        titleLabel?.font = UIFont.pretendard(style: .B1_R)
+        titleLabel?.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         
         setTitle(self.title, for: .normal)
         setTitleColor(self.fontColor, for: .normal)
         setTitleColor(self.disabledFontColor, for: .disabled)
+        
         
         layer.cornerRadius = self.cornerRadius
         layer.borderWidth = 1
