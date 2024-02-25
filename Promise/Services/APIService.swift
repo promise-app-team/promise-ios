@@ -29,7 +29,6 @@ struct BadRequestError {
     let errorResponse: ErrorResponse?
 }
 
-// TODO: 서버 에러 메시지
 struct ErrorResponse: Decodable {
     let message: String
     let error: String
