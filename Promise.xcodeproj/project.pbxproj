@@ -1543,6 +1543,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DQNSTQBH74;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1560,6 +1561,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1717,6 +1719,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DQNSTQBH74;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1734,6 +1737,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1842,9 +1846,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DQNSTQBH74;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1862,6 +1868,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
