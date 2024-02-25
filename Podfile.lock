@@ -1,5 +1,5 @@
 PODS:
-  - FloatingPanel (2.6.5)
+  - FloatingPanel (2.8.1)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
@@ -18,7 +18,7 @@ SPEC REPOS:
     - SwiftGen
 
 SPEC CHECKSUMS:
-  FloatingPanel: cd924b71f05f14586260e83b3b52edbf5eb73340
+  FloatingPanel: 0c32d8c97e52cf6913833af573506f5d86451465
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c

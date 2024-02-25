@@ -8,6 +8,7 @@
 import UIKit
 import KakaoSDKCommon
 import UserNotifications
+import NMapsMap
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -21,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // MARK: 카카오 SDK 초기화(v2부터 필수)
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
-        
+        // MARK: - 네이버 지도
+        NMFAuthManager.shared().clientId = "456s1eany5"
         return true
     }
 

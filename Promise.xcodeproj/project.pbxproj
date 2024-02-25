@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */; };
+		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
+		2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */; };
+		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
+		2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */; };
+		2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */; };
+		2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */; };
+		2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
@@ -143,6 +151,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipView.swift; sourceTree = "<group>"; };
+		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
+		2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTVCell.swift; sourceTree = "<group>"; };
+		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
+		2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAddressStackView.swift; sourceTree = "<group>"; };
+		2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionConfirmView.swift; sourceTree = "<group>"; };
+		2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceMDL.swift; sourceTree = "<group>"; };
+		2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TextField.swift"; sourceTree = "<group>"; };
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
@@ -329,6 +345,25 @@
 				BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		2B9895322B638B24006AE27E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2BBA01982B4E8ABA00B1039A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */,
+				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
+				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
+				2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
@@ -618,6 +653,7 @@
 		FC59743C2A24D58800A642D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */,
 				FC59743D2A24D59A00A642D7 /* UserMDL.swift */,
 				FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */,
 				FCC690542A9E37090017D543 /* PromiseFormMDL.swift */,
@@ -701,6 +737,10 @@
 			isa = PBXGroup;
 			children = (
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
+				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
+				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
+				2B9895322B638B24006AE27E /* Components */,
+				2BBA01982B4E8ABA00B1039A /* View */,
 			);
 			path = PlaceSelectionScreen;
 			sourceTree = "<group>";
@@ -1142,6 +1182,7 @@
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
+				2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */,
 				D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
@@ -1154,8 +1195,13 @@
 				D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */,
+				2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */,
+				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
+				2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */,
+				2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */,
+				2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */,
 				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
 				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
 				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
@@ -1184,6 +1230,7 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
+				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
@@ -1207,6 +1254,7 @@
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
+				2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */,
 				FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */,
 				E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */,
 				FC3CFDA02AF7C6A300AAD420 /* UIView.swift in Sources */,
@@ -1397,7 +1445,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
@@ -1433,8 +1481,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1452,7 +1499,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1609,8 +1655,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1628,7 +1673,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1736,11 +1780,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1758,7 +1801,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
