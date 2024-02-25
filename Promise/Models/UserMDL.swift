@@ -11,4 +11,5 @@ struct UserMDL {
     let userId: String
     let nickname: String?
     let profileUrl: String?
+    let loginMethod: String?
 }

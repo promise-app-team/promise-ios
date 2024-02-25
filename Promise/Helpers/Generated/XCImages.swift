@@ -40,6 +40,9 @@ internal enum Asset {
   internal static let arrowRight = ImageAsset(name: "ArrowRight")
   internal static let calander = ImageAsset(name: "Calander")
   internal static let circleOutlinePlusWhite = ImageAsset(name: "CircleOutlinePlusWhite")
+  internal static let ellipse3 = ImageAsset(name: "Ellipse 3")
+  internal static let ellipse4 = ImageAsset(name: "Ellipse 4")
+  internal static let navigateNext = ImageAsset(name: "Navigate next")
   internal static let editGreen = ImageAsset(name: "EditGreen")
   internal static let editRed = ImageAsset(name: "EditRed")
   internal static let focusMyLocation = ImageAsset(name: "FocusMyLocation")
@@ -61,6 +64,7 @@ internal enum Asset {
   internal static let appleLogo = ImageAsset(name: "AppleLogo")
   internal static let googleLogo = ImageAsset(name: "GoogleLogo")
   internal static let kakaoLogo = ImageAsset(name: "KakaoLogo")
+  internal static let profile = ImageAsset(name: "profile")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
