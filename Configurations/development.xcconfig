@@ -12,8 +12,9 @@
 #include "Pods/Target Support Files/Pods-Promise/Pods-Promise.release (development).xcconfig"
 
 APP_ENV = development
-API_URL = https:/$()/7ubm4jrlgb.execute-api.ap-northeast-2.amazonaws.com
-API_DOC_URL = https:/$()/7ubm4jrlgb.execute-api.ap-northeast-2.amazonaws.com/api-json
+API_URL = https:/$()/api.dev.promise-app.com
+API_DOC_URL = https:/$()/api.dev.promise-app.com/api-json
 UNIVERSAL_LINK_DOMAIN = https:/$()/global-song-391605.web.app
 KAKAO_NATIVE_APP_KEY = 325babc84c1119a1bf72c318eefde3f5
 GOOGLE_CLIENT_ID = 882948941624-cd2vl08k9k9ctbt7ghm0bboo3ji7kea3.apps.googleusercontent.com
+NAVER_CLIENT_ID = 85ykpv1z29

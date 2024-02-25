@@ -75,6 +75,29 @@ extension UIView {
         return nil
     }
     
+    func addBorder(toEdges edges: [UIRectEdge], color: UIColor, width: CGFloat) {
+        // 각 측면마다 layer를 추가하여 border를 구현합니다.
+        edges.forEach { edge in
+            let border = CALayer()
+            border.backgroundColor = color.cgColor
+            
+            switch edge {
+            case .top:
+                border.frame = CGRect(x: 0, y: 0, width: frame.width, height: width)
+            case .left:
+                border.frame = CGRect(x: 0, y: 0, width: width, height: frame.height)
+            case .right:
+                border.frame = CGRect(x: frame.width - width, y: 0, width: width, height: frame.height)
+            case .bottom:
+                border.frame = CGRect(x: 0, y: frame.height - width, width: frame.width, height: width)
+            default:
+                break // .all과 같은 다른 값들은 여기서 처리하지 않습니다.
+            }
+            
+            self.layer.addSublayer(border)
+        }
+    }
+    
     // MARK: 뷰가 그려진 이후에 호출해야 됨.
     func addDashedBorder() {
         let shapeLayer = CAShapeLayer()

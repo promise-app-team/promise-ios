@@ -29,7 +29,7 @@ final class Onboarding {
         
         Task {
             // MARK: 온보딩 Default 대기 시간
-            try await Task.sleep(seconds: 3)
+            try await Task.sleep(seconds: 1)
             
             let token = UserService.shared.getAccessToken()
             if let token = token, !token.isEmpty {

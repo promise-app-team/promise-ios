@@ -8,7 +8,7 @@
 import UIKit
 
 @objc protocol PromiseListLayoutDelegate: AnyObject {
-    @objc optional func updateFocusRatio(_ initFocusRatio: CGFloat, _ ratio: CGFloat)
+    @objc optional func updateFocusRatio(_ initFocusRatio: CGFloat, _ ratio: CGFloat, _ indexPath: IndexPath)
     @objc optional func focusedCellChanged(to indexPath: IndexPath)
 }
 
@@ -82,14 +82,18 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else {
             return nil
         }
+        
         let rectAttributes = super.layoutAttributesForElements(in: rect)!.map { $0.copy() as! UICollectionViewLayoutAttributes }
+        
         let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.frame.size)
         
         for attributes in rectAttributes where attributes.frame.intersects(visibleRect) {
+            
             let distance = visibleRect.midX - attributes.center.x
             let normalizedDistance = distance / activeDistance
             
             if distance.magnitude < activeDistance {
+                
                 let zoom = 1 + zoomFactor * (1 - normalizedDistance.magnitude)
                 attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1)
                 attributes.zIndex = Int(zoom.rounded())
@@ -101,7 +105,7 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 }
                 
                 if let initFocusRatio {
-                    delegate?.updateFocusRatio?(initFocusRatio, focusRatio)
+                    delegate?.updateFocusRatio?(initFocusRatio, focusRatio, attributes.indexPath)
                 }
                 
                 if let cell = collectionView.cellForItem(at: attributes.indexPath) as? PromiseListCell {
@@ -120,10 +124,12 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else {
             return .zero
         }
+        
         let targetRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.frame.width, height: collectionView.frame.height)
         guard let rectAttributes = super.layoutAttributesForElements(in: targetRect) else {
             return .zero
         }
+        
         var offsetAdjustment = CGFloat.greatestFiniteMagnitude
         let horizontalCenter = proposedContentOffset.x + collectionView.frame.width / 2
         
@@ -135,7 +141,6 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
         }
         
         if let indexPath = rectAttributes.sorted(by: { abs($0.center.x - horizontalCenter) < abs($1.center.x - horizontalCenter) }).first?.indexPath {
-            // Delegate 메소드를 호출하도록 수정합니다.
             delegate?.focusedCellChanged?(to: indexPath)
         }
         

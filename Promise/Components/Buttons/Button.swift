@@ -9,7 +9,7 @@ import UIKit
 
 class Button : BaseButton {
     
-    public static let Height: CGFloat = 36
+    public static let Height: CGFloat = adjustedHeight(40)
     
     enum Style {
         case primary

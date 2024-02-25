@@ -52,35 +52,31 @@ class CommonModalManager: NSObject, UIViewControllerTransitioningDelegate, Modal
     
     private var modalViewController: UIViewController?
     
-    private var safeAreaBottomInsetView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
-    
     func show(content: UIView, from parentViewController: UIViewController) {
         let modalViewController = ModalViewController()
         modalViewController.delegate = self
         self.modalViewController = modalViewController
-        let safeAreaLayoutGuide = modalViewController.view.safeAreaLayoutGuide
         
         content.translatesAutoresizingMaskIntoConstraints = false
-        [safeAreaBottomInsetView, content].forEach { modalViewController.view.addSubview($0) }
+        modalViewController.view.addSubview(content)
         NSLayoutConstraint.activate([
-            safeAreaBottomInsetView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            safeAreaBottomInsetView.leadingAnchor.constraint(equalTo: modalViewController.view.leadingAnchor),
-            safeAreaBottomInsetView.trailingAnchor.constraint(equalTo: modalViewController.view.trailingAnchor),
-            safeAreaBottomInsetView.bottomAnchor.constraint(equalTo: modalViewController.view.bottomAnchor),
-            
             content.leadingAnchor.constraint(equalTo: modalViewController.view.leadingAnchor),
             content.trailingAnchor.constraint(equalTo: modalViewController.view.trailingAnchor),
-            content.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            content.bottomAnchor.constraint(equalTo: modalViewController.view.bottomAnchor)
         ])
         
-        // 순서 중요! 강제 업데이트로 컨텐츠의 레이아웃이 바뀌면 사이즈가 새롭게 결정된다. 그 이후 preferredContentSize를 설정한다.
+        // MARK: 순서 중요! 강제 업데이트로 컨텐츠의 레이아웃이 바뀌면 사이즈가 새롭게 결정된다. 그 이후 preferredContentSize를 설정한다.
         modalViewController.view.layoutIfNeeded()
         modalViewController.preferredContentSize = content.frame.size
+        
+        modalViewController.view.layer.cornerRadius = adjustedValue(20, .width)
+        modalViewController.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        modalViewController.view.layer.borderWidth = adjustedValue(1, .width)
+        modalViewController.view.layer.borderColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1).cgColor
+        
+        modalViewController.view.layer.masksToBounds = true
+        modalViewController.view.clipsToBounds = true
         
         modalViewController.modalPresentationStyle = .custom
         modalViewController.transitioningDelegate = self
@@ -140,7 +136,7 @@ class SlideUpAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     var direction: AnimationDirection = .presenting
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return 0.25
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

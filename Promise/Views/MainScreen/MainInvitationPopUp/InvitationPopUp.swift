@@ -443,8 +443,7 @@ class InvitationPopUp {
                 
             }
         })
-        
-        
+
     }
     
     @objc private func onTapStartLocationButton() {

@@ -10,8 +10,8 @@ import UIKit
 import SkeletonView
 
 
-class AttendeeCell: UICollectionViewCell {
-    static let identifier = "AttendeeCell"
+class AttendeeCellForCard: UICollectionViewCell {
+    static let identifier = "AttendeeCellForCard"
     
     private lazy var attendeeProfileImage: UIImageView = {
         let imageView = UIImageView()
@@ -19,20 +19,19 @@ class AttendeeCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = contentView.frame.size.height / 2
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .red
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureAttendeeCell()
+        configure()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureAttendeeCell() {
+    private func configure() {
         contentView.addSubview(attendeeProfileImage)
         
         NSLayoutConstraint.activate([
@@ -43,7 +42,7 @@ class AttendeeCell: UICollectionViewCell {
         ])
     }
     
-    func configureAttendeeCell(with attendee: Components.Schemas.Attendee) {
+    func configureAttendeeCellForCard(with attendee: Components.Schemas.Attendee) {
         guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
             // TODO: 이미지 url이 없을 경우 디폴트 이미지
             return
@@ -72,33 +71,51 @@ class PromiseListCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 22),
-            imageView.heightAnchor.constraint(equalToConstant: 22)
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(20, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height))
+        ])
+        
+        let view = UIView()
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: adjustedValue(30, .width)),
+            view.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height))
         ])
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapShareButton))
-        imageView.addGestureRecognizer(tapGesture)
-        imageView.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        // view.layer.zPosition = 1
         
-        imageView.isHidden = true
+        view.isHidden = true
         
-        return imageView
+        return view
     }()
     
     private let createTaggedTheme = { (themeTitle: String) in
         let insetLabel = InsetLabel()
-        insetLabel.topInset = 3
-        insetLabel.bottomInset = 3
-        insetLabel.leftInset = 7
-        insetLabel.rightInset = 7
+        insetLabel.topInset = adjustedValue(3, .height)
+        insetLabel.bottomInset = adjustedValue(3, .height)
+        insetLabel.leftInset = adjustedValue(7, .width)
+        insetLabel.rightInset = adjustedValue(7, .width)
+        
+        insetLabel.lineBreakMode = .byClipping
+        insetLabel.numberOfLines = 1
         
         insetLabel.text = themeTitle
-        insetLabel.font = UIFont(font: FontFamily.Pretendard.light, size: 11)
+        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(10, .width))
         insetLabel.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         insetLabel.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
         
         insetLabel.layer.masksToBounds = true
-        insetLabel.layer.cornerRadius = 10
+        insetLabel.layer.cornerRadius = adjustedValue(9, .width)
         insetLabel.sizeToFit()
         
         insetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -108,7 +125,7 @@ class PromiseListCell: UICollectionViewCell {
     private let taggedThemes = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.spacing = adjustedValue(4, .width)
         stackView.alignment = .center
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +143,7 @@ class PromiseListCell: UICollectionViewCell {
             taggedThemes.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             taggedThemes.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
         ])
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -135,11 +153,11 @@ class PromiseListCell: UICollectionViewCell {
         
         label.textColor =  UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
         
-        let font = UIFont(font: FontFamily.Pretendard.regular, size: 14)
+        let font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(14, .width))
         label.font = font
         
         label.isSkeletonable = true
-        label.linesCornerRadius = 4
+        label.linesCornerRadius = Int(adjustedValue(4, .width))
         label.lastLineFillPercent = 80
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -155,11 +173,11 @@ class PromiseListCell: UICollectionViewCell {
         
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
-        let font = UIFont(font: FontFamily.Pretendard.bold, size: 18)
+        let font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(18, .width))
         label.font = font
         
         label.isSkeletonable = true
-        label.linesCornerRadius = 4
+        label.linesCornerRadius = Int(adjustedValue(4, .width))
         label.lastLineFillPercent = 90
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -173,8 +191,8 @@ class PromiseListCell: UICollectionViewCell {
     private let placeLabel = {
         let label = UILabel()
         label.text = L10n.Common.place
-        label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 10)
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(13, .width))
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let divider = UIView()
@@ -188,10 +206,10 @@ class PromiseListCell: UICollectionViewCell {
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            divider.topAnchor.constraint(equalTo: view.topAnchor, constant: 2),
-            divider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -1.2),
-            divider.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 3.2),
-            divider.widthAnchor.constraint(equalToConstant: 1.8),
+            divider.topAnchor.constraint(equalTo: view.topAnchor, constant: 2.8),
+            divider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3),
+            divider.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 4),
+            divider.widthAnchor.constraint(equalToConstant: 2),
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -201,8 +219,8 @@ class PromiseListCell: UICollectionViewCell {
     private let hostLabel = {
         let label = UILabel()
         label.text = L10n.Common.host
-        label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 10)
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(13, .width))
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let divider = UIView()
@@ -216,10 +234,10 @@ class PromiseListCell: UICollectionViewCell {
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             label.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            divider.topAnchor.constraint(equalTo: view.topAnchor, constant: 2),
-            divider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -1),
-            divider.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 3),
-            divider.widthAnchor.constraint(equalToConstant: 2),
+            divider.topAnchor.constraint(equalTo: view.topAnchor, constant: 3.2),
+            divider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -2),
+            divider.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 4),
+            divider.widthAnchor.constraint(equalToConstant: 2.5),
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -229,8 +247,8 @@ class PromiseListCell: UICollectionViewCell {
     private lazy var attendeesLabel = {
         let label = UILabel()
         label.text = L10n.Common.attendees
-        label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 10)
+        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(13, .width))
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let view = UIView()
@@ -242,7 +260,7 @@ class PromiseListCell: UICollectionViewCell {
             
             attendeesCount.topAnchor.constraint(equalTo: view.topAnchor),
             attendeesCount.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            attendeesCount.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 2),
+            attendeesCount.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: adjustedValue(2, .width)),
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -251,7 +269,7 @@ class PromiseListCell: UICollectionViewCell {
     
     private let place = {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 10)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(13, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -259,7 +277,7 @@ class PromiseListCell: UICollectionViewCell {
     
     private let host = {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 10)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(13, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -268,7 +286,7 @@ class PromiseListCell: UICollectionViewCell {
     private let attendeesCount = {
         let label = UILabel()
         label.text = "(0)"
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 10)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(13, .width))
         label.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -283,7 +301,7 @@ class PromiseListCell: UICollectionViewCell {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(AttendeeCell.self, forCellWithReuseIdentifier: AttendeeCell.identifier)
+        collectionView.register(AttendeeCellForCard.self, forCellWithReuseIdentifier: AttendeeCellForCard.identifier)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -325,9 +343,16 @@ class PromiseListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //    override func prepareForReuse() {
+    //        super.prepareForReuse()
+    //        // attendees 데이터를 초기화하거나 관련 뷰를 초기 상태로 설정
+    //        attendees = []
+    //        attendeesView.reloadData() // 내부 UICollectionView
+    //    }
+    
     private func configureCell() {
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = adjustedValue(20, .width)
         contentView.isSkeletonable = true
         
         [
@@ -344,49 +369,49 @@ class PromiseListCell: UICollectionViewCell {
         ].forEach { contentView.addSubview($0) }
         
         NSLayoutConstraint.activate([
-            shareButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
-            shareButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
+            shareButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: adjustedValue(22, .height)),
+            shareButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(20, .width)),
             
-            themesScrollWrap.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
-            themesScrollWrap.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            themesScrollWrap.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor, constant: -10),
-            themesScrollWrap.heightAnchor.constraint(equalToConstant: 22),
+            themesScrollWrap.topAnchor.constraint(equalTo: contentView.topAnchor, constant: adjustedValue(22, .height)),
+            themesScrollWrap.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            themesScrollWrap.trailingAnchor.constraint(equalTo: shareButton.leadingAnchor),
+            themesScrollWrap.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height)),
             
-            promisedAt.topAnchor.constraint(equalTo: themesScrollWrap.bottomAnchor, constant: 6),
-            promisedAt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            promisedAt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            promisedAt.topAnchor.constraint(equalTo: themesScrollWrap.bottomAnchor, constant: adjustedValue(6, .height)),
+            promisedAt.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            promisedAt.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
             
-            title.topAnchor.constraint(equalTo: promisedAt.bottomAnchor, constant: 4),
-            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            title.topAnchor.constraint(equalTo: promisedAt.bottomAnchor, constant: adjustedValue(1, .height)),
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
             
-            placeLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 7),
-            placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            placeLabel.widthAnchor.constraint(equalToConstant: 26),
+            placeLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: adjustedValue(8, .height)),
+            placeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            placeLabel.widthAnchor.constraint(equalToConstant: adjustedValue(29, .width)),
             
             place.topAnchor.constraint(equalTo: placeLabel.topAnchor),
-            place.leadingAnchor.constraint(equalTo: placeLabel.trailingAnchor),
+            place.leadingAnchor.constraint(equalTo: placeLabel.trailingAnchor, constant: adjustedValue(4, .width)),
             place.bottomAnchor.constraint(equalTo: placeLabel.bottomAnchor),
             
-            hostLabel.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 7),
-            hostLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            hostLabel.widthAnchor.constraint(equalToConstant: 35),
+            hostLabel.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: adjustedValue(8, .height)),
+            hostLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            hostLabel.widthAnchor.constraint(equalToConstant: adjustedValue(40, .width)),
             
             host.topAnchor.constraint(equalTo: hostLabel.topAnchor),
-            host.leadingAnchor.constraint(equalTo: hostLabel.trailingAnchor),
+            host.leadingAnchor.constraint(equalTo: hostLabel.trailingAnchor, constant: adjustedValue(4, .width)),
             host.bottomAnchor.constraint(equalTo: hostLabel.bottomAnchor),
             
-            attendeesLabel.topAnchor.constraint(equalTo: hostLabel.bottomAnchor, constant: 7),
-            attendeesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            attendeesLabel.topAnchor.constraint(equalTo: hostLabel.bottomAnchor, constant: adjustedValue(8, .height)),
+            attendeesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
             
-            attendeesView.topAnchor.constraint(equalTo: attendeesLabel.bottomAnchor, constant: 10),
-            attendeesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            attendeesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            attendeesView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            attendeesView.topAnchor.constraint(equalTo: attendeesLabel.bottomAnchor, constant: adjustedValue(8, .height)),
+            attendeesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(22, .width)),
+            attendeesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
+            attendeesView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -adjustedValue(22, .height))
         ])
     }
     
-    func configureCell(with promise: Components.Schemas.OutputPromiseListItem?) {
+    func configureCell(with promise: Components.Schemas.OutputPromiseListItem?, at indexPath: IndexPath) {
         guard let promise else {
             contentView.showAnimatedGradientSkeleton(transition: .crossDissolve(0.25))
             return
@@ -411,8 +436,15 @@ class PromiseListCell: UICollectionViewCell {
         
         title.text = promise.title
         
-        if let destination = promise.destination {
-            place.text = destination.value1.address
+        switch promise.destinationType {
+        case .DYNAMIC:
+            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+        case .STATIC:
+            if let destination = promise.destination {
+                place.text = destination.value1.address
+                place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            }
         }
         
         host.text = promise.host.username
@@ -420,14 +452,14 @@ class PromiseListCell: UICollectionViewCell {
         attendeesCount.text = "(\(promise.attendees.count))"
         attendees = promise.attendees
         
-        isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
-        if(isOwner && promise.attendees.count == 0) {
-            //TODO: 프로비 가이드 툴팁 show!!
-        }
+        // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
+        attendeesView.reloadData()
         
+        self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }
     
     func updateBorder(focusRatio: CGFloat) {
+        
         let borderWidth: CGFloat = 1
         let focusedColor: UIColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
         let unfocusedColor: UIColor = .clear
@@ -444,32 +476,32 @@ extension PromiseListCell: UICollectionViewDataSource, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttendeeCell.identifier, for: indexPath) as? AttendeeCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttendeeCellForCard.identifier, for: indexPath) as? AttendeeCellForCard else {
             return UICollectionViewCell()
         }
         
         let attendee = attendees[indexPath.row]
-        cell.configureAttendeeCell(with: attendee)
+        cell.configureAttendeeCellForCard(with: attendee)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 36, height: 36)
+        return CGSize(width: adjustedValue(34, .width), height: adjustedValue(34, .height))
     }
     
     // 섹션당 상하 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return adjustedValue(8, .height)
     }
     
     // 섹션당 좌우 간격 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return adjustedValue(8, .width)
     }
     
     // 섹션의 여백 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: adjustedValue(3, .height), left: 0, bottom: 0, right: 0)
     }
     
     // 셀을 클릭했을 때의 로직

@@ -22,6 +22,10 @@
 "Common.host" = "생성자";
 "Common.attendees" = "참여자";
 
+"Common.MoreMenu.editPromise" = "약속 수정";
+"Common.MoreMenu.delegatePromise" = "약속 위임";
+"Common.MoreMenu.leavePromise" = "약속 나가기";
+
 // MARK: SignInScreen
 "SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
 "SignIn.selectSignInMethodText" = "로그인 수단 선택";
@@ -30,13 +34,25 @@
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
 
 // MARK: MainScreen
-"Main.emptyPromisesTitle" = "아직 약속이 없어요\n새 약속을 추가해 보세요";
+"Main.emptyPromisesTitle" = "초대받은 약속이 있나요?";
+"Main.emptyPromisesDescription" = "초대받은 약속이 있다면\n공유된 링크를 다시 눌러주세요";
 "Main.addNewPromise" = "새 약속 추가";
+
 "Main.PromiseList.placeLabel" = "장소";
 "Main.PromiseList.hostLabel" = "생성자";
 "Main.PromiseList.attendeesLabel" = "참여자";
+
+"Main.PromiseList.DynamicPlace.placeholder" = "두 명 이상 출발지를 설정해주세요";
+"Main.PromiseList.DynamicPlace.requestConfirm" = "중간 장소를 확인해주세요";
+
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
+
+
+"Main.SortPromiseList.selectOrder" = "정렬 선택";
+"Main.SortPromiseList.dateTimeQuickOrder" = "약속시간 빠른순";
+"Main.SortPromiseList.dateTimeLateOrder" = "약속시간 늦은순";
+
 
 // MARK: CreatePromiseScreen
 "CreatePromise.headerTitle" = "새 약속 추가";
@@ -108,3 +124,17 @@
 "InvitationPopUp.IsFailedAttendPromise.description" = "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.";
 
 "InvitationPopUp.Toast.successAttendPromise" = "약속에 참여했어요!";
+
+// MARK: PromiseStatusView/PromiseStatusWithUserView
+"PromiseStatusWithUserView.Label.departureLocation" = "내 출발지";
+"PromiseStatusWithUserView.Label.userStatus" = "내 현재 상태";
+"PromiseStatusWithUserView.Label.userSharingState" = "내 위치공유 상태";
+
+"PromiseStatusWithUserView.departureLocationPlaceholder" = "약속시간 전까지 꼭 출발지를 설정해주세요";
+
+"PromiseStatusWithUserView.Tag.notStart" = "출발 전";
+"PromiseStatusWithUserView.Tag.sharingOn" = "내 위치공유가 켜져있어요";
+"PromiseStatusWithUserView.Tag.sharingOff" = "내 위치공유가 꺼져있어요";
+
+// MARK: PromiseStatusView/PromiseStatusWithAllAttendeesView
+"PromiseStatusWithAllAttendeesView.Header.title" = "약속 상세";

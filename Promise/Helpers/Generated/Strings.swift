@@ -38,6 +38,14 @@ internal enum L10n {
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
     /// 거절
     internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
+    internal enum MoreMenu {
+      /// 약속 위임
+      internal static let delegatePromise = L10n.tr("Localizable", "Common.MoreMenu.delegatePromise", fallback: "약속 위임")
+      /// 약속 수정
+      internal static let editPromise = L10n.tr("Localizable", "Common.MoreMenu.editPromise", fallback: "약속 수정")
+      /// 약속 나가기
+      internal static let leavePromise = L10n.tr("Localizable", "Common.MoreMenu.leavePromise", fallback: "약속 나가기")
+    }
   }
   internal enum CompletedCreatePromise {
     /// 약속 생성 완료
@@ -184,9 +192,11 @@ internal enum L10n {
   internal enum Main {
     /// 새 약속 추가
     internal static let addNewPromise = L10n.tr("Localizable", "Main.addNewPromise", fallback: "새 약속 추가")
-    /// 아직 약속이 없어요
-    /// 새 약속을 추가해 보세요
-    internal static let emptyPromisesTitle = L10n.tr("Localizable", "Main.emptyPromisesTitle", fallback: "아직 약속이 없어요\n새 약속을 추가해 보세요")
+    /// 초대받은 약속이 있다면
+    /// 공유된 링크를 다시 눌러주세요
+    internal static let emptyPromisesDescription = L10n.tr("Localizable", "Main.emptyPromisesDescription", fallback: "초대받은 약속이 있다면\n공유된 링크를 다시 눌러주세요")
+    /// 초대받은 약속이 있나요?
+    internal static let emptyPromisesTitle = L10n.tr("Localizable", "Main.emptyPromisesTitle", fallback: "초대받은 약속이 있나요?")
     internal enum Probee {
       internal enum Guidance {
         /// 공유 아이콘으로 약속에 초대할 수 있어요!
@@ -204,6 +214,46 @@ internal enum L10n {
       internal static let hostLabel = L10n.tr("Localizable", "Main.PromiseList.hostLabel", fallback: "생성자")
       /// 장소
       internal static let placeLabel = L10n.tr("Localizable", "Main.PromiseList.placeLabel", fallback: "장소")
+      internal enum DynamicPlace {
+        /// 두 명 이상 출발지를 설정해주세요
+        internal static let placeholder = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholder", fallback: "두 명 이상 출발지를 설정해주세요")
+        /// 중간 장소를 확인해주세요
+        internal static let requestConfirm = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.requestConfirm", fallback: "중간 장소를 확인해주세요")
+      }
+    }
+    internal enum SortPromiseList {
+      /// 약속시간 늦은순
+      internal static let dateTimeLateOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeLateOrder", fallback: "약속시간 늦은순")
+      /// 약속시간 빠른순
+      internal static let dateTimeQuickOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeQuickOrder", fallback: "약속시간 빠른순")
+      /// 정렬 선택
+      internal static let selectOrder = L10n.tr("Localizable", "Main.SortPromiseList.selectOrder", fallback: "정렬 선택")
+    }
+  }
+  internal enum PromiseStatusWithAllAttendeesView {
+    internal enum Header {
+      /// 약속 상세
+      internal static let title = L10n.tr("Localizable", "PromiseStatusWithAllAttendeesView.Header.title", fallback: "약속 상세")
+    }
+  }
+  internal enum PromiseStatusWithUserView {
+    /// 약속시간 전까지 꼭 출발지를 설정해주세요
+    internal static let departureLocationPlaceholder = L10n.tr("Localizable", "PromiseStatusWithUserView.departureLocationPlaceholder", fallback: "약속시간 전까지 꼭 출발지를 설정해주세요")
+    internal enum Label {
+      /// 내 출발지
+      internal static let departureLocation = L10n.tr("Localizable", "PromiseStatusWithUserView.Label.departureLocation", fallback: "내 출발지")
+      /// 내 위치공유 상태
+      internal static let userSharingState = L10n.tr("Localizable", "PromiseStatusWithUserView.Label.userSharingState", fallback: "내 위치공유 상태")
+      /// 내 현재 상태
+      internal static let userStatus = L10n.tr("Localizable", "PromiseStatusWithUserView.Label.userStatus", fallback: "내 현재 상태")
+    }
+    internal enum Tag {
+      /// 출발 전
+      internal static let notStart = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.notStart", fallback: "출발 전")
+      /// 내 위치공유가 꺼져있어요
+      internal static let sharingOff = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.sharingOff", fallback: "내 위치공유가 꺼져있어요")
+      /// 내 위치공유가 켜져있어요
+      internal static let sharingOn = L10n.tr("Localizable", "PromiseStatusWithUserView.Tag.sharingOn", fallback: "내 위치공유가 켜져있어요")
     }
   }
   internal enum SignIn {

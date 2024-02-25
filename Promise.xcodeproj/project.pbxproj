@@ -13,16 +13,22 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
+		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
+		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
 		D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA522B5A36BD00ED707D /* CarouselCell.swift */; };
 		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
 		D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474E0672B5E974700CD6033 /* InvitationPopUp.swift */; };
 		D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */; };
+		D492BE842B88557D00F6269A /* MapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D492BE832B88557D00F6269A /* MapHelper.swift */; };
+		D4968B962B737772009C6014 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B952B737772009C6014 /* UIFont.swift */; };
+		D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B972B7377CD009C6014 /* LayoutHelper.swift */; };
 		D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497715E2B5FF860005DF103 /* AttendanceHelper.swift */; };
 		D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */; };
 		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
+		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -33,7 +39,6 @@
 		FA931B102AB585A40053FC3B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B0F2AB585A40053FC3B /* TextField.swift */; };
 		FA931B132AB58E300053FC3B /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B122AB58E300053FC3B /* UITextField.swift */; };
 		FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C23092A72BE0A007573A6 /* PopupVC.swift */; };
-		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
 		FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */; };
 		FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */; };
 		FAD2BFCC2A6AF661009E6461 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */; };
@@ -43,7 +48,6 @@
 		FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */; };
 		FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */; };
 		FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */; };
-		FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */; };
 		FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD62A6C2692009E6461 /* Button.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */; };
@@ -155,16 +159,22 @@
 		ADFDB7C0C4B339F6E5621D18 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
+		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
 		D459FA522B5A36BD00ED707D /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
 		D474E0672B5E974700CD6033 /* InvitationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationPopUp.swift; sourceTree = "<group>"; };
 		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
+		D492BE832B88557D00F6269A /* MapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelper.swift; sourceTree = "<group>"; };
+		D4968B952B737772009C6014 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		D4968B972B7377CD009C6014 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
 		D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListEmptyView.swift; sourceTree = "<group>"; };
 		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
 		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
+		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
 		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
 		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
@@ -179,7 +189,6 @@
 		FA931B0F2AB585A40053FC3B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FA931B122AB58E300053FC3B /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		FA9C23092A72BE0A007573A6 /* PopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVC.swift; sourceTree = "<group>"; };
-		FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
 		FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
@@ -189,7 +198,6 @@
 		FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
-		FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
 		FAD2BFD62A6C2692009E6461 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -497,6 +505,7 @@
 				FCE8C44E2A8B787A00E2B672 /* UIColor.swift */,
 				FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */,
 				FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */,
+				D4968B952B737772009C6014 /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,10 +630,10 @@
 			children = (
 				FC5903362A76B5EC00778305 /* Generated */,
 				FC5903212A76A56C00778305 /* Extensions */,
-				FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */,
-				FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */,
 				D497715E2B5FF860005DF103 /* AttendanceHelper.swift */,
+				D4968B972B7377CD009C6014 /* LayoutHelper.swift */,
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
+				D492BE832B88557D00F6269A /* MapHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -636,6 +645,7 @@
 				E7B91E0A2A7D156400426D81 /* LocationService.swift */,
 				E7B91DD82A78D47100426D81 /* WebsocketService.swift */,
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
+				D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -747,6 +757,8 @@
 		FCE8C4552A8B92E500E2B672 /* MainPromiseStatusView */ = {
 			isa = PBXGroup;
 			children = (
+				D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */,
+				D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */,
 				FCE8C4562A8B931300E2B672 /* PromiseStatusView.swift */,
 			);
 			path = MainPromiseStatusView;
@@ -1130,7 +1142,7 @@
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
-				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
+				D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
 				FC40FC1B2A7FB6F600B699F4 /* NavigationView.swift in Sources */,
@@ -1146,14 +1158,16 @@
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
 				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
 				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
+				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
+				D4968B962B737772009C6014 /* UIFont.swift in Sources */,
+				D492BE842B88557D00F6269A /* MapHelper.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
 				FC41B25E2A781E6500C1C592 /* Task.swift in Sources */,
 				FA931B132AB58E300053FC3B /* UITextField.swift in Sources */,
 				FA8416192A9A40CE008CEBC1 /* PopupDelegate.swift in Sources */,
 				FC40FC172A7FB0AD00B699F4 /* MainVM.swift in Sources */,
-				FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */,
 				FCE8C4492A8A447200E2B672 /* NotificationVC.swift in Sources */,
 				FCB3AD702AC845B000219A25 /* KeyboardManager.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
@@ -1170,6 +1184,7 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
+				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,
@@ -1179,6 +1194,7 @@
 				FCB3AD742AC97FBC00219A25 /* CompletedCreatePromiseVC.swift in Sources */,
 				FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */,
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
+				D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* SignInVM.swift in Sources */,
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
 				D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */,
@@ -1389,8 +1405,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1425,8 +1441,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1601,8 +1617,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1731,8 +1747,8 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
