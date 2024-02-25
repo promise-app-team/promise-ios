@@ -124,7 +124,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     let spacingView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: adjustedValue(34, .height)).isActive = true
+        view.heightAnchor.constraint(equalToConstant: adjustedValue(47, .height)).isActive = true
         view.backgroundColor = .white
         view.layer.zPosition = 1
         return view

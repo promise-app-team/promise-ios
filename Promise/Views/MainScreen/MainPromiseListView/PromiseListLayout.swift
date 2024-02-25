@@ -98,7 +98,8 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1)
                 attributes.zIndex = Int(zoom.rounded())
                 
-                let focusRatio = 1 - (distance.magnitude / activeDistance)
+                // 포커스 비율은 소수점 10자리까지만 (반올림 없음)
+                let focusRatio = (1 - (distance.magnitude / activeDistance)).truncated(toPlaces: 10)
                 
                 if initFocusRatio == nil {
                     initFocusRatio = focusRatio

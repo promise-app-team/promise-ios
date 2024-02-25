@@ -27,6 +27,9 @@
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
 		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
 		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
+		D45112D52B8B1187008264A8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D42B8B1187008264A8 /* Double.swift */; };
+		D45112D82B8B11F5008264A8 /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D72B8B11F5008264A8 /* Float.swift */; };
+		D45112DA2B8B136B008264A8 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D92B8B136B008264A8 /* CGFloat.swift */; };
 		D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA522B5A36BD00ED707D /* CarouselCell.swift */; };
 		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
@@ -185,6 +188,9 @@
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
 		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
+		D45112D42B8B1187008264A8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		D45112D72B8B11F5008264A8 /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
+		D45112D92B8B136B008264A8 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		D459FA522B5A36BD00ED707D /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
@@ -581,6 +587,9 @@
 				FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */,
 				FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */,
 				D4968B952B737772009C6014 /* UIFont.swift */,
+				D45112D42B8B1187008264A8 /* Double.swift */,
+				D45112D72B8B11F5008264A8 /* Float.swift */,
+				D45112D92B8B136B008264A8 /* CGFloat.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1231,6 +1240,7 @@
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
 				FC40FC1B2A7FB6F600B699F4 /* NavigationView.swift in Sources */,
+				D45112DA2B8B136B008264A8 /* CGFloat.swift in Sources */,
 				FC41B2682A78239A00C1C592 /* Lotties.swift in Sources */,
 				FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */,
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
@@ -1249,6 +1259,7 @@
 				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
 				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
 				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
+				D45112D52B8B1187008264A8 /* Double.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
 				D4968B962B737772009C6014 /* UIFont.swift in Sources */,
 				D492BE842B88557D00F6269A /* MapHelper.swift in Sources */,
@@ -1271,11 +1282,12 @@
 				FCC4B6242A9CEA7F0003AD3C /* FormTitleView.swift in Sources */,
 				FC59033E2A76BA1400778305 /* XCImages.swift in Sources */,
 				FCA944052AAE0EED0015CB46 /* InsetLabel.swift in Sources */,
+				D45112D82B8B11F5008264A8 /* Float.swift in Sources */,
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
 				4A6CCFCC2ADA87F4005759C0 /* FAQVC.swift in Sources */,
-				FCE8C4452A8A2AE900E2B672 /* HeaderNavigation.swift in Sources */,
+				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
@@ -1531,6 +1543,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DQNSTQBH74;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1548,6 +1561,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1705,6 +1719,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DQNSTQBH74;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1722,6 +1737,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1830,9 +1846,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DQNSTQBH74;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1850,6 +1868,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
