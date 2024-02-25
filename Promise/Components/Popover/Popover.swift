@@ -22,11 +22,13 @@ struct PopoverTarget {
 }
 
 class PopoverView: UIView {
+    static var zPosition = 1.0
+    
     var isEnableDimmingView = false
     var paddingHorizontal = 0.0
     var from: PopoverTarget?
-    var vc: UIViewController?
-    var contentView: UIView?
+    var vc: UIViewController
+    var contentView: UIView
     
     weak var delegate: PopoverViewDelegate?
     
@@ -47,7 +49,7 @@ class PopoverView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if let target = from?.target, let contentView {
+        if let target = from?.target {
             frame.size = CGSize(
                 width: target.frame.size.width,
                 height: contentView.frame.size.height
@@ -110,7 +112,7 @@ class PopoverView: UIView {
     }
     
     private func configurePopoverView() {
-        guard let contentView, let from else { return }
+        guard let from else { return }
         
         self.frame.size = CGSize(
             width: from.target.frame.size.width,
@@ -128,7 +130,7 @@ class PopoverView: UIView {
     }
     
     func show() {
-        updatePopoverPosition(in: vc!)
+        updatePopoverPosition(in: vc)
 
         delegate?.onWillShow?()
         // 애니메이션 시작 전 초기 상태 설정

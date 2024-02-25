@@ -42,6 +42,13 @@ struct SelectionDate {
         }
     }
     
+    var iso8601String: String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(secondsFromGMT: 0) // UTC 타임존 설정
+        return formatter.string(from: originDate)
+    }
+    
     var timeIntervalInSeconds: TimeInterval {
         get {
             return originDate.timeIntervalSince1970

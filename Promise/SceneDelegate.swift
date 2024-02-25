@@ -40,17 +40,166 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UINavigationControllerD
         window.rootViewController = navigationController // MARK: set root vc to navigation controllor with lanch vc
         window.makeKeyAndVisible() // MARK: visible navigation controllor with lanch vc
         
+        // MARK: 유니버설 링크를 통해 앱이 시작되었는지 확인
+        if let userActivity = connectionOptions.userActivities.first {
+            if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+                if let url = userActivity.webpageURL {
+                    
+                    let path = url.path
+                    
+                    Task {
+                        
+                        let attendanceHelper = AttendanceHelper()
+                        let invitedPromiseId: String? = attendanceHelper.parsePromiseId(path: path)
+                        
+                        // onboarding: check token, attend flow, other...
+                        let onboarding = Onboarding()
+                        onboarding.ready(invitedPromiseId: invitedPromiseId) { [weak self] startVC in
+                            self?.navigationController?.pushViewController(startVC, animated: true)
+                        }
+                        
+                    }
+                }
+            }
+            
+            // MARK: 유니버셜 링크로 앱 시작시 아래 코드는 실행되지 않도록 return
+            return
+        }
+        
+        // MARK: 일반적인 앱 실행의 경우 온보딩
         // onboarding: check token, other...
         let onboarding = Onboarding()
-        onboarding.ready { [weak self] startVC in
+        onboarding.ready(invitedPromiseId: nil) { [weak self] startVC in
             self?.navigationController?.pushViewController(startVC, animated: true)
         }
+        
+    }
+    
+    // MARK: 앱이 iOS 메모리에 올라가있는 상태에서 Universal link를 클릭해서 메모리에 있는 앱이 포커스된 경우 실행됨.
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
+            let path = url.path
+            
+            let attendanceHelper = AttendanceHelper()
+            
+            if let promiseId = attendanceHelper.parsePromiseId(path: path) {
+                
+                if let _ = UserService.shared.getUser() {
+                    
+                    Task {
+                        
+                        let (isAbleToAttend, promise, error) = await attendanceHelper.checkAbleToAttend(promiseId: promiseId)
+                        
+                        if (isAbleToAttend) {
+                            // MARK: 로그인 상태, 참여 가이드 화면 or 메인화면에서 참여 팝업.
+                            
+                            let hasSeenGuideAttendee = attendanceHelper.checkHasSeenGuideAttendee()
+                            if hasSeenGuideAttendee {
+                                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 true면 메인화면으로 이동, promiseId injection
+                                
+                                if navigationController?.visibleViewController is MainVC {
+                                    // MARK: 앱 인메모리, 현재 뷰가 메인인 경우
+                                    
+                                    let currentMainVC = navigationController?.visibleViewController as! MainVC
+                                    try await Task.sleep(seconds: 0.5)
+                                    currentMainVC.showInvitationPopUp(promise: promise)
+                                    
+                                } else if navigationController?.visibleViewController is PopupVC {
+                                    // MARK: 앱 인메모리, 현재 뷰가 팝업인 경우
+                                    
+                                    let currentPopUpVC = navigationController?.visibleViewController as! PopupVC
+                                    currentPopUpVC.close {
+                                        
+                                        Task {
+                                            if let mainVC = self.navigationController?.viewControllers.first(where: { $0 is MainVC }) as? MainVC {
+                                                try await Task.sleep(seconds: 0.5)
+                                                mainVC.showInvitationPopUp(promise: promise)
+                                            }
+                                        }
+                                        
+                                    }
+                                    
+                                } else {
+                                    // MARK: 앱 인메모리, 현재 뷰가 메인이 아닌 다른 뷰인 경우
+                                    
+                                    let mainVC = MainVC(invitedPromise: promise)
+                                    self.navigationController?.pushViewController(mainVC, animated: true)
+                                    
+                                }
+                                
+                            } else {
+                                // MARK: UserDefaults에 HAS_SEEN_GUIDE_ATTENDEE가 false면 참여자 가이드 화면으로 이동, promiseId injection
+                                
+                                if let promise {
+                                    let guideAttendeeVC = GuideAttendeeVC(promise: promise)
+                                    self.navigationController?.pushViewController(guideAttendeeVC, animated: true)
+                                }
+                                
+                            }
+                        } else {
+                            // MARK: 로그인 상태, 참여할 수 없는 상태(본인이 만든 약속인데 초대 링크를 클릭한 경우) 해당 약속으로 포커스
+                            
+                            if navigationController?.visibleViewController is MainVC {
+                                // MARK: 앱 인메모리, 현재 뷰가 메인인 경우
+                                
+                                let currentMainVC = navigationController?.visibleViewController as! MainVC
+                                try await Task.sleep(seconds: 0.5)
+                                currentMainVC.focusPromiseById(id: promiseId)
+                                
+                            } else if navigationController?.visibleViewController is PopupVC {
+                                // MARK: 앱 인메모리, 현재 뷰가 팝업인 경우
+                                
+                                let currentPopUpVC = navigationController?.visibleViewController as! PopupVC
+                                currentPopUpVC.close {
+                                    
+                                    Task {
+                                        if let mainVC = self.navigationController?.viewControllers.first(where: { $0 is MainVC }) as? MainVC {
+                                            try await Task.sleep(seconds: 0.5)
+                                            mainVC.focusPromiseById(id: promiseId)
+                                        }
+                                    }
+                                    
+                                }
+                                
+                            } else {
+                                // MARK: 앱 인메모리, 현재 뷰가 메인이 아닌 다른 뷰인 경우
+                                
+                                let mainVC = MainVC(shouldFocusPromiseId: promiseId)
+                                self.navigationController?.pushViewController(mainVC, animated: true)
+                                
+                            }
+                            
+                            // MARK: 로그인 상태, 참여할 수 없는 상태, 약속 자체가 없거나 약속 정보를 가져오는데 실패한 경우
+                            if let _ = error {
+                                try await Task.sleep(seconds: 0.5)
+                                navigationController?.visibleViewController?.showPopUp(
+                                    title: L10n.InvitationPopUp.IsNotAbleToPromise.title,
+                                    message: L10n.InvitationPopUp.IsNotAbleToPromise.description
+                                )
+                            }
+                            
+                        }
+                    }
+                } else {
+                    // MARK: 로그인이 필요한 경우, UserService 싱글톤 객체에 저장. (로그인 후에 결정하도록 지연됨)
+                    UserService.shared.invitedPromiseId = promiseId
+                }
+                
+                // 약속 아이디가 있는 경우 처리후 아래 코드가 실행되지 않음.
+                return
+            }
+            
+            // ...Others (약속 아이디가 없을 경우)
+        }
+        
+        
+        // ...Others (유니버셜 링크가 아닌 경우)
     }
     
     // MARK: call after push animation and view did appear
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         // MARK: launch vc pop after push animation with main vc for memory
-        if viewController is MainVC || viewController is SignInVC {
+        if viewController is MainVC || viewController is SignInVC || viewController is GuideAttendeeVC {
             self.navigationController?.viewControllers = [viewController]
             
             // MARK: check success poped launch vc

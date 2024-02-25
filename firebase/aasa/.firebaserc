@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "global-song-391605"
+  },
+  "targets": {
+    "global-song-391605": {
+      "hosting": {
+        "aasa": [
+          "global-song-391605"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

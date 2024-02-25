@@ -1,0 +1,34 @@
+{
+  "hosting": {
+    "target": "aasa",
+    "public": "public",
+    "appAssociation": "NONE",
+    "headers": [
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/share/:id",
+        "destination": "https://preview-b2bfd.web.app/:id",
+        "type": 301
+      }
+    ],
+    "rewrites": [{
+      "regex": "/[0-9a-zA-Z]+",
+      "destination": "/store/index.html"
+    }],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
