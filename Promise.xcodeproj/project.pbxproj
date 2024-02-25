@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */; };
+		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
+		2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */; };
+		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
+		2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */; };
+		2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */; };
+		2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */; };
+		2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
 		4A6CCFC42ADA8768005759C0 /* LastPromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFC32ADA8768005759C0 /* LastPromiseVC.swift */; };
 		4A6CCFC82ADA8798005759C0 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFC72ADA8798005759C0 /* EditProfileVC.swift */; };
@@ -17,6 +25,22 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
+		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
+		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
+		D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA522B5A36BD00ED707D /* CarouselCell.swift */; };
+		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
+		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
+		D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474E0672B5E974700CD6033 /* InvitationPopUp.swift */; };
+		D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */; };
+		D492BE842B88557D00F6269A /* MapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D492BE832B88557D00F6269A /* MapHelper.swift */; };
+		D4968B962B737772009C6014 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B952B737772009C6014 /* UIFont.swift */; };
+		D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B972B7377CD009C6014 /* LayoutHelper.swift */; };
+		D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497715E2B5FF860005DF103 /* AttendanceHelper.swift */; };
+		D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */; };
+		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
+		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
+		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
+		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -27,7 +51,6 @@
 		FA931B102AB585A40053FC3B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B0F2AB585A40053FC3B /* TextField.swift */; };
 		FA931B132AB58E300053FC3B /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA931B122AB58E300053FC3B /* UITextField.swift */; };
 		FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C23092A72BE0A007573A6 /* PopupVC.swift */; };
-		FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */; };
 		FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */; };
 		FAD2BFCB2A6AF661009E6461 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */; };
 		FAD2BFCC2A6AF661009E6461 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */; };
@@ -37,7 +60,6 @@
 		FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */; };
 		FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */; };
 		FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */; };
-		FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */; };
 		FAD2BFD72A6C2692009E6461 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD2BFD62A6C2692009E6461 /* Button.swift */; };
 		FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE2E0242A26385A002D8869 /* BaseButton.swift */; };
 		FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */; };
@@ -77,7 +99,7 @@
 		FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7B5CE92A2E1EA5002FC94E /* Config.swift */; };
 		FC8924882ADEB3DE0027F601 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = FC8924872ADEB3DE0027F601 /* map.json */; };
 		FCA944052AAE0EED0015CB46 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA944042AAE0EED0015CB46 /* InsetLabel.swift */; };
-		FCB3AD552ABF1F1100219A25 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD542ABF1F1100219A25 /* Promise.swift */; };
+		FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */; };
 		FCB3AD5F2AC2E78D00219A25 /* PlaceSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */; };
 		FCB3AD612AC31A3B00219A25 /* FormTabMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD602AC31A3B00219A25 /* FormTabMenuView.swift */; };
 		FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB3AD642AC3304B00219A25 /* FormShareLocationSelectionInputView.swift */; };
@@ -133,6 +155,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipView.swift; sourceTree = "<group>"; };
+		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
+		2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTVCell.swift; sourceTree = "<group>"; };
+		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
+		2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAddressStackView.swift; sourceTree = "<group>"; };
+		2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionConfirmView.swift; sourceTree = "<group>"; };
+		2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceMDL.swift; sourceTree = "<group>"; };
+		2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TextField.swift"; sourceTree = "<group>"; };
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		4A6CCFC32ADA8768005759C0 /* LastPromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPromiseVC.swift; sourceTree = "<group>"; };
@@ -153,6 +183,25 @@
 		ADFDB7C0C4B339F6E5621D18 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
+		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
+		D459FA522B5A36BD00ED707D /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
+		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
+		D474E0672B5E974700CD6033 /* InvitationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationPopUp.swift; sourceTree = "<group>"; };
+		D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideAttendeeVC.swift; sourceTree = "<group>"; };
+		D492BE832B88557D00F6269A /* MapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelper.swift; sourceTree = "<group>"; };
+		D4968B952B737772009C6014 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		D4968B972B7377CD009C6014 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
+		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
+		D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListEmptyView.swift; sourceTree = "<group>"; };
+		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
+		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
+		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
+		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
+		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
+		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
+		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
 		E05ABACA1B55DE44E538CD23 /* Pods-Promise-PromiseUITests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.release (production).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.release (production).xcconfig"; sourceTree = "<group>"; };
 		E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PromiseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7B91DD82A78D47100426D81 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
@@ -164,7 +213,6 @@
 		FA931B0F2AB585A40053FC3B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		FA931B122AB58E300053FC3B /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		FA9C23092A72BE0A007573A6 /* PopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVC.swift; sourceTree = "<group>"; };
-		FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
 		FAD2BFC12A6AF660009E6461 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		FAD2BFC22A6AF661009E6461 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		FAD2BFC32A6AF661009E6461 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
@@ -174,7 +222,6 @@
 		FAD2BFC72A6AF661009E6461 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		FAD2BFC82A6AF661009E6461 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		FAD2BFC92A6AF661009E6461 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
-		FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
 		FAD2BFD62A6C2692009E6461 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		FAE2E0242A26385A002D8869 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		FC0E4C9F2A78088C00F9CA1C /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -218,7 +265,7 @@
 		FC7B5CE92A2E1EA5002FC94E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		FC8924872ADEB3DE0027F601 /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		FCA944042AAE0EED0015CB46 /* InsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
-		FCB3AD542ABF1F1100219A25 /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
+		FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseConstants.swift; sourceTree = "<group>"; };
 		FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionVC.swift; sourceTree = "<group>"; };
 		FCB3AD602AC31A3B00219A25 /* FormTabMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTabMenuView.swift; sourceTree = "<group>"; };
 		FCB3AD642AC3304B00219A25 /* FormShareLocationSelectionInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormShareLocationSelectionInputView.swift; sourceTree = "<group>"; };
@@ -308,6 +355,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		2B9895322B638B24006AE27E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2BBA01982B4E8ABA00B1039A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */,
+				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
+				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
+				2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +440,41 @@
 				E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D459FA512B5A36A700ED707D /* GuideAttendeeCarouselView */ = {
+			isa = PBXGroup;
+			children = (
+				D459FA562B5A36C700ED707D /* CarouselPageControl.swift */,
+				D459FA542B5A36C200ED707D /* CarouselView.swift */,
+				D459FA522B5A36BD00ED707D /* CarouselCell.swift */,
+			);
+			path = GuideAttendeeCarouselView;
+			sourceTree = "<group>";
+		};
+		D474E0662B5E970C00CD6033 /* MainInvitationPopUp */ = {
+			isa = PBXGroup;
+			children = (
+				D474E0672B5E974700CD6033 /* InvitationPopUp.swift */,
+			);
+			path = MainInvitationPopUp;
+			sourceTree = "<group>";
+		};
+		D48FEC9B2B57E73800C43516 /* GuideAttendeeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D459FA512B5A36A700ED707D /* GuideAttendeeCarouselView */,
+				D48FEC9D2B57E78D00C43516 /* GuideAttendeeVC.swift */,
+			);
+			path = GuideAttendeeScreen;
+			sourceTree = "<group>";
+		};
+		D4C8D1182B67DB3B008AD1EC /* MainPromiseListEmptyView */ = {
+			isa = PBXGroup;
+			children = (
+				D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */,
+			);
+			path = MainPromiseListEmptyView;
 			sourceTree = "<group>";
 		};
 		FA931B0E2AB5856D0053FC3B /* TextField */ = {
@@ -479,6 +580,7 @@
 				FCE8C44E2A8B787A00E2B672 /* UIColor.swift */,
 				FC3CFD9A2AF7A1E100AAD420 /* UIImageView.swift */,
 				FC3CFD9F2AF7C6A300AAD420 /* UIView.swift */,
+				D4968B952B737772009C6014 /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -536,6 +638,9 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
+				D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */,
+				D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */,
+				D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */,
 				FCB3AD522ABF1E8400219A25 /* Constants */,
 				FAE2E0212A26381A002D8869 /* Components */,
 				FC5974482A24D60B00A642D7 /* Views */,
@@ -588,6 +693,7 @@
 		FC59743C2A24D58800A642D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */,
 				FC59743D2A24D59A00A642D7 /* UserMDL.swift */,
 				FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */,
 				FCC690542A9E37090017D543 /* PromiseFormMDL.swift */,
@@ -600,9 +706,10 @@
 			children = (
 				FC5903362A76B5EC00778305 /* Generated */,
 				FC5903212A76A56C00778305 /* Extensions */,
-				FAD2BFBD2A6AF359009E6461 /* UIColorHelper.swift */,
-				FAD2BFD32A6AF8B9009E6461 /* FontHelper.swift */,
+				D497715E2B5FF860005DF103 /* AttendanceHelper.swift */,
+				D4968B972B7377CD009C6014 /* LayoutHelper.swift */,
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
+				D492BE832B88557D00F6269A /* MapHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -614,6 +721,7 @@
 				E7B91E0A2A7D156400426D81 /* LocationService.swift */,
 				E7B91DD82A78D47100426D81 /* WebsocketService.swift */,
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
+				D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -632,6 +740,7 @@
 		FC5974482A24D60B00A642D7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D48FEC9B2B57E73800C43516 /* GuideAttendeeScreen */,
 				FCB3AD5C2AC2E75700219A25 /* PlaceSelectionScreen */,
 				FC4041732A8BAF520057E413 /* CreatePromiseScreen */,
 				FCB3AD722AC97F6300219A25 /* CompletedCreatePromiseScreen */,
@@ -656,7 +765,10 @@
 		FCB3AD522ABF1E8400219A25 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				FCB3AD542ABF1F1100219A25 /* Promise.swift */,
+				FCB3AD542ABF1F1100219A25 /* PromiseConstants.swift */,
+				D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */,
+				D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */,
+				D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -665,6 +777,10 @@
 			isa = PBXGroup;
 			children = (
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
+				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
+				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
+				2B9895322B638B24006AE27E /* Components */,
+				2BBA01982B4E8ABA00B1039A /* View */,
 			);
 			path = PlaceSelectionScreen;
 			sourceTree = "<group>";
@@ -725,6 +841,8 @@
 		FCE8C4552A8B92E500E2B672 /* MainPromiseStatusView */ = {
 			isa = PBXGroup;
 			children = (
+				D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */,
+				D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */,
 				FCE8C4562A8B931300E2B672 /* PromiseStatusView.swift */,
 			);
 			path = MainPromiseStatusView;
@@ -733,6 +851,8 @@
 		FCFC00812A7BF972009D7BC7 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				D4C8D1182B67DB3B008AD1EC /* MainPromiseListEmptyView */,
+				D474E0662B5E970C00CD6033 /* MainInvitationPopUp */,
 				FCFC008B2A7BFCB7009D7BC7 /* MainNavigationView */,
 				FCE8C4552A8B92E500E2B672 /* MainPromiseStatusView */,
 				FCFC00862A7BFB41009D7BC7 /* MainPromiseListView */,
@@ -1095,16 +1215,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */,
 				FCB3AD6C2AC6B10A00219A25 /* CommonModalManager.swift in Sources */,
 				FA820AA02A82791F00AD571C /* UIViewController.swift in Sources */,
 				FC59743E2A24D59A00A642D7 /* UserMDL.swift in Sources */,
 				FCFC00852A7BFB2C009D7BC7 /* PromiseListLayout.swift in Sources */,
+				D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */,
 				FC41B2602A781E8700C1C592 /* OnboardingVC.swift in Sources */,
 				FA931B102AB585A40053FC3B /* TextField.swift in Sources */,
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
-				FAD2BFBE2A6AF359009E6461 /* UIColorHelper.swift in Sources */,
+				2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */,
+				D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
 				FC40FC1B2A7FB6F600B699F4 /* NavigationView.swift in Sources */,
@@ -1113,26 +1236,38 @@
 				FC7B5CEA2A2E1EA5002FC94E /* Config.swift in Sources */,
 				FC5974442A24D5D000A642D7 /* APIService.swift in Sources */,
 				FCC4B62B2A9CEAB60003AD3C /* FormPlaceView.swift in Sources */,
+				D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */,
+				2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */,
+				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
+				2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */,
+				2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */,
+				2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */,
+				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
+				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
+				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
 				FC3BE0622ACC493300CC7CB2 /* HeaderView.swift in Sources */,
+				D4968B962B737772009C6014 /* UIFont.swift in Sources */,
+				D492BE842B88557D00F6269A /* MapHelper.swift in Sources */,
 				FAE2E0252A26385A002D8869 /* BaseButton.swift in Sources */,
 				4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */,
 				FC41B25E2A781E6500C1C592 /* Task.swift in Sources */,
 				FA931B132AB58E300053FC3B /* UITextField.swift in Sources */,
 				FA8416192A9A40CE008CEBC1 /* PopupDelegate.swift in Sources */,
 				FC40FC172A7FB0AD00B699F4 /* MainVM.swift in Sources */,
-				FAD2BFD42A6AF8B9009E6461 /* FontHelper.swift in Sources */,
 				FCE8C4492A8A447200E2B672 /* NotificationVC.swift in Sources */,
 				FCB3AD702AC845B000219A25 /* KeyboardManager.swift in Sources */,
 				FC59740A2A24D38700A642D7 /* AppDelegate.swift in Sources */,
+				D48FEC9E2B57E78D00C43516 /* GuideAttendeeVC.swift in Sources */,
 				FC59033F2A76BA1400778305 /* Strings.swift in Sources */,
 				FCC4B6312A9CEB0D0003AD3C /* FormView.swift in Sources */,
 				FCC4B62D2A9CEAE90003AD3C /* FormShareLocationStartView.swift in Sources */,
 				FCC4B62F2A9CEAF90003AD3C /* FormShareLocationEndView.swift in Sources */,
 				FC4041762A8BAF7F0057E413 /* CreatePromiseVC.swift in Sources */,
+				D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */,
 				FCC4B6242A9CEA7F0003AD3C /* FormTitleView.swift in Sources */,
 				FC59033E2A76BA1400778305 /* XCImages.swift in Sources */,
 				FCA944052AAE0EED0015CB46 /* InsetLabel.swift in Sources */,
@@ -1141,6 +1276,9 @@
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
 				4A6CCFCC2ADA87F4005759C0 /* FAQVC.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* HeaderNavigation.swift in Sources */,
+				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
+				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
+				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,
 				FCB3AD612AC31A3B00219A25 /* FormTabMenuView.swift in Sources */,
@@ -1151,16 +1289,21 @@
 				4A6CCFCF2ADA886C005759C0 /* SettingsVC.swift in Sources */,
 				FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */,
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
+				D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */,
 				FC59743B2A24D57600A642D7 /* SignInVM.swift in Sources */,
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
+				D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */,
 				FCC4B6272A9CEA940003AD3C /* FormDateView.swift in Sources */,
-				FCB3AD552ABF1F1100219A25 /* Promise.swift in Sources */,
+				FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */,
+				D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				4A6CCFC82ADA8798005759C0 /* EditProfileVC.swift in Sources */,
+				D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
+				2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */,
 				FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */,
 				E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */,
 				FC3CFDA02AF7C6A300AAD420 /* UIView.swift in Sources */,
@@ -1347,18 +1490,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseDebug (development).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1381,18 +1526,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseRelease (development).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1402,7 +1548,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1555,18 +1700,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Promise/PromiseDebug (production).entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1576,7 +1722,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1684,17 +1829,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1704,7 +1850,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1862,7 +2007,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-runtime";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.3.2;
 			};
 		};
 		FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */ = {
@@ -1870,7 +2015,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-generator";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
@@ -1878,7 +2023,7 @@
 			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

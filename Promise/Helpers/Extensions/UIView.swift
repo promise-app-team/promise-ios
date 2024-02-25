@@ -62,5 +62,55 @@ extension UIView {
         self.layer.sublayers?.removeAll(where: { $0 is CAShapeLayer })
         self.layer.addSublayer(borderLayer)
     }
+    
+    func parentViewController<T: UIViewController>() -> T? {
+        var responder: UIResponder? = self
+        while let currentResponder = responder {
+            if let viewController = currentResponder as? T {
+                return viewController
+            }
+            responder = currentResponder.next
+        }
+        
+        return nil
+    }
+    
+    func addBorder(toEdges edges: [UIRectEdge], color: UIColor, width: CGFloat) {
+        // 각 측면마다 layer를 추가하여 border를 구현합니다.
+        edges.forEach { edge in
+            let border = CALayer()
+            border.backgroundColor = color.cgColor
+            
+            switch edge {
+            case .top:
+                border.frame = CGRect(x: 0, y: 0, width: frame.width, height: width)
+            case .left:
+                border.frame = CGRect(x: 0, y: 0, width: width, height: frame.height)
+            case .right:
+                border.frame = CGRect(x: frame.width - width, y: 0, width: width, height: frame.height)
+            case .bottom:
+                border.frame = CGRect(x: 0, y: frame.height - width, width: frame.width, height: width)
+            default:
+                break // .all과 같은 다른 값들은 여기서 처리하지 않습니다.
+            }
+            
+            self.layer.addSublayer(border)
+        }
+    }
+    
+    // MARK: 뷰가 그려진 이후에 호출해야 됨.
+    func addDashedBorder() {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.strokeColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+        shapeLayer.lineWidth = frame.height
+        
+        // [첫번째 dash의 길이, 두번째 dash 사이 간격, 두번째 dash의 길이, 두번째와 세번째 dash의 간격] 이 패턴으로 반복된다.
+        shapeLayer.lineDashPattern = [3]
+        
+        let path = CGMutablePath()
+        path.addLines(between: [CGPoint(x: 0, y: frame.height / 2), CGPoint(x: frame.width, y: frame.height / 2)])
+        shapeLayer.path = path
+        layer.addSublayer(shapeLayer)
+    }
 }
 

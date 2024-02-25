@@ -8,6 +8,7 @@
 import UIKit
 import KakaoSDKCommon
 import UserNotifications
+import NMapsMap
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -21,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // MARK: 카카오 SDK 초기화(v2부터 필수)
         KakaoSDK.initSDK(appKey: Config.kakaoNativeAppKey)
-        
+        // MARK: - 네이버 지도
+        NMFAuthManager.shared().clientId = "456s1eany5"
         return true
     }
 
@@ -55,7 +57,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print(#function)
         UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-                print("Permission granted: \(granted)") //인증결과 표시
+                
+                #if DEBUG
+                print("Notification Permission Granted: \(granted)")
+                #endif
+                
                 if granted {
                     self.getNotificationSettings()
                     
@@ -64,7 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func getNotificationSettings() {
-        print(#function)
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {

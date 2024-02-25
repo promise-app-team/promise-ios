@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIViewController {
-    
     func showPopUp(title: String,
                    message: String,
                    rightBtnTitle: String? = nil,
@@ -18,14 +17,14 @@ extension UIViewController {
         let popupVC = PopupVC()
         popupVC.initialize(titleText: title,
                            messageText: message,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandler ?? {popupVC.close()},
-                           leftBtnTitle: cancelBtnExist ? "취소" : nil,
+                           leftBtnTitle: cancelBtnExist ? L10n.Common.cancel : nil,
                            leftBtnHandler: cancelBtnExist ? { popupVC.close() } : nil)
         
         present(popupVC, animated: false, completion: nil)
     }
-    
+
     func showPopUp(title: String,
                    message: String,
                    rightBtnTitle: String? = nil,
@@ -36,7 +35,7 @@ extension UIViewController {
         let popupVC = PopupVC()
         popupVC.initialize(titleText: title,
                            messageText: message,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
                            rightBtnHandelr: rightBtnHandler ?? { popupVC.close() },
                            leftBtnTitle: leftBtnTitle,
                            leftBtnHandler: leftBtnHandler)
@@ -44,35 +43,39 @@ extension UIViewController {
         present(popupVC, animated: false, completion: nil)
     }
     
-    func showPopUp(contentView: UIView,
-                   rightBtnTitle: String? = nil,
-                   rightBtnHandler: (() -> Void)? = nil,
-                   cancelBtnExist: Bool = false) {
+    func showPopUp(
+        contentView: UIView,
+        rightBtnTitle: String? = nil,
+        rightBtnHandler: (() -> Void)? = nil,
+        cancelBtnExist: Bool = false,
+        cancelBtnTitle: String = L10n.Common.cancel
+    ) {
         
         let popupVC = PopupVC()
         popupVC.initialize(contentView: contentView,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
-                           rightBtnHandelr: rightBtnHandler ?? {popupVC.close()},
-                           leftBtnTitle: cancelBtnExist ? "취소" : nil,
-                           leftBtnHandler: cancelBtnExist ? { popupVC.close() } : nil)
+                           leftBtnTitle: cancelBtnExist ? cancelBtnTitle : nil,
+                           leftBtnHandler: cancelBtnExist ? { popupVC.close() } : nil,
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
+                           rightBtnHandelr: rightBtnHandler ?? {popupVC.close()}
+        )
         
         present(popupVC, animated: false, completion: nil)
     }
     
     func showPopUp(contentView: UIView,
-                   rightBtnTitle: String? = nil,
                    leftBtnTitle: String? = nil,
-                   rightBtnHandelr: (() -> Void)? = nil,
-                   leftBtnHandler: (() -> Void)? = nil) {
+                   leftBtnHandler: (() -> Void)? = nil,
+                   rightBtnTitle: String? = nil,
+                   rightBtnHandelr: (() -> Void)? = nil) {
         
         let popupVC = PopupVC()
+        
         popupVC.initialize(contentView: contentView,
-                           rightBtnTitle: rightBtnTitle ?? "확인",
-                           rightBtnHandelr: rightBtnHandelr ?? { popupVC.close() },
                            leftBtnTitle: leftBtnTitle,
-                           leftBtnHandler: leftBtnHandler)
+                           leftBtnHandler: leftBtnHandler,
+                           rightBtnTitle: rightBtnTitle ?? L10n.Common.confirm,
+                           rightBtnHandelr: rightBtnHandelr ?? { popupVC.close() })
         
         present(popupVC, animated: false, completion: nil)
     }
-    
 }

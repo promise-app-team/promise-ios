@@ -12,12 +12,15 @@ import KakaoSDKUser
 import GoogleSignIn
 
 final class UserService {
+    private init() {}
     static let shared = UserService()
     
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
     
     public var user: UserMDL? = nil
+    
+    public var invitedPromiseId: String? = nil
     
     func getUser() -> UserMDL? {
         return user
@@ -49,26 +52,26 @@ final class UserService {
     }
     
     func setAccessToken(_ token: String) {
-        UserDefaults.standard.set(token, forKey: accessTokenKey)
+        UserDefaults.standard.set(token, forKey: UserDefaultConstants.User.ACCESS_TOKEN)
     }
     
     func getAccessToken() -> String? {
-        return UserDefaults.standard.string(forKey: accessTokenKey)
+        return UserDefaults.standard.string(forKey: UserDefaultConstants.User.ACCESS_TOKEN)
     }
     
     func setRefreshToken(_ token: String?) {
         guard let token = token else { return }
-        UserDefaults.standard.set(token, forKey: refreshTokenKey)
+        UserDefaults.standard.set(token, forKey: UserDefaultConstants.User.REFRESH_TOKEN)
     }
     
     func getRefreshToken() -> String? {
-        return UserDefaults.standard.string(forKey: refreshTokenKey)
+        return UserDefaults.standard.string(forKey: UserDefaultConstants.User.REFRESH_TOKEN)
     }
     
     // Clear Tokens
     func clearTokens() {
-        UserDefaults.standard.removeObject(forKey: accessTokenKey)
-        UserDefaults.standard.removeObject(forKey: refreshTokenKey)
+        UserDefaults.standard.removeObject(forKey: UserDefaultConstants.User.ACCESS_TOKEN)
+        UserDefaults.standard.removeObject(forKey: UserDefaultConstants.User.REFRESH_TOKEN)
     }
     
     private func logoutKakao(currentVC: UIViewController) {

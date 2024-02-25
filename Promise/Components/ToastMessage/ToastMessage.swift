@@ -43,24 +43,29 @@ class ToastView: UIView {
     }
     
     func showToast(duration: TimeInterval = 2.0) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else {
-            return
-        }
-        
-        let toastView = ToastView(message: self.label.text ?? "")
-        toastView.center = CGPoint(x: window.center.x, y: window.bounds.height - (toastView.frame.height / 2) - 100)
-        window.addSubview(toastView)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            toastView.alpha = 1.0
-        }) { _ in
-            UIView.animate(withDuration: 0.3, delay: duration, options: .curveEaseOut, animations: {
-                toastView.alpha = 0.0
+        DispatchQueue.main.async {
+            
+            
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first else {
+                return
+            }
+            
+            let toastView = ToastView(message: self.label.text ?? "")
+            toastView.center = CGPoint(x: window.center.x, y: window.bounds.height - (toastView.frame.height / 2) - 100)
+            window.addSubview(toastView)
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                toastView.alpha = 1.0
             }) { _ in
-                toastView.removeFromSuperview()
+                UIView.animate(withDuration: 0.3, delay: duration, options: .curveEaseOut, animations: {
+                    toastView.alpha = 0.0
+                }) { _ in
+                    toastView.removeFromSuperview()
+                }
             }
         }
+        
     }
 }
 

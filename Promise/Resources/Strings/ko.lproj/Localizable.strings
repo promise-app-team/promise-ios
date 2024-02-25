@@ -16,9 +16,15 @@
 "Common.minute" = "분";
 "Common.confirm" = "확인";
 "Common.cancel" = "취소";
+"Common.attend" = "참여";
+"Common.refuse" = "거절";
 "Common.place" = "장소";
 "Common.host" = "생성자";
 "Common.attendees" = "참여자";
+
+"Common.MoreMenu.editPromise" = "약속 수정";
+"Common.MoreMenu.delegatePromise" = "약속 위임";
+"Common.MoreMenu.leavePromise" = "약속 나가기";
 
 // MARK: SignInScreen
 "SignIn.mainDescription" = "만나기 전에 서로의 위치를 공유해 보세요";
@@ -28,12 +34,25 @@
 "SignIn.appleSignInButtonText" = "Apple로 로그인";
 
 // MARK: MainScreen
+"Main.emptyPromisesTitle" = "초대받은 약속이 있나요?";
+"Main.emptyPromisesDescription" = "초대받은 약속이 있다면\n공유된 링크를 다시 눌러주세요";
 "Main.addNewPromise" = "새 약속 추가";
+
 "Main.PromiseList.placeLabel" = "장소";
 "Main.PromiseList.hostLabel" = "생성자";
 "Main.PromiseList.attendeesLabel" = "참여자";
+
+"Main.PromiseList.DynamicPlace.placeholder" = "두 명 이상 출발지를 설정해주세요";
+"Main.PromiseList.DynamicPlace.requestConfirm" = "중간 장소를 확인해주세요";
+
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
+
+
+"Main.SortPromiseList.selectOrder" = "정렬 선택";
+"Main.SortPromiseList.dateTimeQuickOrder" = "약속시간 빠른순";
+"Main.SortPromiseList.dateTimeLateOrder" = "약속시간 늦은순";
+
 
 // MARK: CreatePromiseScreen
 "CreatePromise.headerTitle" = "새 약속 추가";
@@ -82,3 +101,48 @@
 "Account.logout" = "로그아웃";
 "Account.appVer" = "앱 버전";
 
+// MARK: GuideAttendeeScreen
+"GuideAttendee.directAttend" = "바로 참여하기";
+"GuideAttendee.attend" = "약속하러 가기";
+
+"GuideAttendee.title1" = "GPS 공유로\n서로의 위치를 알 수 있어요";
+"GuideAttendee.title2" = "출발지와 경로를 기반으로\n중간위치를 알 수 있어요";
+"GuideAttendee.title3" = "안전하게 내 위치를 공유해요";
+
+"GuideAttendee.Title1.bulletPoint1" = "•  약속한 사람이 어디까지 왔는지!";
+"GuideAttendee.Title1.bulletPoint2" = "•  내가 약속장소에 언제 도착하는지!";
+
+"GuideAttendee.Title2.bulletPoint1" = "•  어디서 만날지 고민이라면 중간에서 만나요";
+"GuideAttendee.Title2.bulletPoint2" = "•  중간위치 주변 장소를 추천 받아요!";
+
+"GuideAttendee.Title3.bulletPoint1" = "•  GPS 정보는 어디에도 저장하지 않아요!";
+"GuideAttendee.Title3.bulletPoint2" = "•  위치를 공유할 시점을 정할 수 있어요!";
+"GuideAttendee.Title3.bulletPoint3" = "•  모두가 만났으면 위치 공유는 종료돼요!";
+
+// MARK: Tagged Notification
+"TaggedNotification.invitedToPromise" = "띵동! 약속에 초대 받았어요";
+"TaggedNotification.middlePlaceWarning" = "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요";
+
+// MARK: Invitation Pop Up
+"InvitationPopUp.startLocationPlaceholder" = "출발지를 등록해 주세요";
+"InvitationPopUp.middlePlaceWarning" = "참여자들의 중간장소로 지정됩니다";
+"InvitationPopUp.IsNotAbleToPromise.title" = "참여할 수 없는 약속입니다";
+"InvitationPopUp.IsNotAbleToPromise.description" = "약속이 존재하지 않거나 약속 정보를 불러오는데 실패했습니다.";
+"InvitationPopUp.IsFailedAttendPromise.title" = "약속에 참여할 수 없습니다";
+"InvitationPopUp.IsFailedAttendPromise.description" = "서버 문제로 약속 참여에 실패했습니다.\n관리자에게 문의해주세요.";
+
+"InvitationPopUp.Toast.successAttendPromise" = "약속에 참여했어요!";
+
+// MARK: PromiseStatusView/PromiseStatusWithUserView
+"PromiseStatusWithUserView.Label.departureLocation" = "내 출발지";
+"PromiseStatusWithUserView.Label.userStatus" = "내 현재 상태";
+"PromiseStatusWithUserView.Label.userSharingState" = "내 위치공유 상태";
+
+"PromiseStatusWithUserView.departureLocationPlaceholder" = "약속시간 전까지 꼭 출발지를 설정해주세요";
+
+"PromiseStatusWithUserView.Tag.notStart" = "출발 전";
+"PromiseStatusWithUserView.Tag.sharingOn" = "내 위치공유가 켜져있어요";
+"PromiseStatusWithUserView.Tag.sharingOff" = "내 위치공유가 꺼져있어요";
+
+// MARK: PromiseStatusView/PromiseStatusWithAllAttendeesView
+"PromiseStatusWithAllAttendeesView.Header.title" = "약속 상세";
