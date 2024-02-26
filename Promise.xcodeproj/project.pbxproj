@@ -7,7 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */; };
+		2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */; };
+		2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */; };
+		2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */; };
+		2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */; };
+		2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */; };
+		2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */; };
+		2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */; };
 		4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4719EF2A37138B00812B29 /* ToastMessage.swift */; };
+		4A6CCFC42ADA8768005759C0 /* LastPromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFC32ADA8768005759C0 /* LastPromiseVC.swift */; };
+		4A6CCFC82ADA8798005759C0 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFC72ADA8798005759C0 /* EditProfileVC.swift */; };
+		4A6CCFCC2ADA87F4005759C0 /* FAQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFCB2ADA87F4005759C0 /* FAQVC.swift */; };
+		4A6CCFCF2ADA886C005759C0 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CCFCE2ADA886C005759C0 /* SettingsVC.swift */; };
 		4A8D376F2A66D338002D63FF /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8D376E2A66D338002D63FF /* logo.json */; };
 		4AEBC3D12A4A91A1004E6EA5 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */; };
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
@@ -143,8 +155,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipView.swift; sourceTree = "<group>"; };
+		2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTipStackView.swift; sourceTree = "<group>"; };
+		2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionTVCell.swift; sourceTree = "<group>"; };
+		2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TableView.swift"; sourceTree = "<group>"; };
+		2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAddressStackView.swift; sourceTree = "<group>"; };
+		2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionConfirmView.swift; sourceTree = "<group>"; };
+		2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoPlaceMDL.swift; sourceTree = "<group>"; };
+		2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+TextField.swift"; sourceTree = "<group>"; };
 		3AB1F030130858ADFE8A8262 /* Pods-PromiseTests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (development).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		4A4719EF2A37138B00812B29 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
+		4A6CCFC32ADA8768005759C0 /* LastPromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPromiseVC.swift; sourceTree = "<group>"; };
+		4A6CCFC72ADA8798005759C0 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		4A6CCFCB2ADA87F4005759C0 /* FAQVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQVC.swift; sourceTree = "<group>"; };
+		4A6CCFCE2ADA886C005759C0 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		4A8D376E2A66D338002D63FF /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
 		4AEBC3D02A4A91A1004E6EA5 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		578512A51520FB30B443D6FB /* Pods-PromiseTests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.debug (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.debug (production).xcconfig"; sourceTree = "<group>"; };
@@ -331,6 +355,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		2B9895322B638B24006AE27E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2B9895282B637F89006AE27E /* PlaceAddressStackView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2BBA01982B4E8ABA00B1039A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B7DE4612B4D258300127DAA /* PlaceSelectionTVCell.swift */,
+				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
+				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
+				2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4A4719EE2A36F29200812B29 /* ToastMessage */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,6 +389,38 @@
 				4A8D376E2A66D338002D63FF /* logo.json */,
 			);
 			path = Lotties;
+			sourceTree = "<group>";
+		};
+		4A6CCFC22ADA873B005759C0 /* LastPromiseScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4A6CCFC32ADA8768005759C0 /* LastPromiseVC.swift */,
+			);
+			path = LastPromiseScreen;
+			sourceTree = "<group>";
+		};
+		4A6CCFC62ADA8786005759C0 /* EditProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4A6CCFC72ADA8798005759C0 /* EditProfileVC.swift */,
+			);
+			path = EditProfileScreen;
+			sourceTree = "<group>";
+		};
+		4A6CCFCA2ADA87CF005759C0 /* FAQScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4A6CCFCB2ADA87F4005759C0 /* FAQVC.swift */,
+			);
+			path = FAQScreen;
+			sourceTree = "<group>";
+		};
+		4A6CCFCD2ADA8858005759C0 /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4A6CCFCE2ADA886C005759C0 /* SettingsVC.swift */,
+			);
+			path = SettingsScreen;
 			sourceTree = "<group>";
 		};
 		4AEBC3CF2A4A9171004E6EA5 /* Label */ = {
@@ -618,6 +693,7 @@
 		FC59743C2A24D58800A642D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */,
 				FC59743D2A24D59A00A642D7 /* UserMDL.swift */,
 				FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */,
 				FCC690542A9E37090017D543 /* PromiseFormMDL.swift */,
@@ -701,6 +777,10 @@
 			isa = PBXGroup;
 			children = (
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
+				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
+				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
+				2B9895322B638B24006AE27E /* Components */,
+				2BBA01982B4E8ABA00B1039A /* View */,
 			);
 			path = PlaceSelectionScreen;
 			sourceTree = "<group>";
@@ -749,6 +829,10 @@
 		FCE8C44B2A8A447A00E2B672 /* AccountScreen */ = {
 			isa = PBXGroup;
 			children = (
+				4A6CCFCD2ADA8858005759C0 /* SettingsScreen */,
+				4A6CCFCA2ADA87CF005759C0 /* FAQScreen */,
+				4A6CCFC62ADA8786005759C0 /* EditProfileScreen */,
+				4A6CCFC22ADA873B005759C0 /* LastPromiseScreen */,
 				FCE8C44C2A8A449300E2B672 /* AccountVC.swift */,
 			);
 			path = AccountScreen;
@@ -1142,6 +1226,7 @@
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
+				2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */,
 				D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
@@ -1154,8 +1239,13 @@
 				D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */,
+				2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */,
+				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
+				2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */,
+				2B9895302B638AC3006AE27E /* PlaceSelectionConfirmView.swift in Sources */,
+				2BBA01C42B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift in Sources */,
 				D474E0682B5E974700CD6033 /* InvitationPopUp.swift in Sources */,
 				D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */,
 				D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */,
@@ -1184,6 +1274,9 @@
 				FCE8C44D2A8A449300E2B672 /* AccountVC.swift in Sources */,
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
+				4A6CCFCC2ADA87F4005759C0 /* FAQVC.swift in Sources */,
+				FCE8C4452A8A2AE900E2B672 /* HeaderNavigation.swift in Sources */,
+				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
@@ -1192,6 +1285,8 @@
 				FCE8C44F2A8B787A00E2B672 /* UIColor.swift in Sources */,
 				FC3CFD9B2AF7A1E100AAD420 /* UIImageView.swift in Sources */,
 				FCB3AD742AC97FBC00219A25 /* CompletedCreatePromiseVC.swift in Sources */,
+				4A6CCFC42ADA8768005759C0 /* LastPromiseVC.swift in Sources */,
+				4A6CCFCF2ADA886C005759C0 /* SettingsVC.swift in Sources */,
 				FC0E4CA02A78088C00F9CA1C /* UIImage.swift in Sources */,
 				FCB7918E2ABC88C900542DAC /* FormThemeTagCell.swift in Sources */,
 				D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */,
@@ -1202,11 +1297,13 @@
 				FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */,
 				D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
+				4A6CCFC82ADA8798005759C0 /* EditProfileVC.swift in Sources */,
 				D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
+				2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */,
 				FCC690552A9E37090017D543 /* PromiseFormMDL.swift in Sources */,
 				E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */,
 				FC3CFDA02AF7C6A300AAD420 /* UIView.swift in Sources */,
@@ -1397,7 +1494,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
@@ -1433,8 +1530,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1452,7 +1548,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1609,8 +1704,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1628,7 +1722,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1736,11 +1829,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Promise/Promise.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DQNSTQBH74;
+				DEVELOPMENT_TEAM = DQNSTQBH74;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Promise/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치를 지도에 표시하며 약속 참여자의 지도에 표시하는데 사용됩니다.";
@@ -1758,7 +1850,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promise-team.promise";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "provisioning-profile-release";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
