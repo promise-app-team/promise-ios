@@ -13,6 +13,9 @@ class MainVM: NSObject {
     
     var currentFocusedPromise: Components.Schemas.OutputPromiseListItem?
     
+    var promiseStatusContainer: CommonFloatingContainerVC?
+    var promiseStatusContent: CommonFloatingContentVC?
+    
     var shouldFocusPromiseId: String?
     var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]?) -> Void)?
     var promises: [Components.Schemas.OutputPromiseListItem?]? {
@@ -130,6 +133,62 @@ class MainVM: NSObject {
                 break
             }
         }
+    }
+    
+    func leavePromise() {
+        guard let promise = currentFocusedPromise, !promise.pid.isEmpty else { return }
+        let id = promise.pid
+        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+        
+        if isOwner {
+            return
+        }
+        
+        Task {
+            
+            let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.DELETE, "/promises/\(id)/attend")
+            
+            switch result {
+            case .success:
+                
+                // 현재 포커스된 promise의 index
+                if let promises, let index = promises.firstIndex(where: { $0?.pid == id }) {
+                    
+                    if index > 0 {
+                        
+                        // 앞에 promise 객체가 있는지 확인
+                        self.shouldFocusPromiseId = promises[index - 1]?.pid
+                        
+                    } else if index + 1 < promises.count {
+                        
+                        // 뒤에 promise 객체가 있는지 확인
+                        self.shouldFocusPromiseId = promises[index + 1]?.pid
+                        
+                    }
+                    
+                    // 앞이나 뒤에 promise가 없는 경우, shouldFocusPromiseId는 변경하지 않음
+                }
+                
+                await getPromiseList()
+                await ToastView(message: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.success).showToast()
+                
+            case .failure(let errorType):
+                switch errorType {
+                case .badRequest(let error):
+                    
+                    await currentVC?.showPopUp(
+                        title: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.failure,
+                        message: error.errorResponse?.message ?? ""
+                    )
+                    
+                default:
+                    // Other Error(Network, badUrl ...)
+                    break
+                }
+            }
+            
+        }
+    
     }
     
     

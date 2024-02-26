@@ -655,8 +655,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
     }
     
     @objc private func onTapLeavePromise() {
-        // TODO:
-        print(#function)
+        CommonModalManager.shared.dismiss {
+            self.mainVM.promiseStatusContainer?.moveHalf()
+        }
+        
+        mainVM.leavePromise()
     }
     
     @objc private func onTapCancelMoreMenuButton() {
@@ -795,7 +798,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     // MARK: initialize
     
     init(vm: MainVM) {
-        mainVM = vm
+        self.mainVM = vm
         super.init(frame: .null)
         configure()
         render()

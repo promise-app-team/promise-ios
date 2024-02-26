@@ -138,3 +138,5 @@
 
 // MARK: PromiseStatusView/PromiseStatusWithAllAttendeesView
 "PromiseStatusWithAllAttendeesView.Header.title" = "약속 상세";
+"PromiseStatusWithAllAttendeesView.More.LeavePromise.success" = "약속에서 나갔어요";
+"PromiseStatusWithAllAttendeesView.More.LeavePromise.failure" = "약속 나가기 실패";
