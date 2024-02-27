@@ -189,7 +189,7 @@ final class MainVC: UIViewController {
     }
     
     private func focusPromiseById() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             
             // MARK: id가 mainVM에 맴버 플레그로 있는 경우
             if let shouldFocusPromiseId = self?.mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
