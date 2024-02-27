@@ -27,6 +27,7 @@
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
 		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
 		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
+		D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */; };
 		D459FA532B5A36BD00ED707D /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA522B5A36BD00ED707D /* CarouselCell.swift */; };
 		D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA542B5A36C200ED707D /* CarouselView.swift */; };
 		D459FA572B5A36C800ED707D /* CarouselPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D459FA562B5A36C700ED707D /* CarouselPageControl.swift */; };
@@ -185,6 +186,7 @@
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
 		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
+		D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusMoreMenuContentView.swift; sourceTree = "<group>"; };
 		D459FA522B5A36BD00ED707D /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		D459FA542B5A36C200ED707D /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		D459FA562B5A36C700ED707D /* CarouselPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselPageControl.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 		FCE8C4552A8B92E500E2B672 /* MainPromiseStatusView */ = {
 			isa = PBXGroup;
 			children = (
+				D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */,
 				D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */,
 				D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */,
 				FCE8C4562A8B931300E2B672 /* PromiseStatusView.swift */,
@@ -1223,6 +1226,7 @@
 				D459FA552B5A36C200ED707D /* CarouselView.swift in Sources */,
 				FC41B2602A781E8700C1C592 /* OnboardingVC.swift in Sources */,
 				FA931B102AB585A40053FC3B /* TextField.swift in Sources */,
+				D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */,
 				FCB9917E2A5B0FB200B82924 /* SignInVC.swift in Sources */,
 				FCC4B6292A9CEAA20003AD3C /* FormThemeCollectionView.swift in Sources */,
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
@@ -1275,7 +1279,7 @@
 				FCB9917C2A5B0F3500B82924 /* UserService.swift in Sources */,
 				FCE8C4572A8B931300E2B672 /* PromiseStatusView.swift in Sources */,
 				4A6CCFCC2ADA87F4005759C0 /* FAQVC.swift in Sources */,
-				FCE8C4452A8A2AE900E2B672 /* HeaderNavigation.swift in Sources */,
+				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,

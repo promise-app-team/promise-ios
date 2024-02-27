@@ -12,11 +12,14 @@ class MainVM: NSObject {
     var currentVC: MainVC?
     
     var currentFocusedPromise: Components.Schemas.OutputPromiseListItem?
+    var currentFocusedPromiseIndexPath: IndexPath?
+    var currentPromisesOrder: SortPromiseListEnum = .dateTimeQuickOrder
     
     var promiseStatusContainer: CommonFloatingContainerVC?
     var promiseStatusContent: CommonFloatingContentVC?
     
     var shouldFocusPromiseId: String?
+    var shouldLazyFocusPromiseId: String?
     var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]?) -> Void)?
     var promises: [Components.Schemas.OutputPromiseListItem?]? {
         didSet {
@@ -67,14 +70,15 @@ class MainVM: NSObject {
         
         switch result {
         case .success(let promises):
-            self.promises = sortedPromises(with: promises)
+            
+            self.promises = sortedPromises(with: promises, by: currentPromisesOrder)
+            
         case .failure(let errorType):
+            
             switch errorType {
-            case .badRequest:
-                // TODO: 약속 리스트 에러 핸들링
+            case .badRequest(let error):
                 break
             default:
-                // Other Error(Network, badUrl ...)
                 break
             }
         }
@@ -140,9 +144,9 @@ class MainVM: NSObject {
         let id = promise.pid
         let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
         
-        if isOwner {
-            return
-        }
+//        if isOwner {
+//            return
+//        }
         
         Task {
             
@@ -151,18 +155,17 @@ class MainVM: NSObject {
             switch result {
             case .success:
                 
-                // 현재 포커스된 promise의 index
                 if let promises, let index = promises.firstIndex(where: { $0?.pid == id }) {
                     
                     if index > 0 {
-                        
-                        // 앞에 promise 객체가 있는지 확인
-                        self.shouldFocusPromiseId = promises[index - 1]?.pid
+                        // 앞에 promise가 있는지 확인
+                        let beforePromiseId = promises[index - 1]?.pid
+                        shouldFocusPromiseId = beforePromiseId
                         
                     } else if index + 1 < promises.count {
-                        
-                        // 뒤에 promise 객체가 있는지 확인
-                        self.shouldFocusPromiseId = promises[index + 1]?.pid
+                        // 뒤에 promise가 있는지 확인
+                        let afterPromiseId = promises[index + 1]?.pid
+                        shouldFocusPromiseId = afterPromiseId
                         
                     }
                     
@@ -170,7 +173,10 @@ class MainVM: NSObject {
                 }
                 
                 await getPromiseList()
-                await ToastView(message: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.success).showToast()
+                
+                await ToastView(
+                    message: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.success
+                ).showToast()
                 
             case .failure(let errorType):
                 switch errorType {
@@ -220,7 +226,8 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
     func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise) {
         
         Task {
-            shouldFocusPromiseId = createdPromise.pid
+            // MARK: 생성 직후 스크롤 할게 아니기 때문에 약속 리스트는 가져오고 포커스 id는 MainVC의 viewDidAppear에서 포커스 핸들링
+            shouldLazyFocusPromiseId = createdPromise.pid
             await getPromiseList()
         }
     }
@@ -240,15 +247,16 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
 extension MainVM: InvitationPopUpDelegate {
     func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem) {
         Task {
+            shouldFocusPromiseId = promise.pid
             await getPromiseList()
-            await currentVC?.focusPromiseById(id: promise.pid)
+            
             await ToastView(message: L10n.InvitationPopUp.Toast.successAttendPromise).showToast()
         }
     }
     
     func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError) {
         DispatchQueue.main.async { [weak self] in
-            self?.currentVC?.focusPromiseById(id: targetPromise.pid)
+             self?.currentVC?.focusPromiseById(id: targetPromise.pid)
             
             guard let errorMessage = error.errorResponse?.message, !errorMessage.isEmpty else {
                 self?.currentVC?.showPopUp(
@@ -273,10 +281,13 @@ extension MainVM: InvitationPopUpDelegate {
 }
 
 extension MainVM: SortPromiseListViewDelegate {
-    func onSelected(order: SortPromiseListEnum) {
+    func onOrderSelected(order: SortPromiseListEnum) {
         guard let promises, promises.count > 1 else { return }
+        
         let sortedPromises = sortedPromises(with: promises, by: order)
+        
+        self.shouldFocusPromiseId = sortedPromises[0]?.pid
         self.promises = sortedPromises
-        currentVC?.focusPromiseById(id: sortedPromises[0]?.pid)
+        self.currentPromisesOrder = order
     }
 }

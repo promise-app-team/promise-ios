@@ -68,13 +68,22 @@ class PromiseStatusWithAllAttendeesView: UIView {
     private var shareUrl: URL? = nil
     private let attendeesViewHeight = 32.0
     private var attendees: [Components.Schemas.Attendee] = []
+    
     private var isOwner = false {
         didSet {
             if(isOwner) {
                 self.shareButton.isHidden = false
+                self.moreMenuContentView.updateMenus(menus: [
+                    .edit,
+                    .delegate,
+                    .leave
+                ])
             } else {
                 self.shareButton.isHidden = true
                 self.shareUrl = nil
+                self.moreMenuContentView.updateMenus(menus: [
+                    .leave
+                ])
             }
         }
     }
@@ -204,86 +213,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return stackView
     }()
     
-    private lazy var moreMenuContentView = {
-        let view = UIView()
-        
-        let editLabel = UILabel()
-        editLabel.text = L10n.Common.MoreMenu.editPromise
-        editLabel.textColor = .black
-        editLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
-        
-        let delegateLabel = UILabel()
-        delegateLabel.text = L10n.Common.MoreMenu.delegatePromise
-        delegateLabel.textColor = .black
-        delegateLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
-        
-        let leaveLabel = UILabel()
-        leaveLabel.text = L10n.Common.MoreMenu.leavePromise
-        leaveLabel.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
-        leaveLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
-        
-        
-        let cancelButton = Button()
-        cancelButton.initialize(title: L10n.Common.cancel, style: .secondary)
-        cancelButton.addTarget(self, action: #selector(onTapCancelMoreMenuButton), for: .touchUpInside)
-        
-        let editTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapEditPromise))
-        editLabel.addGestureRecognizer(editTapGesture)
-        editLabel.isUserInteractionEnabled = true
-        
-        let delegateTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapDelegatePromise))
-        delegateLabel.addGestureRecognizer(delegateTapGesture)
-        delegateLabel.isUserInteractionEnabled = true
-        
-        let leaveTapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapLeavePromise))
-        leaveLabel.addGestureRecognizer(leaveTapGesture)
-        leaveLabel.isUserInteractionEnabled = true
-        
-        editLabel.translatesAutoresizingMaskIntoConstraints = false
-        delegateLabel.translatesAutoresizingMaskIntoConstraints = false
-        leaveLabel.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        
-        if isOwner {
-            view.heightAnchor.constraint(equalToConstant: adjustedValue(234, .height)).isActive = true
-            
-            [editLabel, delegateLabel, leaveLabel, cancelButton].forEach{ view.addSubview($0) }
-            NSLayoutConstraint.activate([
-                editLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(26, .height)),
-                editLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                
-                delegateLabel.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-                delegateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                
-                leaveLabel.topAnchor.constraint(equalTo: delegateLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-                leaveLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                
-                cancelButton.topAnchor.constraint(equalTo: leaveLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-                cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
-                cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
-                cancelButton.heightAnchor.constraint(equalToConstant: Button.Height)
-            ])
-            
-        } else {
-            view.heightAnchor.constraint(equalToConstant: adjustedValue(154, .height)).isActive = true
-            
-            [leaveLabel, cancelButton].forEach{ view.addSubview($0) }
-            NSLayoutConstraint.activate([
-                leaveLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(26, .height)),
-                leaveLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                
-                cancelButton.topAnchor.constraint(equalTo: leaveLabel.bottomAnchor, constant: adjustedValue(18, .height)),
-                cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
-                cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
-                cancelButton.heightAnchor.constraint(equalToConstant: Button.Height)
-            ])
-        }
-        
-        return view
-    }()
+    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
     
     
     private lazy var header = {
@@ -644,27 +574,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         CommonModalManager.shared.show(content: moreMenuContentView, from: topVC)
     }
     
-    @objc private func onTapEditPromise() {
-        // TODO:
-        print(#function)
-    }
     
-    @objc private func onTapDelegatePromise() {
-        // TODO:
-        print(#function)
-    }
-    
-    @objc private func onTapLeavePromise() {
-        CommonModalManager.shared.dismiss {
-            self.mainVM.promiseStatusContainer?.moveHalf()
-        }
-        
-        mainVM.leavePromise()
-    }
-    
-    @objc private func onTapCancelMoreMenuButton() {
-        CommonModalManager.shared.dismiss()
-    }
     
     private func focusMapOnLocation(location: CLLocation) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
