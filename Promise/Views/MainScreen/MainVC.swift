@@ -189,26 +189,29 @@ final class MainVC: UIViewController {
     }
     
     private func focusPromiseById() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        // MARK: id가 mainVM에 맴버 플레그로 있는 경우
+        if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
             
-            // MARK: id가 mainVM에 맴버 플레그로 있는 경우
-            if let shouldFocusPromiseId = self?.mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
+            if let index = mainVM.promises?.firstIndex(where: { $0?.pid == shouldFocusPromiseId }) {
+                let indexPath = IndexPath(item: index, section: 0)
                 
-                if let index = self?.mainVM.promises?.firstIndex(where: { $0?.pid == shouldFocusPromiseId }) {
-                    let indexPath = IndexPath(item: index, section: 0)
-                    
-                    // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
-                    self?.scrollToPreviousFocusedPromise(indexPath: indexPath)
-                    
-                    self?.promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                    self?.focusedCellChanged(to: indexPath)
+                // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
+                scrollToPreviousFocusedPromise(indexPath: indexPath)
+                
+                if let promisesCount = mainVM.promises?.count, index == promisesCount - 1 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        self?.promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                        self?.focusedCellChanged(to: indexPath)
+                    }
+                } else {
+                    promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                    focusedCellChanged(to: indexPath)
                 }
-                
-                // 포커스 스크롤 동작 후에 리셋
-                self?.mainVM.shouldFocusPromiseId = nil
                 
             }
             
+            // 포커스 스크롤 동작 후에 리셋
+            mainVM.shouldFocusPromiseId = nil
         }
     }
     
