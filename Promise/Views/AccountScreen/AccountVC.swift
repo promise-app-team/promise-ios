@@ -35,10 +35,33 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "profile")
+        
+        func setRandomImage() {
+            let randomImage = AlternativeProfileImage.allCases.randomElement()?.image ?? UIImage()
+            imageView.image = randomImage
+        }
+        
+        if let profileImageUrl = UserService.shared.getUser()?.profileUrl {
+            DispatchQueue.global().async {
+                APIService.shared.fetchImage(urlString: profileImageUrl) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let image):
+                            imageView.image = image
+                        case .failure(let error):
+                            setRandomImage()
+                        }
+                    }
+                }
+            }
+
+        } else {
+            // 프로필 이미지가 없는 경우, 프로비 이미지로 세팅
+            setRandomImage()
+        }
         return imageView
     }()
-    
+
     lazy var statusImage: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -52,7 +75,9 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     //사용자 이름
     lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "김지수"
+        if let nickname = UserService.shared.getUser()?.nickname {
+            label.text = nickname
+        }
         label.textColor = .black
         label.font = UIFont.pretendard(style: .H1_B)
         label.textAlignment = .left
@@ -262,6 +287,24 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
             break
         default:
             break
+        }
+    }
+
+    enum AlternativeProfileImage: CaseIterable {
+        case probee1
+        case probee2
+        case probee3
+        case probee4
+        case probee5
+        
+        var image: UIImage {
+            switch self {
+            case .probee1: return UIImage(named: "probee1") ?? UIImage()
+            case .probee2: return UIImage(named: "probee2") ?? UIImage()
+            case .probee3: return UIImage(named: "probee3") ?? UIImage()
+            case .probee4: return UIImage(named: "probee4") ?? UIImage()
+            case .probee5: return UIImage(named: "probee5") ?? UIImage()
+            }
         }
     }
 }
