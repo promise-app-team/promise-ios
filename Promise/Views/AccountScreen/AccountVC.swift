@@ -96,29 +96,36 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         return tableView
     }()
     
-    //"앱 버전" 텍스트
+    // 앱 버전
     lazy var appLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.Account.appVer
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            label.text = L10n.Account.appVer + " " + appVersion
+        } else {
+            label.text = L10n.Account.appVer
+        }
         label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
         label.font = UIFont.pretendard(style: .B1_R)
         label.textAlignment = .left
         return label
     }()
-    
-    //앱 버전
-    lazy var verLabel: UILabel = {
+
+    // 릴리즈 빌드 번호
+    lazy var releaseLabel: UILabel = {
         let label = UILabel()
-        label.text = "1.0.0(3088)"
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            label.text = "\(appVersion) (\(buildNumber))"
+        }
         label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
         label.font = UIFont.pretendard(style: .B1_R)
-        label.textAlignment = .left
+        label.textAlignment = .right
         return label
     }()
-    
+
     //앱 버전 텍스트와 앱 버전을 묶은 스택뷰
     lazy var appVerStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.appLabel, self.verLabel])
+        let stackView = UIStackView(arrangedSubviews: [self.appLabel, self.releaseLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
@@ -182,6 +189,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.heightAnchor.constraint(equalToConstant: CGFloat(4 * 56)),//행 개수 * 행 높이
             appLabel.widthAnchor.constraint(equalToConstant: 254),
+            releaseLabel.widthAnchor.constraint(equalToConstant: 83),
             appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
             appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
         ])
