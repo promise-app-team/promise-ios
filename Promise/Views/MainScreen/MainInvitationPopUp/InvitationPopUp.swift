@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 protocol InvitationPopUpDelegate: NSObject {
-    func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem)
-    func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError)
+    func onSuccessAttendPromise(promise: Components.Schemas.PromiseDTO)
+    func onFailureAttendPromise(targetPromise: Components.Schemas.PromiseDTO, error: BadRequestError)
     func onLoadingAttendPromise()
 }
 
@@ -21,7 +21,7 @@ class InvitationPopUp {
     
     private var popupVC: PopupVC?
     
-    private let invitedPromise: Components.Schemas.OutputPromiseListItem
+    private let invitedPromise: Components.Schemas.PromiseDTO
     private let currentVC: UIViewController
     
     // subviews
@@ -452,7 +452,7 @@ class InvitationPopUp {
     
     // initializer
     
-    init(invitedPromise: Components.Schemas.OutputPromiseListItem, currentVC: UIViewController) {
+    init(invitedPromise: Components.Schemas.PromiseDTO, currentVC: UIViewController) {
         self.invitedPromise = invitedPromise
         self.currentVC = currentVC
     }

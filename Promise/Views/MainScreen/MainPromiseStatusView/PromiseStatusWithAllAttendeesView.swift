@@ -41,7 +41,7 @@ class AttendeeCellForDetail: UICollectionViewCell {
         ])
     }
     
-    func configureAttendeeCellForDetail(with attendee: Components.Schemas.Attendee) {
+    func configureAttendeeCellForDetail(with attendee: Components.Schemas.AttendeeDTO) {
         guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
             // TODO: 이미지 url이 없을 경우 디폴트 이미지
             return
@@ -67,7 +67,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     
     private var shareUrl: URL? = nil
     private let attendeesViewHeight = 32.0
-    private var attendees: [Components.Schemas.Attendee] = []
+    private var attendees: [Components.Schemas.AttendeeDTO] = []
     
     private var isOwner = false {
         didSet {
@@ -582,7 +582,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         map.moveCamera(cameraUpdate)
     }
     
-    private func setDestinationMarkerOnMap(destination: Components.Schemas.OutputDestination?) {
+    private func setDestinationMarkerOnMap(destination: Components.Schemas.LocationDTO?) {
         guard let destination else { return }
 
         promiseDestinationMarker.position = NMGLatLng(
@@ -655,7 +655,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     }
     
     // MARK: self 초기화 시 실행됨
-    private func setPromiseStatusForMap(with promise: Components.Schemas.OutputPromiseListItem) {
+    private func setPromiseStatusForMap(with promise: Components.Schemas.PromiseDTO) {
         
         setDestinationMarkerOnMap(destination: promise.destination?.value1)
         
@@ -664,7 +664,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
     }
     
     // MARK: self 초기화 시 실행됨
-    private func setPromiseDetailInfo(with promise: Components.Schemas.OutputPromiseListItem) {
+    private func setPromiseDetailInfo(with promise: Components.Schemas.PromiseDTO) {
         // TimeInterval을 Date 객체로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
@@ -762,7 +762,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
 }
 
 extension PromiseStatusWithAllAttendeesView {
-    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.OutputPromiseListItem) {
+    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO) {
         setPromiseDetailInfo(with: promise)
     }
     

@@ -9,7 +9,7 @@ import UIKit
 
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
-    var invitedPromise: Components.Schemas.OutputPromiseListItem?
+    var invitedPromise: Components.Schemas.PromiseDTO?
     
     private var probeeGuidanceTask: Task<Void, Never>? = nil
     private var shouldShowProbeeGuidance = false
@@ -138,7 +138,7 @@ final class MainVC: UIViewController {
     
     // MARK: handler
     
-    public func showInvitationPopUp(promise: Components.Schemas.OutputPromiseListItem? = nil) {
+    public func showInvitationPopUp(promise: Components.Schemas.PromiseDTO? = nil) {
         if let promise {
             let popup = InvitationPopUp(invitedPromise: promise, currentVC: self)
             popup.delegate = mainVM
@@ -255,7 +255,7 @@ final class MainVC: UIViewController {
     // MARK: initialize
     
     init(
-        invitedPromise: Components.Schemas.OutputPromiseListItem? = nil,
+        invitedPromise: Components.Schemas.PromiseDTO? = nil,
         shouldFocusPromiseId: String? = nil
     ) {
         self.invitedPromise = invitedPromise

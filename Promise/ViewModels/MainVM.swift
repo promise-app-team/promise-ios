@@ -11,7 +11,7 @@ import UIKit
 class MainVM: NSObject {
     var currentVC: MainVC?
     
-    var currentFocusedPromise: Components.Schemas.OutputPromiseListItem?
+    var currentFocusedPromise: Components.Schemas.PromiseDTO?
     var currentFocusedPromiseIndexPath: IndexPath?
     var currentPromisesOrder: SortPromiseListEnum = .dateTimeQuickOrder
     
@@ -20,8 +20,8 @@ class MainVM: NSObject {
     
     var shouldFocusPromiseId: String?
     var shouldLazyFocusPromiseId: String?
-    var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]?) -> Void)?
-    var promises: [Components.Schemas.OutputPromiseListItem?]? {
+    var promisesDidChange: (([Components.Schemas.PromiseDTO?]?) -> Void)?
+    var promises: [Components.Schemas.PromiseDTO?]? {
         didSet {
             promisesDidChange?(promises)
         }
@@ -34,9 +34,9 @@ class MainVM: NSObject {
     }
     
     func sortedPromises(
-        with willBeSortedPromises: [Components.Schemas.OutputPromiseListItem?],
+        with willBeSortedPromises: [Components.Schemas.PromiseDTO?],
         by order: SortPromiseListEnum = .dateTimeQuickOrder
-    ) -> [Components.Schemas.OutputPromiseListItem?] {
+    ) -> [Components.Schemas.PromiseDTO?] {
         
         // MARK: nil, [nil], [promise] 경우 early return
         guard willBeSortedPromises.count > 1 else {
@@ -66,7 +66,7 @@ class MainVM: NSObject {
     
     
     func getPromiseList() async {
-        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
+        let result: Result<[Components.Schemas.PromiseDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
         
         switch result {
         case .success(let promises):
@@ -76,7 +76,7 @@ class MainVM: NSObject {
         case .failure(let errorType):
             
             switch errorType {
-            case .badRequest(let error):
+            case .badRequest:
                 break
             default:
                 break
@@ -86,12 +86,12 @@ class MainVM: NSObject {
     
     func getDepartureLoaction(
         id: String,
-        onSuccess: @escaping ((Components.Schemas.OutputStartLocation) -> Void),
+        onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void),
         onFailure: @escaping ((BadRequestError?) -> Void)
     ) {
         
         Task {
-            let result: Result<Components.Schemas.OutputStartLocation ,NetworkError> = await APIService.shared.fetch(
+            let result: Result<Components.Schemas.LocationDTO ,NetworkError> = await APIService.shared.fetch(
                 .GET,
                 "/promises/\(id)/start-location"
             )
@@ -114,7 +114,7 @@ class MainVM: NSObject {
         
     }
     
-    func editDepartureLoaction(with: Components.Schemas.InputUpdateUserStartLocation, onSuccess: @escaping (() -> Void)) async {
+    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping (() -> Void)) async {
         guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
         
         let result: Result<EmptyResponse ,NetworkError> = await APIService.shared.fetch(
@@ -223,7 +223,7 @@ class MainVM: NSObject {
 }
 
 extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
-    func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise) {
+    func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO) {
         
         Task {
             // MARK: 생성 직후 스크롤 할게 아니기 때문에 약속 리스트는 가져오고 포커스 id는 MainVC의 viewDidAppear에서 포커스 핸들링
@@ -245,7 +245,7 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
 }
 
 extension MainVM: InvitationPopUpDelegate {
-    func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem) {
+    func onSuccessAttendPromise(promise: Components.Schemas.PromiseDTO) {
         Task {
             shouldFocusPromiseId = promise.pid
             await getPromiseList()
@@ -254,7 +254,7 @@ extension MainVM: InvitationPopUpDelegate {
         }
     }
     
-    func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError) {
+    func onFailureAttendPromise(targetPromise: Components.Schemas.PromiseDTO, error: BadRequestError) {
         DispatchQueue.main.async { [weak self] in
              self?.currentVC?.focusPromiseById(id: targetPromise.pid)
             

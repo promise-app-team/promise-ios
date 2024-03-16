@@ -42,7 +42,7 @@ class AttendeeCellForCard: UICollectionViewCell {
         ])
     }
     
-    func configureAttendeeCellForCard(with attendee: Components.Schemas.Attendee) {
+    func configureAttendeeCellForCard(with attendee: Components.Schemas.AttendeeDTO) {
         guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
             // TODO: 이미지 url이 없을 경우 디폴트 이미지
             return
@@ -53,7 +53,7 @@ class AttendeeCellForCard: UICollectionViewCell {
 }
 
 class PromiseListCell: UICollectionViewCell {
-    private var attendees: [Components.Schemas.Attendee] = []
+    private var attendees: [Components.Schemas.AttendeeDTO] = []
     private var isOwner = false {
         didSet {
             if(isOwner) {
@@ -411,7 +411,7 @@ class PromiseListCell: UICollectionViewCell {
         ])
     }
     
-    func configureCell(with promise: Components.Schemas.OutputPromiseListItem?, at indexPath: IndexPath) {
+    func configureCell(with promise: Components.Schemas.PromiseDTO?, at indexPath: IndexPath) {
         guard let promise else {
             contentView.showAnimatedGradientSkeleton(transition: .crossDissolve(0.25))
             return
