@@ -251,6 +251,14 @@ internal enum L10n {
       /// 약속 상세
       internal static let title = L10n.tr("Localizable", "PromiseStatusWithAllAttendeesView.Header.title", fallback: "약속 상세")
     }
+    internal enum More {
+      internal enum LeavePromise {
+        /// 약속 나가기 실패
+        internal static let failure = L10n.tr("Localizable", "PromiseStatusWithAllAttendeesView.More.LeavePromise.failure", fallback: "약속 나가기 실패")
+        /// 약속에서 나갔어요
+        internal static let success = L10n.tr("Localizable", "PromiseStatusWithAllAttendeesView.More.LeavePromise.success", fallback: "약속에서 나갔어요")
+      }
+    }
   }
   internal enum PromiseStatusWithUserView {
     /// 약속시간 전까지 꼭 출발지를 설정해주세요

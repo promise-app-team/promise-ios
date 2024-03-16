@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol CreatePromiseDelegate: AnyObject {
-    func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise)
+    func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO)
 }
 
 class CreatePromiseVC: UIViewController {

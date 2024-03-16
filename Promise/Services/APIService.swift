@@ -21,6 +21,7 @@ enum NetworkError: Error {
 enum HttpMethod: String {
     case POST
     case GET
+    case DELETE
     // Ohter http methods
 }
 
@@ -108,7 +109,7 @@ final class APIService {
             switch(method) {
             case .GET:
                 break
-            case .POST:
+            case .POST, .DELETE:
                 if let body = body {
                     if let jsonData = try? JSONEncoder().encode(body) {
                         request.httpBody = jsonData
@@ -157,7 +158,7 @@ final class APIService {
             return .failure(.notAuthenticated)
         }
         
-        let result: Result<Components.Schemas.AuthToken, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
+        let result: Result<Components.Schemas.AuthTokenDTO, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
         
         switch result {
         case .success(let updatedToken):
@@ -249,7 +250,7 @@ final class APIService {
         switch(method) {
         case .GET:
             break
-        case .POST:
+        case .POST, .DELETE:
             if let body = body {
                 if let jsonData = try? JSONEncoder().encode(body) {
                     request.httpBody = jsonData
@@ -311,8 +312,8 @@ final class APIService {
             .POST,
             "/auth/refresh",
             nil,
-            Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
-        {  (result: Result<Components.Schemas.AuthToken, NetworkError>) in
+            Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
+        {  (result: Result<Components.Schemas.AuthTokenDTO, NetworkError>) in
             switch result {
             case .success(let updatedToken):
                 Task {

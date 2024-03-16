@@ -26,11 +26,11 @@ final class SignInVM: NSObject {
     private func getUserAuthToken(
         username: String,
         profileUrl: String,
-        provider: Components.Schemas.InputCreateUser.providerPayload,
+        provider: Components.Schemas.InputCreateUserDTO.providerPayload,
         providerId: String)
     async {
         
-        let result: Result<Components.Schemas.AuthToken, NetworkError> = await APIService.shared.fetch(.POST, "/auth/login", nil, Components.Schemas.InputCreateUser(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))
+        let result: Result<Components.Schemas.AuthTokenDTO, NetworkError> = await APIService.shared.fetch(.POST, "/auth/login", nil, Components.Schemas.InputCreateUserDTO(username: username, profileUrl: profileUrl, provider: provider, providerId: providerId))
         
         switch result {
         case .success(let token):
@@ -191,7 +191,7 @@ final class SignInVM: NSObject {
         }
     }
     
-    func handleSignIn(method: Components.Schemas.InputCreateUser.providerPayload) {
+    func handleSignIn(method: Components.Schemas.InputCreateUserDTO.providerPayload) {
         loading = true
         
         switch method {

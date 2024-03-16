@@ -35,24 +35,24 @@ class CreatePromiseVM: NSObject {
         }
     }
     
-    var placeTypeDidChange: ((Components.Schemas.InputCreatePromise.destinationTypePayload) -> Void)?
-    var placeType = Components.Schemas.InputCreatePromise.destinationTypePayload.STATIC {
+    var placeTypeDidChange: ((Components.Schemas.InputCreatePromiseDTO.destinationTypePayload) -> Void)?
+    var placeType = Components.Schemas.InputCreatePromiseDTO.destinationTypePayload.STATIC {
         didSet {
             placeTypeDidChange?(placeType)
             updateForm(keyPath: \.placeType, value: placeType)
         }
     }
     
-    var placeDidChange: ((Components.Schemas.InputCreatePromise.destinationPayload) -> Void)?
-    var place = Components.Schemas.InputCreatePromise.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571)) {
+    var placeDidChange: ((Components.Schemas.InputCreatePromiseDTO.destinationPayload) -> Void)?
+    var place = Components.Schemas.InputCreatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571)) {
         didSet {
             placeDidChange?(place)
             updateForm(keyPath: \.place, value: place)
         }
     }
     
-    var shareLocationStartTypeDidChange: ((Components.Schemas.InputCreatePromise.locationShareStartTypePayload) -> Void)?
-    var shareLocationStartType = Components.Schemas.InputCreatePromise.locationShareStartTypePayload.DISTANCE {
+    var shareLocationStartTypeDidChange: ((Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload) -> Void)?
+    var shareLocationStartType = Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload.DISTANCE {
         didSet {
             shareLocationStartTypeDidChange?(shareLocationStartType)
             updateForm(keyPath: \.shareLocationStartType, value: shareLocationStartType)
@@ -155,15 +155,15 @@ class CreatePromiseVM: NSObject {
         self.themes[index].isSelected = !self.themes[index].isSelected
     }
     
-    func onChangedPlaceType(_ type: Components.Schemas.InputCreatePromise.destinationTypePayload) {
+    func onChangedPlaceType(_ type: Components.Schemas.InputCreatePromiseDTO.destinationTypePayload) {
         self.placeType = type
     }
     
-    func onChangedPlace(_ place: Components.Schemas.InputCreatePromise.destinationPayload) {
+    func onChangedPlace(_ place: Components.Schemas.InputCreatePromiseDTO.destinationPayload) {
         self.place = place
     }
     
-    func onChangedShareLocationStartType(_ type: Components.Schemas.InputCreatePromise.locationShareStartTypePayload) {
+    func onChangedShareLocationStartType(_ type: Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload) {
         self.shareLocationStartType = type
     }
     
@@ -175,8 +175,8 @@ class CreatePromiseVM: NSObject {
         self.shareLocationEnd = shareLocationEnd
     }
     
-    func submit(_ completion: @escaping ((Components.Schemas.OutputCreatePromise?) -> Void)) {
-        let submitForm = Components.Schemas.InputCreatePromise(
+    func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
+        let submitForm = Components.Schemas.InputCreatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
@@ -184,12 +184,12 @@ class CreatePromiseVM: NSObject {
             destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStart,
-            locationShareEndType: Components.Schemas.InputCreatePromise.locationShareEndTypePayload.TIME,
+            locationShareEndType: Components.Schemas.InputCreatePromiseDTO.locationShareEndTypePayload.TIME,
             locationShareEndValue: form.shareLocationEnd
         )
         
         Task {
-            let result: Result<Components.Schemas.OutputCreatePromise, NetworkError> = await APIService.shared.fetch(.POST, "/promises", nil, submitForm)
+            let result: Result<Components.Schemas.PromiseDTO, NetworkError> = await APIService.shared.fetch(.POST, "/promises", nil, submitForm)
             
             switch result {
             case .success(let createdPromise):
@@ -218,12 +218,12 @@ class CreatePromiseVM: NSObject {
     func getSupportedTheme() async {
         themesLoading = true
         
-        let result: Result<[Components.Schemas.ThemeEntity] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
+        let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
         
         switch result {
         case .success(let themes):
             self.themes = themes.map { themeEntity in
-                return SelectableTheme(id: themeEntity.id, theme: themeEntity.theme, isSelected: false)
+                return SelectableTheme(id: themeEntity.id, theme: themeEntity.name, isSelected: false)
             }
         case .failure(let errorType):
             switch errorType {

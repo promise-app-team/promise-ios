@@ -11,9 +11,9 @@ struct PromiseForm {
     var title: String
     var date: SelectionDate?
     var themes: [SelectableTheme]
-    var placeType: Components.Schemas.InputCreatePromise.destinationTypePayload
-    var place: Components.Schemas.InputCreatePromise.destinationPayload?
-    var shareLocationStartType: Components.Schemas.InputCreatePromise.locationShareStartTypePayload
+    var placeType: Components.Schemas.InputCreatePromiseDTO.destinationTypePayload
+    var place: Components.Schemas.InputCreatePromiseDTO.destinationPayload?
+    var shareLocationStartType: Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload
     var shareLocationStart: Double
     var shareLocationEnd: Double
 }

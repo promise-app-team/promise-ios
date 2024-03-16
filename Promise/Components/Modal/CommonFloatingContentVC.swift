@@ -81,7 +81,7 @@ extension CommonFloatingContentVC: FloatingPanelControllerDelegate {
             }
         }
         
-        var progress = (y - minY) / (maxY - minY) // .full에서 .half로 이동하는 동안의 진행 비율
+        var _ = (y - minY) / (maxY - minY) // .full에서 .half로 이동하는 동안의 진행 비율
         
         
         

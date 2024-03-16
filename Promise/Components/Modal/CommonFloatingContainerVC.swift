@@ -90,6 +90,14 @@ class CommonFloatingContainerVC: UIViewController {
             self.isPresented = false
         }
     }
+    
+    func moveHalf() {
+        fpc.move(to: .half, animated: true)
+    }
+    
+    func moveFull() {
+        fpc.move(to: .full, animated: true)
+    }
 }
 
 extension FloatingPanelController {

@@ -47,7 +47,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.mainVM = vm
         
         self.promiseStatusWithUserView = PromiseStatusWithUserView(vm: mainVM)
-        self.promiseStatusWithAllAttendeesView = PromiseStatusWithAllAttendeesView(vm: mainVM)
+        self.promiseStatusWithAllAttendeesView = PromiseStatusWithAllAttendeesView(
+            vm: mainVM
+        )
         
         self.promiseStatusContent = CommonFloatingContentVC(
             halfView: promiseStatusWithUserView,
@@ -55,6 +57,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
         )
         
         super.init(contentVC: self.promiseStatusContent, currentVC: vc)
+        
+        mainVM.promiseStatusContainer = self
+        mainVM.promiseStatusContent = self.promiseStatusContent
         
         configure()
     }
@@ -71,7 +76,7 @@ class PromiseStatusView: CommonFloatingContainerVC {
 }
 
 extension PromiseStatusView {
-    public func updatePromiseStatus(with promise: Components.Schemas.OutputPromiseListItem) {
+    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO) {
         promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
         promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
     }
