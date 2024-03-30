@@ -258,16 +258,20 @@ class PromiseStatusWithUserView: UIView {
         backgroundColor = .white
         
         if let id = mainVM.currentFocusedPromise?.pid {
+            
             mainVM.getDepartureLoaction(id: id) { location in
                 
                 DispatchQueue.main.async { [weak self] in
                     
-                    let departureLoaction = location.city + " " + location.district + " " + location.address
+                    if let city = location.city, let district = location.district, let address = location.address {
+                        let departureLoaction = city + " " + district + " " + address
 
-                    self?.departureLocation.text = departureLoaction
-                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                        self?.departureLocation.text = departureLoaction
+                        self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                        
+                        self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                    }
                     
-                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
                 }
                 
             } onFailure: { [weak self] error in
@@ -333,25 +337,28 @@ extension PromiseStatusWithUserView {
         isEnabledLocationServiceOnDevice = isEnabled
     }
     
-    public func updatePromiseStatusWithUser(with promise: Components.Schemas.OutputPromiseListItem) {
+    public func updatePromiseStatusWithUser(with promise: Components.Schemas.PromiseDTO) {
         let id = promise.pid
         
         mainVM.getDepartureLoaction(id: id) { location in
             
+            print(location)
+            
             DispatchQueue.main.async { [weak self] in
                 
-                let departureLoaction = location.city + " " + location.district + " " + location.address
-
-                self?.departureLocation.text = departureLoaction
-                self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-                
-                self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                if let city = location.city, let district = location.district, let address = location.address {
+                    let departureLoaction = city + " " + district + " " + address
+                    self?.departureLocation.text = departureLoaction
+                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                    
+                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                }
             }
             
         } onFailure: { [weak self] error in
             
             DispatchQueue.main.async { [weak self] in
-                
+
                 // Placeholder
                 self?.departureLocation.text = L10n.PromiseStatusWithUserView.departureLocationPlaceholder
                 self?.departureLocation.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
@@ -367,7 +374,7 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
     // TODO: 장소 설정 완료후 callback으로 변경 (장소 설정 플로우 화면이 완성되면)
     func onDidHide() {
         // TODO: 임시
-        let location = Components.Schemas.InputUpdateUserStartLocation(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.469726, longitude: 126.9419844)
+        let location = Components.Schemas.InputLocationDTO(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.469726, longitude: 126.9419844)
         
         let address = location.city + " " + location.district + " " + (location.address ?? "")
         

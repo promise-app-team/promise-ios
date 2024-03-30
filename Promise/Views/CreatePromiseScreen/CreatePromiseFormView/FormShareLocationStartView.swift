@@ -147,12 +147,12 @@ class FormShareLocationStartView: UIView {
 
 extension FormShareLocationStartView: FormTabMenuViewDelegate, FormShareLocationSelectionInputViewDelegate {
     func onTapLeftButton() {
-        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputCreatePromise.locationShareStartTypePayload.DISTANCE)
+        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload.DISTANCE)
         createPromiseVM.onChangedShareLocationStart(shareLocationStart: shareLocationStartBasedOnDistanceInputButton.currentItem)
     }
     
     func onTapRightButton() {
-        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputCreatePromise.locationShareStartTypePayload.TIME)
+        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload.TIME)
         createPromiseVM.onChangedShareLocationStart(shareLocationStart: shareLocationStartBasedOnTimeInputButton.currentItem)
     }
     

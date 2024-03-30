@@ -11,11 +11,17 @@ import UIKit
 class MainVM: NSObject {
     var currentVC: MainVC?
     
-    var currentFocusedPromise: Components.Schemas.OutputPromiseListItem?
+    var currentFocusedPromise: Components.Schemas.PromiseDTO?
+    var currentFocusedPromiseIndexPath: IndexPath?
+    var currentPromisesOrder: SortPromiseListEnum = .dateTimeQuickOrder
+    
+    var promiseStatusContainer: CommonFloatingContainerVC?
+    var promiseStatusContent: CommonFloatingContentVC?
     
     var shouldFocusPromiseId: String?
-    var promisesDidChange: (([Components.Schemas.OutputPromiseListItem?]?) -> Void)?
-    var promises: [Components.Schemas.OutputPromiseListItem?]? {
+    var shouldLazyFocusPromiseId: String?
+    var promisesDidChange: (([Components.Schemas.PromiseDTO?]?) -> Void)?
+    var promises: [Components.Schemas.PromiseDTO?]? {
         didSet {
             promisesDidChange?(promises)
         }
@@ -28,9 +34,9 @@ class MainVM: NSObject {
     }
     
     func sortedPromises(
-        with willBeSortedPromises: [Components.Schemas.OutputPromiseListItem?],
+        with willBeSortedPromises: [Components.Schemas.PromiseDTO?],
         by order: SortPromiseListEnum = .dateTimeQuickOrder
-    ) -> [Components.Schemas.OutputPromiseListItem?] {
+    ) -> [Components.Schemas.PromiseDTO?] {
         
         // MARK: nil, [nil], [promise] 경우 early return
         guard willBeSortedPromises.count > 1 else {
@@ -60,18 +66,19 @@ class MainVM: NSObject {
     
     
     func getPromiseList() async {
-        let result: Result<[Components.Schemas.OutputPromiseListItem] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
+        let result: Result<[Components.Schemas.PromiseDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises", ["status": "available"])
         
         switch result {
         case .success(let promises):
-            self.promises = sortedPromises(with: promises)
+            
+            self.promises = sortedPromises(with: promises, by: currentPromisesOrder)
+            
         case .failure(let errorType):
+            
             switch errorType {
             case .badRequest:
-                // TODO: 약속 리스트 에러 핸들링
                 break
             default:
-                // Other Error(Network, badUrl ...)
                 break
             }
         }
@@ -79,12 +86,12 @@ class MainVM: NSObject {
     
     func getDepartureLoaction(
         id: String,
-        onSuccess: @escaping ((Components.Schemas.OutputStartLocation) -> Void),
+        onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void),
         onFailure: @escaping ((BadRequestError?) -> Void)
     ) {
         
         Task {
-            let result: Result<Components.Schemas.OutputStartLocation ,NetworkError> = await APIService.shared.fetch(
+            let result: Result<Components.Schemas.LocationDTO ,NetworkError> = await APIService.shared.fetch(
                 .GET,
                 "/promises/\(id)/start-location"
             )
@@ -107,7 +114,7 @@ class MainVM: NSObject {
         
     }
     
-    func editDepartureLoaction(with: Components.Schemas.InputUpdateUserStartLocation, onSuccess: @escaping (() -> Void)) async {
+    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping (() -> Void)) async {
         guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
         
         let result: Result<EmptyResponse ,NetworkError> = await APIService.shared.fetch(
@@ -130,6 +137,64 @@ class MainVM: NSObject {
                 break
             }
         }
+    }
+    
+    func leavePromise() {
+        guard let promise = currentFocusedPromise, !promise.pid.isEmpty else { return }
+        let id = promise.pid
+        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+        
+//        if isOwner {
+//            return
+//        }
+        
+        Task {
+            
+            let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.DELETE, "/promises/\(id)/attend")
+            
+            switch result {
+            case .success:
+                
+                if let promises, let index = promises.firstIndex(where: { $0?.pid == id }) {
+                    
+                    if index > 0 {
+                        // 앞에 promise가 있는지 확인
+                        let beforePromiseId = promises[index - 1]?.pid
+                        shouldFocusPromiseId = beforePromiseId
+                        
+                    } else if index + 1 < promises.count {
+                        // 뒤에 promise가 있는지 확인
+                        let afterPromiseId = promises[index + 1]?.pid
+                        shouldFocusPromiseId = afterPromiseId
+                        
+                    }
+                    
+                    // 앞이나 뒤에 promise가 없는 경우, shouldFocusPromiseId는 변경하지 않음
+                }
+                
+                await getPromiseList()
+                
+                await ToastView(
+                    message: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.success
+                ).showToast()
+                
+            case .failure(let errorType):
+                switch errorType {
+                case .badRequest(let error):
+                    
+                    await currentVC?.showPopUp(
+                        title: L10n.PromiseStatusWithAllAttendeesView.More.LeavePromise.failure,
+                        message: error.errorResponse?.message ?? ""
+                    )
+                    
+                default:
+                    // Other Error(Network, badUrl ...)
+                    break
+                }
+            }
+            
+        }
+    
     }
     
     
@@ -158,10 +223,11 @@ class MainVM: NSObject {
 }
 
 extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
-    func onDidCreatePromise(createdPromise: Components.Schemas.OutputCreatePromise) {
+    func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO) {
         
         Task {
-            shouldFocusPromiseId = createdPromise.pid
+            // MARK: 생성 직후 스크롤 할게 아니기 때문에 약속 리스트는 가져오고 포커스 id는 MainVC의 viewDidAppear에서 포커스 핸들링
+            shouldLazyFocusPromiseId = createdPromise.pid
             await getPromiseList()
         }
     }
@@ -179,17 +245,18 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
 }
 
 extension MainVM: InvitationPopUpDelegate {
-    func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem) {
+    func onSuccessAttendPromise(promise: Components.Schemas.PromiseDTO) {
         Task {
+            shouldFocusPromiseId = promise.pid
             await getPromiseList()
-            await currentVC?.focusPromiseById(id: promise.pid)
+            
             await ToastView(message: L10n.InvitationPopUp.Toast.successAttendPromise).showToast()
         }
     }
     
-    func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError) {
+    func onFailureAttendPromise(targetPromise: Components.Schemas.PromiseDTO, error: BadRequestError) {
         DispatchQueue.main.async { [weak self] in
-            self?.currentVC?.focusPromiseById(id: targetPromise.pid)
+             self?.currentVC?.focusPromiseById(id: targetPromise.pid)
             
             guard let errorMessage = error.errorResponse?.message, !errorMessage.isEmpty else {
                 self?.currentVC?.showPopUp(
@@ -214,10 +281,13 @@ extension MainVM: InvitationPopUpDelegate {
 }
 
 extension MainVM: SortPromiseListViewDelegate {
-    func onSelected(order: SortPromiseListEnum) {
+    func onOrderSelected(order: SortPromiseListEnum) {
         guard let promises, promises.count > 1 else { return }
+        
         let sortedPromises = sortedPromises(with: promises, by: order)
+        
+        self.shouldFocusPromiseId = sortedPromises[0]?.pid
         self.promises = sortedPromises
-        currentVC?.focusPromiseById(id: sortedPromises[0]?.pid)
+        self.currentPromisesOrder = order
     }
 }

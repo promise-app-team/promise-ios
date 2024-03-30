@@ -96,8 +96,8 @@ class FormDateView: UIView {
     }()
     
     @objc func onTapPromiseDateInput() {
-        // 현재부터 10분 후로 변경
-        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 10, to: Date())
+        // 현재부터 11분 후로 변경
+        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 11, to: Date())
         
         if(createPromiseVM.date == nil) {
             let selectionDate = SelectionDate(originDate: Date())

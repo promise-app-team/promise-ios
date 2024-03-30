@@ -309,10 +309,10 @@ class FormPlaceView: UIView {
 
 extension FormPlaceView: FormTabMenuViewDelegate, PlaceSelectionDelegate {
     func onTapLeftButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromise.destinationTypePayload.STATIC)
+        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromiseDTO.destinationTypePayload.STATIC)
     }
     
     func onTapRightButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromise.destinationTypePayload.DYNAMIC)
+        createPromiseVM.onChangedPlaceType(Components.Schemas.InputCreatePromiseDTO.destinationTypePayload.DYNAMIC)
     }
 }
