@@ -150,7 +150,7 @@ class MainVM: NSObject {
         
         Task {
             
-            let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.DELETE, "/promises/\(id)/attend")
+            let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.DELETE, "/promises/\(id)/attendees")
             
             switch result {
             case .success:

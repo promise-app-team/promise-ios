@@ -72,6 +72,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.readyToParent()
         LocationService.shared.delegate = self
         self.promiseStatusContent.delegate = self
+        
+        LocationService.shared.start()
+        WebsocketService.shared.connect(withQueryItems: [URLQueryItem(name: "to", value: "broadcast")])
     }
 }
 
@@ -101,9 +104,6 @@ extension PromiseStatusView: CommonFloatingContentVCDelegate {
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
         switch fpc.state {
         case .full:
-            
-            LocationService.shared.start()
-            
             break;
         case .half:
             break;

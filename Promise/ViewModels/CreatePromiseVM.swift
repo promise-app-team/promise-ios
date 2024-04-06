@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+@_spi(Generated) import OpenAPIRuntime
 
 class CreatePromiseVM: NSObject {
     var currentVC: UIViewController?
@@ -35,24 +36,24 @@ class CreatePromiseVM: NSObject {
         }
     }
     
-    var placeTypeDidChange: ((Components.Schemas.InputCreatePromiseDTO.destinationTypePayload) -> Void)?
-    var placeType = Components.Schemas.InputCreatePromiseDTO.destinationTypePayload.STATIC {
+    var placeTypeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload) -> Void)?
+    var placeType = Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload.STATIC {
         didSet {
             placeTypeDidChange?(placeType)
             updateForm(keyPath: \.placeType, value: placeType)
         }
     }
     
-    var placeDidChange: ((Components.Schemas.InputCreatePromiseDTO.destinationPayload) -> Void)?
-    var place = Components.Schemas.InputCreatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.4749, longitude: 126.9571)) {
+    var placeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload) -> Void)?
+    var place = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.48436353, longitude: 126.92972946)) {
         didSet {
             placeDidChange?(place)
             updateForm(keyPath: \.place, value: place)
         }
     }
     
-    var shareLocationStartTypeDidChange: ((Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload) -> Void)?
-    var shareLocationStartType = Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload.DISTANCE {
+    var shareLocationStartTypeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) -> Void)?
+    var shareLocationStartType = Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.DISTANCE {
         didSet {
             shareLocationStartTypeDidChange?(shareLocationStartType)
             updateForm(keyPath: \.shareLocationStartType, value: shareLocationStartType)
@@ -155,15 +156,15 @@ class CreatePromiseVM: NSObject {
         self.themes[index].isSelected = !self.themes[index].isSelected
     }
     
-    func onChangedPlaceType(_ type: Components.Schemas.InputCreatePromiseDTO.destinationTypePayload) {
+    func onChangedPlaceType(_ type: Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload) {
         self.placeType = type
     }
     
-    func onChangedPlace(_ place: Components.Schemas.InputCreatePromiseDTO.destinationPayload) {
+    func onChangedPlace(_ place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
         self.place = place
     }
     
-    func onChangedShareLocationStartType(_ type: Components.Schemas.InputCreatePromiseDTO.locationShareStartTypePayload) {
+    func onChangedShareLocationStartType(_ type: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) {
         self.shareLocationStartType = type
     }
     
@@ -176,7 +177,7 @@ class CreatePromiseVM: NSObject {
     }
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
-        let submitForm = Components.Schemas.InputCreatePromiseDTO(
+        let submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
@@ -184,7 +185,7 @@ class CreatePromiseVM: NSObject {
             destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStart,
-            locationShareEndType: Components.Schemas.InputCreatePromiseDTO.locationShareEndTypePayload.TIME,
+            locationShareEndType: Components.Schemas.InputUpdatePromiseDTO.locationShareEndTypePayload.TIME,
             locationShareEndValue: form.shareLocationEnd
         )
         
