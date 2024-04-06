@@ -8,6 +8,7 @@
 import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
+import UIKit
 
 enum NetworkError: Error {
     case badUrl
@@ -21,6 +22,7 @@ enum NetworkError: Error {
 enum HttpMethod: String {
     case POST
     case GET
+    case DELETE
     // Ohter http methods
 }
 
@@ -108,7 +110,7 @@ final class APIService {
             switch(method) {
             case .GET:
                 break
-            case .POST:
+            case .POST, .DELETE:
                 if let body = body {
                     if let jsonData = try? JSONEncoder().encode(body) {
                         request.httpBody = jsonData
@@ -157,7 +159,7 @@ final class APIService {
             return .failure(.notAuthenticated)
         }
         
-        let result: Result<Components.Schemas.AuthToken, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
+        let result: Result<Components.Schemas.AuthTokenDTO, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
         
         switch result {
         case .success(let updatedToken):
@@ -249,7 +251,7 @@ final class APIService {
         switch(method) {
         case .GET:
             break
-        case .POST:
+        case .POST, .DELETE:
             if let body = body {
                 if let jsonData = try? JSONEncoder().encode(body) {
                     request.httpBody = jsonData
@@ -311,8 +313,8 @@ final class APIService {
             .POST,
             "/auth/refresh",
             nil,
-            Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
-        {  (result: Result<Components.Schemas.AuthToken, NetworkError>) in
+            Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
+        {  (result: Result<Components.Schemas.AuthTokenDTO, NetworkError>) in
             switch result {
             case .success(let updatedToken):
                 Task {
@@ -370,6 +372,39 @@ final class APIService {
         }
         
     }
+    
+    func fetchImage(urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NetworkError.badUrl))
+            return
+        }
+        
+        // MARK: 사용자 프로필 이미지 다운로드를 위한 dataTask
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            //응답 처리
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                completion(.failure(NetworkError.networkError(nil)))
+                return
+            }
+
+            //데이터 처리
+            guard let imageData = data, let image = UIImage(data: imageData) else {
+                completion(.failure(NetworkError.decodingError))
+                return
+            }
+
+            //프로필 이미지 다운로드 및 패치
+            completion(.success(image))
+        }
+        
+        dataTask.resume()
+    }
+
 }
 
 

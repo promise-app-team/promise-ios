@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class GuideAttendeeVC: UIViewController {
-    let promise: Components.Schemas.OutputPromiseListItem
+    let promise: Components.Schemas.PromiseDTO
     
     private lazy var directAttendPromiseButton = {
         let label = UILabel()
@@ -87,7 +87,7 @@ class GuideAttendeeVC: UIViewController {
     
     // MARK: initialize
     
-    init(promise: Components.Schemas.OutputPromiseListItem) {
+    init(promise: Components.Schemas.PromiseDTO) {
         self.promise = promise
         super.init(nibName: nil, bundle: nil)
     }

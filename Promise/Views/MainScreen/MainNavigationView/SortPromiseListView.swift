@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol SortPromiseListViewDelegate: AnyObject {
-    func onSelected(order: SortPromiseListEnum)
+    func onOrderSelected(order: SortPromiseListEnum)
 }
 
 enum SortPromiseListEnum: Int {
@@ -41,7 +41,7 @@ class SortPromiseListView: UIView {
     private lazy var selectedSortOrder = SortPromiseListEnum.dateTimeQuickOrder {
         didSet {
             guard oldValue != selectedSortOrder else { return }
-            delegate?.onSelected(order: selectedSortOrder)
+            delegate?.onOrderSelected(order: selectedSortOrder)
         }
     }
     
