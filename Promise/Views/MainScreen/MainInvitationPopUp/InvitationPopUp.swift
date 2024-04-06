@@ -419,7 +419,7 @@ class InvitationPopUp {
             Task { [weak self] in
                 guard let targetPromise = self?.invitedPromise else { return }
                 
-                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attend")
+                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attendees")
                 
                 switch result {
                 case .success:
@@ -492,7 +492,7 @@ extension InvitationPopUp {
 extension InvitationPopUp: APIServiceDelegate {
     func onLoading(path: String?, isLoading: Bool) {
         switch(path) {
-        case "/promises/\(invitedPromise.pid)/attend":
+        case "/promises/\(invitedPromise.pid)/attendees":
             if(isLoading) {
                 self.delegate?.onLoadingAttendPromise()
             }

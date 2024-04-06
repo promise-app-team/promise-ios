@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+@_spi(Generated) import OpenAPIRuntime
 
 class PromiseStatusWithUserView: UIView {
     // MARK: properties
@@ -263,8 +264,11 @@ class PromiseStatusWithUserView: UIView {
                 
                 DispatchQueue.main.async { [weak self] in
                     
-                    if let city = location.city, let district = location.district, let address = location.address {
-                        let departureLoaction = city + " " + district + " " + address
+                    if !location.city.isEmpty, 
+                       !location.district.isEmpty,
+                       let address = location.address {
+                        
+                        let departureLoaction = location.city + " " + location.district + " " + address
 
                         self?.departureLocation.text = departureLoaction
                         self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -342,17 +346,20 @@ extension PromiseStatusWithUserView {
         
         mainVM.getDepartureLoaction(id: id) { location in
             
-            print(location)
-            
             DispatchQueue.main.async { [weak self] in
                 
-                if let city = location.city, let district = location.district, let address = location.address {
-                    let departureLoaction = city + " " + district + " " + address
+                if !location.city.isEmpty,
+                   !location.district.isEmpty,
+                   let address = location.address {
+                    
+                    let departureLoaction = location.city + " " + location.district + " " + address
+                    
                     self?.departureLocation.text = departureLoaction
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                     
                     self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
                 }
+                
             }
             
         } onFailure: { [weak self] error in
@@ -374,7 +381,7 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
     // TODO: 장소 설정 완료후 callback으로 변경 (장소 설정 플로우 화면이 완성되면)
     func onDidHide() {
         // TODO: 임시
-        let location = Components.Schemas.InputLocationDTO(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.469726, longitude: 126.9419844)
+        let location = Components.Schemas.InputLocationDTO(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.48436353, longitude: 126.92972946)
         
         let address = location.city + " " + location.district + " " + (location.address ?? "")
         

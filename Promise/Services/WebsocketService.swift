@@ -10,10 +10,17 @@ import Starscream
 
 typealias JsonData = [String: Any]
 
+protocol WebsocketServiceDelegate: AnyObject {
+    func onReceivedMessage(message: WebSocketMessage)
+}
+
 final class WebsocketService {
+    
     // MARK: - Static property
     
     static let shared = WebsocketService()
+    
+    weak var delegate: WebsocketServiceDelegate?
     
     // MARK: - Public property
     
@@ -40,6 +47,7 @@ final class WebsocketService {
             print("WebSocketService: URLRequest 생성 실패")
             return
         }
+        
         socket = WebSocket(request: request)
         socket.delegate = self
         socket.connect()
@@ -49,8 +57,9 @@ final class WebsocketService {
         socket?.disconnect()
     }
     
-    func send(message: String) {
+    func send(message: [String: String]) {
         let jsonData = generateJSONData(event: "ping", clientMessage: message)
+        
         guard let jsonString = jsonString(from: jsonData)
         else {
             print("WebSocketSerice: jsonString 생성 실패")
@@ -82,8 +91,9 @@ final class WebsocketService {
     
     private func generateJSONData(
         event: String,
-        clientMessage: String
+        clientMessage: [String: String]
     ) -> JsonData {
+        
         let jsonData: [String: Any] = [
             "event": event,
             "data": ["client": clientMessage]
@@ -99,6 +109,18 @@ final class WebsocketService {
         } catch {
             print("WebSocketService: JSON 변환에 실패했습니다 \(error)")
             return nil
+        }
+    }
+    
+    private func parseWebSocketMessage(jsonString: String) {
+        let jsonData = Data(jsonString.utf8)
+        let decoder = JSONDecoder()
+
+        do {
+            let message = try decoder.decode(WebSocketMessage.self, from: jsonData)
+            delegate?.onReceivedMessage(message: message)
+        } catch {
+            print("Error decoding JSON: \(error)")
         }
     }
 }
@@ -119,11 +141,13 @@ extension WebsocketService: WebSocketDelegate {
             print("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
             print("Received text: \(string)")
+            parseWebSocketMessage(jsonString: string)
         case .binary(let data):
             print("Received data: \(data.count)")
         case .ping(_), .pong(_), .viabilityChanged(_), .reconnectSuggested(_):
             break
         case .cancelled:
+            print("Cancelled")
             isConnected = false
         case .error(let error):
             isConnected = false
