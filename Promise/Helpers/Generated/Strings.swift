@@ -62,6 +62,8 @@ internal enum L10n {
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
     /// 거절
     internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
+    /// 저장
+    internal static let save = L10n.tr("Localizable", "Common.save", fallback: "저장")
     internal enum MoreMenu {
       /// 약속 위임
       internal static let delegatePromise = L10n.tr("Localizable", "Common.MoreMenu.delegatePromise", fallback: "약속 위임")

@@ -90,17 +90,40 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         let maxLength = 10
-        if updatedText.count <= maxLength {
-            let attributedString = NSMutableAttributedString(string: "\(updatedText.count)/\(maxLength)")
-            attributedString.addAttribute(.foregroundColor, value: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1), 
-                                          range: NSRange(location: 0, length: "\(updatedText.count)".count))
-            countLabel.attributedText = attributedString
-            return true
+        
+        let attributedString = NSMutableAttributedString(string: "\(updatedText.count)/\(maxLength)")
+        attributedString.addAttribute(.foregroundColor, value: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1),
+                                      range: NSRange(location: 0, length: "\(updatedText.count)".count))
+        countLabel.attributedText = attributedString
+        
+        // Update saveButton state based on text length
+        if updatedText.isEmpty {
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
+            saveButton.layer.borderColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1).cgColor
         } else {
-            return false
+            saveButton.isEnabled = true
+            saveButton.backgroundColor = UIColor(red: 0.022, green: 0.75, blue: 0.619, alpha: 1)
+            saveButton.layer.borderColor = UIColor(red: 0.022, green: 0.75, blue: 0.619, alpha: 1).cgColor
         }
+        
+        return updatedText.count <= maxLength
     }
 
+    lazy var cancelButton: Button = {
+        let button = Button()
+        button.initialize(title: L10n.Common.cancel, style: .secondary, iconTitle: "", disabled: false)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var saveButton: Button = {
+        let button = Button()
+        button.initialize(title: L10n.Common.save, style: .primary, iconTitle: "", disabled: false)
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAccountVC()
@@ -114,8 +137,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     func render() {
-        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel].forEach { view.addSubview($0) }
-        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { view.addSubview($0) }
+        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
@@ -138,7 +161,7 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
             profileEditlabel.widthAnchor.constraint(equalToConstant: 297),
             profileEditlabel.heightAnchor.constraint(equalToConstant: 30),
             userImage.topAnchor.constraint(equalTo: editView.topAnchor, constant: 70),
-            userImage.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 134),
+            userImage.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 134.25),
             userImage.widthAnchor.constraint(equalToConstant: 76),
             userImage.heightAnchor.constraint(equalToConstant: 76),
             cameraIcon.topAnchor.constraint(equalTo: editView.topAnchor, constant: 114),
@@ -156,7 +179,15 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
             countLabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 236),
             countLabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 281),
             countLabel.widthAnchor.constraint(equalToConstant: 40),
-            countLabel.heightAnchor.constraint(equalToConstant: 18)
+            countLabel.heightAnchor.constraint(equalToConstant: 18),
+            cancelButton.topAnchor.constraint(equalTo: editView.topAnchor, constant: 270),
+            cancelButton.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
+            cancelButton.widthAnchor.constraint(equalToConstant: 140.5),
+            cancelButton.heightAnchor.constraint(equalToConstant: 40),
+            saveButton.topAnchor.constraint(equalTo: editView.topAnchor, constant: 270),
+            saveButton.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 180.5),
+            saveButton.widthAnchor.constraint(equalToConstant: 140.5),
+            saveButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -168,4 +199,12 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    @objc func cancelButtonTapped() {
+        view.endEditing(true)
+    }
+    
+    @objc func saveButtonTapped() {
+    
+    }
+
 }

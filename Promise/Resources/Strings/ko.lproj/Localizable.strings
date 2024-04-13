@@ -16,6 +16,7 @@
 "Common.minute" = "분";
 "Common.confirm" = "확인";
 "Common.cancel" = "취소";
+"Common.save" = "저장";
 "Common.attend" = "참여";
 "Common.refuse" = "거절";
 "Common.place" = "장소";
