@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditProfileVC: UIViewController {
+class EditProfileVC: UIViewController, UITextFieldDelegate {
     
     let editView: UIView = {
         let view = UIView()
@@ -47,7 +47,7 @@ class EditProfileVC: UIViewController {
         return imageView
     }()
 
-    lazy var cameraIcon: UIImageView = {
+    let cameraIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
@@ -55,12 +55,58 @@ class EditProfileVC: UIViewController {
         imageView.image = UIImage(named: "Group 26086357")
         return imageView
     }()
+    
+    let nickNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = L10n.Account.EditProfile.nickname
+        label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+        label.font = UIFont.pretendard(style: .C_B)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let nicknameTextField: UITextField = {
+        let textField = UITextField()
+        textField.text = UserService.shared.getUser()?.nickname
+        textField.placeholder = L10n.Account.EditProfile.inputNickname
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+        textField.leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 16.0, height: 0.0))
+        textField.leftViewMode = .always
+        return textField
+    }()
+    
+    let countLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        label.font = UIFont.pretendard(style: .C_R)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        let maxLength = 10
+        if updatedText.count <= maxLength {
+            let attributedString = NSMutableAttributedString(string: "\(updatedText.count)/\(maxLength)")
+            attributedString.addAttribute(.foregroundColor, value: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1), 
+                                          range: NSRange(location: 0, length: "\(updatedText.count)".count))
+            countLabel.attributedText = attributedString
+            return true
+        } else {
+            return false
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAccountVC()
         render()
         clickBackgroud()
+        nicknameTextField.delegate = self
     }
 
     func configureAccountVC() {
@@ -68,8 +114,8 @@ class EditProfileVC: UIViewController {
     }
     
     func render() {
-        [editView, profileEditlabel, userImage, cameraIcon].forEach { view.addSubview($0) }
-        [editView, profileEditlabel, userImage, cameraIcon].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel].forEach { view.addSubview($0) }
+        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
@@ -98,7 +144,19 @@ class EditProfileVC: UIViewController {
             cameraIcon.topAnchor.constraint(equalTo: editView.topAnchor, constant: 114),
             cameraIcon.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 178),
             cameraIcon.widthAnchor.constraint(equalToConstant: 32),
-            cameraIcon.heightAnchor.constraint(equalToConstant: 32)
+            cameraIcon.heightAnchor.constraint(equalToConstant: 32),
+            nickNameLabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 162),
+            nickNameLabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
+            nickNameLabel.widthAnchor.constraint(equalToConstant: 32),
+            nickNameLabel.heightAnchor.constraint(equalToConstant: 18),
+            nicknameTextField.topAnchor.constraint(equalTo: editView.topAnchor, constant: 188),
+            nicknameTextField.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
+            nicknameTextField.widthAnchor.constraint(equalToConstant: 297),
+            nicknameTextField.heightAnchor.constraint(equalToConstant: 40),
+            countLabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 236),
+            countLabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 281),
+            countLabel.widthAnchor.constraint(equalToConstant: 40),
+            countLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
     
@@ -107,7 +165,7 @@ class EditProfileVC: UIViewController {
     }
 
     @objc func editViewTapped() {
-
+        view.endEditing(true)
     }
-
+    
 }

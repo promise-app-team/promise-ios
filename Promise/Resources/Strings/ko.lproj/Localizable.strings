@@ -102,6 +102,7 @@
 "Account.appVer" = "앱 버전";
 "Account.EditProfile.editProfile" = "프로필 수정하기";
 "Account.EditProfile.nickname" = "닉네임";
+"Account.EditProfile.inputNickname" = "닉네임을 입력해 주세요.";
 
 // MARK: GuideAttendeeScreen
 "GuideAttendee.directAttend" = "바로 참여하기";

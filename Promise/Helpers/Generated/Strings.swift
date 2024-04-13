@@ -28,6 +28,8 @@ internal enum L10n {
     internal enum EditProfile {
       /// 프로필 수정하기
       internal static let editProfile = L10n.tr("Localizable", "Account.EditProfile.editProfile", fallback: "프로필 수정하기")
+      /// 닉네임을 입력해 주세요.
+      internal static let inputNickname = L10n.tr("Localizable", "Account.EditProfile.inputNickname", fallback: "닉네임을 입력해 주세요.")
       /// 닉네임
       internal static let nickname = L10n.tr("Localizable", "Account.EditProfile.nickname", fallback: "닉네임")
     }
