@@ -200,7 +200,7 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func cancelButtonTapped() {
-        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func saveButtonTapped() {
