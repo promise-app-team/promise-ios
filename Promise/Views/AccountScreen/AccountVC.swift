@@ -84,10 +84,10 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         return label
     }()
     
-    //프로필 수정 버튼
+    //프로필 설정 버튼
     lazy var button: Button = {
         let button = Button()
-        button.initialize(title: L10n.Account.editProfile, style: .primary, iconTitle: "", disabled: false)
+        button.initialize(title: L10n.Account.setProfile, style: .primary, iconTitle: "", disabled: false)
         button.addTarget(self, action: #selector(profileEditButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -219,7 +219,6 @@ class AccountVC: UIViewController, HeaderViewDelegate {
             appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
         ])
     }
-    
 }
 
 extension AccountVC: UITableViewDataSource, UITableViewDelegate {

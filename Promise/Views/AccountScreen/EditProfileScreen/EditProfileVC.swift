@@ -15,6 +15,15 @@ class EditProfileVC: UIViewController {
         view.layer.cornerRadius = 20
         return view
     }()
+    
+    let profileEditlabel: UILabel = {
+        let label = UILabel()
+        label.text = L10n.Account.EditProfile.editProfile
+        label.textColor = .black
+        label.font = UIFont.pretendard(style: .H2_B)
+        label.textAlignment = .center
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +37,17 @@ class EditProfileVC: UIViewController {
     }
     
     func render() {
-        [editView].forEach { view.addSubview($0) }
-        [editView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView, profileEditlabel].forEach { view.addSubview($0) }
+        [editView, profileEditlabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
     func clickBackgroud() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
-        view.addGestureRecognizer(tapGesture)
+        let backgroundGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
+        view.addGestureRecognizer(backgroundGesture)
+        
+        let editViewGesture = UITapGestureRecognizer(target: self, action: #selector(editViewTapped))
+           editView.addGestureRecognizer(editViewGesture)
     }
 
     func setupAutoLayout() {
@@ -43,12 +55,20 @@ class EditProfileVC: UIViewController {
             editView.topAnchor.constraint(equalTo: view.topAnchor, constant: 259),
             editView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             editView.widthAnchor.constraint(equalToConstant: 345),
-            editView.heightAnchor.constraint(equalToConstant: 334)
+            editView.heightAnchor.constraint(equalToConstant: 334),
+            profileEditlabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
+            profileEditlabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 24),
+            profileEditlabel.widthAnchor.constraint(equalToConstant: 297),
+            profileEditlabel.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
     @objc func backgroundTapped() {
         dismiss(animated: true, completion: nil)
+    }
+
+    @objc func editViewTapped() {
+
     }
 
 }

@@ -94,12 +94,14 @@
 "CompletedCreatePromise.shareButtonText" = "약속 공유";
 
 "Account.headerTitle" = "설정";
-"Account.editProfile" = "프로필 설정하기";
+"Account.setProfile" = "프로필 설정하기";
 "Account.lastPromise" = "지난 약속";
 "Account.faq" = "자주 묻는 질문";
 "Account.setting" = "환경설정";
 "Account.logout" = "로그아웃";
 "Account.appVer" = "앱 버전";
+"Account.EditProfile.editProfile" = "프로필 수정하기";
+"Account.EditProfile.nickname" = "닉네임";
 
 // MARK: GuideAttendeeScreen
 "GuideAttendee.directAttend" = "바로 참여하기";

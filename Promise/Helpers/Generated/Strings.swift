@@ -13,8 +13,6 @@ internal enum L10n {
   internal enum Account {
     /// 앱 버전
     internal static let appVer = L10n.tr("Localizable", "Account.appVer", fallback: "앱 버전")
-    /// 프로필 설정하기
-    internal static let editProfile = L10n.tr("Localizable", "Account.editProfile", fallback: "프로필 설정하기")
     /// 자주 묻는 질문
     internal static let faq = L10n.tr("Localizable", "Account.faq", fallback: "자주 묻는 질문")
     /// 설정
@@ -23,8 +21,16 @@ internal enum L10n {
     internal static let lastPromise = L10n.tr("Localizable", "Account.lastPromise", fallback: "지난 약속")
     /// 로그아웃
     internal static let logout = L10n.tr("Localizable", "Account.logout", fallback: "로그아웃")
+    /// 프로필 설정하기
+    internal static let setProfile = L10n.tr("Localizable", "Account.setProfile", fallback: "프로필 설정하기")
     /// 환경설정
     internal static let setting = L10n.tr("Localizable", "Account.setting", fallback: "환경설정")
+    internal enum EditProfile {
+      /// 프로필 수정하기
+      internal static let editProfile = L10n.tr("Localizable", "Account.EditProfile.editProfile", fallback: "프로필 수정하기")
+      /// 닉네임
+      internal static let nickname = L10n.tr("Localizable", "Account.EditProfile.nickname", fallback: "닉네임")
+    }
   }
   internal enum Common {
     /// 참여
