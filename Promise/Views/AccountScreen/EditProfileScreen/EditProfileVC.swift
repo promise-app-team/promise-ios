@@ -9,36 +9,46 @@ import UIKit
 
 class EditProfileVC: UIViewController {
     
-    //헤더
-     lazy var headerView: HeaderView = {
-        let navigationController = self.navigationController
-        let title = L10n.Account.editProfile
-        let headerView = HeaderView(navigationController: navigationController, title: title)
-        return headerView
+    let editView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        return view
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAccountVC()
         render()
+        clickBackgroud()
     }
-           
+
     func configureAccountVC() {
-        view.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
     func render() {
-        [headerView].forEach { view.addSubview($0) }
-        [headerView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView].forEach { view.addSubview($0) }
+        [editView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
+    func clickBackgroud() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
+        view.addGestureRecognizer(tapGesture)
+    }
+
     func setupAutoLayout() {
         NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: 56),
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+            editView.topAnchor.constraint(equalTo: view.topAnchor, constant: 259),
+            editView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            editView.widthAnchor.constraint(equalToConstant: 345),
+            editView.heightAnchor.constraint(equalToConstant: 334)
+        ])
+    }
+    
+    @objc func backgroundTapped() {
+        dismiss(animated: true, completion: nil)
     }
 
 }

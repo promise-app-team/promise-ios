@@ -165,11 +165,11 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     }
     
     @objc func profileEditButtonTapped() {
-        if let navigationController = navigationController {
-            navigationController.pushViewController(EditProfileVC(), animated: true)
-        }
+        let editProfileVC = EditProfileVC()
+        editProfileVC.modalPresentationStyle = .overFullScreen
+        present(editProfileVC, animated: true, completion: nil)
     }
-    
+
     func configureAccountVC() {
         view.backgroundColor = .white
     }
