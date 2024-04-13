@@ -24,6 +24,37 @@ class EditProfileVC: UIViewController {
         label.textAlignment = .center
         return label
     }()
+    
+    lazy var userImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
+        
+        if let user = UserService.shared.getUser() {
+            if let profileUrl = user.profileUrl {
+                print(profileUrl)
+                DispatchQueue.global().async {
+                    if let url = URL(string: profileUrl), let data = try? Data(contentsOf: url) {
+                        DispatchQueue.main.async {
+                            self.userImage.image = UIImage(data: data)
+                        }
+                    }
+                }
+            }
+        }
+        return imageView
+    }()
+
+    lazy var cameraIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "Group 26086357")
+        return imageView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +68,8 @@ class EditProfileVC: UIViewController {
     }
     
     func render() {
-        [editView, profileEditlabel].forEach { view.addSubview($0) }
-        [editView, profileEditlabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView, profileEditlabel, userImage, cameraIcon].forEach { view.addSubview($0) }
+        [editView, profileEditlabel, userImage, cameraIcon].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
@@ -59,7 +90,15 @@ class EditProfileVC: UIViewController {
             profileEditlabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
             profileEditlabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 24),
             profileEditlabel.widthAnchor.constraint(equalToConstant: 297),
-            profileEditlabel.heightAnchor.constraint(equalToConstant: 30)
+            profileEditlabel.heightAnchor.constraint(equalToConstant: 30),
+            userImage.topAnchor.constraint(equalTo: editView.topAnchor, constant: 70),
+            userImage.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 134),
+            userImage.widthAnchor.constraint(equalToConstant: 76),
+            userImage.heightAnchor.constraint(equalToConstant: 76),
+            cameraIcon.topAnchor.constraint(equalTo: editView.topAnchor, constant: 114),
+            cameraIcon.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 178),
+            cameraIcon.widthAnchor.constraint(equalToConstant: 32),
+            cameraIcon.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
     

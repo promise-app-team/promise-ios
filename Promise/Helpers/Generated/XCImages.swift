@@ -47,6 +47,7 @@ internal enum Asset {
   internal static let ellipse4 = ImageAsset(name: "Ellipse 4")
   internal static let focusMyLocation = ImageAsset(name: "FocusMyLocation")
   internal static let focusPromiseDestination = ImageAsset(name: "FocusPromiseDestination")
+  internal static let group26086357 = ImageAsset(name: "Group 26086357")
   internal static let host = ImageAsset(name: "Host")
   internal static let more = ImageAsset(name: "More")
   internal static let navigateNext = ImageAsset(name: "Navigate next")
