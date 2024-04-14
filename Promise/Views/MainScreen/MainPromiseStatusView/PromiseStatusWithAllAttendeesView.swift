@@ -68,7 +68,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
     private var promiseHost: Components.Schemas.HostDTO? = nil
     private var shareUrl: URL? = nil
     private let attendeesViewHeight = 32.0
-    private var attendees: [Components.Schemas.AttendeeDTO] = []
+    private var attendees: [Components.Schemas.AttendeeDTO] = [] {
+        didSet {
+            setAttendeesMarker(attendees: attendees)
+        }
+    }
     
     private var isOwner = false {
         didSet {
@@ -192,53 +196,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return marker
     }()
     
-    private lazy var attendeeLocationMarkers: [String: NMFMarker] = {
-        return self.attendees.reduce([:]) { partialResult, attendee in
-            
-            let marker = NMFMarker()
-            
-            guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
-                return partialResult
-            }
-            
-            
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            
-            imageView.load(url: imageUrl) { [weak marker] profileImage in
-                
-                guard
-                    let resizedProfileImage = profileImage?.resize(
-                        newSize: CGSize(width: 44, height: 44)
-                    ),
-                    
-                    let roundProfileImage = resizedProfileImage.withRoundedCorners(
-                        radius: adjustedValue(22, .width),
-                        borderWidth: adjustedValue(8, .width),
-                        borderColor: .white
-                        
-                    ) else {
-                    
-                    // TODO: 디폴트 이미지 세팅
-                    return
-                }
-                
-                
-                marker?.width = adjustedValue(48, .width)
-                marker?.height = adjustedValue(48, .height)
-                marker?.iconImage = NMFOverlayImage(image: roundProfileImage)
-            }
-            
-            var newResult = partialResult
-            let id = String(Int(attendee.id))
-            newResult[id] = marker
-            
-            return newResult
-        }
-        
-    }()
+    private lazy var attendeeLocationMarkers: [String: NMFMarker] = [:]
     
     private var userLocation: CLLocation? {
         didSet {
@@ -798,6 +756,54 @@ class PromiseStatusWithAllAttendeesView: UIView {
         )
         
         userLocationMarker.mapView = map
+    }
+    
+    private func setAttendeesMarker(attendees: [Components.Schemas.AttendeeDTO]) {
+        attendeeLocationMarkers = attendees.reduce([:]) { partialResult, attendee in
+            
+            
+            let marker = NMFMarker()
+            
+            guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
+                return partialResult
+            }
+            
+            
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            
+            imageView.load(url: imageUrl) { [weak marker] profileImage in
+                
+                guard
+                    let resizedProfileImage = profileImage?.resize(
+                        newSize: CGSize(width: 44, height: 44)
+                    ),
+                    
+                    let roundProfileImage = resizedProfileImage.withRoundedCorners(
+                        radius: adjustedValue(22, .width),
+                        borderWidth: adjustedValue(8, .width),
+                        borderColor: .white
+                        
+                    ) else {
+                    
+                    // TODO: 디폴트 이미지 세팅
+                    return
+                }
+                
+                
+                marker?.width = adjustedValue(48, .width)
+                marker?.height = adjustedValue(48, .height)
+                marker?.iconImage = NMFOverlayImage(image: roundProfileImage)
+            }
+            
+            var newResult = partialResult
+            let id = String(Int(attendee.id))
+            newResult[id] = marker
+            
+            return newResult
+        }
     }
     
     private func setUserLocationOverlayOnMap() {
