@@ -104,6 +104,8 @@
 "Account.EditProfile.editProfile" = "프로필 수정하기";
 "Account.EditProfile.nickname" = "닉네임";
 "Account.EditProfile.inputNickname" = "닉네임을 입력해 주세요.";
+"Account.EditProfile.SelectUserImage.album" = "앨범에서 사진 선택";
+"Account.EditProfile.SelectUserImage.default" = "기본 이미지 선택";
 
 // MARK: GuideAttendeeScreen
 "GuideAttendee.directAttend" = "바로 참여하기";

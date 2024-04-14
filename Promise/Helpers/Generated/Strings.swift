@@ -32,6 +32,12 @@ internal enum L10n {
       internal static let inputNickname = L10n.tr("Localizable", "Account.EditProfile.inputNickname", fallback: "닉네임을 입력해 주세요.")
       /// 닉네임
       internal static let nickname = L10n.tr("Localizable", "Account.EditProfile.nickname", fallback: "닉네임")
+      internal enum SelectUserImage {
+        /// 앨범에서 사진 선택
+        internal static let album = L10n.tr("Localizable", "Account.EditProfile.SelectUserImage.album", fallback: "앨범에서 사진 선택")
+        /// 기본 이미지 선택
+        internal static let `default` = L10n.tr("Localizable", "Account.EditProfile.SelectUserImage.default", fallback: "기본 이미지 선택")
+      }
     }
   }
   internal enum Common {
