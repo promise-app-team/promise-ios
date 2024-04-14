@@ -25,12 +25,13 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    lazy var userImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
-        imageView.clipsToBounds = true
+    lazy var userImageButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 76, height: 76)
+        button.contentMode = .scaleAspectFit
+        button.layer.cornerRadius = button.frame.size.width / 2
+        button.clipsToBounds = true
+        button.adjustsImageWhenHighlighted = false
         
         if let user = UserService.shared.getUser() {
             if let profileUrl = user.profileUrl {
@@ -38,24 +39,29 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
                 DispatchQueue.global().async {
                     if let url = URL(string: profileUrl), let data = try? Data(contentsOf: url) {
                         DispatchQueue.main.async {
-                            self.userImage.image = UIImage(data: data)
+                            button.setImage(UIImage(data: data), for: .normal)
                         }
                     }
                 }
             }
         }
-        return imageView
-    }()
-
-    let cameraIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "Group 26086357")
-        return imageView
+        
+        button.addTarget(self, action: #selector(userImageButtonTapped), for: .touchUpInside)
+        
+        return button
     }()
     
+    lazy var cameraButton: UIButton = {
+        let button = UIButton()
+        button.contentMode = .scaleAspectFit
+        button.layer.cornerRadius = button.frame.size.width / 2
+        button.clipsToBounds = true
+        button.setImage(UIImage(named: "Group 26086357"), for: .normal)
+        button.adjustsImageWhenHighlighted = false
+        button.addTarget(self, action: #selector(userImageButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     let nickNameLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Account.EditProfile.nickname
@@ -137,8 +143,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     func render() {
-        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { view.addSubview($0) }
-        [editView, profileEditlabel, userImage, cameraIcon, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [editView, profileEditlabel, userImageButton, cameraButton, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { view.addSubview($0) }
+        [editView, profileEditlabel, userImageButton, cameraButton, nickNameLabel, nicknameTextField, countLabel, cancelButton, saveButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         setupAutoLayout()
     }
     
@@ -160,14 +166,14 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
             profileEditlabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 24),
             profileEditlabel.widthAnchor.constraint(equalToConstant: 297),
             profileEditlabel.heightAnchor.constraint(equalToConstant: 30),
-            userImage.topAnchor.constraint(equalTo: editView.topAnchor, constant: 70),
-            userImage.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 134.25),
-            userImage.widthAnchor.constraint(equalToConstant: 76),
-            userImage.heightAnchor.constraint(equalToConstant: 76),
-            cameraIcon.topAnchor.constraint(equalTo: editView.topAnchor, constant: 114),
-            cameraIcon.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 178),
-            cameraIcon.widthAnchor.constraint(equalToConstant: 32),
-            cameraIcon.heightAnchor.constraint(equalToConstant: 32),
+            userImageButton.topAnchor.constraint(equalTo: editView.topAnchor, constant: 70),
+            userImageButton.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 134.25),
+            userImageButton.widthAnchor.constraint(equalToConstant: 76),
+            userImageButton.heightAnchor.constraint(equalToConstant: 76),
+            cameraButton.topAnchor.constraint(equalTo: editView.topAnchor, constant: 114),
+            cameraButton.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 178),
+            cameraButton.widthAnchor.constraint(equalToConstant: 32),
+            cameraButton.heightAnchor.constraint(equalToConstant: 32),
             nickNameLabel.topAnchor.constraint(equalTo: editView.topAnchor, constant: 162),
             nickNameLabel.leadingAnchor.constraint(equalTo: editView.leadingAnchor, constant: 24),
             nickNameLabel.widthAnchor.constraint(equalToConstant: 32),
@@ -206,5 +212,12 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
     @objc func saveButtonTapped() {
     
     }
-
+    
+    @objc func userImageButtonTapped() {
+        print("userImageButtonTapped()")
+        let selectUserImageVC = SelectUserImageVC()
+        selectUserImageVC.modalPresentationStyle = .overFullScreen
+        present(selectUserImageVC, animated: true, completion: nil)
+    }
+    
 }
