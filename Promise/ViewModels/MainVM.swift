@@ -22,16 +22,17 @@ class MainVM: NSObject {
     var shouldFocusPromiseId: String?
     var shouldLazyFocusPromiseId: String?
     
-    var reloadTargetIndexPath: IndexPath? = nil
-    var promisesDidChange: ((
-        [Components.Schemas.PromiseDTO?]?,
-        IndexPath?
-    ) -> Void)?
-    
+    var reloadTarget: (Components.Schemas.PromiseDTO, IndexPath)? = nil
+    var promiseDidChange: (((Components.Schemas.PromiseDTO, IndexPath)) -> Void)?
+    var promisesDidChange: (([Components.Schemas.PromiseDTO?]?) -> Void)?
     var promises: [Components.Schemas.PromiseDTO?]? {
         didSet {
-            promisesDidChange?(promises, reloadTargetIndexPath)
-            reloadTargetIndexPath = nil
+            if let reloadTarget {
+                promiseDidChange?(reloadTarget)
+                self.reloadTarget = nil
+            } else {
+                promisesDidChange?(promises)
+            }
         }
     }
     
@@ -101,9 +102,9 @@ class MainVM: NSObject {
             if let index = self.promises?.firstIndex(where: { $0?.pid == promise.pid }) 
             {
                 
-                self.reloadTargetIndexPath = IndexPath(
-                    item: index,
-                    section: 0
+                self.reloadTarget = (
+                    promise,
+                    IndexPath(item: index, section: 0)
                 )
                 
                 self.promises?[index] = promise

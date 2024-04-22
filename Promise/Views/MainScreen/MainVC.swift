@@ -192,8 +192,6 @@ final class MainVC: UIViewController {
                 animated: true
             )
             
-            
-            
         }
     }
     
@@ -240,10 +238,40 @@ final class MainVC: UIViewController {
         }
     }
     
-    private func assignPromisesDidChange() {
-        mainVM.promisesDidChange = { [weak self] (promiseList, reloadTargetIndexPath) in
+    // MARK: 단일 promise cell 변경 핸들러
+    private func assignPromiseDidChange() {
+        mainVM.promiseDidChange = { reloadTarget in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                
+                let (promise, indexPath) = reloadTarget
+                
+                // MARK: cell 업데이트
+                UIView.performWithoutAnimation {
+                    self?.promiseListView.reloadItems(at: [indexPath])
+                }
+                
+                // MARK: 현재 포커스된 cell이 indexPath와 같다면 업데이트
+                if let currentFocusedPromise = self?.mainVM.currentFocusedPromise,
+                   currentFocusedPromise.pid == promise.pid,
+                   let currentFocusedPromiseIndexPath = self?.mainVM.currentFocusedPromiseIndexPath,
+                   currentFocusedPromiseIndexPath == indexPath
+                {
+                    self?.promiseStatusView?
+                        .promiseStatusWithAllAttendeesView
+                        .updatePromiseStatusWithAllAttendees(with: promise)
+                }
+                
+                
+            }
+        }
+    }
+    
+    // MARK: 전체 promise list 변경 핸들러
+    private func assignPromisesDidChange() {
+        mainVM.promisesDidChange = { promiseList in
+            
+            DispatchQueue.main.async { [weak self] in
                 guard let promiseList else { return }
                 
                 // MARK: 네트워크 요청중(로딩)
@@ -253,16 +281,7 @@ final class MainVC: UIViewController {
                 
                 self?.renderAfterGettingPromises(isEmptyPromises: promiseList.isEmpty)
                 
-                if let indexPath = reloadTargetIndexPath {
-                    
-                    UIView.performWithoutAnimation {
-                        self?.promiseListView.reloadItems(at: [indexPath])
-                    }
-                    
-                } else {
-                    self?.promiseListView.reloadData()
-                }
-                
+                self?.promiseListView.reloadData()
                 self?.focusPromiseById()
                 
             }
@@ -299,6 +318,7 @@ final class MainVC: UIViewController {
         mainVM.shouldFocusPromiseId = shouldFocusPromiseId
         
         Task {
+            assignPromiseDidChange()
             assignPromisesDidChange()
             await mainVM.getPromiseList()
         }

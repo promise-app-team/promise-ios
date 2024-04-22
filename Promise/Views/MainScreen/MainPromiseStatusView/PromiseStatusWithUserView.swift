@@ -233,14 +233,9 @@ class PromiseStatusWithUserView: UIView {
     
     // MARK: handler
     
-    private func updateUserDeparture(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
+    private func updateUserDeparture(with promise: Components.Schemas.PromiseDTO) {
         
-        mainVM.getDepartureLoaction(id: promise.pid) { location in
-                
-            // MARK: 약속이 중간장소인 경우, cell에 destination 업데이트
-            if promise.destinationType == .DYNAMIC {
-                cell.configureCell(with: promise)
-            }
+        mainVM.getDepartureLoaction(id: promise.pid) { [weak self] location in
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -259,11 +254,6 @@ class PromiseStatusWithUserView: UIView {
             }
             
         } onFailure: { [weak self] error in
-            
-            // MARK: 약속이 중간장소인 경우, cell에 destination 업데이트
-            if promise.destinationType == .DYNAMIC {
-                cell.configureCell(with: promise)
-            }
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -300,10 +290,8 @@ class PromiseStatusWithUserView: UIView {
     private func configure() {
         backgroundColor = .white
         
-        if let promise = mainVM.currentFocusedPromise, 
-            let cell = mainVM.currentFocusedCell
-        {
-            updateUserDeparture(with: promise, cell: cell)
+        if let promise = mainVM.currentFocusedPromise {
+            updateUserDeparture(with: promise)
         }
     }
     
@@ -354,14 +342,15 @@ extension PromiseStatusWithUserView {
         isEnabledLocationServiceOnDevice = isEnabled
     }
     
-    public func updatePromiseStatusWithUser(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
-        updateUserDeparture(with: promise, cell: cell)
+    public func updatePromiseStatusWithUser(with promise: Components.Schemas.PromiseDTO) {
+        updateUserDeparture(with: promise)
     }
 }
 
 extension PromiseStatusWithUserView: PlaceSelectionDelegate {
     // TODO: 장소 설정 완료후 callback으로 변경 (장소 설정 플로우 화면이 완성되면)
     func onDidHide() {
+        
         // TODO: 임시 ===========================================
         let location = Components.Schemas.InputLocationDTO(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.48436353, longitude: 126.92972946)
         

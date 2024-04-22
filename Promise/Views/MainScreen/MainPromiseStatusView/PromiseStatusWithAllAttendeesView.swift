@@ -852,53 +852,104 @@ class PromiseStatusWithAllAttendeesView: UIView {
     // MARK: self 초기화 시 실행됨
     private func setPromiseStatusForMap(with promise: Components.Schemas.PromiseDTO) {
         
-        setDestinationMarkerOnMap(destination: promise.destination?.value1)
+        DispatchQueue.main.async { [weak self] in
+            self?.setDestinationMarkerOnMap(destination: promise.destination?.value1)
+            
+            // MARK: 내장 location overlay 세팅
+            // self?.setUserLocationOverlayOnMap()
+        }
         
-        // MARK: 내장 location overlay 세팅
-        // setUserLocationOverlayOnMap()
     }
     
     // MARK: self 초기화 시 실행됨
     private func setPromiseDetailInfo(with promise: Components.Schemas.PromiseDTO) {
-        // TimeInterval을 Date 객체로 변환
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
-        
-        promisedAt.text = dateFormatter.string(from: promise.promisedAt)
-        
-        title.text = promise.title
-        
-        assignThemesToTaggedThemes(with: promise.themes)
-        
-        // 공유 링크 세팅
-        let sharePromiseId = promise.pid
-        if(!sharePromiseId.isEmpty) {
-            self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
-        }
-        
-        switch promise.destinationType {
-        case .DYNAMIC:
-            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
-            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
-        case .STATIC:
-            if let destination = promise.destination {
-                place.text = destination.value1.address
-                place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        DispatchQueue.main.async { [weak self] in
+            
+            // TimeInterval을 Date 객체로 변환
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
+            
+            self?.promisedAt.text = dateFormatter.string(from: promise.promisedAt)
+            
+            self?.title.text = promise.title
+            
+            self?.assignThemesToTaggedThemes(with: promise.themes)
+            
+            // 공유 링크 세팅
+            let sharePromiseId = promise.pid
+            if(!sharePromiseId.isEmpty) {
+                self?.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
             }
+            
+            switch promise.destinationType {
+            case .STATIC:
+                
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.address
+                    self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                }
+                
+            case .DYNAMIC:
+                self?.updateDynamicDestination(promise: promise)
+            }
+            
+            
+            self?.host.text = promise.host.username
+            self?.promiseHost = promise.host
+            
+            self?.attendeesCount.text = "(\(promise.attendees.count))"
+            self?.attendees = promise.attendees
+            
+            // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
+            self?.attendeesView.reloadData()
+            
+            self?.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+            
+        }
+    }
+    
+    func updateDynamicDestination(promise: Components.Schemas.PromiseDTO) {
+        
+        DispatchQueue.main.async { [weak self] in
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: promise)
+            
+            switch state {
+                
+            case .notConfigurable:
+                
+                self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            case .configurable:
+                
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+                if let isOwner = self?.isOwner, isOwner {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.requestConfirm
+                    
+                } else {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholderForAttendee
+                    
+                }
+                
+            case .configured:
+                
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                
+            case .newlyConfigurable:
+                
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            }
+            
         }
         
-        
-        host.text = promise.host.username
-        self.promiseHost = promise.host
-        
-        attendeesCount.text = "(\(promise.attendees.count))"
-        attendees = promise.attendees
-        
-        // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
-        attendeesView.reloadData()
-        
-        self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }
     
     // MARK: initialize
@@ -970,7 +1021,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
 }
 
 extension PromiseStatusWithAllAttendeesView {
-    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
+    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO) {
         setPromiseDetailInfo(with: promise)
         setPromiseStatusForMap(with: promise)
     }
