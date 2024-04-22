@@ -79,9 +79,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
 }
 
 extension PromiseStatusView {
-    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO) {
-        promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
-        promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
+    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
+        promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise, cell: cell)
+        promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise, cell: cell)
     }
 }
 

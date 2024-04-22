@@ -15,6 +15,8 @@ final class MainVC: UIViewController {
     private var shouldShowProbeeGuidance = false
     private var isFlyingProbee = false
     
+    private var shouldCallFocusedCellChangedAterScroll: IndexPath? = nil
+    
     private var focusRatioInfo: (CGFloat?, CGFloat?, IndexPath?)
     
     lazy var mainVM = MainVM(currentVC: self)
@@ -134,7 +136,7 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private var promiseStatusView: PromiseStatusView? = nil
+    private var promiseStatusView: PromiseStatusView?
     
     // MARK: handler
     
@@ -184,7 +186,7 @@ final class MainVC: UIViewController {
             scrollToPreviousFocusedPromise(indexPath: indexPath)
             
             promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-            focusedCellChanged(to: indexPath)
+            shouldCallFocusedCellChangedAterScroll = indexPath
         }
     }
     
@@ -201,11 +203,11 @@ final class MainVC: UIViewController {
                 if let promisesCount = mainVM.promises?.count, index == promisesCount - 1 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                         self?.promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                        self?.focusedCellChanged(to: indexPath)
+                        self?.shouldCallFocusedCellChangedAterScroll = indexPath
                     }
                 } else {
                     promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                    focusedCellChanged(to: indexPath)
+                    self.shouldCallFocusedCellChangedAterScroll = indexPath
                 }
                 
             }
@@ -393,6 +395,15 @@ final class MainVC: UIViewController {
 }
 
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        
+        if let indexPath = shouldCallFocusedCellChangedAterScroll {
+            focusedCellChanged(to: indexPath, cell: nil)
+            self.shouldCallFocusedCellChangedAterScroll = nil
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mainVM.promises?.count ?? 0
     }
@@ -412,7 +423,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
            let focusRatio = focusRatioInfo.1,
            initFocusRatio == focusRatio
         {
-            focusedCellChanged(to: indexPath)
+            focusedCellChanged(to: indexPath, cell: cell)
             cell.updateBorder(focusRatio: focusRatio)
         } else {
             cell.updateBorder(focusRatio: 0)
@@ -472,19 +483,36 @@ extension MainVC: PromiseListLayoutDelegate {
         
     }
     
-    func focusedCellChanged(to indexPath: IndexPath) {
+    func focusedCellChanged(to indexPath: IndexPath, cell: PromiseListCell?) {
         guard let promises = mainVM.promises else { return }
         let promise = promises[indexPath.row]
+        
         guard let promise else { return }
         
         mainVM.currentFocusedPromise = promise
         mainVM.currentFocusedPromiseIndexPath = indexPath
         
+        // MARK: 최초에 포커스되는 cell
+        if let cell {
+            mainVM.currentFocusedCell = cell
+            
+            // MARK: for promise status (is not called init mount)
+            self.promiseStatusView?.updatePromiseStatus(with: promise, cell: cell)
+            
+        } else {
+            // MARK: 이후 포커스가 변경되는 cell
+            if let cell = promiseListView.cellForItem(at: indexPath) as? PromiseListCell {
+                mainVM.currentFocusedCell = cell
+                
+                // MARK: for promise status (is not called init mount)
+                self.promiseStatusView?.updatePromiseStatus(with: promise, cell: cell)
+                
+            }
+            
+        }
+        
         let isEmptyAttendees = promise.attendees.isEmpty
         let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
-        
-        // MARK: for promise status (is not called init mount)
-        self.promiseStatusView?.updatePromiseStatus(with: promise)
         
         // MARK: for probee
         self.shouldShowProbeeGuidance = isOwner && isEmptyAttendees

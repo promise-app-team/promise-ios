@@ -11,6 +11,7 @@ import UIKit
 class MainVM: NSObject {
     var currentVC: MainVC?
     
+    var currentFocusedCell: PromiseListCell?
     var currentFocusedPromise: Components.Schemas.PromiseDTO?
     var currentFocusedPromiseIndexPath: IndexPath?
     var currentPromisesOrder: SortPromiseListEnum = .dateTimeQuickOrder
@@ -114,19 +115,19 @@ class MainVM: NSObject {
         
     }
     
-    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping (() -> Void)) async {
+    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void)) async {
         guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
         
-        let result: Result<EmptyResponse ,NetworkError> = await APIService.shared.fetch(
-            .POST,
+        let result: Result<Components.Schemas.LocationDTO ,NetworkError> = await APIService.shared.fetch(
+            .PUT,
             "/promises/\(id)/start-location",
             nil,
             with
         )
         
         switch result {
-        case .success:
-            onSuccess()
+        case .success(let departure):
+            onSuccess(departure)
         case .failure(let errorType):
             switch errorType {
             case .badRequest:

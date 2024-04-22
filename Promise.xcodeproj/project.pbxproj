@@ -27,7 +27,6 @@
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
 		D4312FE52BC80B4A0072F389 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = D4312FE42BC80B4A0072F389 /* SwiftJWT */; };
 		D4312FE82BC80F1A0072F389 /* appleAuthKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */; };
-		D4312FEC2BCBAB100072F389 /* DestinationMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4312FEB2BCBAB100072F389 /* DestinationMDL.swift */; };
 		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
 		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
 		D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */; };
@@ -45,6 +44,7 @@
 		D4968B962B737772009C6014 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B952B737772009C6014 /* UIFont.swift */; };
 		D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B972B7377CD009C6014 /* LayoutHelper.swift */; };
 		D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497715E2B5FF860005DF103 /* AttendanceHelper.swift */; };
+		D4C4CDAF2BD3644A002F0206 /* DynamicDestinationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */; };
 		D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */; };
 		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
@@ -193,7 +193,6 @@
 		BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = appleAuthKey.p8; path = ../../../Downloads/appleAuthKey.p8; sourceTree = "<group>"; };
-		D4312FEB2BCBAB100072F389 /* DestinationMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationMDL.swift; sourceTree = "<group>"; };
 		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
 		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
 		D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusMoreMenuContentView.swift; sourceTree = "<group>"; };
@@ -211,6 +210,7 @@
 		D4968B952B737772009C6014 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		D4968B972B7377CD009C6014 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
+		D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDestinationHelper.swift; sourceTree = "<group>"; };
 		D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListEmptyView.swift; sourceTree = "<group>"; };
 		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
@@ -720,7 +720,6 @@
 				FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */,
 				FCC690542A9E37090017D543 /* PromiseFormMDL.swift */,
 				D470F3972BB827BB008C0453 /* LocationMDL.swift */,
-				D4312FEB2BCBAB100072F389 /* DestinationMDL.swift */,
 				D43ABABD2BBF9DE1004E415E /* WebSocketMessageMDL.swift */,
 			);
 			path = Models;
@@ -735,6 +734,7 @@
 				D4968B972B7377CD009C6014 /* LayoutHelper.swift */,
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
 				D492BE832B88557D00F6269A /* MapHelper.swift */,
+				D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1336,7 +1336,7 @@
 				D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
-				D4312FEC2BCBAB100072F389 /* DestinationMDL.swift in Sources */,
+				D4C4CDAF2BD3644A002F0206 /* DynamicDestinationHelper.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
 				2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */,

@@ -970,7 +970,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
 }
 
 extension PromiseStatusWithAllAttendeesView {
-    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO) {
+    public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
         setPromiseDetailInfo(with: promise)
         setPromiseStatusForMap(with: promise)
     }

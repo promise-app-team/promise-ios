@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SkeletonView
 
-
 class AttendeeCellForCard: UICollectionViewCell {
     static let identifier = "AttendeeCellForCard"
     
@@ -53,6 +52,11 @@ class AttendeeCellForCard: UICollectionViewCell {
 }
 
 class PromiseListCell: UICollectionViewCell {
+    
+    private var promise: Components.Schemas.PromiseDTO? = nil
+    
+    private var dynamicDestinationState: DynamicDestinationState = .notDynamicDestinationType
+    
     private var attendees: [Components.Schemas.AttendeeDTO] = []
     private var isOwner = false {
         didSet {
@@ -267,10 +271,15 @@ class PromiseListCell: UICollectionViewCell {
         return view
     }()
     
-    private let place = {
+    private lazy var place = {
         let label = UILabel()
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(13, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapPlace))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -319,6 +328,22 @@ class PromiseListCell: UICollectionViewCell {
         
         // UIActivityViewController 표시
         topVC.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @objc private func onTapPlace() {
+        guard let promise else { return }
+        guard promise.destinationType == .DYNAMIC else { return }
+        guard isOwner else { return }
+        
+        if dynamicDestinationState == .notConfigurable 
+            || dynamicDestinationState == .notDynamicDestinationType 
+        {
+            return
+        }
+        
+        guard let topVC = parentViewController() else { return }
+        let createPromiseVC = CreatePromiseVC(isEditing: true)
+        topVC.navigationController?.pushViewController(createPromiseVC, animated: true)
     }
     
     private func assignThemesToTaggedThemes(with themes: [String]) {
@@ -419,6 +444,8 @@ class PromiseListCell: UICollectionViewCell {
         
         contentView.hideSkeleton(transition: .crossDissolve(0.25))
         
+        self.promise = promise
+        
         assignThemesToTaggedThemes(with: promise.themes)
         
         // 공유 링크 세팅
@@ -437,14 +464,15 @@ class PromiseListCell: UICollectionViewCell {
         title.text = promise.title
         
         switch promise.destinationType {
-        case .DYNAMIC:
-            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
-            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
         case .STATIC:
+            
             if let destination = promise.destination {
                 place.text = destination.value1.address
                 place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
             }
+            
+        case .DYNAMIC:
+            break
         }
         
         host.text = promise.host.username
@@ -466,6 +494,59 @@ class PromiseListCell: UICollectionViewCell {
         
         contentView.layer.borderWidth = borderWidth * focusRatio
         contentView.layer.borderColor = UIColor.transition(from: unfocusedColor, to: focusedColor, with: focusRatio).cgColor
+    }
+    
+    func updateDynamicDestination(location: Components.Schemas.LocationDTO?) {
+        
+        DispatchQueue.main.async { [weak self] in
+            
+            guard let promise = self?.promise else { return }
+            
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: promise, userDeparture: location)
+            
+            switch state {
+            case .notDynamicDestinationType:
+                
+                self?.dynamicDestinationState = .notDynamicDestinationType
+                
+            case .notConfigurable:
+                
+                self?.dynamicDestinationState = .notConfigurable
+                self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            case .configurable:
+                
+                self?.dynamicDestinationState = .configurable
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+            
+                if let isOwner = self?.isOwner, isOwner {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.requestConfirm
+                    
+                } else {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholderForAttendee
+                    
+                }
+                
+            case .configured:
+                
+                self?.dynamicDestinationState = .configured
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                
+            case .newlyConfigurable:
+                
+                self?.dynamicDestinationState = .newlyConfigurable
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            }
+            
+        }
+        
     }
 }
 

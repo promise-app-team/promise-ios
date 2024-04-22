@@ -44,6 +44,7 @@
 
 "Main.PromiseList.DynamicPlace.placeholder" = "두 명 이상 출발지를 설정해주세요";
 "Main.PromiseList.DynamicPlace.requestConfirm" = "중간 장소를 확인해주세요";
+"Main.PromiseList.DynamicPlace.placeholderForAttendee" = "중간 장소를 정하고 있어요";
 
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
