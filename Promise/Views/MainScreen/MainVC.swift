@@ -571,11 +571,14 @@ extension MainVC: PromiseListLayoutDelegate {
             
         }
         
-        let isEmptyAttendees = promise.attendees.isEmpty
+        let isOnlyOwnerIsAttendee = 
+        promise.attendees.count == 1 &&
+        promise.attendees[0].id == promise.host.id
+        
         let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
         
         // MARK: for probee
-        self.shouldShowProbeeGuidance = isOwner && isEmptyAttendees
+        self.shouldShowProbeeGuidance = isOwner && isOnlyOwnerIsAttendee
         
     }
 }
