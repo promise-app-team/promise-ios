@@ -239,7 +239,7 @@ class PromiseStatusWithUserView: UIView {
                 
             // MARK: 약속이 중간장소인 경우, cell에 destination 업데이트
             if promise.destinationType == .DYNAMIC {
-                cell.updateDynamicDestination(location: location)
+                cell.configureCell(with: promise)
             }
             
             DispatchQueue.main.async { [weak self] in
@@ -259,9 +259,10 @@ class PromiseStatusWithUserView: UIView {
             }
             
         } onFailure: { [weak self] error in
+            
             // MARK: 약속이 중간장소인 경우, cell에 destination 업데이트
             if promise.destinationType == .DYNAMIC {
-                cell.updateDynamicDestination(location: nil)
+                cell.configureCell(with: promise)
             }
             
             DispatchQueue.main.async { [weak self] in
@@ -374,14 +375,6 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
         
         Task {
             await mainVM.editDepartureLoaction(with: location) { [weak self] newDeparture in
-                
-                if self?.mainVM.currentFocusedPromise?.destinationType == .DYNAMIC {
-                    
-                    self?.mainVM
-                        .currentFocusedCell?
-                        .updateDynamicDestination(location: newDeparture)
-                    
-                }
                 
                 DispatchQueue.main.async { [weak self] in
                     

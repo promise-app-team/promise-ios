@@ -8,7 +8,6 @@
 import Foundation
 
 enum DynamicDestinationState {
-    case notDynamicDestinationType
     case notConfigurable
     case configurable
     case configured
@@ -18,12 +17,8 @@ enum DynamicDestinationState {
 struct DynamicDestinationHelper {
     
     func getConfigurableState(
-        promise: Components.Schemas.PromiseDTO, 
-        userDeparture: Components.Schemas.LocationDTO?
+        promise: Components.Schemas.PromiseDTO
     ) -> DynamicDestinationState {
-        guard promise.destinationType == .DYNAMIC else {
-            return .notDynamicDestinationType
-        }
         
         let attendeesCount = promise.attendees.count
         

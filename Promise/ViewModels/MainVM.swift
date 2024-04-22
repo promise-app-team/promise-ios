@@ -85,6 +85,31 @@ class MainVM: NSObject {
         }
     }
     
+    func getPromise(id: String) async -> Components.Schemas.PromiseDTO? {
+        let result: Result<Components.Schemas.PromiseDTO ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/\(id)")
+        
+        switch result {
+        case .success(let promise):
+            
+            if let index = self.promises?.firstIndex(where: { $0?.pid == promise.pid }) 
+            {
+                self.promises?[index] = promise
+                return promise
+            }
+            
+            return nil
+            
+        case .failure(let errorType):
+            
+            switch errorType {
+            case .badRequest:
+                return nil
+            default:
+                return nil
+            }
+        }
+    }
+    
     func getDepartureLoaction(
         id: String,
         onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void),
@@ -116,6 +141,7 @@ class MainVM: NSObject {
     }
     
     func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void)) async {
+        
         guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
         
         let result: Result<Components.Schemas.LocationDTO ,NetworkError> = await APIService.shared.fetch(
@@ -127,15 +153,25 @@ class MainVM: NSObject {
         
         switch result {
         case .success(let departure):
-            onSuccess(departure)
+            
+            if let promise = await getPromise(id: id), promise.pid == id {
+                onSuccess(departure)
+            }
+            
+            // TODO: 업데이트한 약속을 가져오지 못했다면(nil) 에러
+            
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
                 
+                // TODO:  출발지 업데이트에 실패시 에러
                 break
+                
             default:
+                
                 // Other Error(Network, badUrl ...)
                 break
+                
             }
         }
     }
