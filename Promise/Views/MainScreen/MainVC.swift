@@ -183,15 +183,16 @@ final class MainVC: UIViewController {
             let indexPath = IndexPath(item: index, section: 0)
             
             // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
-            // scrollToPreviousFocusedPromise(indexPath: indexPath)
+            scrollToPreviousFocusedPromise(indexPath: indexPath)
             
+            shouldLazyCallFocusedCellChanged = indexPath
             promiseListView.scrollToItem(
                 at: indexPath,
                 at: .centeredHorizontally,
                 animated: true
             )
             
-            shouldLazyCallFocusedCellChanged = indexPath
+            
             
         }
     }
@@ -204,25 +205,33 @@ final class MainVC: UIViewController {
                 let indexPath = IndexPath(item: index, section: 0)
                 
                 // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
-                // scrollToPreviousFocusedPromise(indexPath: indexPath)
+                scrollToPreviousFocusedPromise(indexPath: indexPath)
                 
-//                if let promisesCount = mainVM.promises?.count, index == promisesCount - 1 {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-//                        self?.promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                        self?.shouldCallFocusedCellChangedAterScroll = indexPath
-//                    }
-//                } else {
-//                    promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                    self.shouldCallFocusedCellChangedAterScroll = indexPath
-//                }
-                
-                promiseListView.scrollToItem(
-                    at: indexPath,
-                    at: .centeredHorizontally,
-                    animated: true
-                )
-                
-                self.shouldLazyCallFocusedCellChanged = indexPath
+                if let promisesCount = mainVM.promises?.count,
+                   index == promisesCount - 1
+                {
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        
+                        self?.shouldLazyCallFocusedCellChanged = indexPath
+                        self?.promiseListView.scrollToItem(
+                            at: indexPath,
+                            at: .centeredHorizontally,
+                            animated: true
+                        )
+                        
+                    }
+                    
+                } else {
+                    
+                    self.shouldLazyCallFocusedCellChanged = indexPath
+                    promiseListView.scrollToItem(
+                        at: indexPath,
+                        at: .centeredHorizontally,
+                        animated: true
+                    )
+                    
+                }
                 
             }
             
@@ -232,7 +241,7 @@ final class MainVC: UIViewController {
     }
     
     private func assignPromisesDidChange() {
-        mainVM.promisesDidChange = { [weak self] (promiseList) in
+        mainVM.promisesDidChange = { [weak self] (promiseList, reloadTargetIndexPath) in
             
             DispatchQueue.main.async {
                 guard let promiseList else { return }
@@ -241,10 +250,19 @@ final class MainVC: UIViewController {
                 if promiseList.count == 1, let first = promiseList.first, first == nil {
                     return
                 }
-
+                
                 self?.renderAfterGettingPromises(isEmptyPromises: promiseList.isEmpty)
                 
-                self?.promiseListView.reloadData()
+                if let indexPath = reloadTargetIndexPath {
+                    
+                    UIView.performWithoutAnimation {
+                        self?.promiseListView.reloadItems(at: [indexPath])
+                    }
+                    
+                } else {
+                    self?.promiseListView.reloadData()
+                }
+                
                 self?.focusPromiseById()
                 
             }
@@ -489,7 +507,7 @@ extension MainVC: PromiseListLayoutDelegate {
                     }
                 }
             }
-
+            
             
         } else {
             // MARK: 프로비가 날아다니는 경우
@@ -514,18 +532,14 @@ extension MainVC: PromiseListLayoutDelegate {
         mainVM.currentFocusedPromise = promise
         mainVM.currentFocusedPromiseIndexPath = indexPath
         
-        print("promise: ", promise.title)
-        
         // MARK: 최초에 포커스되는 cell
         if let cell {
-            print("여기-2")
             mainVM.currentFocusedCell = cell
             
             // MARK: for promise status (is not called init mount)
             self.promiseStatusView?.updatePromiseStatus(with: promise, cell: cell)
             
         } else {
-            print("여기-3")
             // MARK: 이후 포커스가 변경되는 cell
             if let cell = promiseListView.cellForItem(at: indexPath) as? PromiseListCell {
                 mainVM.currentFocusedCell = cell

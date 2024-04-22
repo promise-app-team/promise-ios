@@ -16,7 +16,7 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
     weak var delegate: PromiseListLayoutDelegate?
     
     // MARK: - Private property
-    private let activeDistance: CGFloat = 200
+    private let activeDistance: CGFloat = adjustedValue(200, .width)
     private let zoomFactor: CGFloat = 0.25
     private var initFocusRatio: CGFloat?
     
