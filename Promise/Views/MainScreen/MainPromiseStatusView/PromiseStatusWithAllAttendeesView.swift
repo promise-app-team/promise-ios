@@ -215,7 +215,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
             guard let userId = UserService.shared.getUser()?.userId else { return }
         
             WebsocketService.shared.send(message: [
-                "userId": userId,
+                "userId": String(userId),
                 "latitude": userLocation.coordinate.latitude.description,
                 "longitude": userLocation.coordinate.longitude.description
             ])
@@ -904,7 +904,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
             // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
             self?.attendeesView.reloadData()
             
-            self?.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+            self?.isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
             
         }
     }

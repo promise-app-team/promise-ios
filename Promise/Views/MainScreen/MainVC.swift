@@ -575,7 +575,7 @@ extension MainVC: PromiseListLayoutDelegate {
         promise.attendees.count == 1 &&
         promise.attendees[0].id == promise.host.id
         
-        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+        let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
         
         // MARK: for probee
         self.shouldShowProbeeGuidance = isOwner && isOnlyOwnerIsAttendee
