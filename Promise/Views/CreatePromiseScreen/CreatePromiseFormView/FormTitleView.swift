@@ -14,7 +14,7 @@ class FormTitleView: UIView {
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formTitleLabel
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -24,11 +24,11 @@ class FormTitleView: UIView {
     private lazy var promiseTitleInput = {
         let textField = UITextField()
         
-        textField.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        textField.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         
         let placeholderAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
-            NSAttributedString.Key.font: UIFont(font: FontFamily.Pretendard.regular, size: 16) ?? UIFont.systemFont(ofSize: 16)
+            NSAttributedString.Key.font: UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width)) ?? UIFont.systemFont(ofSize: adjustedValue(16, .width))
         ]
         
         textField.attributedPlaceholder = NSAttributedString(
@@ -41,11 +41,16 @@ class FormTitleView: UIView {
         
         let container = UIStackView(arrangedSubviews: [textField])
         container.isLayoutMarginsRelativeArrangement = true
-        container.layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        container.layoutMargins = UIEdgeInsets(
+            top: adjustedValue(8, .height),
+            left: adjustedValue(16, .width),
+            bottom: adjustedValue(8, .height),
+            right: adjustedValue(16, .width)
+        )
         
-        container.layer.borderWidth = 1
+        container.layer.borderWidth = adjustedValue(1, .width)
         container.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
-        container.layer.cornerRadius = 8
+        container.layer.cornerRadius = adjustedValue(8, .width)
         
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
@@ -88,12 +93,12 @@ class FormTitleView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            promiseTitleInput.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            promiseTitleInput.topAnchor.constraint(equalTo: label.bottomAnchor, constant: adjustedValue(8, .height)),
             promiseTitleInput.leadingAnchor.constraint(equalTo: leadingAnchor),
             promiseTitleInput.trailingAnchor.constraint(equalTo: trailingAnchor),
             promiseTitleInput.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            promiseTitleInput.heightAnchor.constraint(equalToConstant: 45)
+            promiseTitleInput.heightAnchor.constraint(equalToConstant: adjustedValue(45, .height))
         ])
     }
 }

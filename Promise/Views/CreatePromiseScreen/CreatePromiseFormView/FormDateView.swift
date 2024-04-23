@@ -14,7 +14,7 @@ class FormDateView: UIView {
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formDateLabel
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,12 +30,17 @@ class FormDateView: UIView {
         datePicker.locale = Locale(identifier: "ko_KR")
         datePicker.tintColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
         
-        datePicker.layer.borderWidth = 1
+        datePicker.layer.borderWidth = adjustedValue(1, .width)
         datePicker.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
-        datePicker.layer.cornerRadius = 8
+        datePicker.layer.cornerRadius = adjustedValue(8, .width)
         datePicker.layer.backgroundColor = UIColor.white.cgColor
         
-        datePicker.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        datePicker.layoutMargins = UIEdgeInsets(
+            top: adjustedValue(20, .height),
+            left: adjustedValue(20, .width),
+            bottom: 0,
+            right: adjustedValue(20, .width)
+        )
         
         datePicker.addTarget(self, action: #selector(onSelectedDateAndTime), for: .valueChanged)
 
@@ -44,11 +49,11 @@ class FormDateView: UIView {
     
     lazy var popoverView = {
         let popoverView = PopoverView(
-            from: PopoverTarget(x: nil, y: 8, target: promiseDateInput),
+            from: PopoverTarget(x: nil, y: adjustedValue(8, .height), target: promiseDateInput),
             in: createPromiseVM.currentVC!,
             contentView: datePicker,
             isEnableDimmingView: false,
-            paddingHorizontal: 8
+            paddingHorizontal: adjustedValue(8, .width)
         )
         
         popoverView.delegate = self
@@ -62,7 +67,7 @@ class FormDateView: UIView {
         let placeholder = createPromiseVM.getTodayString()
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.text = placeholder
         label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         
@@ -71,21 +76,26 @@ class FormDateView: UIView {
     
     private lazy var promiseDateInput = {
         let imageView = UIImageView(image: Asset.calander.image)
-        imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(20, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(20, .height)).isActive = true
         
         let stackView = UIStackView(arrangedSubviews: [imageView, selectedDate])
         
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = adjustedValue(5, .width)
         stackView.alignment = .center
         
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        stackView.layoutMargins = UIEdgeInsets(
+            top: adjustedValue(8, .height),
+            left: adjustedValue(12, .width),
+            bottom: adjustedValue(8, .height),
+            right: adjustedValue(12, .width)
+        )
         
-        stackView.layer.borderWidth = 1
+        stackView.layer.borderWidth = adjustedValue(1, .width)
         stackView.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
-        stackView.layer.cornerRadius = 8
+        stackView.layer.cornerRadius = adjustedValue(8, .width)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapPromiseDateInput))
         stackView.isUserInteractionEnabled = true
@@ -96,8 +106,8 @@ class FormDateView: UIView {
     }()
     
     @objc func onTapPromiseDateInput() {
-        // 현재부터 11분 후로 변경
-        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 11, to: Date())
+        // 현재부터 20분 후로 변경
+        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 20, to: Date())
         
         if(createPromiseVM.date == nil) {
             let selectionDate = SelectionDate(originDate: Date())
@@ -167,12 +177,12 @@ class FormDateView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            promiseDateInput.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            promiseDateInput.topAnchor.constraint(equalTo: label.bottomAnchor, constant: adjustedValue(8, .height)),
             promiseDateInput.leadingAnchor.constraint(equalTo: leadingAnchor),
             promiseDateInput.trailingAnchor.constraint(equalTo: trailingAnchor),
             promiseDateInput.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            promiseDateInput.heightAnchor.constraint(equalToConstant: 45)
+            promiseDateInput.heightAnchor.constraint(equalToConstant: adjustedValue(45, .height))
         ])
     }
     

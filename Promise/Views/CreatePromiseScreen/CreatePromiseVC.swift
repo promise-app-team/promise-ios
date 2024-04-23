@@ -13,9 +13,15 @@ protocol CreatePromiseDelegate: AnyObject {
 }
 
 class CreatePromiseVC: UIViewController {
-    weak var delegate: CreatePromiseDelegate?
     
     private lazy var createPromiseVM = CreatePromiseVM(currentVC: self)
+    private var isEditingPromise = false {
+        didSet {
+            createPromiseVM.isEditingPromise = isEditingPromise
+        }
+    }
+    
+    weak var delegate: CreatePromiseDelegate?
     
     private lazy var headerView = HeaderView(navigationController: createPromiseVM.currentVC?.navigationController, title: L10n.CreatePromise.headerTitle)
     
@@ -51,7 +57,7 @@ class CreatePromiseVC: UIViewController {
         let safeLayoutGuide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: 56),
+            headerView.heightAnchor.constraint(equalToConstant: adjustedValue(56, .height)),
             headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -61,14 +67,14 @@ class CreatePromiseVC: UIViewController {
             formView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -24)
+            formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -adjustedValue(24, .height))
         ])
         
         NSLayoutConstraint.activate([
-            createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -20),
-            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + 3),
+            createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -adjustedValue(20, .height)),
+            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + adjustedValue(3, .height)),
         ])
     }
     
@@ -87,7 +93,10 @@ class CreatePromiseVC: UIViewController {
     }
     
     init(isEditing: Bool = false) {
+        self.isEditingPromise = isEditing
         super.init(nibName: nil, bundle: nil)
+        
+        
     }
     
     required init?(coder: NSCoder) {

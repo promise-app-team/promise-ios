@@ -14,7 +14,7 @@ class FormShareLocationEndView: UIView {
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formShareLocationEndTimeLabel
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -71,10 +71,10 @@ class FormShareLocationEndView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            shareLocationEndInputButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            shareLocationEndInputButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: adjustedValue(8, .height)),
             shareLocationEndInputButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             shareLocationEndInputButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            shareLocationEndInputButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            shareLocationEndInputButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -adjustedValue(20, .height))
         ])
     }
 }

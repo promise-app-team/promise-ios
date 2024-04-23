@@ -25,7 +25,7 @@ class HeaderView: UIView {
         let label = UILabel()
         
         label.text = ""
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -37,8 +37,8 @@ class HeaderView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         imageView.contentMode = .scaleAspectFit
@@ -104,13 +104,13 @@ class HeaderView: UIView {
         [leftView, title, rightView].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
-            leftView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            leftView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: adjustedValue(16, .width)),
             leftView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
             title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             title.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            rightView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            rightView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -adjustedValue(16, .width)),
             rightView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
