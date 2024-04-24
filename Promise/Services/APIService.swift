@@ -21,6 +21,7 @@ enum NetworkError: Error {
 
 enum HttpMethod: String {
     case POST
+    case PUT
     case GET
     case DELETE
     // Ohter http methods
@@ -110,7 +111,7 @@ final class APIService {
             switch(method) {
             case .GET:
                 break
-            case .POST, .DELETE:
+            case .POST, .PUT, .DELETE:
                 if let body = body {
                     if let jsonData = try? JSONEncoder().encode(body) {
                         request.httpBody = jsonData
@@ -251,7 +252,7 @@ final class APIService {
         switch(method) {
         case .GET:
             break
-        case .POST, .DELETE:
+        case .POST, .PUT, .DELETE:
             if let body = body {
                 if let jsonData = try? JSONEncoder().encode(body) {
                     request.httpBody = jsonData

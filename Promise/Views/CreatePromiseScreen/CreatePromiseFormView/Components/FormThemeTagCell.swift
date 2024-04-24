@@ -15,10 +15,10 @@ class FormThemeTagCell: UICollectionViewCell {
         let label = UILabel()
         
         label.text = themeEntity.theme
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.sizeToFit()
         
-        let cellSize = CGSize(width: label.frame.width + 16, height: 28)
+        let cellSize = CGSize(width: label.frame.width + adjustedValue(16, .width), height: adjustedValue(28, .height))
         return cellSize
     }
     
@@ -27,7 +27,7 @@ class FormThemeTagCell: UICollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         label.adjustsFontSizeToFitWidth = false
         
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.textAlignment = .center
 
         label.layer.masksToBounds = true
@@ -59,7 +59,7 @@ class FormThemeTagCell: UICollectionViewCell {
             themeTag.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
             themeTag.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
             
-            themeTag.layer.borderWidth = 1
+            themeTag.layer.borderWidth = adjustedValue(1, .width)
             themeTag.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
         } else {
             themeTag.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)

@@ -31,10 +31,10 @@ class FormTabMenuView: UIView {
         button.backgroundColor = .white
         button.setTitle(leftButtonTitle, for: .normal)
         button.setTitleColor(UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         
         // button.layer.masksToBounds = true -> 설정하면 안됨. mini 대응
-        button.layer.cornerRadius = 6.5
+        button.layer.cornerRadius = adjustedValue(6.5, .width)
         button.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMinYCorner, .layerMinXMaxYCorner)
         
         button.addTarget(self, action: #selector(onTapLeft), for: .touchUpInside)
@@ -47,10 +47,10 @@ class FormTabMenuView: UIView {
         button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         button.setTitle(rightButtonTitle, for: .normal)
         button.setTitleColor(UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        button.titleLabel?.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         
         // button.layer.masksToBounds = true -> 설정하면 안됨. mini 대응
-        button.layer.cornerRadius = 6.5
+        button.layer.cornerRadius = adjustedValue(6.5, .width)
         button.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMaxXMinYCorner, .layerMaxXMaxYCorner)
         
         button.addTarget(self, action: #selector(onTapRight), for: .touchUpInside)
@@ -63,8 +63,8 @@ class FormTabMenuView: UIView {
         view.backgroundColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
         
         // view.layer.masksToBounds = true -> 설정하면 안됨. mini 대응
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 0.5
+        view.layer.cornerRadius = adjustedValue(8, .width)
+        view.layer.borderWidth = adjustedValue(0.5, .width)
         view.layer.borderColor = UIColor.white.cgColor
         view.clipsToBounds = true
         
@@ -88,18 +88,18 @@ class FormTabMenuView: UIView {
         KeyboardManager.shared.hideKeyboard()
         delegate?.onTapLeftButton()
         
-        leftButtonTopConstraint?.constant = 1.5
-        leftButtonLeadingConstraint?.constant = 1.5
-        leftButtonTrailingConstraint?.constant = -1.2
-        leftButtonBottomConstraint?.constant = -1.8
+        leftButtonTopConstraint?.constant = adjustedValue(1.5, .height)
+        leftButtonLeadingConstraint?.constant = adjustedValue(1.5, .width)
+        leftButtonTrailingConstraint?.constant = -adjustedValue(1.2, .width)
+        leftButtonBottomConstraint?.constant = -adjustedValue(1.8, .height)
         
         leftButton.backgroundColor = .white
         leftButton.setTitleColor(UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1), for: .normal)
         
         rightButtonTopConstraint?.constant = 0
         rightButtonLeadingConstraint?.constant = 0
-        rightButtonTrailingConstraint?.constant = 0.5
-        rightButtonBottomConstraint?.constant = 0.5
+        rightButtonTrailingConstraint?.constant = adjustedValue(0.5, .width)
+        rightButtonBottomConstraint?.constant = adjustedValue(0.5, .height)
         
         rightButton.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         rightButton.setTitleColor(UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1), for: .normal)
@@ -114,15 +114,15 @@ class FormTabMenuView: UIView {
         self.leftButtonTopConstraint?.constant = 0
         self.leftButtonLeadingConstraint?.constant = 0
         self.leftButtonTrailingConstraint?.constant = 0
-        self.leftButtonBottomConstraint?.constant = 0.5
+        self.leftButtonBottomConstraint?.constant = adjustedValue(0.5, .height)
         
         self.leftButton.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1)
         self.leftButton.setTitleColor(UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1), for: .normal)
         
-        self.rightButtonTopConstraint?.constant = 1.5
-        self.rightButtonLeadingConstraint?.constant = 1.4
-        self.rightButtonTrailingConstraint?.constant = -1.8
-        self.rightButtonBottomConstraint?.constant = -1.8
+        self.rightButtonTopConstraint?.constant = adjustedValue(1.5, .height)
+        self.rightButtonLeadingConstraint?.constant = adjustedValue(1.4, .width)
+        self.rightButtonTrailingConstraint?.constant = -adjustedValue(1.8, .width)
+        self.rightButtonBottomConstraint?.constant = -adjustedValue(1.8, .height)
         
         self.rightButton.backgroundColor = .white
         self.rightButton.setTitleColor(UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1), for: .normal)
@@ -155,10 +155,10 @@ class FormTabMenuView: UIView {
     private func configureFormTabMenuView() {
         translatesAutoresizingMaskIntoConstraints = false
         
-        leftButtonTopConstraint = leftButton.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: 1.5)
-        leftButtonLeadingConstraint = leftButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: 1.5)
-        leftButtonTrailingConstraint = leftButton.trailingAnchor.constraint(equalTo: wrapper.centerXAnchor, constant: -1.2)
-        leftButtonBottomConstraint = leftButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -1.8)
+        leftButtonTopConstraint = leftButton.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: adjustedValue(1.5, .height))
+        leftButtonLeadingConstraint = leftButton.leadingAnchor.constraint(equalTo: wrapper.leadingAnchor, constant: adjustedValue(1.5, .width))
+        leftButtonTrailingConstraint = leftButton.trailingAnchor.constraint(equalTo: wrapper.centerXAnchor, constant: -adjustedValue(1.2, .width))
+        leftButtonBottomConstraint = leftButton.bottomAnchor.constraint(equalTo: wrapper.bottomAnchor, constant: -adjustedValue(1.8, .height))
         
         rightButtonTopConstraint = rightButton.topAnchor.constraint(equalTo: wrapper.topAnchor, constant: 0)
         rightButtonLeadingConstraint = rightButton.leadingAnchor.constraint(equalTo: wrapper.centerXAnchor, constant: 0)
@@ -186,7 +186,7 @@ class FormTabMenuView: UIView {
             wrapper.leadingAnchor.constraint(equalTo: leadingAnchor),
             wrapper.trailingAnchor.constraint(equalTo: trailingAnchor),
             wrapper.bottomAnchor.constraint(equalTo: bottomAnchor),
-            wrapper.heightAnchor.constraint(equalToConstant: 40)
+            wrapper.heightAnchor.constraint(equalToConstant: adjustedValue(40, .height))
         ])
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class FormView: UIScrollView {
     private var createPromiseVM: CreatePromiseVM
+    private lazy var isEditingPromise = createPromiseVM.isEditingPromise
     
     private lazy var formTitleView = FormTitleView(vm: createPromiseVM)
     private lazy var formDateView = FormDateView(vm: createPromiseVM)
@@ -29,7 +30,7 @@ class FormView: UIScrollView {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 24
+        stackView.spacing = adjustedValue(24, .height)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -69,8 +70,8 @@ class FormView: UIScrollView {
         
         NSLayoutConstraint.activate([
             formStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(24, .width)),
+            formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(24, .width)),
             formStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }

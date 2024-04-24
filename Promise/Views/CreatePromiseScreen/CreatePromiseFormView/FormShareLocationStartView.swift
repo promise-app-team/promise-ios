@@ -14,7 +14,7 @@ class FormShareLocationStartView: UIView {
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formShareLocationStartTimeLabel
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -128,16 +128,16 @@ class FormShareLocationStartView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            shareLocationStartType.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+            shareLocationStartType.topAnchor.constraint(equalTo: label.bottomAnchor, constant: adjustedValue(8, .height)),
             shareLocationStartType.leadingAnchor.constraint(equalTo: leadingAnchor),
             shareLocationStartType.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            shareLocationStartBasedOnDistanceInputButton.topAnchor.constraint(equalTo: shareLocationStartType.bottomAnchor, constant: 8),
+            shareLocationStartBasedOnDistanceInputButton.topAnchor.constraint(equalTo: shareLocationStartType.bottomAnchor, constant: adjustedValue(8, .height)),
             shareLocationStartBasedOnDistanceInputButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             shareLocationStartBasedOnDistanceInputButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             shareLocationStartBasedOnDistanceInputButton.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            shareLocationStartBasedOnTimeInputButton.topAnchor.constraint(equalTo: shareLocationStartType.bottomAnchor, constant: 8),
+            shareLocationStartBasedOnTimeInputButton.topAnchor.constraint(equalTo: shareLocationStartType.bottomAnchor, constant: adjustedValue(8, .height)),
             shareLocationStartBasedOnTimeInputButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             shareLocationStartBasedOnTimeInputButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             shareLocationStartBasedOnTimeInputButton.bottomAnchor.constraint(equalTo: bottomAnchor)

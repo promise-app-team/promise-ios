@@ -12,6 +12,8 @@ import UIKit
 class CreatePromiseVM: NSObject {
     var currentVC: UIViewController?
     
+    var isEditingPromise = false
+    
     var title = "" {
         didSet {
             updateForm(keyPath: \.title, value: title)

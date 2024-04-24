@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserMDL {
-    let userId: String
+    let userId: Int
     let nickname: String?
     let profileUrl: String?
     let loginMethod: String?

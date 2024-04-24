@@ -11,6 +11,7 @@ import UIKit
 class MainVM: NSObject {
     var currentVC: MainVC?
     
+    var currentFocusedCell: PromiseListCell?
     var currentFocusedPromise: Components.Schemas.PromiseDTO?
     var currentFocusedPromiseIndexPath: IndexPath?
     var currentPromisesOrder: SortPromiseListEnum = .dateTimeQuickOrder
@@ -20,10 +21,18 @@ class MainVM: NSObject {
     
     var shouldFocusPromiseId: String?
     var shouldLazyFocusPromiseId: String?
+    
+    var reloadTarget: (Components.Schemas.PromiseDTO, IndexPath)? = nil
+    var promiseDidChange: (((Components.Schemas.PromiseDTO, IndexPath)) -> Void)?
     var promisesDidChange: (([Components.Schemas.PromiseDTO?]?) -> Void)?
     var promises: [Components.Schemas.PromiseDTO?]? {
         didSet {
-            promisesDidChange?(promises)
+            if let reloadTarget {
+                promiseDidChange?(reloadTarget)
+                self.reloadTarget = nil
+            } else {
+                promisesDidChange?(promises)
+            }
         }
     }
     
@@ -84,6 +93,37 @@ class MainVM: NSObject {
         }
     }
     
+    func getPromise(id: String) async -> Components.Schemas.PromiseDTO? {
+        let result: Result<Components.Schemas.PromiseDTO ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/\(id)")
+        
+        switch result {
+        case .success(let promise):
+            
+            if let index = self.promises?.firstIndex(where: { $0?.pid == promise.pid }) 
+            {
+                
+                self.reloadTarget = (
+                    promise,
+                    IndexPath(item: index, section: 0)
+                )
+                
+                self.promises?[index] = promise
+                return promise
+            }
+            
+            return nil
+            
+        case .failure(let errorType):
+            
+            switch errorType {
+            case .badRequest:
+                return nil
+            default:
+                return nil
+            }
+        }
+    }
+    
     func getDepartureLoaction(
         id: String,
         onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void),
@@ -114,27 +154,38 @@ class MainVM: NSObject {
         
     }
     
-    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping (() -> Void)) async {
+    func editDepartureLoaction(with: Components.Schemas.InputLocationDTO, onSuccess: @escaping ((Components.Schemas.LocationDTO) -> Void)) async {
+        
         guard let id = currentFocusedPromise?.pid, !id.isEmpty else { return }
         
-        let result: Result<EmptyResponse ,NetworkError> = await APIService.shared.fetch(
-            .POST,
+        let result: Result<Components.Schemas.LocationDTO ,NetworkError> = await APIService.shared.fetch(
+            .PUT,
             "/promises/\(id)/start-location",
             nil,
             with
         )
         
         switch result {
-        case .success:
-            onSuccess()
+        case .success(let departure):
+            
+            if let promise = await getPromise(id: id), promise.pid == id {
+                onSuccess(departure)
+            }
+            
+            // TODO: 업데이트한 약속을 가져오지 못했다면(nil) 에러
+            
         case .failure(let errorType):
             switch errorType {
             case .badRequest:
                 
+                // TODO:  출발지 업데이트에 실패시 에러
                 break
+                
             default:
+                
                 // Other Error(Network, badUrl ...)
                 break
+                
             }
         }
     }
@@ -142,7 +193,7 @@ class MainVM: NSObject {
     func leavePromise() {
         guard let promise = currentFocusedPromise, !promise.pid.isEmpty else { return }
         let id = promise.pid
-        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+        let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
         
 //        if isOwner {
 //            return

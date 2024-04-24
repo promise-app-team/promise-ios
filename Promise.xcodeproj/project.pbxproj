@@ -26,6 +26,8 @@
 		6675A5AFDDE51E6D2EA8220F /* Pods_PromiseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E46B9D17C8AC616391C471C9 /* Pods_PromiseTests.framework */; };
 		7FFF9ABCE5C706FC51D3B2B9 /* Pods_Promise_PromiseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */; };
 		A3EC68EF17FE9D66AE58961C /* Pods_Promise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A909466D7EC73DBADB1D2CD4 /* Pods_Promise.framework */; };
+		D4312FE52BC80B4A0072F389 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = D4312FE42BC80B4A0072F389 /* SwiftJWT */; };
+		D4312FE82BC80F1A0072F389 /* appleAuthKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */; };
 		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
 		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
 		D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */; };
@@ -43,6 +45,7 @@
 		D4968B962B737772009C6014 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B952B737772009C6014 /* UIFont.swift */; };
 		D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4968B972B7377CD009C6014 /* LayoutHelper.swift */; };
 		D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D497715E2B5FF860005DF103 /* AttendanceHelper.swift */; };
+		D4C4CDAF2BD3644A002F0206 /* DynamicDestinationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */; };
 		D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */; };
 		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
@@ -191,6 +194,7 @@
 		ADFDB7C0C4B339F6E5621D18 /* Pods-Promise-PromiseUITests.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise-PromiseUITests.debug (development).xcconfig"; path = "Target Support Files/Pods-Promise-PromiseUITests/Pods-Promise-PromiseUITests.debug (development).xcconfig"; sourceTree = "<group>"; };
 		BAF4E08C267DD0E79D88427C /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		BAFA329588C2ED9E3C2DC671 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = appleAuthKey.p8; path = ../../../Downloads/appleAuthKey.p8; sourceTree = "<group>"; };
 		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
 		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
 		D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusMoreMenuContentView.swift; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 		D4968B952B737772009C6014 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		D4968B972B7377CD009C6014 /* LayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutHelper.swift; sourceTree = "<group>"; };
 		D497715E2B5FF860005DF103 /* AttendanceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceHelper.swift; sourceTree = "<group>"; };
+		D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDestinationHelper.swift; sourceTree = "<group>"; };
 		D4C8D11A2B67DB74008AD1EC /* PromiseListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseListEmptyView.swift; sourceTree = "<group>"; };
 		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
@@ -320,6 +325,7 @@
 				E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
 				FC516E032A6D108400709F1E /* JWTDecode in Frameworks */,
+				D4312FE52BC80B4A0072F389 /* SwiftJWT in Frameworks */,
 				FCD160882B08742A0093FD30 /* SkeletonView in Frameworks */,
 				FCB991792A5B049200B82924 /* KakaoSDKUser in Frameworks */,
 				FCD552622ADC08B700C6869A /* Lottie in Frameworks */,
@@ -656,6 +662,7 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
+				D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */,
 				D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */,
 				D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */,
 				D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */,
@@ -730,6 +737,7 @@
 				D4968B972B7377CD009C6014 /* LayoutHelper.swift */,
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
 				D492BE832B88557D00F6269A /* MapHelper.swift */,
+				D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -950,6 +958,7 @@
 				FC516E022A6D108400709F1E /* JWTDecode */,
 				FCD552722ADC271F00C6869A /* Lottie */,
 				FCD160872B08742A0093FD30 /* SkeletonView */,
+				D4312FE42BC80B4A0072F389 /* SwiftJWT */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -1037,6 +1046,7 @@
 				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 				FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1054,6 +1064,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4312FE82BC80F1A0072F389 /* appleAuthKey.p8 in Resources */,
 				FC41B2722A782A2900C1C592 /* XCImages.xcassets in Resources */,
 				FC59032D2A76A76A00778305 /* openapi.json in Resources */,
 				FC59034F2A76D08300778305 /* Localizable.strings in Resources */,
@@ -1329,6 +1340,7 @@
 				D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
+				D4C4CDAF2BD3644A002F0206 /* DynamicDestinationHelper.swift in Sources */,
 				FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */,
 				FC41B2652A78231500C1C592 /* Fonts.swift in Sources */,
 				2BBA019D2B4F7B0700B1039A /* KakaoPlaceMDL.swift in Sources */,
@@ -1981,6 +1993,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
@@ -2064,6 +2084,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D4312FE42BC80B4A0072F389 /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
 		E7B91DD22A78C73400426D81 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;

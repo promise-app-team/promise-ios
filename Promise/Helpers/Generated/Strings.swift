@@ -249,6 +249,8 @@ internal enum L10n {
       internal enum DynamicPlace {
         /// 두 명 이상 출발지를 설정해주세요
         internal static let placeholder = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholder", fallback: "두 명 이상 출발지를 설정해주세요")
+        /// 중간 장소를 정하고 있어요
+        internal static let placeholderForAttendee = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholderForAttendee", fallback: "중간 장소를 정하고 있어요")
         /// 중간 장소를 확인해주세요
         internal static let requestConfirm = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.requestConfirm", fallback: "중간 장소를 확인해주세요")
       }

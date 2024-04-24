@@ -14,7 +14,7 @@ class FormThemeCollectionView: UIView {
     private let label = {
         let label = UILabel()
         label.text = L10n.CreatePromise.formThemeLabel
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +80,7 @@ class FormThemeCollectionView: UIView {
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            themeList.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 9),
+            themeList.topAnchor.constraint(equalTo: label.bottomAnchor, constant: adjustedValue(9, .height)),
             themeList.leadingAnchor.constraint(equalTo: leadingAnchor),
             themeList.trailingAnchor.constraint(equalTo: trailingAnchor),
             themeList.bottomAnchor.constraint(equalTo: bottomAnchor),
