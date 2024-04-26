@@ -10,12 +10,139 @@ import UIKit
 @_spi(Generated) import OpenAPIRuntime
 
 class CreatePromiseVM: NSObject {
-    var currentVC: UIViewController?
+    var currentVC: CreatePromiseVC?
     
-    var isEditingPromise = false
+    var capturedEditingPromiseTitle: String? = nil
+    var capturedEditingPromiseDate: SelectionDate? = nil
+    var capturedEditingPromiseThemes: [SelectableTheme]? = nil
+    var capturedEditingPromisePlaceType: Components
+        .Schemas
+        .InputUpdatePromiseDTO
+        .destinationTypePayload? = nil
+    var capturedEditingPromisePlace: Components
+        .Schemas
+        .InputUpdatePromiseDTO
+        .destinationPayload? = nil
+    var capturedEditingPromiseShareLocationStartType: Components
+        .Schemas
+        .InputUpdatePromiseDTO
+        .locationShareStartTypePayload? = nil
+    var capturedEditingPromiseShareLocationStartValue: Double? = nil
+    var capturedEditingPromiseShareLocationEndValue: Double? = nil
     
+    var editingPromise: Components.Schemas.PromiseDTO? = nil {
+        didSet {
+            guard let editingPromise else { return }
+            
+            let title = editingPromise.title
+            self.title = title
+            self.capturedEditingPromiseTitle = title
+            
+            let date = SelectionDate(originDate: editingPromise.promisedAt)
+            self.date = date
+            self.capturedEditingPromiseDate = date
+            
+            // MARK: 테마는 CreatePromiseVC/lazyConfigureAfterInitializeSubviews에서 세팅
+            
+            switch editingPromise.destinationType {
+            case.STATIC:
+                
+                self.placeType = .STATIC
+                self.capturedEditingPromisePlaceType = .STATIC
+                
+                // TODO: 약속 수정시 확인
+                let destination = editingPromise.destination?.value1
+                let place = Components
+                    .Schemas
+                    .InputUpdatePromiseDTO
+                    .destinationPayload(value1: .init(
+                        city: destination?.city ?? "",
+                        district: destination?.district ?? "",
+                        address: destination?.address ?? "",
+                        latitude: destination?.latitude ?? 0,
+                        longitude: destination?.longitude ?? 0)
+                    )
+                
+                self.place = place
+                self.capturedEditingPromisePlace = place
+                
+            case .DYNAMIC:
+                self.placeType = .DYNAMIC
+                self.capturedEditingPromisePlaceType = .DYNAMIC
+                
+                // TODO: 중간장소일 경우
+                break
+            }
+            
+            // MARK: 타입별 위치 공유 시작 시간
+            switch editingPromise.locationShareStartType {
+            case .DISTANCE:
+                self.shareLocationStartType = .DISTANCE
+                self.capturedEditingPromiseShareLocationStartType = .DISTANCE
+                
+                let originItmes = shareLocationStartBasedOnDistanceInfo.originItmes
+                let value = String(Int(editingPromise.locationShareStartValue))
+                
+                let itemIndex = originItmes.firstIndex { $0 == value }
+                guard let itemIndex else { break }
+                
+                let items = shareLocationStartBasedOnDistanceInfo.items
+                let item = items[itemIndex]
+                
+                let selectionItem = SelectionItem(
+                    itemText: item,
+                    itemIndex: itemIndex
+                )
+                self.shareLocationStartValue = selectionItem
+                self.capturedEditingPromiseShareLocationStartValue = editingPromise.locationShareStartValue
+                
+            case .TIME:
+                self.shareLocationStartType = .TIME
+                self.capturedEditingPromiseShareLocationStartType = .TIME
+                
+                let originItmes = shareLocationStartBasedOnTimeInfo.originItmes
+                let value = String(Int(editingPromise.locationShareStartValue))
+
+                let itemIndex = originItmes.firstIndex { $0 == value }
+                guard let itemIndex else { break }
+                
+                let items = shareLocationStartBasedOnTimeInfo.items
+                let item = items[itemIndex]
+                
+                let selectionItem = SelectionItem(
+                    itemText: item,
+                    itemIndex: itemIndex
+                )
+                self.shareLocationStartValue = selectionItem
+                self.capturedEditingPromiseShareLocationStartValue = editingPromise.locationShareStartValue
+            }
+            
+            
+            // MARK: 위치 공유 종료 시간
+            let originItmes = shareLocationEndInfo.originItmes
+            let value = String(Int(editingPromise.locationShareEndValue))
+
+            let itemIndex = originItmes.firstIndex { $0 == value }
+            guard let itemIndex else { return }
+            
+            let items = shareLocationEndInfo.items
+            let item = items[itemIndex]
+            
+            let selectionItem = SelectionItem(
+                itemText: item,
+                itemIndex: itemIndex
+            )
+            self.shareLocationEndValue = selectionItem
+            self.capturedEditingPromiseShareLocationEndValue = editingPromise.locationShareEndValue
+        
+        }
+    }
+    
+    var titleDidChange: ((String) -> Void)?
     var title = "" {
         didSet {
+            guard !title.isEmpty else { return }
+            titleDidChange?(title)
             updateForm(keyPath: \.title, value: title)
         }
     }
@@ -33,6 +160,7 @@ class CreatePromiseVM: NSObject {
     var themesDidChange: (([SelectableTheme]) -> Void)?
     var themes: [SelectableTheme] = [] {
         didSet {
+            
             themesDidChange?(themes)
             updateForm(keyPath: \.themes, value: themes)
         }
@@ -65,26 +193,49 @@ class CreatePromiseVM: NSObject {
     let shareLocationStartBasedOnDistanceInfo = ShareLocationStartBasedOnDistanceInfo()
     let shareLocationStartBasedOnTimeInfo = ShareLocationStartBasedOnTimeInfo()
     
-    lazy var shareLocationStart = shareLocationStartBasedOnDistanceInfo.initialItem {
+    var shareLocationStartValueDidChange: ((SelectionItem) -> Void)?
+    lazy var shareLocationStartValue = shareLocationStartBasedOnDistanceInfo.initialItem {
         didSet {
             switch(shareLocationStartType) {
             case .DISTANCE:
-                if let originItem = shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStart.itemIndex) {
-                    updateForm(keyPath: \.shareLocationStart, value: originItem)
+                
+                shareLocationStartValueDidChange?(shareLocationStartValue)
+                
+                if let originItem = shareLocationStartBasedOnDistanceInfo
+                    .getOriginItem(at: shareLocationStartValue.itemIndex) {
+                    
+                    updateForm(keyPath: \.shareLocationStartValue, value: originItem)
+                    
                 }
+                
             case .TIME:
-                if let originItem = shareLocationStartBasedOnTimeInfo.getOriginItem(at: shareLocationStart.itemIndex) {
-                    updateForm(keyPath: \.shareLocationStart, value: originItem)
+                    
+                shareLocationStartValueDidChange?(shareLocationStartValue)
+                
+                if let originItem = shareLocationStartBasedOnTimeInfo
+                    .getOriginItem(at: shareLocationStartValue.itemIndex) {
+                    
+                    updateForm(keyPath: \.shareLocationStartValue, value: originItem)
+                    
                 }
+                
             }
         }
     }
     
     let shareLocationEndInfo = ShareLocationEndInfo()
-    lazy var shareLocationEnd = shareLocationEndInfo.initialItem {
+    
+    var shareLocationEndValueDidChange: ((SelectionItem) -> Void)?
+    lazy var shareLocationEndValue = shareLocationEndInfo.initialItem {
         didSet {
-            if let originItem = shareLocationEndInfo.getOriginItem(at: shareLocationEnd.itemIndex) {
-                updateForm(keyPath: \.shareLocationEnd, value: originItem)
+            
+            shareLocationEndValueDidChange?(shareLocationEndValue)
+            
+            if let originItem = shareLocationEndInfo
+                .getOriginItem(at: shareLocationEndValue.itemIndex) {
+                
+                updateForm(keyPath: \.shareLocationEndValue, value: originItem)
+                
             }
         }
     }
@@ -96,15 +247,15 @@ class CreatePromiseVM: NSObject {
         placeType: placeType,
         place: place,
         shareLocationStartType: shareLocationStartType,
-        shareLocationStart: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStart.itemIndex)!,
-        shareLocationEnd: shareLocationEndInfo.getOriginItem(at: shareLocationEnd.itemIndex)!
+        shareLocationStartValue: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStartValue.itemIndex)!,
+        shareLocationEndValue: shareLocationEndInfo.getOriginItem(at: shareLocationEndValue.itemIndex)!
     ) {
         didSet {
             validateForm(form)
         }
     }
     
-    init(currentVC: UIViewController? = nil) {
+    init(currentVC: CreatePromiseVC? = nil) {
         self.currentVC = currentVC
     }
     
@@ -116,6 +267,53 @@ class CreatePromiseVM: NSObject {
     
     var assignOnVaildateForm: ((Bool) -> Void)?
     private func validateForm(_ form: PromiseForm) {
+        
+        // MARK: 약속 수정인 경우 validate
+        if let editingPromise = self.editingPromise,
+           let title = self.capturedEditingPromiseTitle,
+           let date = self.capturedEditingPromiseDate,
+           let placeType = self.capturedEditingPromisePlaceType,
+           let place = self.capturedEditingPromisePlace,
+           let shareLocationStartType = self.capturedEditingPromiseShareLocationStartType,
+           let shareLocationStartValue = self.capturedEditingPromiseShareLocationStartValue,
+           let shareLocationEndValue = self.capturedEditingPromiseShareLocationEndValue
+        {
+            if form.title.isEmpty {
+                assignOnVaildateForm?(false)
+                return
+            }
+            
+            
+            if form.title == title &&
+               form.date?.originDate == date.originDate &&
+               form.placeType == placeType &&
+               form.place == place &&
+               form.shareLocationStartType == shareLocationStartType &&
+               form.shareLocationStartValue == shareLocationStartValue &&
+               form.shareLocationEndValue == shareLocationEndValue
+            {
+                if let capturedThemes = capturedEditingPromiseThemes {
+                    
+                    let selectedThemes = self.themes.filter { $0.isSelected }
+                    let selectedThemeIdsSet = Set(selectedThemes.compactMap { $0.id })
+                    
+                    let capturedSelectedThemes = capturedThemes.filter({ $0.isSelected })
+                    let capturedSelectedThemeIdsSet = Set(capturedSelectedThemes.compactMap { $0.id })
+                    
+                    if selectedThemeIdsSet != capturedSelectedThemeIdsSet {
+                        assignOnVaildateForm?(true)
+                        return
+                    }
+                }
+                
+                assignOnVaildateForm?(false)
+                return
+            }
+            
+            assignOnVaildateForm?(true)
+            return
+        }
+        
         guard !form.title.isEmpty else {
             assignOnVaildateForm?(false)
             return
@@ -170,12 +368,12 @@ class CreatePromiseVM: NSObject {
         self.shareLocationStartType = type
     }
     
-    func onChangedShareLocationStart(shareLocationStart: SelectionItem) {
-        self.shareLocationStart = shareLocationStart
+    func onChangedShareLocationStartValue(shareLocationStartValue: SelectionItem) {
+        self.shareLocationStartValue = shareLocationStartValue
     }
     
-    func onChangedShareLocationEnd(shareLocationEnd: SelectionItem) {
-        self.shareLocationEnd = shareLocationEnd
+    func onChangedShareLocationEndValue(shareLocationEndValue: SelectionItem) {
+        self.shareLocationEndValue = shareLocationEndValue
     }
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
@@ -186,9 +384,9 @@ class CreatePromiseVM: NSObject {
             destinationType: form.placeType,
             destination: form.placeType == .STATIC ? form.place : nil,
             locationShareStartType: form.shareLocationStartType,
-            locationShareStartValue: form.shareLocationStart,
-            locationShareEndType: Components.Schemas.InputUpdatePromiseDTO.locationShareEndTypePayload.TIME,
-            locationShareEndValue: form.shareLocationEnd
+            locationShareStartValue: form.shareLocationStartValue,
+            locationShareEndType: .TIME,
+            locationShareEndValue: form.shareLocationEndValue
         )
         
         Task {
@@ -218,16 +416,33 @@ class CreatePromiseVM: NSObject {
         return dateFormatter.string(from: date)
     }
     
-    func getSupportedTheme() async {
+    func getSupportedTheme(initSelectedThemes: [Components.Schemas.ThemeDTO]? = nil) async {
         themesLoading = true
         
         let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
         
         switch result {
         case .success(let themes):
-            self.themes = themes.map { themeEntity in
-                return SelectableTheme(id: themeEntity.id, theme: themeEntity.name, isSelected: false)
+            var selectedThemeIds: Set<Double> = Set()
+            
+            if let initSelectedThemes {
+                selectedThemeIds = Set(initSelectedThemes.compactMap { $0.id })
             }
+            
+             let selectableThemes = themes.map { originTheme in
+                
+                return SelectableTheme(
+                    id: originTheme.id,
+                    theme: originTheme.name,
+                    // contains 시간복잡도 O(1)
+                    isSelected: selectedThemeIds.contains(originTheme.id)
+                )
+                
+            }
+            
+            self.themes = selectableThemes
+            self.capturedEditingPromiseThemes = selectableThemes
+            
         case .failure(let errorType):
             switch errorType {
             case .badRequest:

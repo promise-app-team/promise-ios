@@ -14,8 +14,8 @@ struct PromiseForm {
     var placeType: Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload
     var place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload?
     var shareLocationStartType: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload
-    var shareLocationStart: Double
-    var shareLocationEnd: Double
+    var shareLocationStartValue: Double
+    var shareLocationEndValue: Double
 }
 
 struct SelectableTheme {
@@ -57,7 +57,7 @@ struct SelectionDate {
 }
 
 struct SelectionItem {
-    let item: String
+    let itemText: String
     let itemIndex: Int
 }
 
@@ -77,18 +77,21 @@ struct ShareLocationStartBasedOnDistanceInfo {
         self.kilometersText = kilometers.map { "\($0)\(L10n.Common.km)" }
         
         self.items = metersText + kilometersText
-        self.initialItem = SelectionItem(item: items[9], itemIndex: 9)
+        self.initialItem = SelectionItem(itemText: items[9], itemIndex: 9)
     }
     
     func getOriginItem(at index: Int) -> Double? {
-        if index >= 0 && index < items.count {
+        if index >= 0 && index < originItmes.count {
             return Double(originItmes[index])
         }
         
         return nil
     }
+    
+    func getPrefixedItemText(itemText: String) -> String {
+        return "\(L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix) \(itemText)"
+    }
 }
-
 
 struct ShareLocationStartBasedOnTimeInfo {
     let minutes = ["10", "20", "30", "40", "50"]
@@ -106,15 +109,19 @@ struct ShareLocationStartBasedOnTimeInfo {
         self.hoursText = hours.map { "\($0)\(L10n.Common.hour) \(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemSuffix)" }
         
         self.items = minutesText + hoursText
-        self.initialItem = SelectionItem(item: items[5], itemIndex: 5)
+        self.initialItem = SelectionItem(itemText: items[5], itemIndex: 5)
     }
     
     func getOriginItem(at index: Int) -> Double? {
-        if index >= 0 && index < items.count {
+        if index >= 0 && index < originItmes.count {
             return Double(originItmes[index])
         }
         
         return nil
+    }
+    
+    func getPrefixedItemText(itemText: String) -> String {
+        return "\(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix) \(itemText)"
     }
 }
 
@@ -136,7 +143,7 @@ struct ShareLocationEndInfo {
         self.maxText = "\(L10n.CreatePromise.ShareLocationEnd.max)"
         
         self.items = minutesText + hoursText + [maxText]
-        self.initialItem = SelectionItem(item: items[5], itemIndex: 5)
+        self.initialItem = SelectionItem(itemText: items[5], itemIndex: 5)
     }
     
     func getOriginItem(at index: Int) -> Double? {

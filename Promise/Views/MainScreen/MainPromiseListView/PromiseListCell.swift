@@ -55,6 +55,7 @@ class PromiseListCell: UICollectionViewCell {
     
     private var dynamicDestinationState: DynamicDestinationState? = nil
     
+    private var promise: Components.Schemas.PromiseDTO? = nil
     private var attendees: [Components.Schemas.AttendeeDTO] = []
     private var isOwner = false {
         didSet {
@@ -337,20 +338,20 @@ class PromiseListCell: UICollectionViewCell {
             return
         }
         
-        guard let topVC = parentViewController() else { return }
-        let createPromiseVC = CreatePromiseVC(isEditing: true)
+        guard let topVC = parentViewController(), let promise else { return }
+        let createPromiseVC = CreatePromiseVC(with: promise)
         topVC.navigationController?.pushViewController(createPromiseVC, animated: true)
     }
     
-    private func assignThemesToTaggedThemes(with themes: [String]) {
+    private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
         // 기존의 뷰들을 스택 뷰에서 제거
         taggedThemes.arrangedSubviews.forEach {
             taggedThemes.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         
-        themes.forEach { themeTitle in
-            let taggedTheme = createTaggedTheme(themeTitle)
+        themes.forEach { theme in
+            let taggedTheme = createTaggedTheme(theme.name)
             taggedThemes.addArrangedSubview(taggedTheme)
         }
     }
@@ -439,6 +440,8 @@ class PromiseListCell: UICollectionViewCell {
                 self?.contentView.showAnimatedGradientSkeleton(transition: .crossDissolve(0.25))
                 return
             }
+            
+            self?.promise = promise
             
             self?.contentView.hideSkeleton(transition: .crossDissolve(0.25))
             

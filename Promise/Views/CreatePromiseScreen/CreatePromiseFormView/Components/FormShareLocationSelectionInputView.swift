@@ -150,9 +150,12 @@ class FormShareLocationSelectionInputView: UIView {
         CommonModalManager.shared.show(content: pickerModalContent, from: currentVC)
     }
     
-    private func updateInputButtonText(text: String) {
-        selected.text = text
+    public func updateInputButtonText(displayText: String, item: SelectionItem) {
+        selected.text = displayText
+        picker.selectRow(item.itemIndex, inComponent: 0, animated: true)
+        currentItem = item
         layoutIfNeeded()
+        
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -175,10 +178,10 @@ class FormShareLocationSelectionInputView: UIView {
         
         if let initialItemIndex {
             self.initialItemIndex = initialItemIndex
-            self.currentItem = SelectionItem(item: items[initialItemIndex], itemIndex: initialItemIndex)
+            self.currentItem = SelectionItem(itemText: items[initialItemIndex], itemIndex: initialItemIndex)
         } else {
             self.initialItemIndex = 0
-            self.currentItem = SelectionItem(item: items[0], itemIndex: 0)
+            self.currentItem = SelectionItem(itemText: items[0], itemIndex: 0)
         }
         
         if let placeholder {
@@ -190,20 +193,27 @@ class FormShareLocationSelectionInputView: UIView {
         }
         
         super.init(frame: .null)
-        CommonModalManager.shared.delegate = self
-        configureFormShareLocationSelectionInputView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        configure()
+        render()
+        
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormShareLocationSelectionInputView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         
+        CommonModalManager.shared.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func render() {
         [inputButton].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
@@ -255,16 +265,24 @@ extension FormShareLocationSelectionInputView: UIPickerViewDelegate, UIPickerVie
         
         guard let item = items?[row] else { return }
         
-        let selectionItem = SelectionItem(item: item, itemIndex: row)
+        let selectionItem = SelectionItem(itemText: item, itemIndex: row)
         let updateText = delegate?.onSelect(selected: selectionItem)
         
         currentItem = selectionItem
         
         guard let updateText else {
-            updateInputButtonText(text: item)
+            
+            updateInputButtonText(
+                displayText: item,
+                item: selectionItem
+            )
+            
             return
         }
         
-        updateInputButtonText(text: updateText)
+        updateInputButtonText(
+            displayText: updateText,
+            item: selectionItem
+        )
     }
 }

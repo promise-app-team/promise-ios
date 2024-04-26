@@ -52,7 +52,7 @@ class FormThemeTagCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureFormThemeTagCell(with selectableTheme: SelectableTheme) {
+    func configureCell(with selectableTheme: SelectableTheme) {
         themeTag.text = selectableTheme.theme
         
         if(selectableTheme.isSelected) {

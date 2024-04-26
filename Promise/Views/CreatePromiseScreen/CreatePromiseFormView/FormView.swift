@@ -10,7 +10,6 @@ import UIKit
 
 class FormView: UIScrollView {
     private var createPromiseVM: CreatePromiseVM
-    private lazy var isEditingPromise = createPromiseVM.isEditingPromise
     
     private lazy var formTitleView = FormTitleView(vm: createPromiseVM)
     private lazy var formDateView = FormDateView(vm: createPromiseVM)
@@ -45,16 +44,19 @@ class FormView: UIScrollView {
     init(vm: CreatePromiseVM) {
         self.createPromiseVM = vm
         super.init(frame: .null)
-        configureFormView()
+        configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        
+    }
+    
+    private func render() {
         [contentView].forEach { addSubview($0) }
         [formStackView].forEach { contentView.addSubview($0) }
         

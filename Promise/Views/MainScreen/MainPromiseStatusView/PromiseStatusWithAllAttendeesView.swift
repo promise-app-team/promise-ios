@@ -659,15 +659,15 @@ class PromiseStatusWithAllAttendeesView: UIView {
     
     // MARK: handler
     
-    private func assignThemesToTaggedThemes(with themes: [String]) {
+    private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
         // 기존의 뷰들을 스택 뷰에서 제거
         taggedThemes.arrangedSubviews.forEach {
             taggedThemes.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         
-        themes.forEach { themeTitle in
-            let taggedTheme = createTaggedTheme(themeTitle)
+        themes.forEach { theme in
+            let taggedTheme = createTaggedTheme(theme.name)
             taggedThemes.addArrangedSubview(taggedTheme)
         }
     }

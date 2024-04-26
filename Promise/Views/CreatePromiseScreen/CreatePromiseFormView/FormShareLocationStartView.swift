@@ -13,7 +13,7 @@ class FormShareLocationStartView: UIView {
     
     private let label = {
         let label = UILabel()
-        label.text = L10n.CreatePromise.formShareLocationStartTimeLabel
+        label.text = L10n.CreatePromise.Form.shareLocationStartTimeLabel
         label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
@@ -41,7 +41,7 @@ class FormShareLocationStartView: UIView {
             currentVC: createPromiseVM.currentVC,
             items: items,
             initialItemIndex: initialItem.itemIndex,
-            placeholder: "\(L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix) \(initialItem.item)",
+            placeholder: "\(L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix) \(initialItem.itemText)",
             label: L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.selectionLabel
         )
         
@@ -61,7 +61,7 @@ class FormShareLocationStartView: UIView {
             currentVC: createPromiseVM.currentVC,
             items: items,
             initialItemIndex: initialItem.itemIndex,
-            placeholder: "\(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix) \(initialItem.item)",
+            placeholder: "\(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix) \(initialItem.itemText)",
             label: L10n.CreatePromise.ShareLocationStartType.BasedOnTime.selectionLabel
         )
         
@@ -73,20 +73,67 @@ class FormShareLocationStartView: UIView {
     }()
     
     private func assignShareLocationStartTypeDidChange() {
-        createPromiseVM.shareLocationStartTypeDidChange = { [weak self] type in
-            guard let self else { return }
+        createPromiseVM.shareLocationStartTypeDidChange = { type in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 switch(type) {
                 case .DISTANCE:
-                    self.shareLocationStartBasedOnDistanceInputButton.isHidden = false
-                    self.shareLocationStartBasedOnTimeInputButton.isHidden = true
+                    self?.shareLocationStartType.updateUIForSelectedTab(tab: .LEFT)
+                    self?.shareLocationStartBasedOnDistanceInputButton.isHidden = false
+                    self?.shareLocationStartBasedOnTimeInputButton.isHidden = true
                 case .TIME:
-                    self.shareLocationStartBasedOnDistanceInputButton.isHidden = true
-                    self.shareLocationStartBasedOnTimeInputButton.isHidden = false
+                    self?.shareLocationStartType.updateUIForSelectedTab(tab: .RIGHT)
+                    self?.shareLocationStartBasedOnDistanceInputButton.isHidden = true
+                    self?.shareLocationStartBasedOnTimeInputButton.isHidden = false
                 }
                 
-                self.layoutIfNeeded()
+                self?.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func assignShareLocationStartValueDidChange() {
+        createPromiseVM.shareLocationStartValueDidChange = { selectedItem in
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let shareLocationStartType = self?.createPromiseVM.shareLocationStartType else { return }
+                
+                switch shareLocationStartType {
+                case .DISTANCE:
+                    
+                    if let displayText = self?.createPromiseVM
+                        .shareLocationStartBasedOnDistanceInfo
+                        .getPrefixedItemText(
+                            itemText: selectedItem.itemText
+                        ) {
+                        
+                        self?.shareLocationStartBasedOnDistanceInputButton
+                            .updateInputButtonText(
+                                displayText: displayText,
+                                item: selectedItem
+                            )
+                        
+                    }
+                     
+                case .TIME:
+                        
+                    if let displayText = self?.createPromiseVM
+                        .shareLocationStartBasedOnTimeInfo
+                        .getPrefixedItemText(
+                            itemText: selectedItem.itemText
+                        ) {
+                        
+                        self?.shareLocationStartBasedOnTimeInputButton
+                            .updateInputButtonText(
+                                displayText: displayText,
+                                item: selectedItem
+                            )
+                        
+                    }
+                    
+                }
+                
+                self?.layoutIfNeeded()
             }
         }
     }
@@ -102,21 +149,24 @@ class FormShareLocationStartView: UIView {
     init(vm: CreatePromiseVM) {
         createPromiseVM = vm
         super.init(frame: .null)
-        
-        assignShareLocationStartTypeDidChange()
-        configureFormShareLocationStartView()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormShareLocationStartView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
+        assignShareLocationStartTypeDidChange()
+        assignShareLocationStartValueDidChange()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func render() {
         [label,
          shareLocationStartType,
          shareLocationStartBasedOnTimeInputButton,
@@ -147,27 +197,47 @@ class FormShareLocationStartView: UIView {
 
 extension FormShareLocationStartView: FormTabMenuViewDelegate, FormShareLocationSelectionInputViewDelegate {
     func onTapLeftButton() {
-        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.DISTANCE)
-        createPromiseVM.onChangedShareLocationStart(shareLocationStart: shareLocationStartBasedOnDistanceInputButton.currentItem)
+        createPromiseVM.onChangedShareLocationStartType(.DISTANCE)
+        
+        createPromiseVM
+            .onChangedShareLocationStartValue(
+                shareLocationStartValue: 
+                    shareLocationStartBasedOnDistanceInputButton
+                    .currentItem
+            )
     }
     
     func onTapRightButton() {
-        createPromiseVM.onChangedShareLocationStartType(Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.TIME)
-        createPromiseVM.onChangedShareLocationStart(shareLocationStart: shareLocationStartBasedOnTimeInputButton.currentItem)
+        createPromiseVM.onChangedShareLocationStartType(.TIME)
+        
+        createPromiseVM
+            .onChangedShareLocationStartValue(
+                shareLocationStartValue:
+                    shareLocationStartBasedOnTimeInputButton
+                    .currentItem
+            )
     }
     
     func onSelect(selected: SelectionItem) -> String? {
-        createPromiseVM.onChangedShareLocationStart(shareLocationStart: selected)
+        createPromiseVM.onChangedShareLocationStartValue(shareLocationStartValue: selected)
+        
+        let shareLocationStartBasedOnDistanceInfo = createPromiseVM.shareLocationStartBasedOnDistanceInfo
+        
+        let shareLocationStartBasedOnTimeInfo = createPromiseVM.shareLocationStartBasedOnTimeInfo
         
         let shareLocationStartType = createPromiseVM.shareLocationStartType
-        let selectedItemText = selected.item
+        let selectedItemText = selected.itemText
         
         // Update input button selected text
         switch(shareLocationStartType) {
         case .DISTANCE:
-            return "\(L10n.CreatePromise.ShareLocationStartType.BaseOnDistance.itemPrefix) \(selectedItemText)"
+            
+            return shareLocationStartBasedOnDistanceInfo.getPrefixedItemText(itemText: selectedItemText)
+            
         case .TIME:
-            return "\(L10n.CreatePromise.ShareLocationStartType.BasedOnTime.itemPrefix) \(selectedItemText)"
+            
+            return shareLocationStartBasedOnTimeInfo.getPrefixedItemText(itemText: selectedItemText)
+            
         }
     }
 }

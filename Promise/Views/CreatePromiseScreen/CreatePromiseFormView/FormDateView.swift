@@ -13,7 +13,7 @@ class FormDateView: UIView {
     
     private let label = {
         let label = UILabel()
-        label.text = L10n.CreatePromise.formDateLabel
+        label.text = L10n.CreatePromise.Form.dateLabel
         label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         
@@ -64,13 +64,13 @@ class FormDateView: UIView {
     private lazy var selectedDate = {
         let label = UILabel()
         
-        let placeholder = createPromiseVM.getTodayString()
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
+        
+        let placeholder = createPromiseVM.getTodayString()
         label.text = placeholder
         label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -106,12 +106,22 @@ class FormDateView: UIView {
     }()
     
     @objc func onTapPromiseDateInput() {
-        // 현재부터 20분 후로 변경
-        datePicker.minimumDate = Calendar.current.date(byAdding: .minute, value: 20, to: Date())
         
-        if(createPromiseVM.date == nil) {
-            let selectionDate = SelectionDate(originDate: Date())
-            createPromiseVM.onChangedDate(selectionDate)
+        if let date = createPromiseVM.date {
+            datePicker.date = date.originDate
+        } else {
+            // MARK: 선택된 날짜가 없으면 현재 날짜로 지정
+            let currentDate = Date()
+            let initialDate = SelectionDate(originDate: currentDate)
+            
+            createPromiseVM.onChangedDate(initialDate)
+            
+            // MARK: 현재 시간으로부터 20분 후 부터 설정 가능
+            datePicker.minimumDate = Calendar.current.date(
+                byAdding: .minute,
+                value: 20,
+                to: currentDate
+            )
         }
         
         KeyboardManager.shared.hideKeyboard()
@@ -127,9 +137,9 @@ class FormDateView: UIView {
         createPromiseVM.dateDidChange = { [weak self] date in
             guard let self else { return }
             
-            DispatchQueue.main.async {
-                self.selectedDate.text = date.formattedDate
-                self.selectedDate.textColor = .black
+            DispatchQueue.main.async { [weak self] in
+                self?.selectedDate.text = date.formattedDate
+                self?.selectedDate.textColor = .black
             }
         }
     }
@@ -155,20 +165,24 @@ class FormDateView: UIView {
     init(vm: CreatePromiseVM) {
         createPromiseVM = vm
         super.init(frame: .null)
-        
-        assignDateDidChange()
-        configureFormDateView()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormDateView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
+        
+        assignDateDidChange()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func render() {
         
         [label, promiseDateInput].forEach { addSubview($0) }
         
