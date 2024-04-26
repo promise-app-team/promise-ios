@@ -21,14 +21,13 @@ final class PlaceSelectionConfirmView: UIView {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주소"
+        label.text = " "
         label.font = UIFont(font: FontFamily.Pretendard.bold, size: 16)
         return label
     }()
     
-    private let roadAddressView = PlaceAddressStackView(addressType: .road, address: "도로명 주소")
-    private let regionAddressView = PlaceAddressStackView(addressType: .region, address: "지번 주소")
-
+    private let roadNameAddressView = PlaceAddressStackView(addressType: .roadName)
+    private let lotNumberAddressView = PlaceAddressStackView(addressType: .lotNumber)
     private let detailLabel: UILabel = {
         let label = UILabel()
         label.text = "상세주소"
@@ -75,27 +74,24 @@ final class PlaceSelectionConfirmView: UIView {
         addressTextField.delegate = delegate
     }
     
-    func updateTitleLabel(_ newTitle: String?) {
-        if newTitle == nil {
-            titleLabel.text = "주소"
-            return
-        }
-        titleLabel.text = newTitle
+    func clearLabel() {
+        titleLabel.text = " "
+        roadNameAddressView.clearLabelText()
+        lotNumberAddressView.clearLabelText()
     }
     
-    func updateAddressLabel(_ roadAddress: String?,_ regionAddress: String?) {
-        if let address = roadAddress {
-            roadAddressView.updateAddressLabel(newAddress: address)
-        }
-        if let address = regionAddress {
-            regionAddressView.updateAddressLabel(newAddress: address)
-        }
+    func updateLabel(to place: PlaceSelection) {
+        titleLabel.text = place.buildingName == "" ? "장소명 없음" : place.buildingName
+        let roadName = (place.roadNameAddress == "") ? "없음" : place.roadNameAddress
+        let lotNumber = (place.lotNumberAddress == "") ? "없음" : place.lotNumberAddress
+        roadNameAddressView.updateAddressLabel(newAddress: roadName)
+        lotNumberAddressView.updateAddressLabel(newAddress: lotNumber)
     }
     
     // MARK: Private Function
     
     private func render() {
-        [titleLabel, roadAddressView, regionAddressView, detailLabel, addressTextField, confirmButton].forEach {
+        [titleLabel, roadNameAddressView, lotNumberAddressView, detailLabel, addressTextField, confirmButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
@@ -104,15 +100,15 @@ final class PlaceSelectionConfirmView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            roadAddressView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            roadAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            roadAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            roadNameAddressView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            roadNameAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            roadNameAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
           
-            regionAddressView.topAnchor.constraint(equalTo: roadAddressView.bottomAnchor, constant: 8),
-            regionAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            regionAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            lotNumberAddressView.topAnchor.constraint(equalTo: roadNameAddressView.bottomAnchor, constant: 8),
+            lotNumberAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            lotNumberAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            detailLabel.topAnchor.constraint(equalTo: regionAddressView.bottomAnchor, constant: 16),
+            detailLabel.topAnchor.constraint(equalTo: lotNumberAddressView.bottomAnchor, constant: 16),
             detailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             detailLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             

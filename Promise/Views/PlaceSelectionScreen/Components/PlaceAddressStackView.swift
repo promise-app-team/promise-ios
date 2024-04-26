@@ -10,33 +10,38 @@ import UIKit
 final class PlaceAddressStackView: UIStackView {
     
     enum AddressType {
-        case road, region
+        case roadName, lotNumber
     }
     
     private var addressType: AddressType
     
-    private lazy var addressIconLabel: UILabel = {
+    private lazy var addressTitleLabel: UILabel = {
         let label = UILabel()
+        switch addressType {
+        case .roadName:
+            label.text = "도로명"
+        case .lotNumber:
+            label.text = "지번"
+        }
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
-        label.text = addressType == .road ? "도로명" : "지번"
         label.widthAnchor.constraint(equalToConstant: 33).isActive = true
         return label
     }()
     
-    private let addressLabel: UILabel = {
+    private let addressDetailLabel: UILabel = {
         let label = UILabel()
+        label.text = "없음"
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         return label
     }()
     
-    init(addressType: AddressType, address: String) {
+    init(addressType: AddressType) {
         self.addressType = addressType
-        addressLabel.text = address
         super.init(frame: .zero)
         
-        addArrangedSubview(addressIconLabel)
-        addArrangedSubview(addressLabel)
+        addArrangedSubview(addressTitleLabel)
+        addArrangedSubview(addressDetailLabel)
         axis = .horizontal
         distribution = .fill
         spacing = 4
@@ -48,7 +53,11 @@ final class PlaceAddressStackView: UIStackView {
     
     // MARK: Public Function
     
+    func clearLabelText() {
+        addressDetailLabel.text = nil
+    }
+    
     func updateAddressLabel(newAddress: String) {
-        addressLabel.text = newAddress
+        addressDetailLabel.text = newAddress
     }
 }
