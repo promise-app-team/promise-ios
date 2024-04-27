@@ -10,6 +10,17 @@ import UIKit
 
 protocol CreatePromiseDelegate: AnyObject {
     func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO)
+    func onDidUpdatePromise(updatedPromise: Components.Schemas.PromiseDTO)
+}
+
+extension CreatePromiseDelegate {
+    func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO) {
+        // 기본적으로 아무 작업도 수행하지 않음
+    }
+
+    func onDidUpdatePromise(updatedPromise: Components.Schemas.PromiseDTO) {
+        // 기본적으로 아무 작업도 수행하지 않음
+    }
 }
 
 class CreatePromiseVC: UIViewController {
@@ -59,15 +70,21 @@ class CreatePromiseVC: UIViewController {
     }()
     
     @objc func onTapCreatePromiseButton() {
-        createPromiseVM.submit { [weak self] createdPromise in
-            guard let createdPromise else { return }
-            self?.delegate?.onDidCreatePromise(createdPromise: createdPromise)
+        createPromiseVM.submit { [weak self] promise in
+            guard let promise else { return }
             
-            DispatchQueue.main.async {
-                let completedCreatePromiseVC = CompletedCreatePromiseVC()
-                completedCreatePromiseVC.createdPromiseId = Int(createdPromise.pid)
-                self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+            if let _ = self?.editingPromise {
+                self?.delegate?.onDidUpdatePromise(updatedPromise: promise)
+            } else {
+                self?.delegate?.onDidCreatePromise(createdPromise: promise)
+                
+                DispatchQueue.main.async {
+                    let completedCreatePromiseVC = CompletedCreatePromiseVC()
+                    completedCreatePromiseVC.createdPromiseId = Int(promise.pid)
+                    self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+                }
             }
+            
         }
     }
     

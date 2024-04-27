@@ -158,6 +158,18 @@ internal enum L10n {
       }
     }
   }
+  internal enum GetPromise {
+    internal enum Error {
+      /// 해당 약속 정보를 가져오는데 실패했습니다.
+      internal static let message = L10n.tr("Localizable", "GetPromise.Error.message", fallback: "해당 약속 정보를 가져오는데 실패했습니다.")
+      /// 약속 업데이트 실패
+      internal static let title = L10n.tr("Localizable", "GetPromise.Error.title", fallback: "약속 업데이트 실패")
+    }
+    internal enum NotFoundPromise {
+      /// 약속 정보를 가져왔지만 현재 약속 리스트에 업데이트 할 수 없습니다.
+      internal static let message = L10n.tr("Localizable", "GetPromise.NotFoundPromise.message", fallback: "약속 정보를 가져왔지만 현재 약속 리스트에 업데이트 할 수 없습니다.")
+    }
+  }
   internal enum GuideAttendee {
     /// 약속하러 가기
     internal static let attend = L10n.tr("Localizable", "GuideAttendee.attend", fallback: "약속하러 가기")
@@ -309,6 +321,12 @@ internal enum L10n {
     internal static let invitedToPromise = L10n.tr("Localizable", "TaggedNotification.invitedToPromise", fallback: "띵동! 약속에 초대 받았어요")
     /// 모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요
     internal static let middlePlaceWarning = L10n.tr("Localizable", "TaggedNotification.middlePlaceWarning", fallback: "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요")
+  }
+  internal enum UpdatePromise {
+    internal enum Update {
+      /// 약속이 수정되었어요
+      internal static let successToastMessage = L10n.tr("Localizable", "UpdatePromise.Update.successToastMessage", fallback: "약속이 수정되었어요")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

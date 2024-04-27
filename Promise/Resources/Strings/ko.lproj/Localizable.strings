@@ -54,6 +54,14 @@
 "Main.SortPromiseList.dateTimeQuickOrder" = "약속시간 빠른순";
 "Main.SortPromiseList.dateTimeLateOrder" = "약속시간 늦은순";
 
+// MARK: Get Promise
+"GetPromise.Error.title" = "약속 업데이트 실패";
+"GetPromise.Error.message" = "해당 약속 정보를 가져오는데 실패했습니다.";
+"GetPromise.NotFoundPromise.message" = "약속 정보를 가져왔지만 현재 약속 리스트에 업데이트 할 수 없습니다.";
+
+
+// MARK: UpdatePromiseScreen
+"UpdatePromise.Update.successToastMessage" = "약속이 수정되었어요";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.Create.headerTitle" = "새 약속 추가";

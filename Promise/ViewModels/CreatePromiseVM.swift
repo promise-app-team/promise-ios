@@ -174,8 +174,8 @@ class CreatePromiseVM: NSObject {
         }
     }
     
-    var placeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload) -> Void)?
-    var place = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.48436353, longitude: 126.92972946)) {
+    var placeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload?) -> Void)?
+    var place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload? = nil {
         didSet {
             placeDidChange?(place)
             updateForm(keyPath: \.place, value: place)
@@ -269,11 +269,10 @@ class CreatePromiseVM: NSObject {
     private func validateForm(_ form: PromiseForm) {
         
         // MARK: 약속 수정인 경우 validate
-        if let editingPromise = self.editingPromise,
+        if let _ = self.editingPromise,
            let title = self.capturedEditingPromiseTitle,
            let date = self.capturedEditingPromiseDate,
            let placeType = self.capturedEditingPromisePlaceType,
-           let place = self.capturedEditingPromisePlace,
            let shareLocationStartType = self.capturedEditingPromiseShareLocationStartType,
            let shareLocationStartValue = self.capturedEditingPromiseShareLocationStartValue,
            let shareLocationEndValue = self.capturedEditingPromiseShareLocationEndValue
@@ -283,15 +282,22 @@ class CreatePromiseVM: NSObject {
                 return
             }
             
+            let isEmptySelectedThemes = form.themes.filter{ $0.isSelected }.isEmpty
+            if isEmptySelectedThemes {
+                assignOnVaildateForm?(false)
+                return
+            }
             
             if form.title == title &&
                form.date?.originDate == date.originDate &&
                form.placeType == placeType &&
-               form.place == place &&
+               // MARK: 장소는 nillable
+               form.place == self.capturedEditingPromisePlace &&
                form.shareLocationStartType == shareLocationStartType &&
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
             {
+                
                 if let capturedThemes = capturedEditingPromiseThemes {
                     
                     let selectedThemes = self.themes.filter { $0.isSelected }
@@ -324,7 +330,7 @@ class CreatePromiseVM: NSObject {
             return
         }
         
-        let isExistSelectedThemes = !themes.filter{ $0.isSelected }.isEmpty
+        let isExistSelectedThemes = !form.themes.filter{ $0.isSelected }.isEmpty
         guard isExistSelectedThemes else {
             assignOnVaildateForm?(false)
             return
@@ -435,12 +441,15 @@ class CreatePromiseVM: NSObject {
     }
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
+        // TODO: 임시, form.place로 변경해야함.
+        let tempStaticPlace = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.48436353, longitude: 126.92972946))
+        
         let submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
-            destination: form.placeType == .STATIC ? form.place : nil,
+            destination: form.placeType == .STATIC ? tempStaticPlace : form.place,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStartValue,
             locationShareEndType: .TIME,

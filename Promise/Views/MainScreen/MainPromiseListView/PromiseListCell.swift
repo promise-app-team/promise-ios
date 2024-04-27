@@ -52,6 +52,7 @@ class AttendeeCellForCard: UICollectionViewCell {
 }
 
 class PromiseListCell: UICollectionViewCell {
+    var mainVM: MainVM? = nil
     
     private var dynamicDestinationState: DynamicDestinationState? = nil
     
@@ -338,9 +339,9 @@ class PromiseListCell: UICollectionViewCell {
             return
         }
         
-        guard let topVC = parentViewController(), let promise else { return }
-        let createPromiseVC = CreatePromiseVC(with: promise)
-        topVC.navigationController?.pushViewController(createPromiseVC, animated: true)
+        
+        guard let mainVM, let promise else { return }
+        mainVM.navigateUpdatePromiseScreen(with: promise)
     }
     
     private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
