@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditProfileVC: UIViewController, UITextFieldDelegate {
+class EditProfileVC: UIViewController, UITextFieldDelegate, PopoverViewDelegate {
     
     let editView: UIView = {
         let view = UIView()
@@ -89,6 +89,21 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
         label.font = UIFont.pretendard(style: .C_R)
         label.textAlignment = .right
         return label
+    }()
+    
+    lazy var popoverView: PopoverView = {
+        
+        let popoverView = PopoverView(
+            from: PopoverTarget(x: nil, y: 191, target: editView),
+            in: self,
+            contentView: SelectUserImageButtonView(),
+            isEnableDimmingView: true,
+            paddingHorizontal: adjustedValue(16, .height)
+        )
+
+        popoverView.delegate = self
+
+        return popoverView
     }()
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -214,10 +229,7 @@ class EditProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func userImageButtonTapped() {
-        print("userImageButtonTapped()")
-        let selectUserImageVC = SelectUserImageVC()
-        selectUserImageVC.modalPresentationStyle = .overFullScreen
-        present(selectUserImageVC, animated: true, completion: nil)
+        popoverView.show()
     }
     
 }
