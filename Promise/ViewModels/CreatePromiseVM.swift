@@ -376,7 +376,10 @@ class CreatePromiseVM: NSObject {
         self.shareLocationEndValue = shareLocationEndValue
     }
     
-    func requestCreatePromise(with submitForm: Components.Schemas.InputUpdatePromiseDTO) {
+    func requestCreatePromise(
+        with submitForm: Components.Schemas.InputUpdatePromiseDTO,
+        _ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)
+    ) {
         Task {
             let result: Result<Components.Schemas.PromiseDTO, NetworkError> = await APIService.shared.fetch(
                 .POST,
@@ -401,11 +404,16 @@ class CreatePromiseVM: NSObject {
         }
     }
     
-    func requestEditPromise(with: submitForm: Components.Schemas.InputUpdatePromiseDTO) {
+    func requestEditPromise(
+        with submitForm: Components.Schemas.InputUpdatePromiseDTO,
+        _ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)
+    ) {
+        guard let editingPromise else { return }
+        
         Task {
-            let result: Result<Components.Schemas, NetworkError> = await APIService.shared.fetch(
+            let result: Result<Components.Schemas.PromiseDTO, NetworkError> = await APIService.shared.fetch(
                 .PUT,
-                "/promises/\(editingPromise.id)",
+                "/promises/\(editingPromise.pid)",
                 nil,
                 submitForm
             )
@@ -416,7 +424,7 @@ class CreatePromiseVM: NSObject {
             case .failure(let errorType):
                 switch errorType {
                 case .badRequest:
-                    // TODO: 약속 생성 에러 핸들링
+                    // TODO: 약속 업데이트 에러 핸들링
                     break
                 default:
                     // Other Error(Network, badUrl ...)
@@ -440,9 +448,9 @@ class CreatePromiseVM: NSObject {
         )
         
         if let _ = editingPromise {
-            requestEditPromise(with: submitForm)
+            requestEditPromise(with: submitForm, completion)
         } else {
-            requestCreatePromise(with: submitForm)
+            requestCreatePromise(with: submitForm, completion)
         }
         
     }

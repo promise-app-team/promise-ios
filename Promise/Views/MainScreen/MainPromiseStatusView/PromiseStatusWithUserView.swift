@@ -269,7 +269,7 @@ class PromiseStatusWithUserView: UIView {
     
     @objc func onTapDepartureLocationLabel() {
         guard let topVC = parentViewController() else { return }
-        let placeSelectionVC = PlaceSelectionVC()
+        let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: false)
         placeSelectionVC.delegate = self
         topVC.navigationController?.pushViewController(placeSelectionVC, animated: true)
     }

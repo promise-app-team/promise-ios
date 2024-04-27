@@ -192,7 +192,7 @@ class FormPlaceView: UIView {
     }()
     
     @objc private func onTapSelectPlaceButton(){
-        let placeSelectionVC = PlaceSelectionVC()
+        let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: true)
         placeSelectionVC.delegate = self
         createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
     }
