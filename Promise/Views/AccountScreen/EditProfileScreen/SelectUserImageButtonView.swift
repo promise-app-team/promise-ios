@@ -11,6 +11,8 @@ import UIKit
 
 class SelectUserImageButtonView: UIView {
     
+    weak var parentViewController: UIViewController?
+    
     let contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -39,7 +41,7 @@ class SelectUserImageButtonView: UIView {
     lazy var cancelButton: Button = {
         let button = Button()
         button.initialize(title: L10n.Common.cancel, style: .secondary, iconTitle: "", disabled: false)
-        //        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -84,4 +86,9 @@ class SelectUserImageButtonView: UIView {
             cancelButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
+    
+    @objc func cancelButtonTapped() {
+        parentViewController?.dismiss(animated: true, completion: nil)
+    }
+
 }
