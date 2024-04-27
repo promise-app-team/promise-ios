@@ -376,21 +376,14 @@ class CreatePromiseVM: NSObject {
         self.shareLocationEndValue = shareLocationEndValue
     }
     
-    func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
-        let submitForm = Components.Schemas.InputUpdatePromiseDTO(
-            title: form.title,
-            themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
-            promisedAt: form.date!.iso8601String,
-            destinationType: form.placeType,
-            destination: form.placeType == .STATIC ? form.place : nil,
-            locationShareStartType: form.shareLocationStartType,
-            locationShareStartValue: form.shareLocationStartValue,
-            locationShareEndType: .TIME,
-            locationShareEndValue: form.shareLocationEndValue
-        )
-        
+    func requestCreatePromise(with submitForm: Components.Schemas.InputUpdatePromiseDTO) {
         Task {
-            let result: Result<Components.Schemas.PromiseDTO, NetworkError> = await APIService.shared.fetch(.POST, "/promises", nil, submitForm)
+            let result: Result<Components.Schemas.PromiseDTO, NetworkError> = await APIService.shared.fetch(
+                .POST,
+                "/promises",
+                nil,
+                submitForm
+            )
             
             switch result {
             case .success(let createdPromise):
@@ -406,6 +399,52 @@ class CreatePromiseVM: NSObject {
                 }
             }
         }
+    }
+    
+    func requestEditPromise(with: submitForm: Components.Schemas.InputUpdatePromiseDTO) {
+        Task {
+            let result: Result<Components.Schemas, NetworkError> = await APIService.shared.fetch(
+                .PUT,
+                "/promises/\(editingPromise.id)",
+                nil,
+                submitForm
+            )
+            
+            switch result {
+            case .success(let createdPromise):
+                completion(createdPromise)
+            case .failure(let errorType):
+                switch errorType {
+                case .badRequest:
+                    // TODO: 약속 생성 에러 핸들링
+                    break
+                default:
+                    // Other Error(Network, badUrl ...)
+                    break
+                }
+            }
+        }
+    }
+    
+    func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
+        let submitForm = Components.Schemas.InputUpdatePromiseDTO(
+            title: form.title,
+            themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
+            promisedAt: form.date!.iso8601String,
+            destinationType: form.placeType,
+            destination: form.placeType == .STATIC ? form.place : nil,
+            locationShareStartType: form.shareLocationStartType,
+            locationShareStartValue: form.shareLocationStartValue,
+            locationShareEndType: .TIME,
+            locationShareEndValue: form.shareLocationEndValue
+        )
+        
+        if let _ = editingPromise {
+            requestEditPromise(with: submitForm)
+        } else {
+            requestCreatePromise(with: submitForm)
+        }
+        
     }
     
     func getTodayString() -> String {
