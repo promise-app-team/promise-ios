@@ -220,7 +220,7 @@ extension SignInVM: ASAuthorizationControllerDelegate {
             let totalName = "\(fullName?.familyName ?? "") \(fullName?.givenName ?? "")"
             let trimmedNickname = totalName.trimmingCharacters(in: .whitespaces)
             let nickname = trimmedNickname.isEmpty ? "" : totalName
-            let profileUrl = ""
+            let profileUrl = "2"
             
             Task { [weak self] in
                 await self?.getUserAuthToken(username: nickname, profileUrl: profileUrl , provider: .APPLE, providerId: providerId)

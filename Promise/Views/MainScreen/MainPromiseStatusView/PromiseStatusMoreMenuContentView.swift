@@ -86,8 +86,17 @@ class PromiseStatusMoreMenuContentView: UIView {
     // MARK: handler
     
     @objc private func onTapEditPromise() {
-        // TODO:
-        print(#function)
+        
+        CommonModalManager.shared.dismiss { [weak self] in
+            guard let promise = self?.mainVM.currentFocusedPromise else { return }
+            
+            let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
+            guard isOwner else { return }
+            
+            let createPromiseVC = CreatePromiseVC(with: promise)
+            self?.mainVM.currentVC?.navigationController?.pushViewController(createPromiseVC, animated: true)
+        }
+
     }
     
     @objc private func onTapDelegatePromise() {

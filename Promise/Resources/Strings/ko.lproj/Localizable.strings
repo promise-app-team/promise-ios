@@ -44,6 +44,7 @@
 
 "Main.PromiseList.DynamicPlace.placeholder" = "두 명 이상 출발지를 설정해주세요";
 "Main.PromiseList.DynamicPlace.requestConfirm" = "중간 장소를 확인해주세요";
+"Main.PromiseList.DynamicPlace.placeholderForAttendee" = "중간 장소를 정하고 있어요";
 
 "Main.Probee.Guidance.share" = "공유 아이콘으로 약속에 초대할 수 있어요!";
 "Main.Probee.Guidance.Share.highlight" = "공유 아이콘";
@@ -55,15 +56,19 @@
 
 
 // MARK: CreatePromiseScreen
-"CreatePromise.headerTitle" = "새 약속 추가";
-"CreatePromise.createPromiseButtonTitle" = "약속 생성";
-"CreatePromise.formTitleLabel" = "약속 제목";
-"CreatePromise.formDateLabel" = "약속 시간";
-"CreatePromise.formThemeLabel" = "약속 테마";
-"CreatePromise.formPlaceLabel" = "약속 장소";
-"CreatePromise.formShareLocationStartTimeLabel" = "위치 공유 시작 시간";
-"CreatePromise.formShareLocationEndTimeLabel" = "위치 공유 종료 시간";
-"CreatePromise.promiseTitleInputPlaceholder" = "ex) 독서모임 1회차";
+"CreatePromise.Create.headerTitle" = "새 약속 추가";
+"CreatePromise.Create.submitButtonTitle" = "약속 생성";
+
+"CreatePromise.Edit.headerTitle" = "약속 수정";
+"CreatePromise.Edit.submitButtonTitle" = "수정 확인";
+
+"CreatePromise.Form.titleInputPlaceholder" = "ex) 독서모임 1회차";
+"CreatePromise.Form.titleLabel" = "약속 제목";
+"CreatePromise.Form.dateLabel" = "약속 시간";
+"CreatePromise.Form.themeLabel" = "약속 테마";
+"CreatePromise.Form.placeLabel" = "약속 장소";
+"CreatePromise.Form.shareLocationStartTimeLabel" = "위치 공유 시작 시간";
+"CreatePromise.Form.shareLocationEndTimeLabel" = "위치 공유 종료 시간";
 
 "CreatePromise.PlaceType.designation" = "장소 지정";
 "CreatePromise.PlaceType.middle" = "중간 장소";

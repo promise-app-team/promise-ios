@@ -81,28 +81,38 @@ internal enum L10n {
     }
   }
   internal enum CreatePromise {
-    /// 약속 생성
-    internal static let createPromiseButtonTitle = L10n.tr("Localizable", "CreatePromise.createPromiseButtonTitle", fallback: "약속 생성")
-    /// 약속 시간
-    internal static let formDateLabel = L10n.tr("Localizable", "CreatePromise.formDateLabel", fallback: "약속 시간")
-    /// 약속 장소
-    internal static let formPlaceLabel = L10n.tr("Localizable", "CreatePromise.formPlaceLabel", fallback: "약속 장소")
-    /// 위치 공유 종료 시간
-    internal static let formShareLocationEndTimeLabel = L10n.tr("Localizable", "CreatePromise.formShareLocationEndTimeLabel", fallback: "위치 공유 종료 시간")
-    /// 위치 공유 시작 시간
-    internal static let formShareLocationStartTimeLabel = L10n.tr("Localizable", "CreatePromise.formShareLocationStartTimeLabel", fallback: "위치 공유 시작 시간")
-    /// 약속 테마
-    internal static let formThemeLabel = L10n.tr("Localizable", "CreatePromise.formThemeLabel", fallback: "약속 테마")
-    /// 약속 제목
-    internal static let formTitleLabel = L10n.tr("Localizable", "CreatePromise.formTitleLabel", fallback: "약속 제목")
-    /// 새 약속 추가
-    internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.headerTitle", fallback: "새 약속 추가")
     /// 중간 장소는 어떻게 설정되나요?
     internal static let promiseMiddlePlaceGuidance = L10n.tr("Localizable", "CreatePromise.promiseMiddlePlaceGuidance", fallback: "중간 장소는 어떻게 설정되나요?")
     /// 도로명, 지번, 건물명 검색
     internal static let promisePlaceInputPlaceholder = L10n.tr("Localizable", "CreatePromise.promisePlaceInputPlaceholder", fallback: "도로명, 지번, 건물명 검색")
-    /// ex) 독서모임 1회차
-    internal static let promiseTitleInputPlaceholder = L10n.tr("Localizable", "CreatePromise.promiseTitleInputPlaceholder", fallback: "ex) 독서모임 1회차")
+    internal enum Create {
+      /// 새 약속 추가
+      internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.Create.headerTitle", fallback: "새 약속 추가")
+      /// 약속 생성
+      internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Create.submitButtonTitle", fallback: "약속 생성")
+    }
+    internal enum Edit {
+      /// 약속 수정
+      internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.Edit.headerTitle", fallback: "약속 수정")
+      /// 수정 확인
+      internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Edit.submitButtonTitle", fallback: "수정 확인")
+    }
+    internal enum Form {
+      /// 약속 시간
+      internal static let dateLabel = L10n.tr("Localizable", "CreatePromise.Form.dateLabel", fallback: "약속 시간")
+      /// 약속 장소
+      internal static let placeLabel = L10n.tr("Localizable", "CreatePromise.Form.placeLabel", fallback: "약속 장소")
+      /// 위치 공유 종료 시간
+      internal static let shareLocationEndTimeLabel = L10n.tr("Localizable", "CreatePromise.Form.shareLocationEndTimeLabel", fallback: "위치 공유 종료 시간")
+      /// 위치 공유 시작 시간
+      internal static let shareLocationStartTimeLabel = L10n.tr("Localizable", "CreatePromise.Form.shareLocationStartTimeLabel", fallback: "위치 공유 시작 시간")
+      /// 약속 테마
+      internal static let themeLabel = L10n.tr("Localizable", "CreatePromise.Form.themeLabel", fallback: "약속 테마")
+      /// ex) 독서모임 1회차
+      internal static let titleInputPlaceholder = L10n.tr("Localizable", "CreatePromise.Form.titleInputPlaceholder", fallback: "ex) 독서모임 1회차")
+      /// 약속 제목
+      internal static let titleLabel = L10n.tr("Localizable", "CreatePromise.Form.titleLabel", fallback: "약속 제목")
+    }
     internal enum PlaceType {
       /// 장소 지정
       internal static let designation = L10n.tr("Localizable", "CreatePromise.PlaceType.designation", fallback: "장소 지정")
@@ -233,6 +243,8 @@ internal enum L10n {
       internal enum DynamicPlace {
         /// 두 명 이상 출발지를 설정해주세요
         internal static let placeholder = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholder", fallback: "두 명 이상 출발지를 설정해주세요")
+        /// 중간 장소를 정하고 있어요
+        internal static let placeholderForAttendee = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.placeholderForAttendee", fallback: "중간 장소를 정하고 있어요")
         /// 중간 장소를 확인해주세요
         internal static let requestConfirm = L10n.tr("Localizable", "Main.PromiseList.DynamicPlace.requestConfirm", fallback: "중간 장소를 확인해주세요")
       }

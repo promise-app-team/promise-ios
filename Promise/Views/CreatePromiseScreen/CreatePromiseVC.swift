@@ -17,14 +17,38 @@ class CreatePromiseVC: UIViewController {
     
     private lazy var createPromiseVM = CreatePromiseVM(currentVC: self)
     
-    private lazy var headerView = HeaderView(navigationController: createPromiseVM.currentVC?.navigationController, title: L10n.CreatePromise.headerTitle)
+    var editingPromise: Components.Schemas.PromiseDTO? = nil
+
+    private lazy var headerView = {
+        var headerTitle = ""
+        
+        if let editingPromise {
+            headerTitle = L10n.CreatePromise.Edit.headerTitle
+        } else {
+            headerTitle = L10n.CreatePromise.Create.headerTitle
+        }
+        
+        return HeaderView(
+            navigationController: createPromiseVM.currentVC?.navigationController,
+            title: headerTitle
+        )
+    }()
+    
     
     private lazy var formView = FormView(vm: createPromiseVM)
     
     private lazy var createPromiseButton = {
+        var buttonTitle = ""
+        
+        if let editingPromise {
+            buttonTitle = L10n.CreatePromise.Edit.submitButtonTitle
+        } else {
+            buttonTitle = L10n.CreatePromise.Create.submitButtonTitle
+        }
+        
         let button = Button()
         button.initialize(
-            title: L10n.CreatePromise.createPromiseButtonTitle,
+            title: buttonTitle,
             style: .primary,
             iconTitle: "",
             disabled: true //TODO: 폼 입력 여부에 따라 활성화
@@ -47,31 +71,6 @@ class CreatePromiseVC: UIViewController {
         }
     }
     
-    func setupAutoLayout() {
-        let safeLayoutGuide = view.safeAreaLayoutGuide
-        
-        NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: 56),
-            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -24)
-        ])
-        
-        NSLayoutConstraint.activate([
-            createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -20),
-            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + 3),
-        ])
-    }
-    
     func assignOnVaildateForm() {
         createPromiseVM.assignOnVaildateForm = { [weak self] isVaild in
             guard let self else { return }
@@ -86,15 +85,26 @@ class CreatePromiseVC: UIViewController {
         }
     }
     
+    init(with promise: Components.Schemas.PromiseDTO? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        self.editingPromise = promise
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        assignOnVaildateForm()
-        configureCreatePromiseVC()
+        configure()
         render()
     }
     
-    func configureCreatePromiseVC() {
+    func configure() {
         view.backgroundColor = .white
+        
+        assignOnVaildateForm()
+        
         KeyboardManager.shared.delegate = self
         KeyboardManager.shared.registerVC(self)
     }
@@ -105,7 +115,47 @@ class CreatePromiseVC: UIViewController {
             formView,
             createPromiseButton,
         ].forEach { view.addSubview($0) }
-        setupAutoLayout()
+        
+        let safeLayoutGuide = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            headerView.heightAnchor.constraint(equalToConstant: adjustedValue(56, .height)),
+            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -adjustedValue(24, .height))
+        ])
+        
+        NSLayoutConstraint.activate([
+            createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -adjustedValue(20, .height)),
+            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + adjustedValue(3, .height)),
+        ])
+        
+        // MARK: subviews가 모두 초기화 된 이후 실행
+        lazyConfigureAfterInitializeSubviews()
+    }
+    
+    func lazyConfigureAfterInitializeSubviews() {
+        // MARK: 수정할 약속 세팅
+        createPromiseVM.editingPromise = editingPromise
+
+        
+        Task {
+            // MARK: 수정할 약속의 선택된 themes를 모든 테마를 가져올 때 초기화
+            // 전체 테마를 가져오기 전에 editingPromise가 있어야 하는데
+            // getSupportedTheme 내부에서 editingPromise 참조해도 되지만
+            // 여기서 직접 paramater로 전달
+            await createPromiseVM.getSupportedTheme(initSelectedThemes: editingPromise?.themes)
+        }
+        
     }
 }
 

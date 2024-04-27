@@ -222,14 +222,14 @@ class InvitationPopUp {
     }()
     
     private lazy var taggedThemes = {
-        let taggedTheme = invitedPromise.themes.map { themeTitle in
+        let taggedTheme = invitedPromise.themes.map { theme in
             let insetLabel = InsetLabel()
             insetLabel.topInset = 3
             insetLabel.bottomInset = 3
             insetLabel.leftInset = 8
             insetLabel.rightInset = 8
             
-            insetLabel.text = themeTitle
+            insetLabel.text = theme.name
             insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
             insetLabel.textColor = UIColor(red: 0.898, green: 0.702, blue: 0.204, alpha: 1)
             insetLabel.backgroundColor = UIColor(red: 1, green: 0.976, blue: 0.922, alpha: 1)
@@ -419,7 +419,7 @@ class InvitationPopUp {
             Task { [weak self] in
                 guard let targetPromise = self?.invitedPromise else { return }
                 
-                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attend")
+                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attendees")
                 
                 switch result {
                 case .success:
@@ -492,7 +492,7 @@ extension InvitationPopUp {
 extension InvitationPopUp: APIServiceDelegate {
     func onLoading(path: String?, isLoading: Bool) {
         switch(path) {
-        case "/promises/\(invitedPromise.pid)/attend":
+        case "/promises/\(invitedPromise.pid)/attendees":
             if(isLoading) {
                 self.delegate?.onLoadingAttendPromise()
             }

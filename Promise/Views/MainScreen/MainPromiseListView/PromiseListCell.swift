@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SkeletonView
 
-
 class AttendeeCellForCard: UICollectionViewCell {
     static let identifier = "AttendeeCellForCard"
     
@@ -53,6 +52,10 @@ class AttendeeCellForCard: UICollectionViewCell {
 }
 
 class PromiseListCell: UICollectionViewCell {
+    
+    private var dynamicDestinationState: DynamicDestinationState? = nil
+    
+    private var promise: Components.Schemas.PromiseDTO? = nil
     private var attendees: [Components.Schemas.AttendeeDTO] = []
     private var isOwner = false {
         didSet {
@@ -267,10 +270,15 @@ class PromiseListCell: UICollectionViewCell {
         return view
     }()
     
-    private let place = {
+    private lazy var place = {
         let label = UILabel()
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(13, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapPlace))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -321,15 +329,29 @@ class PromiseListCell: UICollectionViewCell {
         topVC.present(activityViewController, animated: true, completion: nil)
     }
     
-    private func assignThemesToTaggedThemes(with themes: [String]) {
+    @objc private func onTapPlace() {
+        guard isOwner else { return }
+        
+        if dynamicDestinationState == nil
+            || dynamicDestinationState == .notConfigurable
+        {
+            return
+        }
+        
+        guard let topVC = parentViewController(), let promise else { return }
+        let createPromiseVC = CreatePromiseVC(with: promise)
+        topVC.navigationController?.pushViewController(createPromiseVC, animated: true)
+    }
+    
+    private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
         // 기존의 뷰들을 스택 뷰에서 제거
         taggedThemes.arrangedSubviews.forEach {
             taggedThemes.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         
-        themes.forEach { themeTitle in
-            let taggedTheme = createTaggedTheme(themeTitle)
+        themes.forEach { theme in
+            let taggedTheme = createTaggedTheme(theme.name)
             taggedThemes.addArrangedSubview(taggedTheme)
         }
     }
@@ -411,51 +433,58 @@ class PromiseListCell: UICollectionViewCell {
         ])
     }
     
-    func configureCell(with promise: Components.Schemas.PromiseDTO?, at indexPath: IndexPath) {
-        guard let promise else {
-            contentView.showAnimatedGradientSkeleton(transition: .crossDissolve(0.25))
-            return
-        }
-        
-        contentView.hideSkeleton(transition: .crossDissolve(0.25))
-        
-        assignThemesToTaggedThemes(with: promise.themes)
-        
-        // 공유 링크 세팅
-        let sharePromiseId = promise.pid
-        if(!sharePromiseId.isEmpty) {
-            self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
-        }
-        
-        // TimeInterval을 Date 객체로 변환
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
-        
-        promisedAt.text = dateFormatter.string(from: promise.promisedAt)
-        
-        title.text = promise.title
-        
-        switch promise.destinationType {
-        case .DYNAMIC:
-            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
-            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
-        case .STATIC:
-            if let destination = promise.destination {
-                place.text = destination.value1.address
-                place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+    func configureCell(with promise: Components.Schemas.PromiseDTO?) {
+        DispatchQueue.main.async { [weak self] in
+            
+            guard let promise else {
+                self?.contentView.showAnimatedGradientSkeleton(transition: .crossDissolve(0.25))
+                return
             }
+            
+            self?.promise = promise
+            
+            self?.contentView.hideSkeleton(transition: .crossDissolve(0.25))
+            
+            self?.assignThemesToTaggedThemes(with: promise.themes)
+            
+            // 공유 링크 세팅
+            let sharePromiseId = promise.pid
+            if(!sharePromiseId.isEmpty) {
+                self?.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
+            }
+            
+            // TimeInterval을 Date 객체로 변환
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
+            
+            self?.promisedAt.text = dateFormatter.string(from: promise.promisedAt)
+            
+            self?.title.text = promise.title
+            
+            switch promise.destinationType {
+            case .STATIC:
+                
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.address
+                    self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                }
+                
+            case .DYNAMIC:
+                self?.updateDynamicDestination(promise: promise)
+            }
+            
+            self?.host.text = promise.host.username
+            
+            self?.attendeesCount.text = "(\(promise.attendees.count))"
+            self?.attendees = promise.attendees
+            
+            // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
+            self?.attendeesView.reloadData()
+            
+            self?.isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
+            
         }
-        
-        host.text = promise.host.username
-        
-        attendeesCount.text = "(\(promise.attendees.count))"
-        attendees = promise.attendees
-        
-        // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
-        attendeesView.reloadData()
-        
-        self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }
     
     func updateBorder(focusRatio: CGFloat) {
@@ -467,6 +496,55 @@ class PromiseListCell: UICollectionViewCell {
         contentView.layer.borderWidth = borderWidth * focusRatio
         contentView.layer.borderColor = UIColor.transition(from: unfocusedColor, to: focusedColor, with: focusRatio).cgColor
     }
+    
+    func updateDynamicDestination(promise: Components.Schemas.PromiseDTO) {
+        
+        DispatchQueue.main.async { [weak self] in
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: promise)
+            
+            switch state {
+                
+            case .notConfigurable:
+                
+                self?.dynamicDestinationState = .notConfigurable
+                self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            case .configurable:
+                
+                self?.dynamicDestinationState = .configurable
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+                if let isOwner = self?.isOwner, isOwner {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.requestConfirm
+                    
+                } else {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholderForAttendee
+                    
+                }
+                
+            case .configured:
+                
+                self?.dynamicDestinationState = .configured
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                
+            case .newlyConfigurable:
+                
+                self?.dynamicDestinationState = .newlyConfigurable
+                self?.place.text = promise.destination?.value1.address
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            }
+            
+        }
+        
+    }
+    
+    
 }
 
 extension PromiseListCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

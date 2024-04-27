@@ -16,8 +16,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
     private let mainVM: MainVM
     
     private let promiseStatusContent: CommonFloatingContentVC
-    private let promiseStatusWithUserView: PromiseStatusWithUserView
-    private let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
+    
+    let promiseStatusWithUserView: PromiseStatusWithUserView
+    let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
     
     private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
         didSet {
@@ -72,11 +73,14 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.readyToParent()
         LocationService.shared.delegate = self
         self.promiseStatusContent.delegate = self
+        
+        LocationService.shared.start()
+        WebsocketService.shared.connect(withQueryItems: [URLQueryItem(name: "to", value: "broadcast")])
     }
 }
 
 extension PromiseStatusView {
-    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO) {
+    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
         promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
         promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
     }
@@ -101,9 +105,6 @@ extension PromiseStatusView: CommonFloatingContentVCDelegate {
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
         switch fpc.state {
         case .full:
-            
-            LocationService.shared.start()
-            
             break;
         case .half:
             break;

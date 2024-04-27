@@ -37,7 +37,7 @@ struct AttendanceHelper {
         case .success(let promise):
             if let user = UserService.shared.getUser() {
                 let userId = user.userId
-                if(userId == String(Int(promise.host.id))) {
+                if userId == Int(promise.host.id) {
                     return (false, promise, nil)
                 }
                 
