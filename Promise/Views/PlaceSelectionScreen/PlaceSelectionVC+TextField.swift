@@ -32,7 +32,7 @@ extension PlaceSelectionVC: UITextFieldDelegate {
         case searchTextField:
             
             switch viewState {
-            case .none:
+            case .idle:
                 viewState = .onSearch
             default:
                 break
@@ -58,7 +58,7 @@ extension PlaceSelectionVC: UITextFieldDelegate {
         case searchTextField:
             switch viewState {
             case .onSearch:
-                viewState = .none
+                viewState = .idle
             default:
                 break
             }

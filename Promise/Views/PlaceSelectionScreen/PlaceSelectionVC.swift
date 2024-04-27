@@ -22,13 +22,14 @@ struct PlaceSelection {
     var buildingName: String = ""
     var lotNumberAddress: String = ""
     var roadNameAddress: String = ""
+    var userInputAddress: String?
     var lat: Double = 37.5664056 // 시청
     var lon: Double = 126.9778222
 }
 
 class PlaceSelectionVC: UIViewController {
     enum SearchStatus {
-        case none
+        case idle
         case onSearch
         case searchFail
         case searchResult
@@ -40,11 +41,12 @@ class PlaceSelectionVC: UIViewController {
     weak var delegate: PlaceSelectionDelegate?
     weak var dataDelegate: PlaceSelectionDataDelegate?
     
-    var viewState: SearchStatus = .none {
+    var isSearchBarFocused: Bool
+    var viewState: SearchStatus = .idle {
         didSet {
             headerView.isUserInteractionEnabled = (viewState == .onSearch) ? false : true
             switch self.viewState {
-            case .none:
+            case .idle:
                 print("❤️")
                 naverMapView.mapView.addCameraDelegate(delegate: self)
                 // 현재 위치로 지도 보여줌
@@ -116,14 +118,14 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: - Initialize
     
-//    init(status: SearchStatus = .none) {
-//        self.viewState = state
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(isSearchBarFocused: Bool) {
+        self.isSearchBarFocused = isSearchBarFocused
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
 //    init(delegate: PlaceSelectionDelegate? = nil, dataDelegate: PlaceSelectionDataDelegate? = nil, viewState: SearchStatus, marker: NMFMarker? = nil, place: KakaoPlaceMDL? = nil, currentPlace: PlaceSelection = PlaceSelection()) {
 //        self.delegate = delegate
@@ -193,7 +195,7 @@ class PlaceSelectionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewState = .none
+//        viewState = .idle
         LocationService.shared.start()
         configureAccountVC()
         render()
@@ -211,7 +213,7 @@ class PlaceSelectionVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewState = .onSearch
+        viewState = isSearchBarFocused ? .onSearch : .idle
         delegate?.onDidShow?()
     }
     
@@ -333,7 +335,7 @@ class PlaceSelectionVC: UIViewController {
             confirmView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             confirmView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             confirmView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            confirmView.heightAnchor.constraint(equalToConstant: 300),
+            confirmView.heightAnchor.constraint(equalToConstant: 250),
         ])
     }
 }

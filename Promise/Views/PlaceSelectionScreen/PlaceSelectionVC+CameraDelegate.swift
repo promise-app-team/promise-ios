@@ -26,14 +26,21 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                 var lotNumber = ""
                 var building = ""
                 
-                // 위도경도 reverse geocoding 결과가 없는 경우
                 guard !data.results.isEmpty else {
+                    // 위도경도 reverse geocoding 결과가 없는 경우
                     self.currentPlace = PlaceSelection(buildingName: building,
                                                        lotNumberAddress: lotNumber,
                                                        roadNameAddress: roadName,
                                                        lat: position.target.lat,
                                                        lon: position.target.lng)
+//                    print("no result: ",self.currentPlace)
+                    DispatchQueue.main.async {
+                        self.confirmView.confirmButton.isDisabled = true
+                    }
                     return
+                }
+                DispatchQueue.main.async {
+                    self.confirmView.confirmButton.isDisabled = false
                 }
                 
                 let _ = data.results.filter { $0.name == "addr" }.map { addrData in
@@ -60,8 +67,11 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                 self.currentPlace = PlaceSelection(buildingName: building,
                                            lotNumberAddress: lotNumber,
                                            roadNameAddress: roadName,
+                                           userInputAddress: self.confirmView.addressTextField.text,
                                            lat: position.target.lat,
                                            lon: position.target.lng)
+                print(self.currentPlace)
+                print(data)
             }
         }
     }

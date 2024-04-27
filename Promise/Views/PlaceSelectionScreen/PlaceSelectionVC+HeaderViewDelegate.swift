@@ -13,8 +13,9 @@ extension PlaceSelectionVC: HeaderViewDelegate {
         case .searchMap:
             viewState = .searchResult
         case .searchResult:
-            viewState = .none
-        case .none:
+            viewState = .idle
+        case .idle:
+            navigationController?.popViewController(animated: true)
             dismiss(animated: true)
         default:
             break
