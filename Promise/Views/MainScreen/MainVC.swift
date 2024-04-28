@@ -260,6 +260,8 @@ final class MainVC: UIViewController {
                     self?.promiseStatusView?
                         .promiseStatusWithAllAttendeesView
                         .updatePromiseStatusWithAllAttendees(with: promise)
+                    
+                    self?.focusedCellChanged(to: indexPath, cell: nil)
                 }
                 
                 

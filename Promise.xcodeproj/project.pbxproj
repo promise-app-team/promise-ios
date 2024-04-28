@@ -29,6 +29,7 @@
 		D4312FE82BC80F1A0072F389 /* appleAuthKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */; };
 		D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */; };
 		D432331B2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */; };
+		D4336AD82BDE679D00F46573 /* DynamicDestinationSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336AD72BDE679D00F46573 /* DynamicDestinationSelectionVC.swift */; };
 		D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */; };
 		D43ABABE2BBF9DE1004E415E /* WebSocketMessageMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43ABABD2BBF9DE1004E415E /* WebSocketMessageMDL.swift */; };
 		D45112D52B8B1187008264A8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D42B8B1187008264A8 /* Double.swift */; };
@@ -197,6 +198,7 @@
 		D4312FE72BC80F1A0072F389 /* appleAuthKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = appleAuthKey.p8; path = ../../../Downloads/appleAuthKey.p8; sourceTree = "<group>"; };
 		D43233182B6DD0390020876F /* PromiseStatusWithUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithUserView.swift; sourceTree = "<group>"; };
 		D432331A2B6DD04B0020876F /* PromiseStatusWithAllAttendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusWithAllAttendeesView.swift; sourceTree = "<group>"; };
+		D4336AD72BDE679D00F46573 /* DynamicDestinationSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDestinationSelectionVC.swift; sourceTree = "<group>"; };
 		D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusMoreMenuContentView.swift; sourceTree = "<group>"; };
 		D43ABABD2BBF9DE1004E415E /* WebSocketMessageMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketMessageMDL.swift; sourceTree = "<group>"; };
 		D45112D42B8B1187008264A8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -454,6 +456,14 @@
 				FCA944042AAE0EED0015CB46 /* InsetLabel.swift */,
 			);
 			path = Label;
+			sourceTree = "<group>";
+		};
+		D4336AD62BDE676800F46573 /* DynamicDestinationSelectionScreen */ = {
+			isa = PBXGroup;
+			children = (
+				D4336AD72BDE679D00F46573 /* DynamicDestinationSelectionVC.swift */,
+			);
+			path = DynamicDestinationSelectionScreen;
 			sourceTree = "<group>";
 		};
 		D459FA512B5A36A700ED707D /* GuideAttendeeCarouselView */ = {
@@ -772,6 +782,7 @@
 		FC5974482A24D60B00A642D7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D4336AD62BDE676800F46573 /* DynamicDestinationSelectionScreen */,
 				D48FEC9B2B57E73800C43516 /* GuideAttendeeScreen */,
 				FCB3AD5C2AC2E75700219A25 /* PlaceSelectionScreen */,
 				FC4041732A8BAF520057E413 /* CreatePromiseScreen */,
@@ -1046,13 +1057,13 @@
 				FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
 				FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
-				E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift.git" */,
+				E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 				FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift.git" */,
-				FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm.git" */,
-				FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView.git" */,
-				D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT.git" */,
+				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -1267,6 +1278,7 @@
 				FC40FC192A7FB13700B699F4 /* PromiseMDL.swift in Sources */,
 				2B7DE4652B4D277000127DAA /* PlaceSelectionVC+TableView.swift in Sources */,
 				D4968B982B7377CD009C6014 /* LayoutHelper.swift in Sources */,
+				D4336AD82BDE679D00F46573 /* DynamicDestinationSelectionVC.swift in Sources */,
 				FC3356602AA4A8C900C2CC6B /* Popover.swift in Sources */,
 				FCC4B6132A9CD60A0003AD3C /* CreatePromiseVM.swift in Sources */,
 				FC40FC1B2A7FB6F600B699F4 /* NavigationView.swift in Sources */,
@@ -1393,7 +1405,7 @@
 		};
 		FCEAAB682A59DED60048192E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */;
+			productRef = FCEAAB672A59DED60048192E /* OpenAPIGenerator */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2001,7 +2013,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT.git" */ = {
+		D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
 			requirement = {
@@ -2009,7 +2021,7 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift.git" */ = {
+		E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
 			requirement = {
@@ -2025,7 +2037,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift.git" */ = {
+		FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
 			requirement = {
@@ -2041,7 +2053,7 @@
 				minimumVersion = 2.15.0;
 			};
 		};
-		FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView.git" */ = {
+		FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
 			requirement = {
@@ -2049,7 +2061,7 @@
 				minimumVersion = 1.30.4;
 			};
 		};
-		FCD552602ADC08B700C6869A /* XCRemoteSwiftPackageReference "lottie-spm.git" */ = {
+		FCD552602ADC08B700C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
@@ -2057,7 +2069,7 @@
 				minimumVersion = 4.3.3;
 			};
 		};
-		FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm.git" */ = {
+		FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
@@ -2094,12 +2106,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D4312FE42BC80B4A0072F389 /* SwiftJWT */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT.git" */;
+			package = D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
 		};
 		E7B91DD22A78C73400426D81 /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift.git" */;
+			package = E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
 			productName = SocketIO;
 		};
 		FC4A7AB82A6448790055FE4F /* GoogleSignIn */ = {
@@ -2109,7 +2121,7 @@
 		};
 		FC516E022A6D108400709F1E /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift.git" */;
+			package = FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
 			productName = JWTDecode;
 		};
 		FCB991742A5B049200B82924 /* KakaoSDKAuth */ = {
@@ -2129,17 +2141,17 @@
 		};
 		FCD160872B08742A0093FD30 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView.git" */;
+			package = FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
 		};
 		FCD552612ADC08B700C6869A /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FCD552602ADC08B700C6869A /* XCRemoteSwiftPackageReference "lottie-spm.git" */;
+			package = FCD552602ADC08B700C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 		FCD552722ADC271F00C6869A /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm.git" */;
+			package = FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 		FCEAAB552A59DBF00048192E /* OpenAPIRuntime */ = {
@@ -2152,7 +2164,7 @@
 			package = FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
 			productName = OpenAPIURLSession;
 		};
-		FCEAAB672A59DED60048192E /* plugin:OpenAPIGenerator */ = {
+		FCEAAB672A59DED60048192E /* OpenAPIGenerator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */;
 			productName = "plugin:OpenAPIGenerator";

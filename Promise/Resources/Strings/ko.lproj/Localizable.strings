@@ -67,7 +67,10 @@
 "UpdatePromise.DynamicDestination.Guidance.newlyConfigurable" = "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요";
 "UpdatePromise.DynamicDestination.selectionButtonTitle" = "중간 장소 변경";
 "UpdatePromise.DynamicDestination.Configurable.placeholder" = "중간장소를 선택해 주세요";
-// "UpdatePromise.DynamicDestination.NotConfigurable" = "";
+
+// MARK: DynamicDestinationSelectionScreen
+"DynamicDestinationSelection.headerTitle" = "중간 장소 선택";
+"DynamicDestinationSelection.confirm" = "선택 완료";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.Create.headerTitle" = "새 약속 추가";

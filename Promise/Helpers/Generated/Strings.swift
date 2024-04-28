@@ -158,6 +158,12 @@ internal enum L10n {
       }
     }
   }
+  internal enum DynamicDestinationSelection {
+    /// 선택 완료
+    internal static let confirm = L10n.tr("Localizable", "DynamicDestinationSelection.confirm", fallback: "선택 완료")
+    /// 중간 장소 선택
+    internal static let headerTitle = L10n.tr("Localizable", "DynamicDestinationSelection.headerTitle", fallback: "중간 장소 선택")
+  }
   internal enum GetPromise {
     internal enum Error {
       /// 해당 약속 정보를 가져오는데 실패했습니다.

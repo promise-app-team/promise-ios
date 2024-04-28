@@ -40,6 +40,7 @@ internal enum Asset {
   internal static let arrowRight = ImageAsset(name: "ArrowRight")
   internal static let calander = ImageAsset(name: "Calander")
   internal static let circleOutlinePlusWhite = ImageAsset(name: "CircleOutlinePlusWhite")
+  internal static let close = ImageAsset(name: "Close")
   internal static let destinationMarker = ImageAsset(name: "DestinationMarker")
   internal static let editGreen = ImageAsset(name: "EditGreen")
   internal static let editRed = ImageAsset(name: "EditRed")
