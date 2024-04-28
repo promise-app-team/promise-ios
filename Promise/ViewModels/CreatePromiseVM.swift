@@ -30,6 +30,8 @@ class CreatePromiseVM: NSObject {
     var capturedEditingPromiseShareLocationStartValue: Double? = nil
     var capturedEditingPromiseShareLocationEndValue: Double? = nil
     
+    var dynamicDestinationState: DynamicDestinationState? = nil
+    
     var editingPromise: Components.Schemas.PromiseDTO? = nil {
         didSet {
             guard let editingPromise else { return }
@@ -70,8 +72,30 @@ class CreatePromiseVM: NSObject {
                 self.placeType = .DYNAMIC
                 self.capturedEditingPromisePlaceType = .DYNAMIC
                 
-                // TODO: 중간장소일 경우
-                break
+                let helper = DynamicDestinationHelper()
+                let state = helper.getConfigurableState(promise: editingPromise)
+                self.dynamicDestinationState = state
+                
+                switch state {
+                case .notConfigurable, .configurable:
+                    break
+                case .configured, .newlyConfigurable:
+                    let destination = editingPromise.destination?.value1
+                    let place = Components
+                        .Schemas
+                        .InputUpdatePromiseDTO
+                        .destinationPayload(value1: .init(
+                            city: destination?.city ?? "",
+                            district: destination?.district ?? "",
+                            address: destination?.address ?? "",
+                            latitude: destination?.latitude ?? 0,
+                            longitude: destination?.longitude ?? 0)
+                        )
+                    
+                    self.place = place
+                    self.capturedEditingPromisePlace = place
+                    
+                }
             }
             
             // MARK: 타입별 위치 공유 시작 시간

@@ -62,6 +62,12 @@
 
 // MARK: UpdatePromiseScreen
 "UpdatePromise.Update.successToastMessage" = "약속이 수정되었어요";
+"UpdatePromise.DynamicDestination.Guidance.configurable" = "중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요";
+"UpdatePromise.DynamicDestination.Guidance.configured" = "중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요";
+"UpdatePromise.DynamicDestination.Guidance.newlyConfigurable" = "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요";
+"UpdatePromise.DynamicDestination.selectionButtonTitle" = "중간 장소 변경";
+"UpdatePromise.DynamicDestination.Configurable.placeholder" = "중간장소를 선택해 주세요";
+// "UpdatePromise.DynamicDestination.NotConfigurable" = "";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.Create.headerTitle" = "새 약속 추가";

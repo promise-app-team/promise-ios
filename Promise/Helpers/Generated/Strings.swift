@@ -323,6 +323,22 @@ internal enum L10n {
     internal static let middlePlaceWarning = L10n.tr("Localizable", "TaggedNotification.middlePlaceWarning", fallback: "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요")
   }
   internal enum UpdatePromise {
+    internal enum DynamicDestination {
+      /// 중간 장소 변경
+      internal static let selectionButtonTitle = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.selectionButtonTitle", fallback: "중간 장소 변경")
+      internal enum Configurable {
+        /// 중간장소를 선택해 주세요
+        internal static let placeholder = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Configurable.placeholder", fallback: "중간장소를 선택해 주세요")
+      }
+      internal enum Guidance {
+        /// 중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요
+        internal static let configurable = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.configurable", fallback: "중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요")
+        /// 중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요
+        internal static let configured = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.configured", fallback: "중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요")
+        /// 참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요
+        internal static let newlyConfigurable = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.newlyConfigurable", fallback: "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요")
+      }
+    }
     internal enum Update {
       /// 약속이 수정되었어요
       internal static let successToastMessage = L10n.tr("Localizable", "UpdatePromise.Update.successToastMessage", fallback: "약속이 수정되었어요")
