@@ -319,15 +319,40 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return stackView
     }()
     
-    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
+    private lazy var closeButtonWrapper = {
+        let imageView = UIImageView(image: Asset.close.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)).isActive = true
+        
+        let view = UIView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapClose))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: adjustedValue(56, .width)).isActive = true
+        return view
+    }()
     
+    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
     
     private lazy var header = {
         let view = UIView()
         
-        [headerTitle, menuWrapper].forEach { view.addSubview($0) }
+        [closeButtonWrapper, headerTitle, menuWrapper].forEach { view.addSubview($0) }
         
         NSLayoutConstraint.activate([
+            closeButtonWrapper.topAnchor.constraint(equalTo: view.topAnchor),
+            closeButtonWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            closeButtonWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             headerTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             headerTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
@@ -670,6 +695,10 @@ class PromiseStatusWithAllAttendeesView: UIView {
             let taggedTheme = createTaggedTheme(theme.name)
             taggedThemes.addArrangedSubview(taggedTheme)
         }
+    }
+    
+    @objc private func onTapClose() {
+        mainVM.currentVC?.promiseStatusView?.moveHalf()
     }
     
     @objc private func onTapCollapseButton() {

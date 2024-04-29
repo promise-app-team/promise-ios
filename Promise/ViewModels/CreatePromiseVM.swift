@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-@_spi(Generated) import OpenAPIRuntime
 
 class CreatePromiseVM: NSObject {
     var currentVC: CreatePromiseVC?

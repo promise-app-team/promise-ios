@@ -71,6 +71,8 @@
 // MARK: DynamicDestinationSelectionScreen
 "DynamicDestinationSelection.headerTitle" = "중간 장소 선택";
 "DynamicDestinationSelection.confirm" = "선택 완료";
+"DynamicDestinationSelection.DetailAddress.label" = "상세 주소";
+"DynamicDestinationSelection.DetailAddress.placeholder" = "예) 스터디룸 1번방";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.Create.headerTitle" = "새 약속 추가";

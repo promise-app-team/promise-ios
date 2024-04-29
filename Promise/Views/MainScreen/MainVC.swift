@@ -136,7 +136,7 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private var promiseStatusView: PromiseStatusView?
+    public var promiseStatusView: PromiseStatusView?
     
     // MARK: handler
     

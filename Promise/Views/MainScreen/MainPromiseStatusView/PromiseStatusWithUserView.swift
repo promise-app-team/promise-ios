@@ -195,7 +195,7 @@ class PromiseStatusWithUserView: UIView {
         insetLabel.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1)
         
         insetLabel.layer.masksToBounds = true
-        insetLabel.layer.cornerRadius = 9
+        insetLabel.layer.cornerRadius = adjustedValue(9, .width)
         insetLabel.sizeToFit()
         
         insetLabel.translatesAutoresizingMaskIntoConstraints = false
