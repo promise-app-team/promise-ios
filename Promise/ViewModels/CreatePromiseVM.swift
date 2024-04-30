@@ -22,6 +22,10 @@ class CreatePromiseVM: NSObject {
         .Schemas
         .InputUpdatePromiseDTO
         .destinationPayload? = nil
+    var capturedEditingPromiseMiddlePlace: Components
+        .Schemas
+        .InputUpdatePromiseDTO
+        .destinationPayload? = nil
     var capturedEditingPromiseShareLocationStartType: Components
         .Schemas
         .InputUpdatePromiseDTO
@@ -80,7 +84,7 @@ class CreatePromiseVM: NSObject {
                     break
                 case .configured, .newlyConfigurable:
                     let destination = editingPromise.destination?.value1
-                    let place = Components
+                    let middlePlace = Components
                         .Schemas
                         .InputUpdatePromiseDTO
                         .destinationPayload(value1: .init(
@@ -91,8 +95,8 @@ class CreatePromiseVM: NSObject {
                             longitude: destination?.longitude ?? 0)
                         )
                     
-                    self.place = place
-                    self.capturedEditingPromisePlace = place
+                    self.middlePlace = middlePlace
+                    self.capturedEditingPromiseMiddlePlace = middlePlace
                     
                 }
             }
@@ -205,6 +209,14 @@ class CreatePromiseVM: NSObject {
         }
     }
     
+    var middlePlaceDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload?) -> Void)?
+    var middlePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload? = nil {
+        didSet {
+            middlePlaceDidChange?(middlePlace)
+            updateForm(keyPath: \.middlePlace, value: middlePlace)
+        }
+    }
+    
     var shareLocationStartTypeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) -> Void)?
     var shareLocationStartType = Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.DISTANCE {
         didSet {
@@ -269,6 +281,7 @@ class CreatePromiseVM: NSObject {
         themes: [],
         placeType: placeType,
         place: place,
+        middlePlace: middlePlace,
         shareLocationStartType: shareLocationStartType,
         shareLocationStartValue: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStartValue.itemIndex)!,
         shareLocationEndValue: shareLocationEndInfo.getOriginItem(at: shareLocationEndValue.itemIndex)!
@@ -315,7 +328,8 @@ class CreatePromiseVM: NSObject {
                form.date?.originDate == date.originDate &&
                form.placeType == placeType &&
                // MARK: 장소는 nillable
-               form.place == self.capturedEditingPromisePlace &&
+                // TODO: 중간장소 validate
+                (form.place == self.capturedEditingPromisePlace || form.middlePlace == self.capturedEditingPromiseMiddlePlace) &&
                form.shareLocationStartType == shareLocationStartType &&
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
@@ -386,11 +400,23 @@ class CreatePromiseVM: NSObject {
     }
     
     func onChangedPlaceType(_ type: Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload) {
+    
+        // MARK: 장소 타입 중간장소로 변경시 출발지에 따른 상태 체크
+        if type == .DYNAMIC, let editingPromise {
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: editingPromise)
+            self.dynamicDestinationState = state
+        }
+        
         self.placeType = type
     }
     
     func onChangedPlace(_ place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
         self.place = place
+    }
+    
+    func onChangedMiddlePlace(_ middlePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
+        self.middlePlace = middlePlace
     }
     
     func onChangedShareLocationStartType(_ type: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) {
@@ -472,7 +498,7 @@ class CreatePromiseVM: NSObject {
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
-            destination: form.placeType == .STATIC ? tempStaticPlace : form.place,
+            destination: form.placeType == .STATIC ? tempStaticPlace : form.middlePlace,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStartValue,
             locationShareEndType: .TIME,

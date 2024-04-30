@@ -378,7 +378,7 @@ class FormPlaceView: UIView {
         createPromiseVM.placeTypeDidChange = { type in
             
             DispatchQueue.main.async { [weak self] in
-                if let editingPromise = self?.createPromiseVM.editingPromise {
+                if let _ = self?.createPromiseVM.editingPromise {
                     
                     switch(type) {
                     case .STATIC:
@@ -423,15 +423,28 @@ class FormPlaceView: UIView {
         }
     }
     
+    // TODO: middlePlaceDidChange
+    private func assignMiddlePlaceDidChange() {
+        createPromiseVM.middlePlaceDidChange = { [weak self] middlePlace in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                
+            }
+        }
+    }
+    
+    // TODO: placeDidChange
     private func assignPlaceDidChange() {
-        //        createPromiseVM.placeDidChange = { [weak self] place in
-        //            guard let self else { return }
-        //
-        //            DispatchQueue.main.async {
-        //                // TODO: 주소 업데이트 시 UI 업데이트
-        //
-        //            }
-        //        }
+        createPromiseVM.placeDidChange = { [weak self] place in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                
+                
+            }
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -458,6 +471,7 @@ class FormPlaceView: UIView {
         
         assignPlaceTypeDidChange()
         assignPlaceDidChange()
+        assignMiddlePlaceDidChange()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -485,11 +499,11 @@ class FormPlaceView: UIView {
 
 extension FormPlaceView: FormTabMenuViewDelegate {
     func onTapLeftButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload.STATIC)
+        createPromiseVM.onChangedPlaceType(.STATIC)
     }
     
     func onTapRightButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload.DYNAMIC)
+        createPromiseVM.onChangedPlaceType(.DYNAMIC)
     }
 }
 

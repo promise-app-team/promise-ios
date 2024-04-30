@@ -13,6 +13,7 @@ struct PromiseForm {
     var themes: [SelectableTheme]
     var placeType: Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload
     var place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload?
+    var middlePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload?
     var shareLocationStartType: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload
     var shareLocationStartValue: Double
     var shareLocationEndValue: Double
