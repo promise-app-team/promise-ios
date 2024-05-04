@@ -11,6 +11,9 @@ import UIKit
 class CreatePromiseVM: NSObject {
     var currentVC: CreatePromiseVC?
     
+    var isNewSelectedPlaceForUpdate = false
+    var isNewSelectedMiddlePlaceForUpdate = false
+    
     var capturedEditingPromiseTitle: String? = nil
     var capturedEditingPromiseDate: SelectionDate? = nil
     var capturedEditingPromiseThemes: [SelectableTheme]? = nil
@@ -328,12 +331,63 @@ class CreatePromiseVM: NSObject {
                form.date?.originDate == date.originDate &&
                form.placeType == placeType &&
                // MARK: 장소는 nillable
-                // TODO: 중간장소 validate
-                (form.place == self.capturedEditingPromisePlace || form.middlePlace == self.capturedEditingPromiseMiddlePlace) &&
                form.shareLocationStartType == shareLocationStartType &&
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
             {
+                switch placeType {
+                case .STATIC:
+                    let city = form.place?.value1.city
+                    let district = form.place?.value1.district
+                    let address = form.place?.value1.address
+                    let lat = form.place?.value1.latitude
+                    let lng = form.place?.value1.longitude
+                    
+                    let capturedCity = self.capturedEditingPromisePlace?.value1.city
+                    let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
+                    let capturedAddress = self.capturedEditingPromisePlace?.value1.address
+                    let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
+                    let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
+                    
+                    if city != capturedCity ||
+                        district != capturedDistrict ||
+                        address != capturedAddress ||
+                        lat != capturedLat ||
+                        lng != capturedLng {
+                        
+                        self.isNewSelectedPlaceForUpdate = true
+                        assignOnVaildateForm?(true)
+                        return
+                    } else {
+                        self.isNewSelectedPlaceForUpdate = false
+                    }
+                    
+                case .DYNAMIC:
+                    let city = form.middlePlace?.value1.city
+                    let district = form.middlePlace?.value1.district
+                    let address = form.middlePlace?.value1.address
+                    let lat = form.middlePlace?.value1.latitude
+                    let lng = form.middlePlace?.value1.longitude
+                    
+                    let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
+                    let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
+                    let capturedAddress = self.capturedEditingPromiseMiddlePlace?.value1.address
+                    let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
+                    let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
+                    
+                    if city != capturedCity ||
+                        district != capturedDistrict ||
+                        address != capturedAddress ||
+                        lat != capturedLat ||
+                        lng != capturedLng {
+                        
+                        self.isNewSelectedMiddlePlaceForUpdate = true
+                        assignOnVaildateForm?(true)
+                        return
+                    } else {
+                        self.isNewSelectedMiddlePlaceForUpdate = false
+                    }
+                }
                 
                 if let capturedThemes = capturedEditingPromiseThemes {
                     
@@ -524,7 +578,7 @@ class CreatePromiseVM: NSObject {
     func getSupportedTheme(initSelectedThemes: [Components.Schemas.ThemeDTO]? = nil) async {
         themesLoading = true
         
-        let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
+        let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/themes")
         
         switch result {
         case .success(let themes):

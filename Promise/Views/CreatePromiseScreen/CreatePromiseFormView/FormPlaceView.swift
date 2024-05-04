@@ -329,10 +329,28 @@ class FormPlaceView: UIView {
             self.middlePlaceGuidanceButton.isHidden = true
             self.selectPlaceButton.isHidden = false
             self.selectPlaceButton.layer.borderColor = UIColor(red: 1, green: 0.41, blue: 0.3, alpha: 1).cgColor
-            self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+            
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " " + middlePlace.value1.district + " " + (middlePlace.value1.address ?? "")
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
             
             // MARK: configuable 상태에서 middlePlaceTaggedGuidance 내용 및 색상은 초기화 시 default 구성
             self.middlePlaceTaggedGuidance.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            }
             
         case .configured:
             
@@ -346,11 +364,32 @@ class FormPlaceView: UIView {
             self.middlePlaceGuidanceButton.isHidden = true
             self.selectPlaceButton.isHidden = false
             
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " " + middlePlace.value1.district + " " + (middlePlace.value1.address ?? "")
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
+            
             self.middlePlaceTaggedGuidance.isHidden = false
-            self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.922, green: 0.957, blue: 1, alpha: 1)
-            self.middlePlaceGuidanceTaggedIcon.image = Asset.informationBlue.image
-            self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.2, green: 0.52, blue: 0.9, alpha: 1)
-            self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.configured
+            
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            } else {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.922, green: 0.957, blue: 1, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationBlue.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.2, green: 0.52, blue: 0.9, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.configured
+            }
             
             self.middlePlaceSelectionButton.isHidden = false
             
@@ -366,12 +405,33 @@ class FormPlaceView: UIView {
             self.middlePlaceGuidanceButton.isHidden = true
             self.selectPlaceButton.isHidden = false
             
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " " + middlePlace.value1.district + " " + (middlePlace.value1.address ?? "")
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
+            
             self.middlePlaceTaggedGuidance.isHidden = false
-            self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.newlyConfigurable
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            } else {
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.newlyConfigurable
+            }
             
             self.middlePlaceSelectionButton.isHidden = false
         }
         
+        self.layoutIfNeeded()
     }
     
     private func assignPlaceTypeDidChange() {
@@ -389,7 +449,19 @@ class FormPlaceView: UIView {
                         
                         self?.selectPlaceButton.isHidden = false
                         self?.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
-                        self?.selectedPlace.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+                        
+                        if let place = self?.createPromiseVM.form.place {
+                            
+                            let placeText = place.value1.city + " " + place.value1.district + " " + (place.value1.address ?? "")
+                            self?.selectedPlace.text = placeText
+                            self?.selectedPlace.textColor = .black
+                            
+                        } else {
+                            
+                            self?.selectedPlace.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+                            self?.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                            
+                        }
                         
                         self?.middlePlaceGuidanceButton.isHidden = true
                         self?.middlePlaceTaggedGuidance.isHidden = true
@@ -425,22 +497,20 @@ class FormPlaceView: UIView {
     
     // TODO: middlePlaceDidChange
     private func assignMiddlePlaceDidChange() {
-        createPromiseVM.middlePlaceDidChange = { [weak self] middlePlace in
-            guard let self else { return }
+        createPromiseVM.middlePlaceDidChange = { middlePlace in
             
-            DispatchQueue.main.async {
-                
-                
+            DispatchQueue.main.async { [weak self] in
+                self?.updateMiddlePlaceViewByState()
+                self?.layoutIfNeeded()
             }
         }
     }
     
     // TODO: placeDidChange
     private func assignPlaceDidChange() {
-        createPromiseVM.placeDidChange = { [weak self] place in
-            guard let self else { return }
+        createPromiseVM.placeDidChange = { place in
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 
                 
             }
@@ -512,5 +582,7 @@ extension FormPlaceView: PlaceSelectionDelegate {
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {
-    
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, detailAddress: String) {
+        createPromiseVM.onChangedMiddlePlace(place)
+    }
 }

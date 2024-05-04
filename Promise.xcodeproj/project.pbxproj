@@ -53,6 +53,7 @@
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
 		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
+		D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
@@ -224,6 +225,7 @@
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
 		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
 		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
+		D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewService.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
 		D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (production).entitlements"; sourceTree = "<group>"; };
 		D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseRelease (development).entitlements"; sourceTree = "<group>"; };
@@ -770,6 +772,7 @@
 				E7B91DD82A78D47100426D81 /* WebsocketService.swift */,
 				FCB9917B2A5B0F3500B82924 /* UserService.swift */,
 				D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */,
+				D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1342,6 +1345,7 @@
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				2B7DE4622B4D258300127DAA /* PlaceSelectionTVCell.swift in Sources */,
 				D43233192B6DD0390020876F /* PromiseStatusWithUserView.swift in Sources */,
+				D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */,
 				FCE8C4452A8A2AE900E2B672 /* NavigationMenusView.swift in Sources */,
 				FCB3AD652AC3304B00219A25 /* FormShareLocationSelectionInputView.swift in Sources */,
 				FCFC008D2A7C0AD1009D7BC7 /* PromiseListCell.swift in Sources */,

@@ -65,6 +65,7 @@
 "UpdatePromise.DynamicDestination.Guidance.configurable" = "중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요";
 "UpdatePromise.DynamicDestination.Guidance.configured" = "중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요";
 "UpdatePromise.DynamicDestination.Guidance.newlyConfigurable" = "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요";
+"UpdatePromise.DynamicDestination.Guidance.staging" = "선택한 중간 장소를 약속 장소로 설정할 수 있어요";
 "UpdatePromise.DynamicDestination.selectionButtonTitle" = "중간 장소 변경";
 "UpdatePromise.DynamicDestination.Configurable.placeholder" = "중간장소를 선택해 주세요";
 
@@ -73,6 +74,7 @@
 "DynamicDestinationSelection.confirm" = "선택 완료";
 "DynamicDestinationSelection.DetailAddress.label" = "상세 주소";
 "DynamicDestinationSelection.DetailAddress.placeholder" = "예) 스터디룸 1번방";
+"DynamicDestinationSelection.detailPlaceButtonTitle" = "상세보기";
 
 // MARK: CreatePromiseScreen
 "CreatePromise.Create.headerTitle" = "새 약속 추가";

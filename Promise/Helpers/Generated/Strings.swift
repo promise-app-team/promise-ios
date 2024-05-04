@@ -161,6 +161,8 @@ internal enum L10n {
   internal enum DynamicDestinationSelection {
     /// 선택 완료
     internal static let confirm = L10n.tr("Localizable", "DynamicDestinationSelection.confirm", fallback: "선택 완료")
+    /// 상세보기
+    internal static let detailPlaceButtonTitle = L10n.tr("Localizable", "DynamicDestinationSelection.detailPlaceButtonTitle", fallback: "상세보기")
     /// 중간 장소 선택
     internal static let headerTitle = L10n.tr("Localizable", "DynamicDestinationSelection.headerTitle", fallback: "중간 장소 선택")
     internal enum DetailAddress {
@@ -349,6 +351,8 @@ internal enum L10n {
         internal static let configured = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.configured", fallback: "중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요")
         /// 참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요
         internal static let newlyConfigurable = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.newlyConfigurable", fallback: "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요")
+        /// 선택한 중간 장소를 약속 장소로 설정할 수 있어요
+        internal static let staging = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.staging", fallback: "선택한 중간 장소를 약속 장소로 설정할 수 있어요")
       }
     }
     internal enum Update {

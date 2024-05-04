@@ -10,7 +10,7 @@ import UIKit
 import NMapsMap
 
 protocol DynamicDestinationSelectionDelegate: AnyObject {
-    
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, detailAddress: String)
 }
 
 class AttendeeCellForDeparturesSelection: UICollectionViewCell {
@@ -330,13 +330,320 @@ class DynamicDestinationSelectionVC: UIViewController {
         return view
     }()
     
-    // MARK: handler
-    @objc private func onConfirm() {
-        // TODO: vm에 submit 연결
+    private let middlePointMarker = {
+        let marker = NMFMarker()
+        marker.iconImage = NMFOverlayImage(image: Asset.middlePointMarker.image)
+        marker.width = adjustedValue(40, .width)
+        marker.height = adjustedValue(53, .height)
+        
+        return marker
+    }()
+    
+    private var currentTappedPlaceMarker: (NMFMarker, Document)? = nil
+    private var currentPlaceMarkers: [(NMFMarker, NMFMarker, Document)] = [] {
+        didSet {
+            
+        }
     }
     
-    @objc private func onChangedDetailAddress() {
-        // TODO: 상세주소 vm과 연결
+    private lazy var infoWindow = {
+        let infoWindow = NMFInfoWindow()
+        infoWindow.dataSource = self
+        infoWindow.offsetY = Int(adjustedValue(10, .height))
+        infoWindow.zIndex = dynamicDestinationSelectionVM.size + 1
+        
+        infoWindow.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            self?.onTapInfoWindow()
+            return true
+        }
+        
+        return infoWindow
+    }()
+    
+    private lazy var infoDetailWindow = {
+        let infoWindow = NMFInfoWindow()
+        infoWindow.dataSource = self
+        infoWindow.offsetY = Int(adjustedValue(25, .height))
+        infoWindow.zIndex = dynamicDestinationSelectionVM.size + 2
+        
+        infoWindow.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            self?.onTapInfoDetailWindow()
+            return true
+        }
+        
+        return infoWindow
+    }()
+    
+    private let placeCategory = {
+        let insetLabel = InsetLabel()
+        insetLabel.topInset = adjustedValue(3, .height)
+        insetLabel.bottomInset = adjustedValue(3, .height)
+        insetLabel.leftInset = adjustedValue(7, .width)
+        insetLabel.rightInset = adjustedValue(7, .width)
+        
+        insetLabel.lineBreakMode = .byClipping
+        insetLabel.numberOfLines = 1
+
+        insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(13, .width))
+        insetLabel.textColor = UIColor(red: 0.9, green: 0.7, blue: 0.2, alpha: 1)
+        insetLabel.backgroundColor = UIColor(red: 1, green: 0.98, blue: 0.92, alpha: 1)
+        
+        insetLabel.layer.masksToBounds = true
+        insetLabel.layer.cornerRadius = adjustedValue(11, .width)
+        insetLabel.sizeToFit()
+        
+        insetLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        insetLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        insetLabel.translatesAutoresizingMaskIntoConstraints = false
+        return insetLabel
+    }()
+    
+    private let placeTitle = {
+        let label = UILabel()
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(15, .width))
+        label.textColor = .black
+        
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+//    private lazy var infoWindowContent = {
+//        let totalSize = CGSize(width: adjustedValue(174, .width), height: adjustedValue(88, .height))
+//        let renderer = UIGraphicsImageRenderer(size: totalSize)
+//        
+//        let img = renderer.image { ctx in
+//            let bounds = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
+//            let view = UIView(frame: bounds)
+//            
+//            view.backgroundColor = .white
+//            view.layer.cornerRadius = adjustedValue(16, .width)
+//            view.layer.borderWidth = 1
+//            view.layer.borderColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1).cgColor
+//            
+//            view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.03).cgColor
+//            view.layer.shadowOpacity = 1
+//            view.layer.shadowOffset = CGSize(width: 0, height: 0)
+//            view.layer.shadowRadius = adjustedValue(16, .width)
+//            
+//            [placeTitle, placeCategory].forEach { view.addSubview($0) }
+//            NSLayoutConstraint.activate([
+//                placeCategory.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(16, .height)),
+//                placeCategory.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .width)),
+//                
+//                placeTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(19, .height)),
+//                placeTitle.leadingAnchor.constraint(equalTo: placeCategory.trailingAnchor, constant: adjustedValue(8, .width)),
+//                placeTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .width))
+//            ])
+//            
+//            view.layoutIfNeeded()
+//            view.layer.render(in: ctx.cgContext)
+//        }
+//        
+//        let imageView = UIImageView(image: img)
+//        imageView.frame = CGRect(origin: .zero, size: totalSize)
+//        return imageView
+//    }()
+    
+    private lazy var infoWindowContent = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: adjustedValue(200, .width), height: adjustedValue(98, .height)))
+        
+        view.backgroundColor = .white
+        view.layer.cornerRadius = adjustedValue(16, .width)
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(red: 0.949, green: 0.949, blue: 0.949, alpha: 1).cgColor
+        
+        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.03).cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = adjustedValue(16, .width)
+        
+        [placeTitle, placeCategory].forEach { view.addSubview($0) }
+        NSLayoutConstraint.activate([
+            placeCategory.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(16, .height)),
+            placeCategory.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .width)),
+            
+            placeTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(18, .height)),
+            placeTitle.leadingAnchor.constraint(equalTo: placeCategory.trailingAnchor, constant: adjustedValue(8, .width)),
+            placeTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .width))
+        ])
+        
+        return view
+    }()
+    
+    private let infoDetailWindowContent = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: adjustedValue(164, .width), height: adjustedValue(32, .height)))
+        view.backgroundColor = .white
+        
+        view.layer.cornerRadius = adjustedValue(16, .height)
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+        
+        let label = UILabel()
+        label.text = L10n.DynamicDestinationSelection.detailPlaceButtonTitle
+        label.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(14, .width))
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        return view
+    }()
+    
+    // MARK: handler
+    
+    private func setPlaceMarkers(with info: KakaoPlaceMDL) {
+        guard let list = info.documents else { return }
+        
+        var markers: [(NMFMarker, NMFMarker, Document)] = []
+       
+        list.enumerated().forEach { (index, place) in
+            let marker = NMFMarker()
+            marker.iconImage = NMFOverlayImage(image: Asset.placeMarker.image)
+            marker.width = adjustedValue(16, .width)
+            marker.height = adjustedValue(16, .height)
+            
+            let subMarker = NMFMarker()
+            subMarker.iconImage = NMFOverlayImage(image: Asset.placeSubMarker.image)
+            subMarker.width = adjustedValue(18, .width)
+            subMarker.height = adjustedValue(18, .height)
+            subMarker.anchor = CGPoint(x: 0.5, y: 0.95)
+            subMarker.alpha = 0.2
+            
+            if let lat = Double(place.y),
+               let lng = Double(place.x) {
+                
+                marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                    self?.onTapMiddlePlaceMarker(marker: overlay, subMarker: subMarker, place: place)
+                    return true
+                }
+                marker.zIndex = index
+                subMarker.zIndex = index - 1
+                
+                marker.position = NMGLatLng(
+                    lat: lat,
+                    lng: lng
+                )
+                subMarker.position = NMGLatLng(
+                    lat: lat,
+                    lng: lng
+                )
+                
+                marker.mapView = map
+                subMarker.mapView = map
+                
+                markers.append((marker, subMarker, place))
+                
+            }
+            
+        }
+        
+        currentPlaceMarkers = markers
+    }
+    
+    private func assignRecommendedPlaceListInfoDidChange() {
+        dynamicDestinationSelectionVM.recommendedPlaceListInfoDidChange = { [weak self] info in
+            
+            DispatchQueue.main.async {
+                self?.setPlaceMarkers(with: info)
+            }
+        }
+    }
+    
+    private func assignMiddlePointDidChange() {
+        dynamicDestinationSelectionVM.middlePointDidChange = { [weak self] middlePoint in
+            
+            DispatchQueue.main.async {
+                self?.middlePointMarker.position = NMGLatLng(
+                    lat: middlePoint.latitude,
+                    lng: middlePoint.longitude
+                )
+                
+                self?.middlePointMarker.mapView = self?.map
+                self?.focusMapOnLocation(location: CLLocation(
+                    latitude: middlePoint.latitude,
+                    longitude: middlePoint.longitude
+                ))
+            }
+        }
+    }
+    
+    private func updateInfoWindowContent(place: Document) {
+        placeCategory.text = place.categoryGroupName
+        placeTitle.text = place.placeName
+        infoWindowContent.layoutIfNeeded()
+        infoDetailWindowContent.layoutIfNeeded()
+    }
+    
+    private func onTapMiddlePlaceMarker(marker overlay: NMFOverlay, subMarker subOverlay: NMFOverlay, place: Document) {
+        guard let marker = overlay as? NMFMarker,
+              let subMarker = subOverlay as? NMFMarker else { return }
+        
+        currentTappedPlaceMarker = (marker, place)
+        updateInfoWindowContent(place: place)
+        
+        if marker.infoWindow == nil {
+            infoWindow.open(with: marker)
+            infoDetailWindow.open(with: subMarker)
+        } else {
+            infoWindow.close()
+            infoDetailWindow.close()
+            currentTappedPlaceMarker = nil
+        }
+        
+    }
+    
+    @objc private func onTapInfoWindow() {
+        infoWindow.close()
+        infoDetailWindow.close()
+        currentTappedPlaceMarker = nil
+    }
+    
+    @objc private func onTapInfoDetailWindow() {
+        guard let currentTappedPlaceMarker else { return }
+        let (_, info) = currentTappedPlaceMarker
+        let url = info.placeURL
+        WebViewService.shared.presentWebView(urlString: url, from: self)
+    }
+    
+    private func focusMapOnLocation(location: CLLocation) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+        cameraUpdate.animation = .linear
+        map.moveCamera(cameraUpdate)
+    }
+    
+    @objc private func onConfirm() {
+        guard let (_, info) = currentTappedPlaceMarker else { return }
+        
+        self.dismiss(animated: true)
+        let addressName = info.roadAddressName
+        let splitAddressName = addressName.split(separator: " ")
+        
+        guard let y = Double(info.y), let x = Double(info.x) else { return }
+        let formattedYString = String(format: "%.8f", y)
+        let formattedXString = String(format: "%.8f", x)
+        guard let lat = Double(formattedYString), let lng = Double(formattedXString) else { return }
+
+        delegate?.onSelectedMiddlePlace(place: .init(value1: .init(
+            city: splitAddressName[0].description,
+            district: splitAddressName[1].description,
+            address: splitAddressName[2].description,
+            latitude: lat,
+            longitude: lng
+        )), detailAddress: dynamicDestinationSelectionVM.detailAddress)
+        
+    }
+    
+    @objc private func onChangedDetailAddress(_ textField: UITextField) {
+        dynamicDestinationSelectionVM.onChangedDetailAddress(textField)
+
     }
     
     @objc private func onTapKeyboardDismissBackdrop() {
@@ -460,6 +767,9 @@ class DynamicDestinationSelectionVC: UIViewController {
     private func configure() {
         view.backgroundColor = .white
         
+        assignMiddlePointDidChange()
+        assignRecommendedPlaceListInfoDidChange()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
@@ -514,6 +824,26 @@ extension DynamicDestinationSelectionVC: HeaderViewDelegate {
 }
 
 extension DynamicDestinationSelectionVC: NMFMapViewTouchDelegate {
+    
+}
+
+extension DynamicDestinationSelectionVC: NMFOverlayImageDataSource {
+    func view(with overlay: NMFOverlay) -> UIView {
+        guard let infoWindow = overlay as? NMFInfoWindow else {
+            return UIView()
+        }
+        
+        if infoWindow == self.infoWindow {
+            return infoWindowContent
+        } 
+        
+        if infoWindow == self.infoDetailWindow {
+            return infoDetailWindowContent
+        }
+        
+        return UIView()
+        
+    }
     
 }
 
@@ -581,3 +911,5 @@ extension DynamicDestinationSelectionVC: UICollectionViewDataSource, UICollectio
         }
     }
 }
+
+

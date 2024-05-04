@@ -6,14 +6,50 @@
 //
 
 import Foundation
+import NMapsMap
 
 class DynamicDestinationSelectionVM: NSObject {
-    // var middlePlaceList:
+    let size = 15
     
-    var point: Components.Schemas.PointDTO? = nil {
+    var detailAddress = ""
+    var getRecommendedPlaceByPointLoading = false
+    
+    // var recommendedPlaceMarkers
+    
+    var recommendedPlaceListInfoDidChange: ((KakaoPlaceMDL) -> Void)?
+    var recommendedPlaceListInfo: KakaoPlaceMDL? = nil {
         didSet {
-            guard let point else { return }
-            print("point: ", point)
+            if let recommendedPlaceListInfo {
+                recommendedPlaceListInfoDidChange?(recommendedPlaceListInfo)
+            }
+        }
+    }
+    
+    var middlePointDidChange: ((Components.Schemas.PointDTO) -> Void)?
+    var middlePoint: Components.Schemas.PointDTO? = nil {
+        didSet {
+            guard let middlePoint else { return }
+            
+            middlePointDidChange?(middlePoint)
+            
+            Task {
+                let result = await getRecommendedPlaceByPoint(with: middlePoint)
+                
+                switch result {
+                case .success(let recommendedPlaceListInfo):
+                    self.recommendedPlaceListInfo = recommendedPlaceListInfo
+                case .failure(let errorType):
+                    switch errorType {
+                    case .badRequest:
+                        // TODO: 추천 장소 정보 얻기 실패 에러 처리
+                        break
+                    default:
+                        // Other Error(Network, badUrl ...)
+                        break
+                    }
+                }
+            }
+            
         }
     }
     
@@ -25,8 +61,8 @@ class DynamicDestinationSelectionVM: NSObject {
             let selectedAttendeeIds = attendees.filter { $0.isSelected }.map { $0.info.id }
             guard 1 < selectedAttendeeIds.count else { return }
             
-            getMiddleLocationWithDepartures(with: selectedAttendeeIds) { point in
-                self.point = point
+            getMiddlePointWithDepartures(with: selectedAttendeeIds) { middlePoint in
+                self.middlePoint = middlePoint
             }
             
         }
@@ -43,13 +79,13 @@ class DynamicDestinationSelectionVM: NSObject {
         let selectedAttendeeIds = self.attendees.filter { $0.isSelected }.map { $0.info.id }
         guard 1 < selectedAttendeeIds.count else { return }
         
-        getMiddleLocationWithDepartures(with: selectedAttendeeIds) { point in
-            self.point = point
+        getMiddlePointWithDepartures(with: selectedAttendeeIds) { middlePoint in
+            self.middlePoint = middlePoint
         }
         
     }
     
-    func getMiddleLocationWithDepartures(
+    func getMiddlePointWithDepartures(
         with attendeeIds: [Double],
         _ completion: @escaping ((Components.Schemas.PointDTO?) -> Void)
     ) {
@@ -64,8 +100,8 @@ class DynamicDestinationSelectionVM: NSObject {
             )
             
             switch result {
-            case .success(let point):
-                completion(point)
+            case .success(let middlePoint):
+                completion(middlePoint)
             case .failure(let errorType):
                 switch errorType {
                 case .badRequest:
@@ -79,8 +115,77 @@ class DynamicDestinationSelectionVM: NSObject {
         }
     }
     
-    func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
+    func getRecommendedPlaceByPoint(with point: Components.Schemas.PointDTO ) async -> Result<KakaoPlaceMDL, NetworkError> {
+        
+        getRecommendedPlaceByPointLoading = true
+        defer {
+            getRecommendedPlaceByPointLoading = false
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            
+            let url = Config.kakaoLocalSearchApiUrl
+            
+            // let path = ""
+            // url.appendPathComponent(path)
+            
+            guard var urlComponents = URLComponents(string: url.absoluteString) else {
+                return .failure(.badUrl)
+            }
+            
+            
+            urlComponents.queryItems = [
+                URLQueryItem(name: "category_group_code", value: CategoryGroupCode.음식점.rawValue),
+                URLQueryItem(name: "x", value: String(point.longitude)),
+                URLQueryItem(name: "y", value: String(point.latitude)),
+                URLQueryItem(name: "radius", value: "20000"),
+                URLQueryItem(name: "rect", value: ""),
+                URLQueryItem(name: "page", value: "1"),
+                URLQueryItem(name: "size", value: String(size)),
+                URLQueryItem(name: "sort", value: "distance"),
+            ]
+            
+            guard let requestUrl = urlComponents.url else {
+                return .failure(.badUrl)
+            }
+            
+            var request = URLRequest(url: requestUrl)
+            let appKey = Config.kakaoRestAppKey
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
+            request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
+            request.setValue( "KakaoAK \(appKey)", forHTTPHeaderField: "Authorization") // REST APP KEY 설정
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if (response as? HTTPURLResponse)?.statusCode == 401 {
+                return .failure(.notAuthenticated)
+            }
+            
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                
+                if let errorResponse = try? decoder.decode(ErrorResponse.self, from: data) {
+                    return .failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse)))
+                }
+                return .failure(.badRequest(BadRequestError(data: data, errorResponse: nil)))
+                
+            }
+            
+            guard let parsedData = try? decoder.decode(KakaoPlaceMDL.self, from: data) else {
+                return .failure(.decodingError)
+            }
+            
+            return .success(parsedData)
+        } catch {
+            return .failure(.networkError(error))
+        }
         
     }
     
+    func onChangedDetailAddress(_ textField: UITextField) {
+        self.detailAddress = textField.text ?? ""
+    }
+
 }
