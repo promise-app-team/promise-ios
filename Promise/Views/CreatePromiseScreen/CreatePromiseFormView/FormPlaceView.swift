@@ -313,9 +313,8 @@ class FormPlaceView: UIView {
         case .notConfigurable:
             
             self.placeWrapper.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
-            self.selectPlaceButton.isHidden = true
             self.middlePlaceGuidanceButton.isHidden = false
+            self.selectPlaceButton.isHidden = true
             
         case .configurable:
             
@@ -327,8 +326,13 @@ class FormPlaceView: UIView {
             )
             
             self.middlePlaceGuidanceButton.isHidden = true
+            
             self.selectPlaceButton.isHidden = false
-            self.selectPlaceButton.layer.borderColor = UIColor(red: 1, green: 0.41, blue: 0.3, alpha: 1).cgColor
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 1, green: 0.41, blue: 0.3, alpha: 1).cgColor
+            }
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
                 
@@ -362,7 +366,13 @@ class FormPlaceView: UIView {
             )
             
             self.middlePlaceGuidanceButton.isHidden = true
+            
             self.selectPlaceButton.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+            }
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
                 
@@ -403,7 +413,13 @@ class FormPlaceView: UIView {
             )
             
             self.middlePlaceGuidanceButton.isHidden = true
+            
             self.selectPlaceButton.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+            }
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
                 

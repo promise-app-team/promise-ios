@@ -335,7 +335,7 @@ class CreatePromiseVM: NSObject {
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
             {
-                switch placeType {
+                switch form.placeType {
                 case .STATIC:
                     let city = form.place?.value1.city
                     let district = form.place?.value1.district
