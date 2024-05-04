@@ -91,8 +91,8 @@ class CreatePromiseVC: UIViewController {
         }
     }
     
-    func assignOnVaildateForm() {
-        createPromiseVM.assignOnVaildateForm = { [weak self] isVaild in
+    func assignFormDidValidate() {
+        createPromiseVM.formDidValidate = { [weak self] isVaild in
             guard let self else { return }
             
             DispatchQueue.main.async {
@@ -123,7 +123,7 @@ class CreatePromiseVC: UIViewController {
     func configure() {
         view.backgroundColor = .white
         
-        assignOnVaildateForm()
+        assignFormDidValidate()
         
         KeyboardManager.shared.delegate = self
         KeyboardManager.shared.registerVC(self)

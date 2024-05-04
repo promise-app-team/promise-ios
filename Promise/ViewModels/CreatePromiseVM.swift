@@ -304,10 +304,10 @@ class CreatePromiseVM: NSObject {
         self.form = newForm
     }
     
-    var assignOnVaildateForm: ((Bool) -> Void)?
+    var formDidValidate: ((Bool) -> Void)?
     private func validateForm(_ form: PromiseForm) {
-        
         // MARK: 약속 수정인 경우 validate
+        // MARK: 장소는 nillable
         if let _ = self.editingPromise,
            let title = self.capturedEditingPromiseTitle,
            let date = self.capturedEditingPromiseDate,
@@ -317,113 +317,115 @@ class CreatePromiseVM: NSObject {
            let shareLocationEndValue = self.capturedEditingPromiseShareLocationEndValue
         {
             if form.title.isEmpty {
-                assignOnVaildateForm?(false)
+                formDidValidate?(false)
                 return
             }
             
             let isEmptySelectedThemes = form.themes.filter{ $0.isSelected }.isEmpty
             if isEmptySelectedThemes {
-                assignOnVaildateForm?(false)
+                formDidValidate?(false)
                 return
             }
             
+            // MARK: 장소 validate
+            // MARK: 장소는 nillable
+            switch form.placeType {
+            case .STATIC:
+                let city = form.place?.value1.city
+                let district = form.place?.value1.district
+                let address = form.place?.value1.address
+                let lat = form.place?.value1.latitude
+                let lng = form.place?.value1.longitude
+                
+                let capturedCity = self.capturedEditingPromisePlace?.value1.city
+                let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
+                let capturedAddress = self.capturedEditingPromisePlace?.value1.address
+                let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
+                let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
+                
+                if city != capturedCity ||
+                    district != capturedDistrict ||
+                    address != capturedAddress ||
+                    lat != capturedLat ||
+                    lng != capturedLng {
+                    self.isNewSelectedPlaceForUpdate = true
+                    formDidValidate?(true)
+                    return
+                } else {
+                    self.isNewSelectedPlaceForUpdate = false
+                }
+                
+            case .DYNAMIC:
+                let city = form.middlePlace?.value1.city
+                let district = form.middlePlace?.value1.district
+                let address = form.middlePlace?.value1.address
+                let lat = form.middlePlace?.value1.latitude
+                let lng = form.middlePlace?.value1.longitude
+                
+                let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
+                let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
+                let capturedAddress = self.capturedEditingPromiseMiddlePlace?.value1.address
+                let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
+                let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
+                
+                if city != capturedCity ||
+                    district != capturedDistrict ||
+                    address != capturedAddress ||
+                    lat != capturedLat ||
+                    lng != capturedLng {
+                    self.isNewSelectedMiddlePlaceForUpdate = true
+                    formDidValidate?(true)
+                    return
+                } else {
+                    self.isNewSelectedMiddlePlaceForUpdate = false
+                }
+            }
+            
+            // MARK: 테마 validate
+            if let capturedThemes = capturedEditingPromiseThemes {
+                
+                let selectedThemes = self.themes.filter { $0.isSelected }
+                let selectedThemeIdsSet = Set(selectedThemes.compactMap { $0.id })
+                
+                let capturedSelectedThemes = capturedThemes.filter({ $0.isSelected })
+                let capturedSelectedThemeIdsSet = Set(capturedSelectedThemes.compactMap { $0.id })
+                
+                if selectedThemeIdsSet != capturedSelectedThemeIdsSet {
+                    formDidValidate?(true)
+                    return
+                }
+            }
+            
+            // MARK: 나머지 요소들 validate
             if form.title == title &&
                form.date?.originDate == date.originDate &&
                form.placeType == placeType &&
-               // MARK: 장소는 nillable
                form.shareLocationStartType == shareLocationStartType &&
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
             {
-                switch form.placeType {
-                case .STATIC:
-                    let city = form.place?.value1.city
-                    let district = form.place?.value1.district
-                    let address = form.place?.value1.address
-                    let lat = form.place?.value1.latitude
-                    let lng = form.place?.value1.longitude
-                    
-                    let capturedCity = self.capturedEditingPromisePlace?.value1.city
-                    let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
-                    let capturedAddress = self.capturedEditingPromisePlace?.value1.address
-                    let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
-                    let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
-                    
-                    if city != capturedCity ||
-                        district != capturedDistrict ||
-                        address != capturedAddress ||
-                        lat != capturedLat ||
-                        lng != capturedLng {
-                        
-                        self.isNewSelectedPlaceForUpdate = true
-                        assignOnVaildateForm?(true)
-                        return
-                    } else {
-                        self.isNewSelectedPlaceForUpdate = false
-                    }
-                    
-                case .DYNAMIC:
-                    let city = form.middlePlace?.value1.city
-                    let district = form.middlePlace?.value1.district
-                    let address = form.middlePlace?.value1.address
-                    let lat = form.middlePlace?.value1.latitude
-                    let lng = form.middlePlace?.value1.longitude
-                    
-                    let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
-                    let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
-                    let capturedAddress = self.capturedEditingPromiseMiddlePlace?.value1.address
-                    let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
-                    let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
-                    
-                    if city != capturedCity ||
-                        district != capturedDistrict ||
-                        address != capturedAddress ||
-                        lat != capturedLat ||
-                        lng != capturedLng {
-                        
-                        self.isNewSelectedMiddlePlaceForUpdate = true
-                        assignOnVaildateForm?(true)
-                        return
-                    } else {
-                        self.isNewSelectedMiddlePlaceForUpdate = false
-                    }
-                }
                 
-                if let capturedThemes = capturedEditingPromiseThemes {
-                    
-                    let selectedThemes = self.themes.filter { $0.isSelected }
-                    let selectedThemeIdsSet = Set(selectedThemes.compactMap { $0.id })
-                    
-                    let capturedSelectedThemes = capturedThemes.filter({ $0.isSelected })
-                    let capturedSelectedThemeIdsSet = Set(capturedSelectedThemes.compactMap { $0.id })
-                    
-                    if selectedThemeIdsSet != capturedSelectedThemeIdsSet {
-                        assignOnVaildateForm?(true)
-                        return
-                    }
-                }
-                
-                assignOnVaildateForm?(false)
+                formDidValidate?(false)
                 return
             }
             
-            assignOnVaildateForm?(true)
+            formDidValidate?(true)
             return
         }
         
         guard !form.title.isEmpty else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
         guard let _ = form.date else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
         let isExistSelectedThemes = !form.themes.filter{ $0.isSelected }.isEmpty
         guard isExistSelectedThemes else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
@@ -434,11 +436,11 @@ class CreatePromiseVM: NSObject {
            let _ = form.place?.value1.latitude,
            let _ = form.place?.value1.longitude
         {
-            assignOnVaildateForm?(true)
+            formDidValidate?(true)
             return
         }
         
-        assignOnVaildateForm?(true)
+        formDidValidate?(true)
     }
     
     func onChangedTitle(_ textField: UITextField) {
