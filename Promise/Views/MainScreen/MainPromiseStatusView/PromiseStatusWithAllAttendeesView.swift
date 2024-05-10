@@ -915,7 +915,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
             case .STATIC:
                 
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.address
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                    
                     self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 }
                 
@@ -966,13 +970,23 @@ class PromiseStatusWithAllAttendeesView: UIView {
                 }
                 
             case .configured:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
                 
-                self?.place.text = promise.destination?.value1.address
                 self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 
             case .newlyConfigurable:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
                 
-                self?.place.text = promise.destination?.value1.address
                 self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
                 
             }

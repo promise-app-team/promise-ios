@@ -162,7 +162,11 @@ class InvitationPopUp {
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
         
         if let destination = invitedPromise.destination, invitedPromise.destinationType == .STATIC {
-            label.text = destination.value1.address
+            label.text = destination.value1.city + " " 
+            + destination.value1.district + " " 
+            + destination.value1.address1 + " "
+            + (destination.value1.address2 ?? "")
+            
             label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
         } else {
             label.text = L10n.InvitationPopUp.middlePlaceWarning

@@ -74,7 +74,9 @@ class DynamicDestinationSelectionVM: NSObject {
         super.init()
         
         guard let promise else { return }
-        self.attendees = promise.attendees.map { SelectableAttendee(info: $0, isSelected: $0.hasStartLocation) }
+        self.attendees = promise.attendees.map {
+            SelectableAttendee(info: $0, isSelected: $0.hasStartLocation)
+        }
         
         let selectedAttendeeIds = self.attendees.filter { $0.isSelected }.map { $0.info.id }
         guard 1 < selectedAttendeeIds.count else { return }

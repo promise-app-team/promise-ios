@@ -10,7 +10,7 @@ import UIKit
 import NMapsMap
 
 protocol DynamicDestinationSelectionDelegate: AnyObject {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, detailAddress: String)
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload)
 }
 
 class AttendeeCellForDeparturesSelection: UICollectionViewCell {
@@ -634,10 +634,13 @@ class DynamicDestinationSelectionVC: UIViewController {
         delegate?.onSelectedMiddlePlace(place: .init(value1: .init(
             city: splitAddressName[0].description,
             district: splitAddressName[1].description,
-            address: splitAddressName[2].description,
+            address1: splitAddressName[2].description,
+            address2: dynamicDestinationSelectionVM.detailAddress.isEmpty 
+            ? nil
+            : dynamicDestinationSelectionVM.detailAddress,
             latitude: lat,
             longitude: lng
-        )), detailAddress: dynamicDestinationSelectionVM.detailAddress)
+        )))
         
     }
     

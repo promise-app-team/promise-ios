@@ -59,20 +59,23 @@ class CreatePromiseVM: NSObject {
                 self.capturedEditingPromisePlaceType = .STATIC
                 
                 // TODO: 약속 수정시 확인
-                let destination = editingPromise.destination?.value1
-                let place = Components
-                    .Schemas
-                    .InputUpdatePromiseDTO
-                    .destinationPayload(value1: .init(
-                        city: destination?.city ?? "",
-                        district: destination?.district ?? "",
-                        address: destination?.address ?? "",
-                        latitude: destination?.latitude ?? 0,
-                        longitude: destination?.longitude ?? 0)
-                    )
+                if let destinationValue = editingPromise.destination?.value1 {
+                    let place = Components
+                        .Schemas
+                        .InputUpdatePromiseDTO
+                        .destinationPayload(value1: .init(
+                            city: destinationValue.city,
+                            district: destinationValue.district,
+                            address1: destinationValue.address1,
+                            address2: destinationValue.address2,
+                            latitude: destinationValue.latitude,
+                            longitude: destinationValue.longitude
+                        ))
+                    
+                    self.place = place
+                    self.capturedEditingPromisePlace = place
+                }
                 
-                self.place = place
-                self.capturedEditingPromisePlace = place
                 
             case .DYNAMIC:
                 self.placeType = .DYNAMIC
@@ -86,20 +89,23 @@ class CreatePromiseVM: NSObject {
                 case .notConfigurable, .configurable:
                     break
                 case .configured, .newlyConfigurable:
-                    let destination = editingPromise.destination?.value1
-                    let middlePlace = Components
-                        .Schemas
-                        .InputUpdatePromiseDTO
-                        .destinationPayload(value1: .init(
-                            city: destination?.city ?? "",
-                            district: destination?.district ?? "",
-                            address: destination?.address ?? "",
-                            latitude: destination?.latitude ?? 0,
-                            longitude: destination?.longitude ?? 0)
-                        )
                     
-                    self.middlePlace = middlePlace
-                    self.capturedEditingPromiseMiddlePlace = middlePlace
+                    if let destinationValue = editingPromise.destination?.value1 {
+                        let middlePlace = Components
+                            .Schemas
+                            .InputUpdatePromiseDTO
+                            .destinationPayload(value1: .init(
+                                city: destinationValue.city,
+                                district: destinationValue.district,
+                                address1: destinationValue.address1,
+                                address2: destinationValue.address2,
+                                latitude: destinationValue.latitude,
+                                longitude: destinationValue.longitude)
+                            )
+                        
+                        self.middlePlace = middlePlace
+                        self.capturedEditingPromiseMiddlePlace = middlePlace
+                    }
                     
                 }
             }
@@ -333,19 +339,22 @@ class CreatePromiseVM: NSObject {
             case .STATIC:
                 let city = form.place?.value1.city
                 let district = form.place?.value1.district
-                let address = form.place?.value1.address
+                let address1 = form.place?.value1.address1
+                let address2 = form.place?.value1.address2
                 let lat = form.place?.value1.latitude
                 let lng = form.place?.value1.longitude
                 
                 let capturedCity = self.capturedEditingPromisePlace?.value1.city
                 let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
-                let capturedAddress = self.capturedEditingPromisePlace?.value1.address
+                let capturedAddress1 = self.capturedEditingPromisePlace?.value1.address1
+                let capturedAddress2 = self.capturedEditingPromisePlace?.value1.address2
                 let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
                 let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
                 
                 if city != capturedCity ||
                     district != capturedDistrict ||
-                    address != capturedAddress ||
+                    address1 != capturedAddress1 ||
+                    address2 != capturedAddress2 ||
                     lat != capturedLat ||
                     lng != capturedLng {
                     self.isNewSelectedPlaceForUpdate = true
@@ -358,19 +367,22 @@ class CreatePromiseVM: NSObject {
             case .DYNAMIC:
                 let city = form.middlePlace?.value1.city
                 let district = form.middlePlace?.value1.district
-                let address = form.middlePlace?.value1.address
+                let address1 = form.middlePlace?.value1.address1
+                let address2 = form.middlePlace?.value1.address2
                 let lat = form.middlePlace?.value1.latitude
                 let lng = form.middlePlace?.value1.longitude
                 
                 let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
                 let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
-                let capturedAddress = self.capturedEditingPromiseMiddlePlace?.value1.address
+                let capturedAddress1 = self.capturedEditingPromiseMiddlePlace?.value1.address1
+                let capturedAddress2 = self.capturedEditingPromiseMiddlePlace?.value1.address2
                 let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
                 let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
                 
                 if city != capturedCity ||
                     district != capturedDistrict ||
-                    address != capturedAddress ||
+                    address1 != capturedAddress1 ||
+                    address2 != capturedAddress2 ||
                     lat != capturedLat ||
                     lng != capturedLng {
                     self.isNewSelectedMiddlePlaceForUpdate = true
@@ -432,7 +444,8 @@ class CreatePromiseVM: NSObject {
         if form.placeType == .STATIC,
            let _ = form.place?.value1.city,
            let _ = form.place?.value1.district,
-           let _ = form.place?.value1.address,
+           let _ = form.place?.value1.address1,
+           // MARK: address2는 상세 주소로 nullable, address1까지만 필수이기 때문에 제외
            let _ = form.place?.value1.latitude,
            let _ = form.place?.value1.longitude
         {
@@ -547,7 +560,14 @@ class CreatePromiseVM: NSObject {
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
         // TODO: 임시, form.place로 변경해야함.
-        let tempStaticPlace = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.48436353, longitude: 126.92972946))
+        let tempStaticPlace = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(
+            city: "서울특별시",
+            district: "관악구",
+            address1: "관악로 14길 109",
+            address2: nil,
+            latitude: 37.48436353,
+            longitude: 126.92972946
+        ))
         
         let submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,

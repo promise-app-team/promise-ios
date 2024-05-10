@@ -241,9 +241,12 @@ class PromiseStatusWithUserView: UIView {
                 
                 if !location.city.isEmpty,
                    !location.district.isEmpty,
-                   let address = location.address {
+                   !location.address1.isEmpty {
                     
-                    let departureLoaction = location.city + " " + location.district + " " + address
+                    let departureLoaction = location.city + " "
+                    + location.district + " "
+                    + location.address1 + " "
+                    + (location.address2 ?? "")
                     
                     self?.departureLocation.text = departureLoaction
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -352,9 +355,19 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
     func onDidHide() {
         
         // TODO: 임시 ===========================================
-        let location = Components.Schemas.InputLocationDTO(city: "서울특별시", district: "관악구", address: "신림로3가길 46-17", latitude: 37.48436353, longitude: 126.92972946)
+        let location = Components.Schemas.InputLocationDTO(
+            city: "서울특별시",
+            district: "관악구",
+            address1: "신림로3가길 46-17",
+            address2: nil,
+            latitude: 37.48436353,
+            longitude: 126.92972946
+        )
         
-        let address = location.city + " " + location.district + " " + (location.address ?? "")
+        let address = location.city + " "
+        + location.district + " "
+        + location.address1 + " " 
+        + (location.address2 ?? "")
         
         if address == departureLocation.text {
             return
@@ -367,9 +380,11 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
                 
                 DispatchQueue.main.async { [weak self] in
                     
-                    let address = newDeparture.city + " " + newDeparture.district + " " + (newDeparture.address ?? "")
+                    self?.departureLocation.text = newDeparture.city + " "
+                    + newDeparture.district + " "
+                    + newDeparture.address1 + " "
+                    + (newDeparture.address2 ?? "")
                     
-                    self?.departureLocation.text = address
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                     
                     self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
