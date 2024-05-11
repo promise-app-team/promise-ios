@@ -17,6 +17,7 @@ struct PromiseForm {
     var shareLocationStartType: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload
     var shareLocationStartValue: Double
     var shareLocationEndValue: Double
+    var midpointCalculatedIds: [Double]?
 }
 
 struct SelectableTheme {

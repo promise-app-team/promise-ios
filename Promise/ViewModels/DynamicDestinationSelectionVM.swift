@@ -60,6 +60,7 @@ class DynamicDestinationSelectionVM: NSObject {
     
     var isInitSelectedPlaceConfiguration = false
     var initAttendeesWithIsMidpointCalculated: [Double: Components.Schemas.AttendeeDTO]? = nil
+    var midpointCalculatedIds: [Double]? = nil
     
     var attendees: [SelectableAttendee] = [] {
         didSet {
@@ -79,12 +80,17 @@ class DynamicDestinationSelectionVM: NSObject {
             }
             
             if let initAttendeesWithIsMidpointCalculated, 1 < initAttendeesWithIsMidpointCalculated.count {
-                isInitSelectedPlaceConfiguration = selectedAttendeeIds.allSatisfy { initAttendeesWithIsMidpointCalculated.keys.contains($0) }
+                
+                let attendeeIdsSet = Set(selectedAttendeeIds)
+                let dictKeysSet = Set(initAttendeesWithIsMidpointCalculated.keys)
+
+                isInitSelectedPlaceConfiguration = attendeeIdsSet == dictKeysSet
             }
             
             
             getMiddlePointWithDepartures(with: selectedAttendeeIds) { middlePoint in
                 self.middlePoint = middlePoint
+                self.midpointCalculatedIds = selectedAttendeeIds
             }
             
         }
@@ -116,7 +122,7 @@ class DynamicDestinationSelectionVM: NSObject {
                 
                 return current
             }
-            
+                        
             self.attendees = promise.attendees.map {
                 SelectableAttendee(info: $0, isSelected: $0.hasStartLocation && $0.isMidpointCalculated)
             }

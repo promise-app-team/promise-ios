@@ -12,7 +12,8 @@ import NMapsMap
 protocol DynamicDestinationSelectionDelegate: AnyObject {
     func onSelectedMiddlePlace(
         place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload,
-        middlePoint: Components.Schemas.PointDTO
+        middlePoint: Components.Schemas.PointDTO,
+        midpointCalculatedIds: [Double]
     )
 }
 
@@ -696,7 +697,7 @@ class DynamicDestinationSelectionVC: UIViewController {
             DispatchQueue.main.async {
                 self?.detailAddressTextField.text = text
                 
-                guard let currentTappedPlaceMarker = self?.currentTappedPlaceMarker else {
+                guard let _ = self?.currentTappedPlaceMarker else {
                     self?.confirmButton.isDisabled = true
                     return
                 }
@@ -765,11 +766,12 @@ class DynamicDestinationSelectionVC: UIViewController {
     @objc private func onConfirm() {
         guard let (_, info) = currentTappedPlaceMarker else { return }
         guard let middlePoint = dynamicDestinationSelectionVM.middlePoint else { return }
+        guard let midpointCalculatedIds = dynamicDestinationSelectionVM.midpointCalculatedIds else { return }
                 
         self.dismiss(animated: true)
         
         guard let place = dynamicDestinationSelectionVM.getDestinationPayload(info: info) else { return }
-        delegate?.onSelectedMiddlePlace(place: place, middlePoint: middlePoint)
+        delegate?.onSelectedMiddlePlace(place: place, middlePoint: middlePoint, midpointCalculatedIds: midpointCalculatedIds)
         
     }
     

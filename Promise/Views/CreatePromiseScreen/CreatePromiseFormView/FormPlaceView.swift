@@ -600,8 +600,9 @@ extension FormPlaceView: PlaceSelectionDelegate {
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, middlePoint: Components.Schemas.PointDTO) {
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, middlePoint: Components.Schemas.PointDTO, midpointCalculatedIds: [Double]) {
         createPromiseVM.onChangedMiddlePlace(place)
         createPromiseVM.onChangeMiddlePoint(middlePoint)
+        createPromiseVM.onChangeMidpointCalculatedIds(midpointCalculatedIds)
     }
 }
