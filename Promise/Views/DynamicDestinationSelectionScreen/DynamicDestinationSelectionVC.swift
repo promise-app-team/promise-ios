@@ -339,7 +339,16 @@ class DynamicDestinationSelectionVC: UIViewController {
         return marker
     }()
     
-    private var currentTappedPlaceMarker: (NMFMarker, Document)? = nil
+    private var currentTappedPlaceMarker: (NMFMarker, Document)? = nil {
+        didSet {
+            if let currentTappedPlaceMarker {
+                confirmButton.isDisabled = false
+            } else {
+                confirmButton.isDisabled = true
+            }
+        }
+    }
+    
     private var currentPlaceMarkers: [(NMFMarker, NMFMarker, Document)] = [] {
         didSet {
             
@@ -623,8 +632,17 @@ class DynamicDestinationSelectionVC: UIViewController {
         guard let (_, info) = currentTappedPlaceMarker else { return }
         
         self.dismiss(animated: true)
-        let addressName = info.roadAddressName
-        let splitAddressName = addressName.split(separator: " ")
+        
+        let addressName = info.roadAddressName.isEmpty ? info.addressName : info.roadAddressName
+        let placeName = info.placeName
+        let etcAddress = "\(dynamicDestinationSelectionVM.detailAddress)"
+        
+        let parsedAddress = AddressHelper().parseAddress(addressName)
+        let city = parsedAddress.city
+        let district = parsedAddress.district
+        let address1 = parsedAddress.address1
+        
+        guard let city, let district, let address1 else { return }
         
         guard let y = Double(info.y), let x = Double(info.x) else { return }
         let formattedYString = String(format: "%.8f", y)
@@ -632,12 +650,10 @@ class DynamicDestinationSelectionVC: UIViewController {
         guard let lat = Double(formattedYString), let lng = Double(formattedXString) else { return }
 
         delegate?.onSelectedMiddlePlace(place: .init(value1: .init(
-            city: splitAddressName[0].description,
-            district: splitAddressName[1].description,
-            address1: splitAddressName[2].description,
-            address2: dynamicDestinationSelectionVM.detailAddress.isEmpty 
-            ? nil
-            : dynamicDestinationSelectionVM.detailAddress,
+            city: city,
+            district: district,
+            address1: address1 + placeName,
+            address2: etcAddress.isEmpty ? nil : etcAddress,
             latitude: lat,
             longitude: lng
         )))

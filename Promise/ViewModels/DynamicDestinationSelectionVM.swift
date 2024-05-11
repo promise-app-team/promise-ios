@@ -189,5 +189,4 @@ class DynamicDestinationSelectionVM: NSObject {
     func onChangedDetailAddress(_ textField: UITextField) {
         self.detailAddress = textField.text ?? ""
     }
-
 }

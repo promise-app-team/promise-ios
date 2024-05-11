@@ -569,7 +569,7 @@ class CreatePromiseVM: NSObject {
             longitude: 126.92972946
         ))
         
-        let submitForm = Components.Schemas.InputUpdatePromiseDTO(
+        var submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
@@ -582,8 +582,13 @@ class CreatePromiseVM: NSObject {
         )
         
         if let _ = editingPromise {
+            // MARK: 약속 업데이트 할 때만, 중간장소 타입인 경우, 중간장소 ref key가 존재한다.
+            submitForm.middleLocationRef = form.placeType == .DYNAMIC ? "todo: 키" : nil
+            
             requestEditPromise(with: submitForm, completion)
         } else {
+            // MARK: 약속 생성시, 중간장소 타입일 경우, 출발지가 2개 이상이여야 중간장소를 정할 수 있기 때문에 중간장소 ref가 없다.
+            
             requestCreatePromise(with: submitForm, completion)
         }
         

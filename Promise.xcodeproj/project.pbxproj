@@ -34,6 +34,7 @@
 		D4336AE42BDFAF2A00F46573 /* AttendeeMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4336AE32BDFAF2A00F46573 /* AttendeeMDL.swift */; };
 		D43772142B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */; };
 		D43ABABE2BBF9DE1004E415E /* WebSocketMessageMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43ABABD2BBF9DE1004E415E /* WebSocketMessageMDL.swift */; };
+		D44E58592BEE5516003FA7BB /* AddressHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44E58582BEE5516003FA7BB /* AddressHelper.swift */; };
 		D45112D52B8B1187008264A8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D42B8B1187008264A8 /* Double.swift */; };
 		D45112D82B8B11F5008264A8 /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D72B8B11F5008264A8 /* Float.swift */; };
 		D45112DA2B8B136B008264A8 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45112D92B8B136B008264A8 /* CGFloat.swift */; };
@@ -206,6 +207,7 @@
 		D4336AE32BDFAF2A00F46573 /* AttendeeMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeMDL.swift; sourceTree = "<group>"; };
 		D43772132B8DC1AF006BEC01 /* PromiseStatusMoreMenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseStatusMoreMenuContentView.swift; sourceTree = "<group>"; };
 		D43ABABD2BBF9DE1004E415E /* WebSocketMessageMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketMessageMDL.swift; sourceTree = "<group>"; };
+		D44E58582BEE5516003FA7BB /* AddressHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressHelper.swift; sourceTree = "<group>"; };
 		D45112D42B8B1187008264A8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		D45112D72B8B11F5008264A8 /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
 		D45112D92B8B136B008264A8 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
@@ -760,6 +762,7 @@
 				FCB3AD6F2AC845B000219A25 /* KeyboardManager.swift */,
 				D492BE832B88557D00F6269A /* MapHelper.swift */,
 				D4C4CDAE2BD3644A002F0206 /* DynamicDestinationHelper.swift */,
+				D44E58582BEE5516003FA7BB /* AddressHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1303,6 +1306,7 @@
 				E7C12CB92BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift in Sources */,
 				2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */,
 				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
+				D44E58592BEE5516003FA7BB /* AddressHelper.swift in Sources */,
 				4A4719F02A37138B00812B29 /* ToastMessage.swift in Sources */,
 				FA9C230A2A72BE0A007573A6 /* PopupVC.swift in Sources */,
 				2B9895292B637F89006AE27E /* PlaceAddressStackView.swift in Sources */,
