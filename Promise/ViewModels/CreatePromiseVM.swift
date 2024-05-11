@@ -112,7 +112,6 @@ class CreatePromiseVM: NSObject {
                             .filter { $0.isMidpointCalculated }
                             .map { $0.id }
                         
-                        print("ids: ", ids)
                         self.midpointCalculatedIds = ids
                         self.capturedMidpointCalculatedIds = ids
                         
