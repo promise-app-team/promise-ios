@@ -60,7 +60,6 @@
 		E7C12CB62BC59A1C003FEF8C /* PlaceSelectionVC+CameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */; };
 		E7C12CB92BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */; };
 		E7C12CBB2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */; };
-		E7C638722BDE597E009FEB55 /* appleAuthKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = E7C638712BDE597E009FEB55 /* appleAuthKey.p8 */; };
 		E7D586D02BEF034C0027790B /* PlaceLocationMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */; };
 		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
 		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
@@ -239,7 +238,6 @@
 		E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+CameraDelegate.swift"; sourceTree = "<group>"; };
 		E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+HeaderViewDelegate.swift"; sourceTree = "<group>"; };
 		E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodingMDL.swift; sourceTree = "<group>"; };
-		E7C638712BDE597E009FEB55 /* appleAuthKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = appleAuthKey.p8; sourceTree = "<group>"; };
 		E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLocationMDL.swift; sourceTree = "<group>"; };
 		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
 		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
@@ -685,7 +683,6 @@
 		FC5974082A24D38700A642D7 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
-				E7C638712BDE597E009FEB55 /* appleAuthKey.p8 */,
 				D4FC81CC2B455862000C18CC /* PromiseRelease (development).entitlements */,
 				D4FC81CB2B455859000C18CC /* PromiseDebug (production).entitlements */,
 				D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */,
@@ -1099,7 +1096,6 @@
 				FC41B2722A782A2900C1C592 /* XCImages.xcassets in Resources */,
 				FC59032D2A76A76A00778305 /* openapi.json in Resources */,
 				FC59034F2A76D08300778305 /* Localizable.strings in Resources */,
-				E7C638722BDE597E009FEB55 /* appleAuthKey.p8 in Resources */,
 				FC59032C2A76A76A00778305 /* openapi-generator-config.yml in Resources */,
 				FC59032B2A76A76A00778305 /* swiftgen.yml in Resources */,
 				FAD2BFCA2A6AF661009E6461 /* Pretendard-ExtraLight.otf in Resources */,
