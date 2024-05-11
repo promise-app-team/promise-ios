@@ -118,15 +118,6 @@ extension PlaceSelectionVC {
             do {
                 let parsedData = try JSONDecoder().decode(ReverseGeocodingMDL.self, from: data)
                 completion(parsedData)
-                
-                // MARK: - Test
-                if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                            // 디코딩한 JSON 데이터를 다시 JSON 형태의 문자열로 인코딩하여 프린트
-                            if let jsonPrintData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted),
-                               let jsonString = String(data: jsonPrintData, encoding: .utf8) {
-                                print(jsonString)
-                            }
-                        }
             } catch {
                 print(error)
             }

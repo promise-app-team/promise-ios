@@ -30,27 +30,15 @@ extension PlaceSelectionVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         switch textField {
         case searchTextField:
-            
             switch viewState {
             case .idle:
                 viewState = .onSearch
             default:
                 break
             }
-            
-            
-            
-            
         default:
             break
         }
-//        switch textField {
-//        case searchTextField:
-//            guard viewState == .none || viewState == .searchMap else { return }
-//            viewState = .onSearch
-//        default:
-//            break
-//        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -98,6 +86,10 @@ extension PlaceSelectionVC {
             } else if let data = data {
                 do {
                     let json = try JSONDecoder().decode(KakaoPlaceMDL.self, from: data)
+                    guard let documents = json.documents, !documents.isEmpty else {
+                        self?.viewState = .searchFail
+                        return
+                    }
                     self?.place = json
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()
@@ -110,5 +102,4 @@ extension PlaceSelectionVC {
         }
         task.resume()
     }
-    
 }
