@@ -226,6 +226,8 @@ class CreatePromiseVM: NSObject {
         }
     }
     
+    var middlePoint: Components.Schemas.PointDTO? = nil
+    
     var shareLocationStartTypeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) -> Void)?
     var shareLocationStartType = Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.DISTANCE {
         didSet {
@@ -488,6 +490,10 @@ class CreatePromiseVM: NSObject {
         self.middlePlace = middlePlace
     }
     
+    func onChangeMiddlePoint(_ middlePoint: Components.Schemas.PointDTO) {
+        self.middlePoint = middlePoint
+    }
+    
     func onChangedShareLocationStartType(_ type: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) {
         self.shareLocationStartType = type
     }
@@ -583,7 +589,9 @@ class CreatePromiseVM: NSObject {
         
         if let _ = editingPromise {
             // MARK: 약속 업데이트 할 때만, 중간장소 타입인 경우, 중간장소 ref key가 존재한다.
-            submitForm.middleLocationRef = form.placeType == .DYNAMIC ? "todo: 키" : nil
+            if form.placeType == .DYNAMIC, let ref = middlePoint?.ref {
+                submitForm.middleLocationRef = ref
+            }
             
             requestEditPromise(with: submitForm, completion)
         } else {

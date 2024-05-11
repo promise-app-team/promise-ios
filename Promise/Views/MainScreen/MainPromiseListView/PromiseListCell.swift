@@ -414,6 +414,7 @@ class PromiseListCell: UICollectionViewCell {
             
             place.topAnchor.constraint(equalTo: placeLabel.topAnchor),
             place.leadingAnchor.constraint(equalTo: placeLabel.trailingAnchor, constant: adjustedValue(4, .width)),
+            place.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
             place.bottomAnchor.constraint(equalTo: placeLabel.bottomAnchor),
             
             hostLabel.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: adjustedValue(8, .height)),
@@ -422,6 +423,7 @@ class PromiseListCell: UICollectionViewCell {
             
             host.topAnchor.constraint(equalTo: hostLabel.topAnchor),
             host.leadingAnchor.constraint(equalTo: hostLabel.trailingAnchor, constant: adjustedValue(4, .width)),
+            host.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(22, .width)),
             host.bottomAnchor.constraint(equalTo: hostLabel.bottomAnchor),
             
             attendeesLabel.topAnchor.constraint(equalTo: hostLabel.bottomAnchor, constant: adjustedValue(8, .height)),
