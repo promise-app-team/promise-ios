@@ -75,6 +75,67 @@ class FormPlaceView: UIView {
         return stackView
     }()
     
+    private let middlePlaceGuidanceTaggedText = {
+        let label = UILabel()
+        
+        // Placeholder
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
+        
+        label.text = L10n.UpdatePromise.DynamicDestination.Guidance.configurable
+        label.textColor = UIColor(red: 0.898, green: 0.369, blue: 0.275, alpha: 1)
+        
+        label.sizeToFit()
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let middlePlaceGuidanceTaggedIcon = {
+        let imageView = UIImageView(image: Asset.informationRed.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(16, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(16, .height)).isActive = true
+        return imageView
+    }()
+    
+    private lazy var middlePlaceGuidanceTaggedWrapper = {
+        let view = UIView()
+        
+        [
+            middlePlaceGuidanceTaggedIcon,
+            middlePlaceGuidanceTaggedText
+        ].forEach { view.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            middlePlaceGuidanceTaggedIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            middlePlaceGuidanceTaggedIcon.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            middlePlaceGuidanceTaggedText.leadingAnchor.constraint(equalTo: middlePlaceGuidanceTaggedIcon.trailingAnchor, constant: adjustedValue(4, .width)),
+            middlePlaceGuidanceTaggedText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            middlePlaceGuidanceTaggedText.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var middlePlaceTaggedGuidance = {
+        let view = UIView()
+        view.addSubview(middlePlaceGuidanceTaggedWrapper)
+        NSLayoutConstraint.activate([
+            middlePlaceGuidanceTaggedWrapper.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            middlePlaceGuidanceTaggedWrapper.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+        view.backgroundColor = UIColor(red: 1, green: 0.941, blue: 0.929, alpha: 1)
+        view.layer.cornerRadius = adjustedValue(12, .width)
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)).isActive = true
+        return view
+    }()
+    
     private lazy var middlePlaceGuidanceButton = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -108,6 +169,23 @@ class FormPlaceView: UIView {
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private lazy var middlePlaceSelectionButton = {
+        let button = Button()
+        button.initialize(
+            title: L10n.UpdatePromise.DynamicDestination.selectionButtonTitle,
+            bgColor: .white,
+            borderColor: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1),
+            fontColor: UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+        )
+        
+        button.addTarget(self, action: #selector(onTapMiddlePlaceSelectionButton), for: .touchUpInside)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: Button.Height).isActive = true
+        button.isHidden = true
+        return button
     }()
     
     let animatedMapImage = {
@@ -181,20 +259,32 @@ class FormPlaceView: UIView {
     
     private lazy var placeWrapper = {
         let stackView = UIStackView(arrangedSubviews: [
-            selectPlaceButton, 
-            middlePlaceGuidanceButton
+            middlePlaceTaggedGuidance,
+            selectPlaceButton,
+            middlePlaceGuidanceButton,
+            middlePlaceSelectionButton
         ])
         
         stackView.axis = .vertical
+        stackView.spacing = adjustedValue(16, .height)
+        
+        stackView.isLayoutMarginsRelativeArrangement = true
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
-    @objc private func onTapSelectPlaceButton(){
-        let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: true)
-        placeSelectionVC.delegate = self
-        createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
+    @objc private func onTapSelectPlaceButton() {
+        switch createPromiseVM.placeType {
+        case .STATIC:
+            let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: true)
+            placeSelectionVC.delegate = self
+            createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
+        case .DYNAMIC:
+            guard let state = createPromiseVM.dynamicDestinationState else { return }
+            guard state == .configurable else { return }
+            onTapMiddlePlaceSelectionButton()
+        }
     }
     
     @objc private func onTapMiddlePlaceGuidanceButton() {
@@ -203,20 +293,232 @@ class FormPlaceView: UIView {
         }
     }
     
+    @objc private func onTapMiddlePlaceSelectionButton() {
+        
+        guard let state = createPromiseVM.dynamicDestinationState else { return }
+        
+        let dynamicDestinationSelectionVC = DynamicDestinationSelectionVC(vm: createPromiseVM, state: state)
+        dynamicDestinationSelectionVC.delegate = self
+        createPromiseVM.currentVC?.present(dynamicDestinationSelectionVC, animated: true)
+    }
+    
+    private func updateMiddlePlaceViewByState() {
+        guard let state = createPromiseVM.dynamicDestinationState else {
+            self.selectPlaceButton.isHidden = true
+            self.middlePlaceGuidanceButton.isHidden = false
+            return
+        }
+        
+        switch state {
+        case .notConfigurable:
+            
+            self.placeWrapper.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.middlePlaceGuidanceButton.isHidden = false
+            self.selectPlaceButton.isHidden = true
+            
+        case .configurable:
+            
+            self.placeWrapper.layoutMargins = UIEdgeInsets(
+                top: adjustedValue(8, .height),
+                left: 0,
+                bottom: 0,
+                right: 0
+            )
+            
+            self.middlePlaceGuidanceButton.isHidden = true
+            
+            self.selectPlaceButton.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 1, green: 0.41, blue: 0.3, alpha: 1).cgColor
+            }
+            
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " "
+                + middlePlace.value1.district + " "
+                + middlePlace.value1.address1 + " "
+                + (middlePlace.value1.address2 ?? "")
+                
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
+            
+            // MARK: configuable 상태에서 middlePlaceTaggedGuidance 내용 및 색상은 초기화 시 default 구성
+            self.middlePlaceTaggedGuidance.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            }
+            
+        case .configured:
+            
+            self.placeWrapper.layoutMargins = UIEdgeInsets(
+                top: adjustedValue(8, .height),
+                left: 0,
+                bottom: 0,
+                right: 0
+            )
+            
+            self.middlePlaceGuidanceButton.isHidden = true
+            
+            self.selectPlaceButton.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+            }
+            
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " " 
+                + middlePlace.value1.district + " "
+                + middlePlace.value1.address1 + " "
+                + (middlePlace.value1.address2 ?? "")
+                
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
+            
+            self.middlePlaceTaggedGuidance.isHidden = false
+            
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            } else {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.922, green: 0.957, blue: 1, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationBlue.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.2, green: 0.52, blue: 0.9, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.configured
+            }
+            
+            self.middlePlaceSelectionButton.isHidden = false
+            
+        case .newlyConfigurable:
+            
+            self.placeWrapper.layoutMargins = UIEdgeInsets(
+                top: adjustedValue(8, .height),
+                left: 0,
+                bottom: 0,
+                right: 0
+            )
+            
+            self.middlePlaceGuidanceButton.isHidden = true
+            
+            self.selectPlaceButton.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1).cgColor
+            } else {
+                self.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+            }
+            
+            if let middlePlace = self.createPromiseVM.form.middlePlace {
+                
+                let middlePlaceText = middlePlace.value1.city + " " 
+                + middlePlace.value1.district + " "
+                + middlePlace.value1.address1 + " "
+                + (middlePlace.value1.address2 ?? "")
+                
+                self.selectedPlace.text = middlePlaceText
+                self.selectedPlace.textColor = .black
+                
+            } else {
+                
+                self.selectedPlace.text = L10n.UpdatePromise.DynamicDestination.Configurable.placeholder
+                self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                
+            }
+            
+            self.middlePlaceTaggedGuidance.isHidden = false
+            if createPromiseVM.isNewSelectedMiddlePlaceForUpdate {
+                self.middlePlaceTaggedGuidance.backgroundColor = UIColor(red: 0.9, green: 0.98, blue: 0.96, alpha: 1)
+                self.middlePlaceGuidanceTaggedIcon.image = Asset.informationGreen.image
+                self.middlePlaceGuidanceTaggedText.textColor = UIColor(red: 0.02, green: 0.75, blue: 0.62, alpha: 1)
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.staging
+            } else {
+                self.middlePlaceGuidanceTaggedText.text = L10n.UpdatePromise.DynamicDestination.Guidance.newlyConfigurable
+            }
+            
+            self.middlePlaceSelectionButton.isHidden = false
+        }
+        
+        self.layoutIfNeeded()
+    }
+    
     private func assignPlaceTypeDidChange() {
         createPromiseVM.placeTypeDidChange = { type in
             
             DispatchQueue.main.async { [weak self] in
-                switch(type) {
-                case .STATIC:
-                    self?.placeType.updateUIForSelectedTab(tab: .LEFT)
-                    self?.selectPlaceButton.isHidden = false
-                    self?.middlePlaceGuidanceButton.isHidden = true
+                if let _ = self?.createPromiseVM.editingPromise {
                     
-                case .DYNAMIC:
-                    self?.placeType.updateUIForSelectedTab(tab: .RIGHT)
-                    self?.selectPlaceButton.isHidden = true
-                    self?.middlePlaceGuidanceButton.isHidden = false
+                    switch(type) {
+                    case .STATIC:
+                        
+                        self?.placeType.updateUIForSelectedTab(tab: .LEFT)
+                        
+                        self?.placeWrapper.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                        
+                        self?.selectPlaceButton.isHidden = false
+                        self?.selectPlaceButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).cgColor
+                        
+                        if let place = self?.createPromiseVM.form.place {
+                            
+                            let placeText = place.value1.city + " "
+                            + place.value1.district + " "
+                            + place.value1.address1 + " "
+                            + (place.value1.address2 ?? "")
+                            
+                            self?.selectedPlace.text = placeText
+                            self?.selectedPlace.textColor = .black
+                            
+                        } else {
+                            
+                            self?.selectedPlace.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+                            self?.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+                            
+                        }
+                        
+                        self?.middlePlaceGuidanceButton.isHidden = true
+                        self?.middlePlaceTaggedGuidance.isHidden = true
+                        self?.middlePlaceSelectionButton.isHidden = true
+                        
+                    case .DYNAMIC:
+                        
+                        self?.placeType.updateUIForSelectedTab(tab: .RIGHT)
+                        self?.updateMiddlePlaceViewByState()
+                    }
+                    
+                } else {
+                    
+                    switch(type) {
+                    case .STATIC:
+                        self?.placeType.updateUIForSelectedTab(tab: .LEFT)
+                        self?.selectPlaceButton.isHidden = false
+                        self?.middlePlaceGuidanceButton.isHidden = true
+                        
+                    case .DYNAMIC:
+                        self?.placeType.updateUIForSelectedTab(tab: .RIGHT)
+                        self?.selectPlaceButton.isHidden = true
+                        self?.middlePlaceGuidanceButton.isHidden = false
+                        
+                    }
                     
                 }
                 
@@ -225,15 +527,26 @@ class FormPlaceView: UIView {
         }
     }
     
+    // TODO: middlePlaceDidChange
+    private func assignMiddlePlaceDidChange() {
+        createPromiseVM.middlePlaceDidChange = { middlePlace in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.updateMiddlePlaceViewByState()
+                self?.layoutIfNeeded()
+            }
+        }
+    }
+    
+    // TODO: placeDidChange
     private func assignPlaceDidChange() {
-//        createPromiseVM.placeDidChange = { [weak self] place in
-//            guard let self else { return }
-//
-//            DispatchQueue.main.async {
-//                // TODO: 주소 업데이트 시 UI 업데이트
-//
-//            }
-//        }
+        createPromiseVM.placeDidChange = { place in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                
+            }
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -260,6 +573,7 @@ class FormPlaceView: UIView {
         
         assignPlaceTypeDidChange()
         assignPlaceDidChange()
+        assignMiddlePlaceDidChange()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -285,12 +599,22 @@ class FormPlaceView: UIView {
     }
 }
 
-extension FormPlaceView: FormTabMenuViewDelegate, PlaceSelectionDelegate {
+extension FormPlaceView: FormTabMenuViewDelegate {
     func onTapLeftButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload.STATIC)
+        createPromiseVM.onChangedPlaceType(.STATIC)
     }
     
     func onTapRightButton() {
-        createPromiseVM.onChangedPlaceType(Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload.DYNAMIC)
+        createPromiseVM.onChangedPlaceType(.DYNAMIC)
+    }
+}
+
+extension FormPlaceView: PlaceSelectionDelegate {
+    
+}
+
+extension FormPlaceView: DynamicDestinationSelectionDelegate {
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
+        createPromiseVM.onChangedMiddlePlace(place)
     }
 }

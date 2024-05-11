@@ -93,8 +93,7 @@ class PromiseStatusMoreMenuContentView: UIView {
             let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
             guard isOwner else { return }
             
-            let createPromiseVC = CreatePromiseVC(with: promise)
-            self?.mainVM.currentVC?.navigationController?.pushViewController(createPromiseVC, animated: true)
+            self?.mainVM.navigateUpdatePromiseScreen(with: promise)
         }
 
     }

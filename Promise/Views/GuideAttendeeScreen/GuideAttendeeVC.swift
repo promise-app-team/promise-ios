@@ -98,11 +98,11 @@ class GuideAttendeeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureMainVC()
+        configure()
         render()
     }
     
-    private func configureMainVC() {
+    private func configure() {
         view.backgroundColor = .white
     }
     

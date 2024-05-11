@@ -52,6 +52,7 @@ class AttendeeCellForCard: UICollectionViewCell {
 }
 
 class PromiseListCell: UICollectionViewCell {
+    var mainVM: MainVM? = nil
     
     private var dynamicDestinationState: DynamicDestinationState? = nil
     
@@ -338,9 +339,9 @@ class PromiseListCell: UICollectionViewCell {
             return
         }
         
-        guard let topVC = parentViewController(), let promise else { return }
-        let createPromiseVC = CreatePromiseVC(with: promise)
-        topVC.navigationController?.pushViewController(createPromiseVC, animated: true)
+        
+        guard let mainVM, let promise else { return }
+        mainVM.navigateUpdatePromiseScreen(with: promise)
     }
     
     private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
@@ -466,7 +467,11 @@ class PromiseListCell: UICollectionViewCell {
             case .STATIC:
                 
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.address
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                    
                     self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 }
                 
@@ -529,13 +534,26 @@ class PromiseListCell: UICollectionViewCell {
             case .configured:
                 
                 self?.dynamicDestinationState = .configured
-                self?.place.text = promise.destination?.value1.address
+                
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
+                
                 self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 
             case .newlyConfigurable:
                 
                 self?.dynamicDestinationState = .newlyConfigurable
-                self?.place.text = promise.destination?.value1.address
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
+        
                 self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
                 
             }

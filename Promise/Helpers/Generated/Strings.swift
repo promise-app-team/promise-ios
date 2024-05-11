@@ -158,6 +158,32 @@ internal enum L10n {
       }
     }
   }
+  internal enum DynamicDestinationSelection {
+    /// 선택 완료
+    internal static let confirm = L10n.tr("Localizable", "DynamicDestinationSelection.confirm", fallback: "선택 완료")
+    /// 상세보기
+    internal static let detailPlaceButtonTitle = L10n.tr("Localizable", "DynamicDestinationSelection.detailPlaceButtonTitle", fallback: "상세보기")
+    /// 중간 장소 선택
+    internal static let headerTitle = L10n.tr("Localizable", "DynamicDestinationSelection.headerTitle", fallback: "중간 장소 선택")
+    internal enum DetailAddress {
+      /// 상세 주소
+      internal static let label = L10n.tr("Localizable", "DynamicDestinationSelection.DetailAddress.label", fallback: "상세 주소")
+      /// 예) 스터디룸 1번방
+      internal static let placeholder = L10n.tr("Localizable", "DynamicDestinationSelection.DetailAddress.placeholder", fallback: "예) 스터디룸 1번방")
+    }
+  }
+  internal enum GetPromise {
+    internal enum Error {
+      /// 해당 약속 정보를 가져오는데 실패했습니다.
+      internal static let message = L10n.tr("Localizable", "GetPromise.Error.message", fallback: "해당 약속 정보를 가져오는데 실패했습니다.")
+      /// 약속 업데이트 실패
+      internal static let title = L10n.tr("Localizable", "GetPromise.Error.title", fallback: "약속 업데이트 실패")
+    }
+    internal enum NotFoundPromise {
+      /// 약속 정보를 가져왔지만 현재 약속 리스트에 업데이트 할 수 없습니다.
+      internal static let message = L10n.tr("Localizable", "GetPromise.NotFoundPromise.message", fallback: "약속 정보를 가져왔지만 현재 약속 리스트에 업데이트 할 수 없습니다.")
+    }
+  }
   internal enum GuideAttendee {
     /// 약속하러 가기
     internal static let attend = L10n.tr("Localizable", "GuideAttendee.attend", fallback: "약속하러 가기")
@@ -309,6 +335,30 @@ internal enum L10n {
     internal static let invitedToPromise = L10n.tr("Localizable", "TaggedNotification.invitedToPromise", fallback: "띵동! 약속에 초대 받았어요")
     /// 모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요
     internal static let middlePlaceWarning = L10n.tr("Localizable", "TaggedNotification.middlePlaceWarning", fallback: "모두 출발지를 등록해야 중간장소를 정해드릴 수 있어요")
+  }
+  internal enum UpdatePromise {
+    internal enum DynamicDestination {
+      /// 중간 장소 변경
+      internal static let selectionButtonTitle = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.selectionButtonTitle", fallback: "중간 장소 변경")
+      internal enum Configurable {
+        /// 중간장소를 선택해 주세요
+        internal static let placeholder = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Configurable.placeholder", fallback: "중간장소를 선택해 주세요")
+      }
+      internal enum Guidance {
+        /// 중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요
+        internal static let configurable = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.configurable", fallback: "중간 장소를 추천해드렸어요. 중간 장소는 수정이 가능해요")
+        /// 중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요
+        internal static let configured = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.configured", fallback: "중간 장소가 설정되었어요. 중간 장소는 수정이 가능해요")
+        /// 참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요
+        internal static let newlyConfigurable = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.newlyConfigurable", fallback: "참여자 정보가 변경되어 중간 장소를 다시 추천받을 수 있어요")
+        /// 선택한 중간 장소를 약속 장소로 설정할 수 있어요
+        internal static let staging = L10n.tr("Localizable", "UpdatePromise.DynamicDestination.Guidance.staging", fallback: "선택한 중간 장소를 약속 장소로 설정할 수 있어요")
+      }
+    }
+    internal enum Update {
+      /// 약속이 수정되었어요
+      internal static let successToastMessage = L10n.tr("Localizable", "UpdatePromise.Update.successToastMessage", fallback: "약속이 수정되었어요")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

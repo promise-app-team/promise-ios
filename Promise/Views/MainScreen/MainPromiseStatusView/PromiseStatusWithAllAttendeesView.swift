@@ -319,15 +319,40 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return stackView
     }()
     
-    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
+    private lazy var closeButtonWrapper = {
+        let imageView = UIImageView(image: Asset.close.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)).isActive = true
+        
+        let view = UIView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapClose))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: adjustedValue(56, .width)).isActive = true
+        return view
+    }()
     
+    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
     
     private lazy var header = {
         let view = UIView()
         
-        [headerTitle, menuWrapper].forEach { view.addSubview($0) }
+        [closeButtonWrapper, headerTitle, menuWrapper].forEach { view.addSubview($0) }
         
         NSLayoutConstraint.activate([
+            closeButtonWrapper.topAnchor.constraint(equalTo: view.topAnchor),
+            closeButtonWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            closeButtonWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             headerTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             headerTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
@@ -672,6 +697,10 @@ class PromiseStatusWithAllAttendeesView: UIView {
         }
     }
     
+    @objc private func onTapClose() {
+        mainVM.currentVC?.promiseStatusView?.moveHalf()
+    }
+    
     @objc private func onTapCollapseButton() {
         if isCollapsedAttendeesStatusView {
             UIView.animate(withDuration: 0.2) {
@@ -886,7 +915,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
             case .STATIC:
                 
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.address
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                    
                     self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 }
                 
@@ -937,13 +970,23 @@ class PromiseStatusWithAllAttendeesView: UIView {
                 }
                 
             case .configured:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
                 
-                self?.place.text = promise.destination?.value1.address
                 self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 
             case .newlyConfigurable:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
                 
-                self?.place.text = promise.destination?.value1.address
                 self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
                 
             }

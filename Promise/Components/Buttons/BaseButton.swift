@@ -51,7 +51,14 @@ open class BaseButton: UIButton {
     
     // MARK: - 초기화
     
-    open func initialize(title: String, bgColor: UIColor, borderColor: UIColor, fontColor: UIColor, iconTitle: String, disabled: Bool) {
+    open func initialize(
+        title: String,
+        bgColor: UIColor,
+        borderColor: UIColor,
+        fontColor: UIColor,
+        iconTitle: String = "",
+        disabled: Bool = false
+    ) {
         self.title = title
         self.bgColor = bgColor
         self.borderColor = borderColor

@@ -15,29 +15,27 @@ struct KakaoPlaceMDL: Codable {
 
 // MARK: - Document
 struct Document: Codable {
-    let placeName, distance: String
+    let addressName, categoryGroupCode, categoryGroupName, categoryName: String
+    let distance, id, phone, placeName: String
     let placeURL: String
-    let categoryName, addressName, roadAddressName, id: String
-    let phone, categoryGroupCode, categoryGroupName, x: String
-    let y: String
+    let roadAddressName, x, y: String
 
     enum CodingKeys: String, CodingKey {
-        case placeName = "place_name"
-        case distance
-        case placeURL = "place_url"
-        case categoryName = "category_name"
         case addressName = "address_name"
-        case roadAddressName = "road_address_name"
-        case id, phone
         case categoryGroupCode = "category_group_code"
         case categoryGroupName = "category_group_name"
+        case categoryName = "category_name"
+        case distance, id, phone
+        case placeName = "place_name"
+        case placeURL = "place_url"
+        case roadAddressName = "road_address_name"
         case x, y
     }
 }
 
 // MARK: - Meta
 struct Meta: Codable {
-    let sameName: SameName
+    let sameName: SameName?
     let pageableCount, totalCount: Int
     let isEnd: Bool
 
@@ -58,4 +56,25 @@ struct SameName: Codable {
         case region, keyword
         case selectedRegion = "selected_region"
     }
+}
+
+enum CategoryGroupCode: String {
+    case 대형마트 = "MT1"
+    case 편의점 = "CS2"
+    case 어린이집, 유치원 = "PS3"
+    case 학교 = "SC4"
+    case 학원 = "AC5"
+    case 주차장 = "PK6"
+    case 주유소, 충전소 = "OL7"
+    case 지하철역 = "SW8"
+    case 은행 = "BK9"
+    case 문화시설 = "CT1"
+    case 중개업소 = "AG2"
+    case 공공기관 = "PO3"
+    case 관광명소 = "AT4"
+    case 숙박 = "AD5"
+    case 음식점 = "FD6"
+    case 카페 = "CE7"
+    case 병원 = "HP8"
+    case 약국 = "PM9"
 }

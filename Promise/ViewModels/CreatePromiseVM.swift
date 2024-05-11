@@ -7,10 +7,12 @@
 
 import Foundation
 import UIKit
-@_spi(Generated) import OpenAPIRuntime
 
 class CreatePromiseVM: NSObject {
     var currentVC: CreatePromiseVC?
+    
+    var isNewSelectedPlaceForUpdate = false
+    var isNewSelectedMiddlePlaceForUpdate = false
     
     var capturedEditingPromiseTitle: String? = nil
     var capturedEditingPromiseDate: SelectionDate? = nil
@@ -23,12 +25,18 @@ class CreatePromiseVM: NSObject {
         .Schemas
         .InputUpdatePromiseDTO
         .destinationPayload? = nil
+    var capturedEditingPromiseMiddlePlace: Components
+        .Schemas
+        .InputUpdatePromiseDTO
+        .destinationPayload? = nil
     var capturedEditingPromiseShareLocationStartType: Components
         .Schemas
         .InputUpdatePromiseDTO
         .locationShareStartTypePayload? = nil
     var capturedEditingPromiseShareLocationStartValue: Double? = nil
     var capturedEditingPromiseShareLocationEndValue: Double? = nil
+    
+    var dynamicDestinationState: DynamicDestinationState? = nil
     
     var editingPromise: Components.Schemas.PromiseDTO? = nil {
         didSet {
@@ -51,27 +59,55 @@ class CreatePromiseVM: NSObject {
                 self.capturedEditingPromisePlaceType = .STATIC
                 
                 // TODO: 약속 수정시 확인
-                let destination = editingPromise.destination?.value1
-                let place = Components
-                    .Schemas
-                    .InputUpdatePromiseDTO
-                    .destinationPayload(value1: .init(
-                        city: destination?.city ?? "",
-                        district: destination?.district ?? "",
-                        address: destination?.address ?? "",
-                        latitude: destination?.latitude ?? 0,
-                        longitude: destination?.longitude ?? 0)
-                    )
+                if let destinationValue = editingPromise.destination?.value1 {
+                    let place = Components
+                        .Schemas
+                        .InputUpdatePromiseDTO
+                        .destinationPayload(value1: .init(
+                            city: destinationValue.city,
+                            district: destinationValue.district,
+                            address1: destinationValue.address1,
+                            address2: destinationValue.address2,
+                            latitude: destinationValue.latitude,
+                            longitude: destinationValue.longitude
+                        ))
+                    
+                    self.place = place
+                    self.capturedEditingPromisePlace = place
+                }
                 
-                self.place = place
-                self.capturedEditingPromisePlace = place
                 
             case .DYNAMIC:
                 self.placeType = .DYNAMIC
                 self.capturedEditingPromisePlaceType = .DYNAMIC
                 
-                // TODO: 중간장소일 경우
-                break
+                let helper = DynamicDestinationHelper()
+                let state = helper.getConfigurableState(promise: editingPromise)
+                self.dynamicDestinationState = state
+                
+                switch state {
+                case .notConfigurable, .configurable:
+                    break
+                case .configured, .newlyConfigurable:
+                    
+                    if let destinationValue = editingPromise.destination?.value1 {
+                        let middlePlace = Components
+                            .Schemas
+                            .InputUpdatePromiseDTO
+                            .destinationPayload(value1: .init(
+                                city: destinationValue.city,
+                                district: destinationValue.district,
+                                address1: destinationValue.address1,
+                                address2: destinationValue.address2,
+                                latitude: destinationValue.latitude,
+                                longitude: destinationValue.longitude)
+                            )
+                        
+                        self.middlePlace = middlePlace
+                        self.capturedEditingPromiseMiddlePlace = middlePlace
+                    }
+                    
+                }
             }
             
             // MARK: 타입별 위치 공유 시작 시간
@@ -174,11 +210,19 @@ class CreatePromiseVM: NSObject {
         }
     }
     
-    var placeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload) -> Void)?
-    var place = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(city: "서울특별시", district: "관악구", address: "관악로 14길 109", latitude: 37.48436353, longitude: 126.92972946)) {
+    var placeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload?) -> Void)?
+    var place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload? = nil {
         didSet {
             placeDidChange?(place)
             updateForm(keyPath: \.place, value: place)
+        }
+    }
+    
+    var middlePlaceDidChange: ((Components.Schemas.InputUpdatePromiseDTO.destinationPayload?) -> Void)?
+    var middlePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload? = nil {
+        didSet {
+            middlePlaceDidChange?(middlePlace)
+            updateForm(keyPath: \.middlePlace, value: middlePlace)
         }
     }
     
@@ -246,6 +290,7 @@ class CreatePromiseVM: NSObject {
         themes: [],
         placeType: placeType,
         place: place,
+        middlePlace: middlePlace,
         shareLocationStartType: shareLocationStartType,
         shareLocationStartValue: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStartValue.itemIndex)!,
         shareLocationEndValue: shareLocationEndInfo.getOriginItem(at: shareLocationEndValue.itemIndex)!
@@ -265,83 +310,150 @@ class CreatePromiseVM: NSObject {
         self.form = newForm
     }
     
-    var assignOnVaildateForm: ((Bool) -> Void)?
+    var formDidValidate: ((Bool) -> Void)?
     private func validateForm(_ form: PromiseForm) {
-        
         // MARK: 약속 수정인 경우 validate
-        if let editingPromise = self.editingPromise,
+        // MARK: 장소는 nillable
+        if let _ = self.editingPromise,
            let title = self.capturedEditingPromiseTitle,
            let date = self.capturedEditingPromiseDate,
            let placeType = self.capturedEditingPromisePlaceType,
-           let place = self.capturedEditingPromisePlace,
            let shareLocationStartType = self.capturedEditingPromiseShareLocationStartType,
            let shareLocationStartValue = self.capturedEditingPromiseShareLocationStartValue,
            let shareLocationEndValue = self.capturedEditingPromiseShareLocationEndValue
         {
             if form.title.isEmpty {
-                assignOnVaildateForm?(false)
+                formDidValidate?(false)
                 return
             }
             
+            let isEmptySelectedThemes = form.themes.filter{ $0.isSelected }.isEmpty
+            if isEmptySelectedThemes {
+                formDidValidate?(false)
+                return
+            }
             
+            // MARK: 장소 validate
+            // MARK: 장소는 nillable
+            switch form.placeType {
+            case .STATIC:
+                let city = form.place?.value1.city
+                let district = form.place?.value1.district
+                let address1 = form.place?.value1.address1
+                let address2 = form.place?.value1.address2
+                let lat = form.place?.value1.latitude
+                let lng = form.place?.value1.longitude
+                
+                let capturedCity = self.capturedEditingPromisePlace?.value1.city
+                let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
+                let capturedAddress1 = self.capturedEditingPromisePlace?.value1.address1
+                let capturedAddress2 = self.capturedEditingPromisePlace?.value1.address2
+                let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
+                let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
+                
+                if city != capturedCity ||
+                    district != capturedDistrict ||
+                    address1 != capturedAddress1 ||
+                    address2 != capturedAddress2 ||
+                    lat != capturedLat ||
+                    lng != capturedLng {
+                    self.isNewSelectedPlaceForUpdate = true
+                    formDidValidate?(true)
+                    return
+                } else {
+                    self.isNewSelectedPlaceForUpdate = false
+                }
+                
+            case .DYNAMIC:
+                let city = form.middlePlace?.value1.city
+                let district = form.middlePlace?.value1.district
+                let address1 = form.middlePlace?.value1.address1
+                let address2 = form.middlePlace?.value1.address2
+                let lat = form.middlePlace?.value1.latitude
+                let lng = form.middlePlace?.value1.longitude
+                
+                let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
+                let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
+                let capturedAddress1 = self.capturedEditingPromiseMiddlePlace?.value1.address1
+                let capturedAddress2 = self.capturedEditingPromiseMiddlePlace?.value1.address2
+                let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
+                let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
+                
+                if city != capturedCity ||
+                    district != capturedDistrict ||
+                    address1 != capturedAddress1 ||
+                    address2 != capturedAddress2 ||
+                    lat != capturedLat ||
+                    lng != capturedLng {
+                    self.isNewSelectedMiddlePlaceForUpdate = true
+                    formDidValidate?(true)
+                    return
+                } else {
+                    self.isNewSelectedMiddlePlaceForUpdate = false
+                }
+            }
+            
+            // MARK: 테마 validate
+            if let capturedThemes = capturedEditingPromiseThemes {
+                
+                let selectedThemes = self.themes.filter { $0.isSelected }
+                let selectedThemeIdsSet = Set(selectedThemes.compactMap { $0.id })
+                
+                let capturedSelectedThemes = capturedThemes.filter({ $0.isSelected })
+                let capturedSelectedThemeIdsSet = Set(capturedSelectedThemes.compactMap { $0.id })
+                
+                if selectedThemeIdsSet != capturedSelectedThemeIdsSet {
+                    formDidValidate?(true)
+                    return
+                }
+            }
+            
+            // MARK: 나머지 요소들 validate
             if form.title == title &&
                form.date?.originDate == date.originDate &&
                form.placeType == placeType &&
-               form.place == place &&
                form.shareLocationStartType == shareLocationStartType &&
                form.shareLocationStartValue == shareLocationStartValue &&
                form.shareLocationEndValue == shareLocationEndValue
             {
-                if let capturedThemes = capturedEditingPromiseThemes {
-                    
-                    let selectedThemes = self.themes.filter { $0.isSelected }
-                    let selectedThemeIdsSet = Set(selectedThemes.compactMap { $0.id })
-                    
-                    let capturedSelectedThemes = capturedThemes.filter({ $0.isSelected })
-                    let capturedSelectedThemeIdsSet = Set(capturedSelectedThemes.compactMap { $0.id })
-                    
-                    if selectedThemeIdsSet != capturedSelectedThemeIdsSet {
-                        assignOnVaildateForm?(true)
-                        return
-                    }
-                }
                 
-                assignOnVaildateForm?(false)
+                formDidValidate?(false)
                 return
             }
             
-            assignOnVaildateForm?(true)
+            formDidValidate?(true)
             return
         }
         
         guard !form.title.isEmpty else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
         guard let _ = form.date else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
-        let isExistSelectedThemes = !themes.filter{ $0.isSelected }.isEmpty
+        let isExistSelectedThemes = !form.themes.filter{ $0.isSelected }.isEmpty
         guard isExistSelectedThemes else {
-            assignOnVaildateForm?(false)
+            formDidValidate?(false)
             return
         }
         
         if form.placeType == .STATIC,
            let _ = form.place?.value1.city,
            let _ = form.place?.value1.district,
-           let _ = form.place?.value1.address,
+           let _ = form.place?.value1.address1,
+           // MARK: address2는 상세 주소로 nullable, address1까지만 필수이기 때문에 제외
            let _ = form.place?.value1.latitude,
            let _ = form.place?.value1.longitude
         {
-            assignOnVaildateForm?(true)
+            formDidValidate?(true)
             return
         }
         
-        assignOnVaildateForm?(true)
+        formDidValidate?(true)
     }
     
     func onChangedTitle(_ textField: UITextField) {
@@ -357,11 +469,23 @@ class CreatePromiseVM: NSObject {
     }
     
     func onChangedPlaceType(_ type: Components.Schemas.InputUpdatePromiseDTO.destinationTypePayload) {
+    
+        // MARK: 장소 타입 중간장소로 변경시 출발지에 따른 상태 체크
+        if type == .DYNAMIC, let editingPromise {
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: editingPromise)
+            self.dynamicDestinationState = state
+        }
+        
         self.placeType = type
     }
     
     func onChangedPlace(_ place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
         self.place = place
+    }
+    
+    func onChangedMiddlePlace(_ middlePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
+        self.middlePlace = middlePlace
     }
     
     func onChangedShareLocationStartType(_ type: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) {
@@ -435,12 +559,22 @@ class CreatePromiseVM: NSObject {
     }
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
-        let submitForm = Components.Schemas.InputUpdatePromiseDTO(
+        // TODO: 임시, form.place로 변경해야함.
+        let tempStaticPlace = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(
+            city: "서울특별시",
+            district: "관악구",
+            address1: "관악로 14길 109",
+            address2: nil,
+            latitude: 37.48436353,
+            longitude: 126.92972946
+        ))
+        
+        var submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
-            destination: form.placeType == .STATIC ? form.place : nil,
+            destination: form.placeType == .STATIC ? tempStaticPlace : form.middlePlace,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStartValue,
             locationShareEndType: .TIME,
@@ -448,8 +582,13 @@ class CreatePromiseVM: NSObject {
         )
         
         if let _ = editingPromise {
+            // MARK: 약속 업데이트 할 때만, 중간장소 타입인 경우, 중간장소 ref key가 존재한다.
+            submitForm.middleLocationRef = form.placeType == .DYNAMIC ? "todo: 키" : nil
+            
             requestEditPromise(with: submitForm, completion)
         } else {
+            // MARK: 약속 생성시, 중간장소 타입일 경우, 출발지가 2개 이상이여야 중간장소를 정할 수 있기 때문에 중간장소 ref가 없다.
+            
             requestCreatePromise(with: submitForm, completion)
         }
         
@@ -466,7 +605,7 @@ class CreatePromiseVM: NSObject {
     func getSupportedTheme(initSelectedThemes: [Components.Schemas.ThemeDTO]? = nil) async {
         themesLoading = true
         
-        let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/promises/themes")
+        let result: Result<[Components.Schemas.ThemeDTO] ,NetworkError> = await APIService.shared.fetch(.GET, "/themes")
         
         switch result {
         case .success(let themes):

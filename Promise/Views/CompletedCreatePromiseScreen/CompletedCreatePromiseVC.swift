@@ -11,11 +11,15 @@ import UIKit
 class CompletedCreatePromiseVC: UIViewController {
     var createdPromiseId: Int?
     
-    private lazy var headerView = HeaderView(navigationController: self.navigationController, title: L10n.CompletedCreatePromise.headerTitle, isHiddenGoBackButton: true)
+    private lazy var header = HeaderView(
+        navigationController: self.navigationController,
+        title: L10n.CompletedCreatePromise.headerTitle,
+        isHiddenLeftView: true
+    )
     
     private var mainTitle: UILabel = {
-        let fontSize: CGFloat = 24.0
-        let desiredLineHeight: CGFloat = 36.0
+        let fontSize: CGFloat = adjustedValue(24, .width)
+        let desiredLineHeight: CGFloat = adjustedValue(36, .height)
         
         let font = UIFont(font: FontFamily.Pretendard.bold, size: fontSize)!
         let actualLineHeight = font.lineHeight
@@ -45,18 +49,20 @@ class CompletedCreatePromiseVC: UIViewController {
     private let screenshotMain = {
         let imageView = UIImageView(image: Asset.main.image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(209, .height)).isActive = true
         return imageView
     }()
     
     private let screenshotMap = {
         let imageView = UIImageView(image: Asset.map.image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(209, .height)).isActive = true
         return imageView
     }()
     
     private var mainDescription: UILabel = {
-        let fontSize: CGFloat = 16.0
-        let desiredLineHeight: CGFloat = 24.0
+        let fontSize: CGFloat = adjustedValue(16, .width)
+        let desiredLineHeight: CGFloat = adjustedValue(24, .height)
         
         let font = UIFont(font: FontFamily.Pretendard.regular, size: fontSize)!
         let actualLineHeight = font.lineHeight
@@ -126,66 +132,13 @@ class CompletedCreatePromiseVC: UIViewController {
         ])
         
         stackView.axis = .horizontal
-        stackView.spacing = 16
+        stackView.spacing = adjustedValue(16, .width)
         stackView.distribution = .fillEqually
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.heightAnchor.constraint(equalToConstant: Button.Height).isActive = true
         return stackView
     }()
-    
-    func setupAutoLayout() {
-        let safeLayoutGuide = view.safeAreaLayoutGuide
-        
-        let mainTitleFormHeaderSpacingRatio = (view.frame.height > 850 ? CGFloat(24) : CGFloat(10)) / CGFloat(852)
-        let mainTitleFormHeaderSpacing = view.frame.height * mainTitleFormHeaderSpacingRatio
-        
-        let imageWidthRatio = CGFloat(345) / CGFloat(393)
-        let imageHeightRatio = CGFloat(209) / CGFloat(852)
-        
-        let imageWidth = view.frame.width * imageWidthRatio
-        let imageHeight = view.frame.height * imageHeightRatio
-        
-        let spacingBetweenMainToMapRatio = CGFloat(20) / CGFloat(852)
-        let spacingBetweenMainToMap = view.frame.height * spacingBetweenMainToMapRatio
-        
-        let mainDescriptionFormHeaderSpacingRatio = CGFloat(30) / CGFloat(852)
-        let mainDescriptionFormHeaderSpacing = view.frame.height * mainDescriptionFormHeaderSpacingRatio
-        
-        let safeareaBottomSpacingRatio = CGFloat(10) / CGFloat(852)
-        let safeareaBottomSpacing = view.frame.height * safeareaBottomSpacingRatio
-        
-        NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: 56),
-            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            mainTitle.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: mainTitleFormHeaderSpacing),
-            mainTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            mainTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            
-            screenshotMain.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            screenshotMain.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            screenshotMain.widthAnchor.constraint(equalToConstant: imageWidth),
-            screenshotMain.heightAnchor.constraint(equalToConstant: imageHeight),
-            
-            screenshotMap.topAnchor.constraint(equalTo: view.centerYAnchor, constant: spacingBetweenMainToMap),
-            screenshotMap.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            screenshotMap.widthAnchor.constraint(equalToConstant: imageWidth),
-            screenshotMap.heightAnchor.constraint(equalToConstant: imageHeight),
-            
-            mainDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            mainDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            mainDescription.bottomAnchor.constraint(equalTo: buttonsWrapper.topAnchor, constant: -mainDescriptionFormHeaderSpacing),
-            
-            buttonsWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            buttonsWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            buttonsWrapper.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -safeareaBottomSpacing),
-            buttonsWrapper.heightAnchor.constraint(equalToConstant: Button.Height + 3),
-        ])
-    }
     
     @objc private func onTapConfirmButton() {
         guard let viewControllers = navigationController?.viewControllers else { return }
@@ -228,16 +181,44 @@ class CompletedCreatePromiseVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureAccountVC()
+        configure()
         render()
     }
     
-    func configureAccountVC() {
+    func configure() {
         view.backgroundColor = .white
     }
     
     func render() {
-        [headerView, mainTitle, screenshotMain, screenshotMap, mainDescription, buttonsWrapper].forEach { view.addSubview($0) }
-        setupAutoLayout()
+        [header, mainTitle, screenshotMain, screenshotMap, mainDescription, buttonsWrapper].forEach { view.addSubview($0) }
+        
+        let safeLayoutGuide = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            mainTitle.topAnchor.constraint(equalTo: header.bottomAnchor, constant: adjustedValue(8, .height)),
+            mainTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            mainTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            
+            screenshotMain.topAnchor.constraint(equalTo: mainTitle.bottomAnchor, constant: adjustedValue(24, .height)),
+            screenshotMain.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            screenshotMain.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            
+            screenshotMap.topAnchor.constraint(equalTo: screenshotMain.bottomAnchor, constant: adjustedValue(16, .height)),
+            screenshotMap.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            screenshotMap.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            
+            mainDescription.topAnchor.constraint(equalTo: screenshotMap.bottomAnchor, constant: adjustedValue(32, .height)),
+            mainDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            mainDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            mainDescription.bottomAnchor.constraint(equalTo: buttonsWrapper.topAnchor, constant: -adjustedValue(28, .height)),
+            
+            buttonsWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            buttonsWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            buttonsWrapper.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -adjustedValue(16, .height))
+        ])
     }
 }

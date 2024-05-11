@@ -26,6 +26,7 @@ struct DynamicDestinationHelper {
         
         let isLatestDestination = promise.isLatestDestination
         
+        let destinationType = promise.destinationType
         let destination = promise.destination
         
         // MARK: notConfigurable
@@ -34,10 +35,10 @@ struct DynamicDestinationHelper {
         }
         
         // MARK: configurable, notLatest
-        guard isLatestDestination else {
+        guard destinationType == .DYNAMIC, isLatestDestination else {
             
             // MARK: configurable, 최초 중간장소가 없는 경우
-            guard let _ = destination else {
+            guard destinationType == .DYNAMIC, let _ = destination else {
                 return .configurable
             }
             

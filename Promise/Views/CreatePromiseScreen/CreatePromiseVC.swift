@@ -10,6 +10,17 @@ import UIKit
 
 protocol CreatePromiseDelegate: AnyObject {
     func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO)
+    func onDidUpdatePromise(updatedPromise: Components.Schemas.PromiseDTO)
+}
+
+extension CreatePromiseDelegate {
+    func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO) {
+        // 기본적으로 아무 작업도 수행하지 않음
+    }
+
+    func onDidUpdatePromise(updatedPromise: Components.Schemas.PromiseDTO) {
+        // 기본적으로 아무 작업도 수행하지 않음
+    }
 }
 
 class CreatePromiseVC: UIViewController {
@@ -19,7 +30,7 @@ class CreatePromiseVC: UIViewController {
     
     var editingPromise: Components.Schemas.PromiseDTO? = nil
 
-    private lazy var headerView = {
+    private lazy var header = {
         var headerTitle = ""
         
         if let editingPromise {
@@ -55,24 +66,33 @@ class CreatePromiseVC: UIViewController {
         )
         
         button.addTarget(self, action: #selector(onTapCreatePromiseButton), for: .touchUpInside)
+        
+        button.heightAnchor.constraint(equalToConstant: Button.Height).isActive = true
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     @objc func onTapCreatePromiseButton() {
-        createPromiseVM.submit { [weak self] createdPromise in
-            guard let createdPromise else { return }
-            self?.delegate?.onDidCreatePromise(createdPromise: createdPromise)
+        createPromiseVM.submit { [weak self] promise in
+            guard let promise else { return }
             
-            DispatchQueue.main.async {
-                let completedCreatePromiseVC = CompletedCreatePromiseVC()
-                completedCreatePromiseVC.createdPromiseId = Int(createdPromise.pid)
-                self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+            if let _ = self?.editingPromise {
+                self?.delegate?.onDidUpdatePromise(updatedPromise: promise)
+            } else {
+                self?.delegate?.onDidCreatePromise(createdPromise: promise)
+                
+                DispatchQueue.main.async {
+                    let completedCreatePromiseVC = CompletedCreatePromiseVC()
+                    completedCreatePromiseVC.createdPromiseId = Int(promise.pid)
+                    self?.navigationController?.pushViewController(completedCreatePromiseVC, animated: true)
+                }
             }
+            
         }
     }
     
-    func assignOnVaildateForm() {
-        createPromiseVM.assignOnVaildateForm = { [weak self] isVaild in
+    func assignFormDidValidate() {
+        createPromiseVM.formDidValidate = { [weak self] isVaild in
             guard let self else { return }
             
             DispatchQueue.main.async {
@@ -103,7 +123,7 @@ class CreatePromiseVC: UIViewController {
     func configure() {
         view.backgroundColor = .white
         
-        assignOnVaildateForm()
+        assignFormDidValidate()
         
         KeyboardManager.shared.delegate = self
         KeyboardManager.shared.registerVC(self)
@@ -111,7 +131,7 @@ class CreatePromiseVC: UIViewController {
     
     func render() {
         [
-            headerView,
+            header,
             formView,
             createPromiseButton,
         ].forEach { view.addSubview($0) }
@@ -119,14 +139,13 @@ class CreatePromiseVC: UIViewController {
         let safeLayoutGuide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            headerView.heightAnchor.constraint(equalToConstant: adjustedValue(56, .height)),
-            headerView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            header.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            formView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            formView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: adjustedValue(16, .height)),
             formView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             formView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             formView.bottomAnchor.constraint(equalTo: createPromiseButton.topAnchor, constant: -adjustedValue(24, .height))
@@ -135,8 +154,7 @@ class CreatePromiseVC: UIViewController {
         NSLayoutConstraint.activate([
             createPromiseButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
             createPromiseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
-            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -adjustedValue(20, .height)),
-            createPromiseButton.heightAnchor.constraint(equalToConstant: Button.Height + adjustedValue(3, .height)),
+            createPromiseButton.bottomAnchor.constraint(equalTo: safeLayoutGuide.bottomAnchor, constant: -adjustedValue(16, .height))
         ])
         
         // MARK: subviews가 모두 초기화 된 이후 실행

@@ -136,7 +136,7 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private var promiseStatusView: PromiseStatusView?
+    public var promiseStatusView: PromiseStatusView?
     
     // MARK: handler
     
@@ -260,6 +260,8 @@ final class MainVC: UIViewController {
                     self?.promiseStatusView?
                         .promiseStatusWithAllAttendeesView
                         .updatePromiseStatusWithAllAttendees(with: promise)
+                    
+                    self?.focusedCellChanged(to: indexPath, cell: nil)
                 }
                 
                 
@@ -469,10 +471,14 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         guard let promises = mainVM.promises else { return cell }
         
         let promise = promises[indexPath.row]
+        
+        // MARK: cell 구성
         cell.configureCell(with: promise)
+        cell.mainVM = mainVM
         
         // MARK: 최초에 한 번만 실행, cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
         if indexPath.row == 0,
+           mainVM.currentFocusedPromiseIndexPath == nil,
            let initFocusRatio = focusRatioInfo.0,
            let focusRatio = focusRatioInfo.1,
            initFocusRatio == focusRatio

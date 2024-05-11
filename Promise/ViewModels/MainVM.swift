@@ -99,8 +99,7 @@ class MainVM: NSObject {
         switch result {
         case .success(let promise):
             
-            if let index = self.promises?.firstIndex(where: { $0?.pid == promise.pid }) 
-            {
+            if let index = self.promises?.firstIndex(where: { $0?.pid == promise.pid }) {
                 
                 self.reloadTarget = (
                     promise,
@@ -109,17 +108,35 @@ class MainVM: NSObject {
                 
                 self.promises?[index] = promise
                 return promise
+                
             }
+            
+            await self.currentVC?.showPopUp(
+                title: L10n.GetPromise.Error.title,
+                message: L10n.GetPromise.NotFoundPromise.message
+            )
             
             return nil
             
         case .failure(let errorType):
             
             switch errorType {
-            case .badRequest:
+            case .badRequest(let error):
+                
+                await self.currentVC?.showPopUp(
+                    title: L10n.GetPromise.Error.title,
+                    message: error.errorResponse?.message ?? L10n.GetPromise.Error.message
+                )
                 return nil
+                
             default:
+                
+                await self.currentVC?.showPopUp(
+                    title: L10n.GetPromise.Error.title,
+                    message: L10n.GetPromise.Error.message
+                )
                 return nil
+                
             }
         }
     }
@@ -264,6 +281,14 @@ class MainVM: NSObject {
         }
     }
     
+    func navigateUpdatePromiseScreen(with promise: Components.Schemas.PromiseDTO) {
+        DispatchQueue.main.async {[weak self] in
+            let createPromiseVC = CreatePromiseVC(with: promise)
+            createPromiseVC.delegate = self
+            self?.currentVC?.navigationController?.pushViewController(createPromiseVC, animated: true)
+        }
+    }
+    
     func navigateCreatePromiseScreen() {
         DispatchQueue.main.async {[weak self] in
             let createPromiseVC = CreatePromiseVC()
@@ -272,8 +297,7 @@ class MainVM: NSObject {
         }
     }
 }
-
-extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
+extension MainVM: CreatePromiseDelegate {
     func onDidCreatePromise(createdPromise: Components.Schemas.PromiseDTO) {
         
         Task {
@@ -281,7 +305,26 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
             shouldLazyFocusPromiseId = createdPromise.pid
             await getPromiseList()
         }
+        
     }
+    
+    func onDidUpdatePromise(updatedPromise: Components.Schemas.PromiseDTO) {
+        DispatchQueue.main.async { [weak self] in
+            self?.currentVC?.navigationController?.popViewController(animated: true)
+        }
+        
+        Task {
+            guard let _ = await getPromise(id: updatedPromise.pid) else { return }
+            
+                await ToastView(
+                    message: L10n.UpdatePromise.Update.successToastMessage
+                ).showToast()
+            
+        }
+    }
+}
+
+extension MainVM: APIServiceDelegate {
     
     func onLoading(path: String?, isLoading: Bool) {
         switch(path) {
@@ -293,6 +336,7 @@ extension MainVM: CreatePromiseDelegate, APIServiceDelegate {
             break
         }
     }
+    
 }
 
 extension MainVM: InvitationPopUpDelegate {
