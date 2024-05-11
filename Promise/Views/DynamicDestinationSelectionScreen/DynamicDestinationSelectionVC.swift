@@ -372,10 +372,13 @@ class DynamicDestinationSelectionVC: UIViewController {
                 
                 if destinationLng == infoLng &&
                     destinationLat == infoLat &&
-                    address1.contains(placeName) {
+                    address1.contains(placeName) &&
+                    dynamicDestinationSelectionVM.detailAddress == destination.value1.address2 &&
+                    dynamicDestinationSelectionVM.isInitSelectedPlaceConfiguration {
                     
                     confirmButton.isDisabled = true
                     return
+                    
                 }
                 
             }
@@ -389,8 +392,6 @@ class DynamicDestinationSelectionVC: UIViewController {
             
         }
     }
-    
-    
     
     private lazy var infoWindow = {
         let infoWindow = NMFInfoWindow()
@@ -644,8 +645,15 @@ class DynamicDestinationSelectionVC: UIViewController {
         guard let initSelectedPlaceInfo else { return }
         let (marker, subMarker, place) = initSelectedPlaceInfo.value
         
+        // MARK: 중요! 아래 onTapMiddlePlaceMarker 보다 먼저 선행되어야 함. (그래야 currentTappedPlaceMarker didSet 로직이 제대로 동작)
+        if dynamicDestinationSelectionVM.detailAddress == destination.value1.address2 || dynamicDestinationSelectionVM.detailAddress == nil {
+            
+            dynamicDestinationSelectionVM.detailAddress = destination.value1.address2
+            
+        }
+        
+        // MARK: 중요! detailAddress이 선행되어야 함.
         onTapMiddlePlaceMarker(marker: marker, subMarker: subMarker, place: place)
-        dynamicDestinationSelectionVM.detailAddress = destination.value1.address2
     }
     
     private func assignRecommendedPlaceListInfoDidChange() {
@@ -687,6 +695,23 @@ class DynamicDestinationSelectionVC: UIViewController {
         dynamicDestinationSelectionVM.detailAddressDidChange = { [weak self] text in
             DispatchQueue.main.async {
                 self?.detailAddressTextField.text = text
+                
+                guard let currentTappedPlaceMarker = self?.currentTappedPlaceMarker else {
+                    self?.confirmButton.isDisabled = true
+                    return
+                }
+                
+                guard let destination = self?.dynamicDestinationSelectionVM.promise?.destination else {
+                    self?.confirmButton.isDisabled = false
+                    return
+                }
+                
+                if text == destination.value1.address2 {
+                    self?.confirmButton.isDisabled = true
+                } else {
+                    self?.confirmButton.isDisabled = false
+                }
+                
             }
         }
     }
@@ -933,7 +958,7 @@ extension DynamicDestinationSelectionVC: HeaderViewDelegate {
 
 extension DynamicDestinationSelectionVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
-        return true
+        return false
     }
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {

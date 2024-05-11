@@ -469,10 +469,7 @@ class PromiseListCell: UICollectionViewCell {
             case .STATIC:
                 
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.city + " "
-                    + destination.value1.district + " "
-                    + destination.value1.address1 + " "
-                    + (destination.value1.address2 ?? "")
+                    self?.place.text = AddressHelper().getDisplayAddressText(place: destination)
                     
                     self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                 }
@@ -538,10 +535,7 @@ class PromiseListCell: UICollectionViewCell {
                 self?.dynamicDestinationState = .configured
                 
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.city + " "
-                    + destination.value1.district + " "
-                    + destination.value1.address1 + " "
-                    + (destination.value1.address2 ?? "")
+                    self?.place.text = AddressHelper().getDisplayAddressText(place: destination)
                 }
                 
                 self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -550,10 +544,7 @@ class PromiseListCell: UICollectionViewCell {
                 
                 self?.dynamicDestinationState = .newlyConfigurable
                 if let destination = promise.destination {
-                    self?.place.text = destination.value1.city + " "
-                    + destination.value1.district + " "
-                    + destination.value1.address1 + " "
-                    + (destination.value1.address2 ?? "")
+                    self?.place.text = AddressHelper().getDisplayAddressText(place: destination)
                 }
         
                 self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
