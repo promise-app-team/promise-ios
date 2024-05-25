@@ -34,7 +34,7 @@ class FormShareLocationSelectionInputView: UIView {
             label.text = items?[initialItemIndex ?? 0] ?? ""
         }
         
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         return label
@@ -45,8 +45,8 @@ class FormShareLocationSelectionInputView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         return imageView
@@ -62,11 +62,15 @@ class FormShareLocationSelectionInputView: UIView {
         stackView.alignment = .center
         
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 12)
+        stackView.layoutMargins = UIEdgeInsets(
+            top: adjustedValue(8, .height),
+            left: adjustedValue(16, .width),
+            bottom: adjustedValue(8, .height),
+            right: adjustedValue(12, .width))
         
         stackView.layer.masksToBounds = true
-        stackView.layer.cornerRadius = 8
-        stackView.layer.borderWidth = 1
+        stackView.layer.cornerRadius = adjustedValue(8, .width)
+        stackView.layer.borderWidth = adjustedValue(1, .width)
         stackView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapInputButton))
@@ -81,7 +85,7 @@ class FormShareLocationSelectionInputView: UIView {
         let label = UILabel()
         label.text = self.label
         label.textColor = .black
-        label.font = UIFont(font: FontFamily.Pretendard.semiBold, size: 20)
+        label.font = UIFont(font: FontFamily.Pretendard.semiBold, size: adjustedValue(20, .width))
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -91,10 +95,10 @@ class FormShareLocationSelectionInputView: UIView {
         view.backgroundColor = .white
         view.addSubview(pickerLabel)
         NSLayoutConstraint.activate([
-            pickerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 24),
-            pickerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            pickerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            pickerLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
+            pickerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(24, .height)),
+            pickerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            pickerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
+            pickerLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -adjustedValue(24, .height))
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +124,7 @@ class FormShareLocationSelectionInputView: UIView {
         view.backgroundColor = .white
         
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = adjustedValue(20, .width)
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         [header, picker].forEach { view.addSubview($0) }
@@ -130,10 +134,10 @@ class FormShareLocationSelectionInputView: UIView {
             header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             picker.topAnchor.constraint(equalTo: header.bottomAnchor),
-            picker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            picker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            picker.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
-            picker.heightAnchor.constraint(equalToConstant: 140)
+            picker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .width)),
+            picker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .width)),
+            picker.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -adjustedValue(40, .height)),
+            picker.heightAnchor.constraint(equalToConstant: adjustedValue(140, .height))
         ])
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -146,9 +150,12 @@ class FormShareLocationSelectionInputView: UIView {
         CommonModalManager.shared.show(content: pickerModalContent, from: currentVC)
     }
     
-    private func updateInputButtonText(text: String) {
-        selected.text = text
+    public func updateInputButtonText(displayText: String, item: SelectionItem) {
+        selected.text = displayText
+        picker.selectRow(item.itemIndex, inComponent: 0, animated: true)
+        currentItem = item
         layoutIfNeeded()
+        
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -171,10 +178,10 @@ class FormShareLocationSelectionInputView: UIView {
         
         if let initialItemIndex {
             self.initialItemIndex = initialItemIndex
-            self.currentItem = SelectionItem(item: items[initialItemIndex], itemIndex: initialItemIndex)
+            self.currentItem = SelectionItem(itemText: items[initialItemIndex], itemIndex: initialItemIndex)
         } else {
             self.initialItemIndex = 0
-            self.currentItem = SelectionItem(item: items[0], itemIndex: 0)
+            self.currentItem = SelectionItem(itemText: items[0], itemIndex: 0)
         }
         
         if let placeholder {
@@ -186,20 +193,27 @@ class FormShareLocationSelectionInputView: UIView {
         }
         
         super.init(frame: .null)
-        CommonModalManager.shared.delegate = self
-        configureFormShareLocationSelectionInputView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        configure()
+        render()
+        
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormShareLocationSelectionInputView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
         
+        CommonModalManager.shared.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func render() {
         [inputButton].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
@@ -208,7 +222,7 @@ class FormShareLocationSelectionInputView: UIView {
             inputButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             inputButton.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            inputButton.heightAnchor.constraint(equalToConstant: 45)
+            inputButton.heightAnchor.constraint(equalToConstant: adjustedValue(45, .height))
         ])
     }
 }
@@ -225,12 +239,12 @@ extension FormShareLocationSelectionInputView: UIPickerViewDelegate, UIPickerVie
     
     // MARK: UIPickerViewDelegate
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 35.0
+        return adjustedValue(35, .height)
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 20)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(20, .width))
         
         label.textAlignment = .center
         label.text = items?[row] ?? ""
@@ -251,16 +265,24 @@ extension FormShareLocationSelectionInputView: UIPickerViewDelegate, UIPickerVie
         
         guard let item = items?[row] else { return }
         
-        let selectionItem = SelectionItem(item: item, itemIndex: row)
+        let selectionItem = SelectionItem(itemText: item, itemIndex: row)
         let updateText = delegate?.onSelect(selected: selectionItem)
         
         currentItem = selectionItem
         
         guard let updateText else {
-            updateInputButtonText(text: item)
+            
+            updateInputButtonText(
+                displayText: item,
+                item: selectionItem
+            )
+            
             return
         }
         
-        updateInputButtonText(text: updateText)
+        updateInputButtonText(
+            displayText: updateText,
+            item: selectionItem
+        )
     }
 }

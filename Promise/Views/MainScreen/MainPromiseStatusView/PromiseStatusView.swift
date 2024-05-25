@@ -16,8 +16,9 @@ class PromiseStatusView: CommonFloatingContainerVC {
     private let mainVM: MainVM
     
     private let promiseStatusContent: CommonFloatingContentVC
-    private let promiseStatusWithUserView: PromiseStatusWithUserView
-    private let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
+    
+    let promiseStatusWithUserView: PromiseStatusWithUserView
+    let promiseStatusWithAllAttendeesView: PromiseStatusWithAllAttendeesView
     
     private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
         didSet {
@@ -79,7 +80,7 @@ class PromiseStatusView: CommonFloatingContainerVC {
 }
 
 extension PromiseStatusView {
-    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO) {
+    public func updatePromiseStatus(with promise: Components.Schemas.PromiseDTO, cell: PromiseListCell) {
         promiseStatusWithUserView.updatePromiseStatusWithUser(with: promise)
         promiseStatusWithAllAttendeesView.updatePromiseStatusWithAllAttendees(with: promise)
     }

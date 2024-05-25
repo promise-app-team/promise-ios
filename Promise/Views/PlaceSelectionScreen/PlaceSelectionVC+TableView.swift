@@ -48,22 +48,26 @@ extension PlaceSelectionVC: UITableViewDelegate {
         let position = NMGLatLng(lat: lat, lng: lon)
         let cameraUpdate = NMFCameraUpdate(scrollTo: position)
         naverMapView.mapView.moveCamera(cameraUpdate)
+        naverMapView.mapView.zoomLevel = 17
         
         let marker = NMFMarker()
+        marker.iconImage = NMFOverlayImage(name: "ProbeeMap")
+        marker.width = 40
+        marker.height = 40
         marker.position = position
         self.marker = marker
         
-        let placeName = place?.documents?[indexPath.row].placeName
-        let roadAddress = place?.documents?[indexPath.row].roadAddressName
-        let regionAddress = place?.documents?[indexPath.row].addressName
-        confirmView.updateTitleLabel(placeName)
-        confirmView.updateAddressLabel(roadAddress, regionAddress)
+        let placeName = place?.documents?[indexPath.row].placeName ?? ""
+        let roadNameAddress = place?.documents?[indexPath.row].roadAddressName ?? ""
+        let lotNumberAddress = place?.documents?[indexPath.row].addressName ?? ""
+        let place = PlaceSelection(buildingName: placeName, 
+                                   lotNumberAddress: lotNumberAddress,
+                                   roadNameAddress: roadNameAddress,
+                                   lat: lat,
+                                   lon: lon)
+        currentPlace = place
         
-        viewState = .map
-        
-        currentPlace.name = placeName ?? "placeName"
-        currentPlace.lat = lat
-        currentPlace.lon = lon
+        viewState = .searchMap
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

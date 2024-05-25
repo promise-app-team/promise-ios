@@ -162,7 +162,11 @@ class InvitationPopUp {
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
         
         if let destination = invitedPromise.destination, invitedPromise.destinationType == .STATIC {
-            label.text = destination.value1.address
+            label.text = destination.value1.city + " " 
+            + destination.value1.district + " " 
+            + destination.value1.address1 + " "
+            + (destination.value1.address2 ?? "")
+            
             label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
         } else {
             label.text = L10n.InvitationPopUp.middlePlaceWarning
@@ -222,14 +226,14 @@ class InvitationPopUp {
     }()
     
     private lazy var taggedThemes = {
-        let taggedTheme = invitedPromise.themes.map { themeTitle in
+        let taggedTheme = invitedPromise.themes.map { theme in
             let insetLabel = InsetLabel()
             insetLabel.topInset = 3
             insetLabel.bottomInset = 3
             insetLabel.leftInset = 8
             insetLabel.rightInset = 8
             
-            insetLabel.text = themeTitle
+            insetLabel.text = theme.name
             insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
             insetLabel.textColor = UIColor(red: 0.898, green: 0.702, blue: 0.204, alpha: 1)
             insetLabel.backgroundColor = UIColor(red: 1, green: 0.976, blue: 0.922, alpha: 1)

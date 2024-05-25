@@ -68,7 +68,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
     private var promiseHost: Components.Schemas.HostDTO? = nil
     private var shareUrl: URL? = nil
     private let attendeesViewHeight = 32.0
-    private var attendees: [Components.Schemas.AttendeeDTO] = []
+    private var attendees: [Components.Schemas.AttendeeDTO] = [] {
+        didSet {
+            setAttendeesMarker(attendees: attendees)
+        }
+    }
     
     private var isOwner = false {
         didSet {
@@ -192,53 +196,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return marker
     }()
     
-    private lazy var attendeeLocationMarkers: [String: NMFMarker] = {
-        return self.attendees.reduce([:]) { partialResult, attendee in
-            
-            let marker = NMFMarker()
-            
-            guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
-                return partialResult
-            }
-            
-            
-            let imageView = UIImageView()
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            
-            imageView.load(url: imageUrl) { [weak marker] profileImage in
-                
-                guard
-                    let resizedProfileImage = profileImage?.resize(
-                        newSize: CGSize(width: 44, height: 44)
-                    ),
-                    
-                    let roundProfileImage = resizedProfileImage.withRoundedCorners(
-                        radius: adjustedValue(22, .width),
-                        borderWidth: adjustedValue(8, .width),
-                        borderColor: .white
-                        
-                    ) else {
-                    
-                    // TODO: 디폴트 이미지 세팅
-                    return
-                }
-                
-                
-                marker?.width = adjustedValue(48, .width)
-                marker?.height = adjustedValue(48, .height)
-                marker?.iconImage = NMFOverlayImage(image: roundProfileImage)
-            }
-            
-            var newResult = partialResult
-            let id = String(Int(attendee.id))
-            newResult[id] = marker
-            
-            return newResult
-        }
-        
-    }()
+    private lazy var attendeeLocationMarkers: [String: NMFMarker] = [:]
     
     private var userLocation: CLLocation? {
         didSet {
@@ -257,7 +215,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
             guard let userId = UserService.shared.getUser()?.userId else { return }
         
             WebsocketService.shared.send(message: [
-                "userId": userId,
+                "userId": String(userId),
                 "latitude": userLocation.coordinate.latitude.description,
                 "longitude": userLocation.coordinate.longitude.description
             ])
@@ -361,15 +319,40 @@ class PromiseStatusWithAllAttendeesView: UIView {
         return stackView
     }()
     
-    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
+    private lazy var closeButtonWrapper = {
+        let imageView = UIImageView(image: Asset.close.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)).isActive = true
+        
+        let view = UIView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapClose))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: adjustedValue(56, .width)).isActive = true
+        return view
+    }()
     
+    private lazy var moreMenuContentView = PromiseStatusMoreMenuContentView(mv: mainVM)
     
     private lazy var header = {
         let view = UIView()
         
-        [headerTitle, menuWrapper].forEach { view.addSubview($0) }
+        [closeButtonWrapper, headerTitle, menuWrapper].forEach { view.addSubview($0) }
         
         NSLayoutConstraint.activate([
+            closeButtonWrapper.topAnchor.constraint(equalTo: view.topAnchor),
+            closeButtonWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            closeButtonWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             headerTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             headerTitle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
@@ -701,17 +684,21 @@ class PromiseStatusWithAllAttendeesView: UIView {
     
     // MARK: handler
     
-    private func assignThemesToTaggedThemes(with themes: [String]) {
+    private func assignThemesToTaggedThemes(with themes: [Components.Schemas.ThemeDTO]) {
         // 기존의 뷰들을 스택 뷰에서 제거
         taggedThemes.arrangedSubviews.forEach {
             taggedThemes.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         
-        themes.forEach { themeTitle in
-            let taggedTheme = createTaggedTheme(themeTitle)
+        themes.forEach { theme in
+            let taggedTheme = createTaggedTheme(theme.name)
             taggedThemes.addArrangedSubview(taggedTheme)
         }
+    }
+    
+    @objc private func onTapClose() {
+        mainVM.currentVC?.promiseStatusView?.moveHalf()
     }
     
     @objc private func onTapCollapseButton() {
@@ -800,6 +787,54 @@ class PromiseStatusWithAllAttendeesView: UIView {
         userLocationMarker.mapView = map
     }
     
+    private func setAttendeesMarker(attendees: [Components.Schemas.AttendeeDTO]) {
+        attendeeLocationMarkers = attendees.reduce([:]) { partialResult, attendee in
+            
+            
+            let marker = NMFMarker()
+            
+            guard let profileUrl = attendee.profileUrl, let imageUrl = URL(string: profileUrl) else {
+                return partialResult
+            }
+            
+            
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            
+            imageView.load(url: imageUrl) { [weak marker] profileImage in
+                
+                guard
+                    let resizedProfileImage = profileImage?.resize(
+                        newSize: CGSize(width: 44, height: 44)
+                    ),
+                    
+                    let roundProfileImage = resizedProfileImage.withRoundedCorners(
+                        radius: adjustedValue(22, .width),
+                        borderWidth: adjustedValue(8, .width),
+                        borderColor: .white
+                        
+                    ) else {
+                    
+                    // TODO: 디폴트 이미지 세팅
+                    return
+                }
+                
+                
+                marker?.width = adjustedValue(48, .width)
+                marker?.height = adjustedValue(48, .height)
+                marker?.iconImage = NMFOverlayImage(image: roundProfileImage)
+            }
+            
+            var newResult = partialResult
+            let id = String(Int(attendee.id))
+            newResult[id] = marker
+            
+            return newResult
+        }
+    }
+    
     private func setUserLocationOverlayOnMap() {
         let user = UserService.shared.getUser()
         if let profileUrl = user?.profileUrl, let imageUrl = URL(string: profileUrl) {
@@ -846,53 +881,118 @@ class PromiseStatusWithAllAttendeesView: UIView {
     // MARK: self 초기화 시 실행됨
     private func setPromiseStatusForMap(with promise: Components.Schemas.PromiseDTO) {
         
-        setDestinationMarkerOnMap(destination: promise.destination?.value1)
+        DispatchQueue.main.async { [weak self] in
+            self?.setDestinationMarkerOnMap(destination: promise.destination?.value1)
+            
+            // MARK: 내장 location overlay 세팅
+            // self?.setUserLocationOverlayOnMap()
+        }
         
-        // MARK: 내장 location overlay 세팅
-        // setUserLocationOverlayOnMap()
     }
     
     // MARK: self 초기화 시 실행됨
     private func setPromiseDetailInfo(with promise: Components.Schemas.PromiseDTO) {
-        // TimeInterval을 Date 객체로 변환
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
-        
-        promisedAt.text = dateFormatter.string(from: promise.promisedAt)
-        
-        title.text = promise.title
-        
-        assignThemesToTaggedThemes(with: promise.themes)
-        
-        // 공유 링크 세팅
-        let sharePromiseId = promise.pid
-        if(!sharePromiseId.isEmpty) {
-            self.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
-        }
-        
-        switch promise.destinationType {
-        case .DYNAMIC:
-            place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
-            place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
-        case .STATIC:
-            if let destination = promise.destination {
-                place.text = destination.value1.address
-                place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        DispatchQueue.main.async { [weak self] in
+            
+            // TimeInterval을 Date 객체로 변환
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.dateFormat = "yyyy.MM.dd a hh시 mm분"
+            
+            self?.promisedAt.text = dateFormatter.string(from: promise.promisedAt)
+            
+            self?.title.text = promise.title
+            
+            self?.assignThemesToTaggedThemes(with: promise.themes)
+            
+            // 공유 링크 세팅
+            let sharePromiseId = promise.pid
+            if(!sharePromiseId.isEmpty) {
+                self?.shareUrl = URL(string: "\(Config.universalLinkDomain)/share/\(sharePromiseId)")
             }
+            
+            switch promise.destinationType {
+            case .STATIC:
+                
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                    
+                    self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                }
+                
+            case .DYNAMIC:
+                self?.updateDynamicDestination(promise: promise)
+            }
+            
+            
+            self?.host.text = promise.host.username
+            self?.promiseHost = promise.host
+            
+            self?.attendeesCount.text = "(\(promise.attendees.count))"
+            self?.attendees = promise.attendees
+            
+            // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
+            self?.attendeesView.reloadData()
+            
+            self?.isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
+            
+        }
+    }
+    
+    func updateDynamicDestination(promise: Components.Schemas.PromiseDTO) {
+        
+        DispatchQueue.main.async { [weak self] in
+            let helper = DynamicDestinationHelper()
+            let state = helper.getConfigurableState(promise: promise)
+            
+            switch state {
+                
+            case .notConfigurable:
+                
+                self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholder
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            case .configurable:
+                
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+                if let isOwner = self?.isOwner, isOwner {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.requestConfirm
+                    
+                } else {
+                    
+                    self?.place.text = L10n.Main.PromiseList.DynamicPlace.placeholderForAttendee
+                    
+                }
+                
+            case .configured:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
+                
+                self?.place.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                
+            case .newlyConfigurable:
+                if let destination = promise.destination {
+                    self?.place.text = destination.value1.city + " "
+                    + destination.value1.district + " "
+                    + destination.value1.address1 + " "
+                    + (destination.value1.address2 ?? "")
+                }
+                
+                self?.place.textColor = UIColor(red: 1, green: 0.408, blue: 0.304, alpha: 1)
+                
+            }
+            
         }
         
-        
-        host.text = promise.host.username
-        self.promiseHost = promise.host
-        
-        attendeesCount.text = "(\(promise.attendees.count))"
-        attendees = promise.attendees
-        
-        // MARK: 중요! cell이 재사용되면서 내부 attendeesView(collectionView)가 같이 재사용될 수 있음. reloadData or prepareForReuse override 로 해결.
-        attendeesView.reloadData()
-        
-        self.isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
     }
     
     // MARK: initialize
@@ -966,6 +1066,7 @@ class PromiseStatusWithAllAttendeesView: UIView {
 extension PromiseStatusWithAllAttendeesView {
     public func updatePromiseStatusWithAllAttendees(with promise: Components.Schemas.PromiseDTO) {
         setPromiseDetailInfo(with: promise)
+        setPromiseStatusForMap(with: promise)
     }
     
     public func updateUserLocation(location: CLLocation) {

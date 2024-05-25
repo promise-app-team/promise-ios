@@ -9,31 +9,55 @@ import UIKit
 
 extension PlaceSelectionVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         switch textField {
         case searchTextField:
             guard
                 let userInput = textField.text,
                 textField.text != ""
             else {
-                viewState = .idle
+                viewState = .onSearch
                 return false
             }
-            
             searchPlace(of: userInput)
-            viewState = .resultList
-        case confirmView.addressTextField:
-            print("this")
+            viewState = .searchResult
         default:
             break
         }
-        
         textField.resignFirstResponder()
-        
         return true
     }
     
-    func searchPlace(of userInput: String) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        switch textField {
+        case searchTextField:
+            switch viewState {
+            case .idle:
+                viewState = .onSearch
+            default:
+                break
+            }
+        default:
+            break
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField {
+        case searchTextField:
+            switch viewState {
+            case .onSearch:
+                viewState = .idle
+            default:
+                break
+            }
+        default:
+            break
+        }
+    }
+}
+
+extension PlaceSelectionVC {
+    private func searchPlace(of userInput: String) {
         let urlString = "https://dapi.kakao.com/v2/local/search/keyword.json"
         let restAPIKey = "d957fe93f39254e70df345a09caaecf7"
         let searchKeyword = userInput
@@ -62,6 +86,10 @@ extension PlaceSelectionVC: UITextFieldDelegate {
             } else if let data = data {
                 do {
                     let json = try JSONDecoder().decode(KakaoPlaceMDL.self, from: data)
+                    guard let documents = json.documents, !documents.isEmpty else {
+                        self?.viewState = .searchFail
+                        return
+                    }
                     self?.place = json
                     DispatchQueue.main.async {
                         self?.tableView.reloadData()

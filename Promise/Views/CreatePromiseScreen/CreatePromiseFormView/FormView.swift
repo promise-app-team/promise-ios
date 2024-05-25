@@ -29,7 +29,7 @@ class FormView: UIScrollView {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 24
+        stackView.spacing = adjustedValue(24, .height)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -44,16 +44,19 @@ class FormView: UIScrollView {
     init(vm: CreatePromiseVM) {
         self.createPromiseVM = vm
         super.init(frame: .null)
-        configureFormView()
+        configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        
+    }
+    
+    private func render() {
         [contentView].forEach { addSubview($0) }
         [formStackView].forEach { contentView.addSubview($0) }
         
@@ -69,8 +72,8 @@ class FormView: UIScrollView {
         
         NSLayoutConstraint.activate([
             formStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-            formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: adjustedValue(24, .width)),
+            formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -adjustedValue(24, .width)),
             formStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }

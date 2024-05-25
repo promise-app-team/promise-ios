@@ -32,8 +32,8 @@ final class UserService {
         
         do {
             let jwt = try decode(jwt: accessToken)
-            let userId = jwt.claim(name: "id").string
-            guard let userId = userId else { return false }
+            let userId = jwt.claim(name: "sub").integer
+            guard let userId else { return false }
             
             let result: Result<Components.Schemas.UserDTO, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
             

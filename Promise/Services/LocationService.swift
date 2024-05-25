@@ -23,6 +23,7 @@ final class LocationService: NSObject {
     // MARK: - Public property
     
     weak var delegate: LocationServiceDelegate?
+    var currentLocation = CLLocationCoordinate2D(latitude: 37.541, longitude: 126.986)
     
     var authorizationStatus: CLAuthorizationStatus {
         return manager.authorizationStatus
@@ -128,6 +129,7 @@ extension LocationService: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        currentLocation = location.coordinate
         delegate?.onDidUpdatedUserLocation(location: location)
     }
 }
