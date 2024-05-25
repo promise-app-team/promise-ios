@@ -36,6 +36,8 @@ class CreatePromiseVM: NSObject {
     var capturedEditingPromiseShareLocationStartValue: Double? = nil
     var capturedEditingPromiseShareLocationEndValue: Double? = nil
     
+    var capturedMidpointCalculatedIds: [Double]? = nil
+    
     var dynamicDestinationState: DynamicDestinationState? = nil
     
     var editingPromise: Components.Schemas.PromiseDTO? = nil {
@@ -105,6 +107,14 @@ class CreatePromiseVM: NSObject {
                         
                         self.middlePlace = middlePlace
                         self.capturedEditingPromiseMiddlePlace = middlePlace
+                        
+                        let ids = editingPromise.attendees
+                            .filter { $0.isMidpointCalculated }
+                            .map { $0.id }
+                        
+                        self.midpointCalculatedIds = ids
+                        self.capturedMidpointCalculatedIds = ids
+                        
                     }
                     
                 }
@@ -226,6 +236,14 @@ class CreatePromiseVM: NSObject {
         }
     }
     
+    var middlePoint: Components.Schemas.PointDTO? = nil
+    
+    var midpointCalculatedIds: [Double]? = nil {
+        didSet {
+            updateForm(keyPath: \.midpointCalculatedIds, value: midpointCalculatedIds)
+        }
+    }
+    
     var shareLocationStartTypeDidChange: ((Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) -> Void)?
     var shareLocationStartType = Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload.DISTANCE {
         didSet {
@@ -293,7 +311,8 @@ class CreatePromiseVM: NSObject {
         middlePlace: middlePlace,
         shareLocationStartType: shareLocationStartType,
         shareLocationStartValue: shareLocationStartBasedOnDistanceInfo.getOriginItem(at: shareLocationStartValue.itemIndex)!,
-        shareLocationEndValue: shareLocationEndInfo.getOriginItem(at: shareLocationEndValue.itemIndex)!
+        shareLocationEndValue: shareLocationEndInfo.getOriginItem(at: shareLocationEndValue.itemIndex)!,
+        midpointCalculatedIds: midpointCalculatedIds
     ) {
         didSet {
             validateForm(form)
@@ -379,15 +398,29 @@ class CreatePromiseVM: NSObject {
                 let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
                 let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
                 
+                // MARK: 중간장소 계산된 참여자가 다른지 같은지도 검사 추가
+                if let midpointCalculatedIds = self.midpointCalculatedIds,
+                   let capturedMidpointCalculatedIds = self.capturedMidpointCalculatedIds {
+                    
+                    if Set(midpointCalculatedIds) != Set(capturedMidpointCalculatedIds) {
+                        self.isNewSelectedMiddlePlaceForUpdate = true
+                        formDidValidate?(true)
+                        return
+                    }
+                    
+                }
+                
                 if city != capturedCity ||
                     district != capturedDistrict ||
                     address1 != capturedAddress1 ||
                     address2 != capturedAddress2 ||
                     lat != capturedLat ||
                     lng != capturedLng {
+                    
                     self.isNewSelectedMiddlePlaceForUpdate = true
                     formDidValidate?(true)
                     return
+                    
                 } else {
                     self.isNewSelectedMiddlePlaceForUpdate = false
                 }
@@ -488,6 +521,14 @@ class CreatePromiseVM: NSObject {
         self.middlePlace = middlePlace
     }
     
+    func onChangeMiddlePoint(_ middlePoint: Components.Schemas.PointDTO) {
+        self.middlePoint = middlePoint
+    }
+    
+    func onChangeMidpointCalculatedIds(_ midpointCalculatedIds: [Double]) {
+        self.midpointCalculatedIds = midpointCalculatedIds
+    }
+    
     func onChangedShareLocationStartType(_ type: Components.Schemas.InputUpdatePromiseDTO.locationShareStartTypePayload) {
         self.shareLocationStartType = type
     }
@@ -583,7 +624,9 @@ class CreatePromiseVM: NSObject {
         
         if let _ = editingPromise {
             // MARK: 약속 업데이트 할 때만, 중간장소 타입인 경우, 중간장소 ref key가 존재한다.
-            submitForm.middleLocationRef = form.placeType == .DYNAMIC ? "todo: 키" : nil
+            if form.placeType == .DYNAMIC, let ref = middlePoint?.ref {
+                submitForm.middleLocationRef = ref
+            }
             
             requestEditPromise(with: submitForm, completion)
         } else {

@@ -11,10 +11,13 @@ import NMapsMap
 class DynamicDestinationSelectionVM: NSObject {
     let size = 15
     
-    var detailAddress = ""
     var getRecommendedPlaceByPointLoading = false
     
-    // var recommendedPlaceMarkers
+    var currentPlaceMarkers: [String: (NMFMarker, NMFMarker, Document)] = [:] {
+        didSet {
+            
+        }
+    }
     
     var recommendedPlaceListInfoDidChange: ((KakaoPlaceMDL) -> Void)?
     var recommendedPlaceListInfo: KakaoPlaceMDL? = nil {
@@ -25,12 +28,12 @@ class DynamicDestinationSelectionVM: NSObject {
         }
     }
     
-    var middlePointDidChange: ((Components.Schemas.PointDTO) -> Void)?
+    var middlePointDidChange: ((Components.Schemas.PointDTO?) -> Void)?
     var middlePoint: Components.Schemas.PointDTO? = nil {
         didSet {
-            guard let middlePoint else { return }
-            
             middlePointDidChange?(middlePoint)
+            
+            guard let middlePoint else { return }
             
             Task {
                 let result = await getRecommendedPlaceByPoint(with: middlePoint)
@@ -55,16 +58,48 @@ class DynamicDestinationSelectionVM: NSObject {
     
     var promise: Components.Schemas.PromiseDTO? = nil
     
+    var isInitSelectedPlaceConfiguration = false
+    var initAttendeesWithIsMidpointCalculated: [Double: Components.Schemas.AttendeeDTO]? = nil
+    var midpointCalculatedIds: [Double]? = nil
+    
     var attendees: [SelectableAttendee] = [] {
         didSet {
             
             let selectedAttendeeIds = attendees.filter { $0.isSelected }.map { $0.info.id }
-            guard 1 < selectedAttendeeIds.count else { return }
+            
+            guard 1 < selectedAttendeeIds.count else {
+                currentPlaceMarkers.forEach { (key: String, value: (NMFMarker, NMFMarker, Document)) in
+                    let (marker, subMarker, _) = value
+                    marker.mapView = nil
+                    subMarker.mapView = nil
+                }
+                
+                currentPlaceMarkers = [:]
+                middlePoint = nil
+                return
+            }
+            
+            if let initAttendeesWithIsMidpointCalculated, 1 < initAttendeesWithIsMidpointCalculated.count {
+                
+                let attendeeIdsSet = Set(selectedAttendeeIds)
+                let dictKeysSet = Set(initAttendeesWithIsMidpointCalculated.keys)
+
+                isInitSelectedPlaceConfiguration = attendeeIdsSet == dictKeysSet
+            }
+            
             
             getMiddlePointWithDepartures(with: selectedAttendeeIds) { middlePoint in
                 self.middlePoint = middlePoint
+                self.midpointCalculatedIds = selectedAttendeeIds
             }
             
+        }
+    }
+    
+    var detailAddressDidChange: ((String?) -> Void)?
+    var detailAddress: String? = nil {
+        didSet {
+            detailAddressDidChange?(detailAddress)
         }
     }
     
@@ -74,8 +109,28 @@ class DynamicDestinationSelectionVM: NSObject {
         super.init()
         
         guard let promise else { return }
-        self.attendees = promise.attendees.map {
-            SelectableAttendee(info: $0, isSelected: $0.hasStartLocation)
+        guard promise.destinationType == .DYNAMIC else { return }
+        
+        if let _ = promise.destination {
+            self.isInitSelectedPlaceConfiguration = true
+            self.initAttendeesWithIsMidpointCalculated = promise.attendees.reduce([:]) { (partialResult, attendee) in
+                var current = partialResult
+                
+                if attendee.isMidpointCalculated {
+                    current[attendee.id] = attendee
+                }
+                
+                return current
+            }
+                        
+            self.attendees = promise.attendees.map {
+                SelectableAttendee(info: $0, isSelected: $0.hasStartLocation && $0.isMidpointCalculated)
+            }
+            
+        } else {
+            self.attendees = promise.attendees.map {
+                SelectableAttendee(info: $0, isSelected: $0.hasStartLocation)
+            }
         }
         
         let selectedAttendeeIds = self.attendees.filter { $0.isSelected }.map { $0.info.id }
@@ -188,5 +243,63 @@ class DynamicDestinationSelectionVM: NSObject {
     
     func onChangedDetailAddress(_ textField: UITextField) {
         self.detailAddress = textField.text ?? ""
+    }
+    
+    func getFixedDecimalPointDocument(doc: Document) -> Document {
+        let (lng, lat) = getFixedDecimalPoint(x: doc.x, y: doc.y)
+        guard let lng, let lat else { return doc }
+        
+        return Document(
+            addressName: doc.addressName,
+            categoryGroupCode: doc.categoryGroupCode,
+            categoryGroupName: doc.categoryGroupName,
+            categoryName: doc.categoryName,
+            distance: doc.distance,
+            id: doc.id,
+            phone: doc.phone,
+            placeName: doc.placeName,
+            placeURL: doc.placeURL,
+            roadAddressName: doc.roadAddressName,
+            x: String(lng),
+            y: String(lat)
+        )
+    }
+    
+    func getFixedDecimalPoint(x: String, y: String) -> (Double?, Double?) {
+        guard let x = Double(x) , let y = Double(y) else { return (nil, nil)}
+        
+        let formattedXString = String(format: "%.8f", x)
+        let formattedYString = String(format: "%.8f", y)
+        
+        guard let lng = Double(formattedXString), let lat = Double(formattedYString) else { return (nil, nil) }
+        
+        return (lng, lat)
+    }
+    
+    func getDestinationPayload(info: Document) -> Components.Schemas.InputUpdatePromiseDTO.destinationPayload? {
+        
+        let addressName = info.roadAddressName.isEmpty ? info.addressName : info.roadAddressName
+        let placeName = info.placeName
+        
+        
+        let parsedAddress = AddressHelper().parseAddress(addressName)
+        
+        let city = parsedAddress.city
+        let district = parsedAddress.district
+        let address1 = parsedAddress.address1
+        let etcAddress = "\(detailAddress ?? "")"
+        
+        guard let city, let district, let address1 else { return nil}
+        let (lng, lat) = getFixedDecimalPoint(x: info.x, y: info.y)
+        guard let lng, let lat else { return nil }
+        
+        return .init(value1: .init(
+            city: city,
+            district: district,
+            address1: address1 + " " + placeName, // MARK: 장소이름(placeName)은 꼭 같이 address1에 붙이기
+            address2: etcAddress.isEmpty ? nil : etcAddress,
+            latitude: lat,
+            longitude: lng
+        ))
     }
 }

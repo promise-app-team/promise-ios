@@ -10,7 +10,11 @@ import UIKit
 import NMapsMap
 
 protocol DynamicDestinationSelectionDelegate: AnyObject {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload)
+    func onSelectedMiddlePlace(
+        place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload,
+        middlePoint: Components.Schemas.PointDTO,
+        midpointCalculatedIds: [Double]
+    )
 }
 
 class AttendeeCellForDeparturesSelection: UICollectionViewCell {
@@ -190,7 +194,7 @@ class DynamicDestinationSelectionVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var detailAddressInput = {
+    private lazy var detailAddressTextField = {
         let textField = UITextField()
         
         let placeholderAttributes = [
@@ -207,14 +211,17 @@ class DynamicDestinationSelectionVC: UIViewController {
         textField.addTarget(self, action: #selector(onChangedDetailAddress), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
+        return textField
+    }()
+    
+    private lazy var detailAddressInput = {
         let view = UIView()
-        view.addSubview(textField)
+        view.addSubview(detailAddressTextField)
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(8, .height)),
-            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .height)),
-            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .height)),
-            textField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -adjustedValue(8, .height))
+            detailAddressTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: adjustedValue(8, .height)),
+            detailAddressTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .height)),
+            detailAddressTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .height)),
+            detailAddressTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -adjustedValue(8, .height))
         ])
         
         view.layer.borderWidth = adjustedValue(1, .width)
@@ -251,6 +258,7 @@ class DynamicDestinationSelectionVC: UIViewController {
         button.addTarget(self, action: #selector(onConfirm), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: Button.Height).isActive = true
+        button.isDisabled = true
         return button
     }()
     
@@ -341,16 +349,47 @@ class DynamicDestinationSelectionVC: UIViewController {
     
     private var currentTappedPlaceMarker: (NMFMarker, Document)? = nil {
         didSet {
-            if let currentTappedPlaceMarker {
-                confirmButton.isDisabled = false
-            } else {
+            guard let currentTappedPlaceMarker else {
                 confirmButton.isDisabled = true
+                return
             }
-        }
-    }
-    
-    private var currentPlaceMarkers: [(NMFMarker, NMFMarker, Document)] = [] {
-        didSet {
+            
+            let (marker, info) = currentTappedPlaceMarker
+            
+            // MARK: 기존 약속의 목적지가 currentTappedPlaceMarker이라면 confirmButton disable
+            if let destination = dynamicDestinationSelectionVM.promise?.destination {
+                
+                let address1 = destination.value1.address1
+                let (destinationLng, destinationLat) = dynamicDestinationSelectionVM.getFixedDecimalPoint(
+                    x: String(destination.value1.longitude),
+                    y: String(destination.value1.latitude)
+                )
+                
+                let placeName = info.placeName
+                let (infoLng, infoLat) = dynamicDestinationSelectionVM.getFixedDecimalPoint(
+                    x: info.x,
+                    y: info.y
+                )
+                
+                if destinationLng == infoLng &&
+                    destinationLat == infoLat &&
+                    address1.contains(placeName) &&
+                    dynamicDestinationSelectionVM.detailAddress == destination.value1.address2 &&
+                    dynamicDestinationSelectionVM.isInitSelectedPlaceConfiguration {
+                    
+                    confirmButton.isDisabled = true
+                    return
+                    
+                }
+                
+            }
+            
+            confirmButton.isDisabled = false
+            focusMapOnLocation(location: .init(
+                latitude: marker.position.lat,
+                longitude: marker.position.lng
+            ))
+                
             
         }
     }
@@ -511,7 +550,7 @@ class DynamicDestinationSelectionVC: UIViewController {
     private func setPlaceMarkers(with info: KakaoPlaceMDL) {
         guard let list = info.documents else { return }
         
-        var markers: [(NMFMarker, NMFMarker, Document)] = []
+        var newMarkers: [String: (NMFMarker, NMFMarker, Document)] = [:]
        
         list.enumerated().forEach { (index, place) in
             let marker = NMFMarker()
@@ -529,13 +568,26 @@ class DynamicDestinationSelectionVC: UIViewController {
             if let lat = Double(place.y),
                let lng = Double(place.x) {
                 
+                let id = place.id
+                
+                // MARK: 새로 생성하려는 marker가 현재 표시되고 있는 마커라면 새롭게 생성하지 않는다.
+                if let existingMarker = dynamicDestinationSelectionVM.currentPlaceMarkers[id] {
+                    newMarkers[id] = existingMarker
+                    dynamicDestinationSelectionVM.currentPlaceMarkers.removeValue(forKey: id)
+                    return
+                }
+                
+                // MARK: 핸들러 바인딩
                 marker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                     self?.onTapMiddlePlaceMarker(marker: overlay, subMarker: subMarker, place: place)
                     return true
                 }
+                
+                // marker와 subMarker z축 설정
                 marker.zIndex = index
                 subMarker.zIndex = index - 1
                 
+                // marker와 subMarker 좌표 설정
                 marker.position = NMGLatLng(
                     lat: lat,
                     lng: lng
@@ -545,16 +597,64 @@ class DynamicDestinationSelectionVC: UIViewController {
                     lng: lng
                 )
                 
+                // marker와 subMarker 마커 추가
                 marker.mapView = map
                 subMarker.mapView = map
                 
-                markers.append((marker, subMarker, place))
+                newMarkers[id] = (marker, subMarker, place)
                 
             }
             
         }
         
-        currentPlaceMarkers = markers
+        // 재사용 마커를 제외한 기존 마커들 제거
+        dynamicDestinationSelectionVM.currentPlaceMarkers.forEach { (key: String, value: (NMFMarker, NMFMarker, Document)) in
+            let (marker, subMarker, _) = value
+            marker.mapView = nil
+            subMarker.mapView = nil
+        }
+        
+        // 새로운 마커들로 변경
+        dynamicDestinationSelectionVM.currentPlaceMarkers = newMarkers
+        
+    }
+    
+    private func initSelectedPlaceMarker() {
+        guard dynamicDestinationSelectionVM.isInitSelectedPlaceConfiguration else { return }
+        if let _ = currentTappedPlaceMarker { return }
+        guard let destination = dynamicDestinationSelectionVM.promise?.destination else { return }
+
+        let address1 = destination.value1.address1
+        let (destinationLng, destinationLat) = dynamicDestinationSelectionVM.getFixedDecimalPoint(
+            x: String(destination.value1.longitude),
+            y: String(destination.value1.latitude)
+        )
+        
+        let initSelectedPlaceInfo = dynamicDestinationSelectionVM.currentPlaceMarkers.first { (key: String, value: (NMFMarker, NMFMarker, Document)) in
+            let (_, _, doc) = value
+            let placeName = doc.placeName
+            let (docLng, docLat) = dynamicDestinationSelectionVM.getFixedDecimalPoint(
+                x: doc.x,
+                y: doc.y
+            )
+            
+            return destinationLng == docLng &&
+            destinationLat == docLat &&
+            address1.contains(placeName) // MARK: placeName까지 확인
+        }
+        
+        guard let initSelectedPlaceInfo else { return }
+        let (marker, subMarker, place) = initSelectedPlaceInfo.value
+        
+        // MARK: 중요! 아래 onTapMiddlePlaceMarker 보다 먼저 선행되어야 함. (그래야 currentTappedPlaceMarker didSet 로직이 제대로 동작)
+        if dynamicDestinationSelectionVM.detailAddress == destination.value1.address2 || dynamicDestinationSelectionVM.detailAddress == nil {
+            
+            dynamicDestinationSelectionVM.detailAddress = destination.value1.address2
+            
+        }
+        
+        // MARK: 중요! detailAddress이 선행되어야 함.
+        onTapMiddlePlaceMarker(marker: marker, subMarker: subMarker, place: place)
     }
     
     private func assignRecommendedPlaceListInfoDidChange() {
@@ -562,14 +662,22 @@ class DynamicDestinationSelectionVC: UIViewController {
             
             DispatchQueue.main.async {
                 self?.setPlaceMarkers(with: info)
+                self?.initSelectedPlaceMarker()
             }
         }
     }
     
     private func assignMiddlePointDidChange() {
         dynamicDestinationSelectionVM.middlePointDidChange = { [weak self] middlePoint in
-            
+    
             DispatchQueue.main.async {
+                self?.closeWindowOfCurrentTappedPlaceMarker()
+                
+                guard let middlePoint else {
+                    self?.middlePointMarker.mapView = nil
+                    return
+                }
+                
                 self?.middlePointMarker.position = NMGLatLng(
                     lat: middlePoint.latitude,
                     lng: middlePoint.longitude
@@ -580,6 +688,31 @@ class DynamicDestinationSelectionVC: UIViewController {
                     latitude: middlePoint.latitude,
                     longitude: middlePoint.longitude
                 ))
+            }
+        }
+    }
+    
+    private func assignDetailAddressDidChange() {
+        dynamicDestinationSelectionVM.detailAddressDidChange = { [weak self] text in
+            DispatchQueue.main.async {
+                self?.detailAddressTextField.text = text
+                
+                guard let _ = self?.currentTappedPlaceMarker else {
+                    self?.confirmButton.isDisabled = true
+                    return
+                }
+                
+                guard let destination = self?.dynamicDestinationSelectionVM.promise?.destination else {
+                    self?.confirmButton.isDisabled = false
+                    return
+                }
+                
+                if text == destination.value1.address2 {
+                    self?.confirmButton.isDisabled = true
+                } else {
+                    self?.confirmButton.isDisabled = false
+                }
+                
             }
         }
     }
@@ -602,17 +735,19 @@ class DynamicDestinationSelectionVC: UIViewController {
             infoWindow.open(with: marker)
             infoDetailWindow.open(with: subMarker)
         } else {
-            infoWindow.close()
-            infoDetailWindow.close()
-            currentTappedPlaceMarker = nil
+            closeWindowOfCurrentTappedPlaceMarker()
         }
         
     }
     
-    @objc private func onTapInfoWindow() {
+    private func closeWindowOfCurrentTappedPlaceMarker() {
         infoWindow.close()
         infoDetailWindow.close()
         currentTappedPlaceMarker = nil
+    }
+    
+    @objc private func onTapInfoWindow() {
+        closeWindowOfCurrentTappedPlaceMarker()
     }
     
     @objc private func onTapInfoDetailWindow() {
@@ -630,33 +765,13 @@ class DynamicDestinationSelectionVC: UIViewController {
     
     @objc private func onConfirm() {
         guard let (_, info) = currentTappedPlaceMarker else { return }
-        
+        guard let middlePoint = dynamicDestinationSelectionVM.middlePoint else { return }
+        guard let midpointCalculatedIds = dynamicDestinationSelectionVM.midpointCalculatedIds else { return }
+                
         self.dismiss(animated: true)
         
-        let addressName = info.roadAddressName.isEmpty ? info.addressName : info.roadAddressName
-        let placeName = info.placeName
-        let etcAddress = "\(dynamicDestinationSelectionVM.detailAddress)"
-        
-        let parsedAddress = AddressHelper().parseAddress(addressName)
-        let city = parsedAddress.city
-        let district = parsedAddress.district
-        let address1 = parsedAddress.address1
-        
-        guard let city, let district, let address1 else { return }
-        
-        guard let y = Double(info.y), let x = Double(info.x) else { return }
-        let formattedYString = String(format: "%.8f", y)
-        let formattedXString = String(format: "%.8f", x)
-        guard let lat = Double(formattedYString), let lng = Double(formattedXString) else { return }
-
-        delegate?.onSelectedMiddlePlace(place: .init(value1: .init(
-            city: city,
-            district: district,
-            address1: address1 + placeName,
-            address2: etcAddress.isEmpty ? nil : etcAddress,
-            latitude: lat,
-            longitude: lng
-        )))
+        guard let place = dynamicDestinationSelectionVM.getDestinationPayload(info: info) else { return }
+        delegate?.onSelectedMiddlePlace(place: place, middlePoint: middlePoint, midpointCalculatedIds: midpointCalculatedIds)
         
     }
     
@@ -788,6 +903,7 @@ class DynamicDestinationSelectionVC: UIViewController {
         
         assignMiddlePointDidChange()
         assignRecommendedPlaceListInfoDidChange()
+        assignDetailAddressDidChange()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -843,7 +959,15 @@ extension DynamicDestinationSelectionVC: HeaderViewDelegate {
 }
 
 extension DynamicDestinationSelectionVC: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
+        return false
+    }
     
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        infoWindow.close()
+        infoDetailWindow.close()
+        currentTappedPlaceMarker = nil
+    }
 }
 
 extension DynamicDestinationSelectionVC: NMFOverlayImageDataSource {

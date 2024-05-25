@@ -41,4 +41,52 @@ struct AddressHelper {
         // 주소 형식이 맞지 않을 경우 nil 반환
         return (nil, nil, nil)
     }
+    
+    func getDisplayAddressText(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) -> String {
+        var etcAddress = ""
+        if let address2 = place.value1.address2, !address2.isEmpty {
+            etcAddress = "(\(address2))"
+        }
+        
+        return place.value1.city + " "
+        + place.value1.district + " "
+        + place.value1.address1 + " "
+        + etcAddress
+    }
+    
+    func getDisplayAddressText(place: Components.Schemas.PromiseDTO.destinationPayload) -> String {
+        var etcAddress = ""
+        if let address2 = place.value1.address2, !address2.isEmpty {
+            etcAddress = "(\(address2))"
+        }
+        
+        return place.value1.city + " "
+        + place.value1.district + " "
+        + place.value1.address1 + " "
+        + etcAddress
+    }
+    
+    func getDisplayAddressText(place: Components.Schemas.LocationDTO) -> String {
+        var etcAddress = ""
+        if let address2 = place.address2, !address2.isEmpty {
+            etcAddress = "(\(address2))"
+        }
+        
+        return place.city + " "
+        + place.district + " "
+        + place.address1 + " "
+        + etcAddress
+    }
+    
+    func getDisplayAddressText(place: Components.Schemas.InputLocationDTO) -> String {
+        var etcAddress = ""
+        if let address2 = place.address2, !address2.isEmpty {
+            etcAddress = "(\(address2))"
+        }
+        
+        return place.city + " "
+        + place.district + " "
+        + place.address1 + " "
+        + etcAddress
+    }
 }

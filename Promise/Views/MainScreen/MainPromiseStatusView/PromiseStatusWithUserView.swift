@@ -243,10 +243,7 @@ class PromiseStatusWithUserView: UIView {
                    !location.district.isEmpty,
                    !location.address1.isEmpty {
                     
-                    let departureLoaction = location.city + " "
-                    + location.district + " "
-                    + location.address1 + " "
-                    + (location.address2 ?? "")
+                    let departureLoaction = AddressHelper().getDisplayAddressText(place: location)
                     
                     self?.departureLocation.text = departureLoaction
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -364,10 +361,7 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
             longitude: 126.92972946
         )
         
-        let address = location.city + " "
-        + location.district + " "
-        + location.address1 + " " 
-        + (location.address2 ?? "")
+        let address = AddressHelper().getDisplayAddressText(place: location)
         
         if address == departureLocation.text {
             return
@@ -380,10 +374,7 @@ extension PromiseStatusWithUserView: PlaceSelectionDelegate {
                 
                 DispatchQueue.main.async { [weak self] in
                     
-                    self?.departureLocation.text = newDeparture.city + " "
-                    + newDeparture.district + " "
-                    + newDeparture.address1 + " "
-                    + (newDeparture.address2 ?? "")
+                    self?.departureLocation.text = AddressHelper().getDisplayAddressText(place: newDeparture)
                     
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                     

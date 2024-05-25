@@ -335,12 +335,7 @@ class FormPlaceView: UIView {
             }
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
-                
-                let middlePlaceText = middlePlace.value1.city + " "
-                + middlePlace.value1.district + " "
-                + middlePlace.value1.address1 + " "
-                + (middlePlace.value1.address2 ?? "")
-                
+                let middlePlaceText = AddressHelper().getDisplayAddressText(place: middlePlace)
                 self.selectedPlace.text = middlePlaceText
                 self.selectedPlace.textColor = .black
                 
@@ -380,10 +375,7 @@ class FormPlaceView: UIView {
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
                 
-                let middlePlaceText = middlePlace.value1.city + " " 
-                + middlePlace.value1.district + " "
-                + middlePlace.value1.address1 + " "
-                + (middlePlace.value1.address2 ?? "")
+                let middlePlaceText = AddressHelper().getDisplayAddressText(place: middlePlace)
                 
                 self.selectedPlace.text = middlePlaceText
                 self.selectedPlace.textColor = .black
@@ -431,10 +423,7 @@ class FormPlaceView: UIView {
             
             if let middlePlace = self.createPromiseVM.form.middlePlace {
                 
-                let middlePlaceText = middlePlace.value1.city + " " 
-                + middlePlace.value1.district + " "
-                + middlePlace.value1.address1 + " "
-                + (middlePlace.value1.address2 ?? "")
+                let middlePlaceText = AddressHelper().getDisplayAddressText(place: middlePlace)
                 
                 self.selectedPlace.text = middlePlaceText
                 self.selectedPlace.textColor = .black
@@ -480,10 +469,7 @@ class FormPlaceView: UIView {
                         
                         if let place = self?.createPromiseVM.form.place {
                             
-                            let placeText = place.value1.city + " "
-                            + place.value1.district + " "
-                            + place.value1.address1 + " "
-                            + (place.value1.address2 ?? "")
+                            let placeText = AddressHelper().getDisplayAddressText(place: place)
                             
                             self?.selectedPlace.text = placeText
                             self?.selectedPlace.textColor = .black
@@ -614,7 +600,9 @@ extension FormPlaceView: PlaceSelectionDelegate {
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) {
+    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, middlePoint: Components.Schemas.PointDTO, midpointCalculatedIds: [Double]) {
         createPromiseVM.onChangedMiddlePlace(place)
+        createPromiseVM.onChangeMiddlePoint(middlePoint)
+        createPromiseVM.onChangeMidpointCalculatedIds(midpointCalculatedIds)
     }
 }
