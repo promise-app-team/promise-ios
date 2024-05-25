@@ -66,6 +66,8 @@ internal enum Asset {
   internal static let statusOff = ImageAsset(name: "StatusOff")
   internal static let statusOn = ImageAsset(name: "StatusOn")
   internal static let subMarkerPrimary = ImageAsset(name: "SubMarkerPrimary")
+  internal static let probeeNoResult = ImageAsset(name: "probeeNoResult")
+  internal static let probeeOnMap = ImageAsset(name: "probeeOnMap")
   internal static let questionMarkPrimary = ImageAsset(name: "questionMarkPrimary")
   internal static let probee = ImageAsset(name: "Probee")
   internal static let probeeAll = ImageAsset(name: "ProbeeAll")
