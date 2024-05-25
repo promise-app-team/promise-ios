@@ -35,10 +35,33 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "profile")
+        
+        func setRandomImage() {
+            let randomImage = AlternativeProfileImage.allCases.randomElement()?.image ?? UIImage()
+            imageView.image = randomImage
+        }
+        
+        if let profileImageUrl = UserService.shared.getUser()?.profileUrl {
+            DispatchQueue.global().async {
+                APIService.shared.fetchImage(urlString: profileImageUrl) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let image):
+                            imageView.image = image
+                        case .failure(let error):
+                            setRandomImage()
+                        }
+                    }
+                }
+            }
+
+        } else {
+            // 프로필 이미지가 없는 경우, 프로비 이미지로 세팅
+            setRandomImage()
+        }
         return imageView
     }()
-    
+
     lazy var statusImage: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -52,7 +75,9 @@ class AccountVC: UIViewController, HeaderViewDelegate {
     //사용자 이름
     lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "김지수"
+        if let nickname = UserService.shared.getUser()?.nickname {
+            label.text = nickname
+        }
         label.textColor = .black
         label.font = UIFont.pretendard(style: .H1_B)
         label.textAlignment = .left
@@ -96,29 +121,36 @@ class AccountVC: UIViewController, HeaderViewDelegate {
         return tableView
     }()
     
-    //"앱 버전" 텍스트
+    // 앱 버전
     lazy var appLabel: UILabel = {
         let label = UILabel()
-        label.text = L10n.Account.appVer
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            label.text = L10n.Account.appVer + " " + appVersion
+        } else {
+            label.text = L10n.Account.appVer
+        }
         label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
         label.font = UIFont.pretendard(style: .B1_R)
         label.textAlignment = .left
         return label
     }()
-    
-    //앱 버전
-    lazy var verLabel: UILabel = {
+
+    // 릴리즈 빌드 번호
+    lazy var releaseLabel: UILabel = {
         let label = UILabel()
-        label.text = "1.0.0(3088)"
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            label.text = "\(appVersion) (\(buildNumber))"
+        }
         label.textColor = UIColor(hexCode: "#CCCCCC", alpha: 1)
         label.font = UIFont.pretendard(style: .B1_R)
-        label.textAlignment = .left
+        label.textAlignment = .right
         return label
     }()
-    
+
     //앱 버전 텍스트와 앱 버전을 묶은 스택뷰
     lazy var appVerStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.appLabel, self.verLabel])
+        let stackView = UIStackView(arrangedSubviews: [self.appLabel, self.releaseLabel])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 8
@@ -182,6 +214,7 @@ class AccountVC: UIViewController, HeaderViewDelegate {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.heightAnchor.constraint(equalToConstant: CGFloat(4 * 56)),//행 개수 * 행 높이
             appLabel.widthAnchor.constraint(equalToConstant: 254),
+            releaseLabel.widthAnchor.constraint(equalToConstant: 83),
             appVerStackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
             appVerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
         ])
@@ -254,6 +287,24 @@ extension AccountVC: UITableViewDataSource, UITableViewDelegate {
             break
         default:
             break
+        }
+    }
+
+    enum AlternativeProfileImage: CaseIterable {
+        case probee1
+        case probee2
+        case probee3
+        case probee4
+        case probee5
+        
+        var image: UIImage {
+            switch self {
+            case .probee1: return UIImage(named: "probee1") ?? UIImage()
+            case .probee2: return UIImage(named: "probee2") ?? UIImage()
+            case .probee3: return UIImage(named: "probee3") ?? UIImage()
+            case .probee4: return UIImage(named: "probee4") ?? UIImage()
+            case .probee5: return UIImage(named: "probee5") ?? UIImage()
+            }
         }
     }
 }

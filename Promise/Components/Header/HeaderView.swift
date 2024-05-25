@@ -9,75 +9,101 @@ import Foundation
 import UIKit
 
 @objc protocol HeaderViewDelegate: AnyObject {
-    @objc optional func mountLeftView() -> UIView
-    @objc optional func mountRightView() -> UIView
-    
     @objc optional func onTapCustomBackAction() -> Void
+    @objc optional func onTapLeftView() -> Void
+    @objc optional func onTapRightView() -> Void
 }
 
 class HeaderView: UIView {
     weak var navigationController: UINavigationController?
     weak var delegate: HeaderViewDelegate?
     
-    var isHiddenGoBackButton = false
+    var isHiddenLeftView = false
+    var isHiddenRightView = true
     
     private let title = {
         let label = UILabel()
         
         label.text = ""
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var goBackButton = {
+    private lazy var leftViewIcon = {
         let imageView = UIImageView(image: Asset.arrowLeft.image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24),
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
         ])
         
         imageView.contentMode = .scaleAspectFit
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGoBackButton))
-        imageView.addGestureRecognizer(tapGesture)
-        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+    
+    private lazy var rightViewIcon = {
+        let imageView = UIImageView(image: Asset.close.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        imageView.isHidden = isHiddenGoBackButton
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(24, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(24, .height)),
+        ])
+        
+        imageView.contentMode = .scaleAspectFit
+        
         return imageView
     }()
     
     private lazy var leftView = {
-        if let mountLeftView = delegate?.mountLeftView {
-            let leftView = mountLeftView()
-            leftView.translatesAutoresizingMaskIntoConstraints = false
-            return leftView
-        }
-        
-        // default: go back
-        return goBackButton
-    }()
-    
-    private lazy var rightView = {
-        if let mountRightView = delegate?.mountRightView {
-            let rightView = mountRightView()
-            rightView.translatesAutoresizingMaskIntoConstraints = false
-            return rightView
-        }
-        
-        // default: empty
         let view = UIView()
+        view.addSubview(leftViewIcon)
+        NSLayoutConstraint.activate([
+            leftViewIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(16, .width)),
+            leftViewIcon.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapLeftView))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        view.isHidden = isHiddenLeftView
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    @objc func onTapGoBackButton() {
+    private lazy var rightView = {
+        let view = UIView()
+        view.addSubview(rightViewIcon)
+        NSLayoutConstraint.activate([
+            rightViewIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(16, .width)),
+            rightViewIcon.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapRightView))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        view.isHidden = isHiddenRightView
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    @objc func onTapLeftView() {
         if let onTapCustomBackAction = delegate?.onTapCustomBackAction {
             onTapCustomBackAction()
+            return
+        }
+        
+        if let onTapLeftView = delegate?.onTapLeftView {
+            onTapLeftView()
             return
         }
         
@@ -85,33 +111,48 @@ class HeaderView: UIView {
         navigationController?.popViewController(animated: true)
     }
     
-    init(navigationController: UINavigationController?, title: String, isHiddenGoBackButton: Bool = false) {
+    @objc func onTapRightView() {
+        if let onTapRightView = delegate?.onTapRightView {
+            onTapRightView()
+            return
+        }
+    }
+    
+    init(navigationController: UINavigationController?, title: String, isHiddenLeftView: Bool = false, isHiddenRightView: Bool = true) {
         self.navigationController = navigationController
         self.title.text = title
-        self.isHiddenGoBackButton = isHiddenGoBackButton
-        
+        self.isHiddenLeftView = isHiddenLeftView
+        self.isHiddenRightView = isHiddenRightView
         super.init(frame: .null)
-        configureHeaderView()
+        configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureHeaderView() {
+    private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        
+        heightAnchor.constraint(equalToConstant: adjustedValue(56, .height)).isActive = true
+    }
+    
+    private func render() {
         [leftView, title, rightView].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
-            leftView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            leftView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            leftView.topAnchor.constraint(equalTo: topAnchor),
+            leftView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            leftView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            leftView.widthAnchor.constraint(equalToConstant: adjustedValue(16 + 24 + 16, .width)),
             
-            title.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            title.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            title.centerXAnchor.constraint(equalTo: centerXAnchor),
+            title.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            rightView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            rightView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            rightView.topAnchor.constraint(equalTo: topAnchor),
+            rightView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            rightView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            rightView.widthAnchor.constraint(equalToConstant: adjustedValue(16 + 24 + 16, .width)),
         ])
     }
 }

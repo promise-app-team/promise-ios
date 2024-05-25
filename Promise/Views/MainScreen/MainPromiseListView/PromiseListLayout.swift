@@ -9,14 +9,14 @@ import UIKit
 
 @objc protocol PromiseListLayoutDelegate: AnyObject {
     @objc optional func updateFocusRatio(_ initFocusRatio: CGFloat, _ ratio: CGFloat, _ indexPath: IndexPath)
-    @objc optional func focusedCellChanged(to indexPath: IndexPath)
+    @objc optional func focusedCellChanged(to indexPath: IndexPath, cell: PromiseListCell?)
 }
 
 final class PromiseListLayout: UICollectionViewFlowLayout {
     weak var delegate: PromiseListLayoutDelegate?
     
     // MARK: - Private property
-    private let activeDistance: CGFloat = 200
+    private let activeDistance: CGFloat = adjustedValue(200, .width)
     private let zoomFactor: CGFloat = 0.25
     private var initFocusRatio: CGFloat?
     
@@ -98,7 +98,8 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
                 attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1)
                 attributes.zIndex = Int(zoom.rounded())
                 
-                let focusRatio = 1 - (distance.magnitude / activeDistance)
+                // 포커스 비율은 소수점 10자리까지만 (반올림 없음)
+                let focusRatio = (1 - (distance.magnitude / activeDistance)).truncated(toPlaces: 10)
                 
                 if initFocusRatio == nil {
                     initFocusRatio = focusRatio
@@ -141,7 +142,7 @@ final class PromiseListLayout: UICollectionViewFlowLayout {
         }
         
         if let indexPath = rectAttributes.sorted(by: { abs($0.center.x - horizontalCenter) < abs($1.center.x - horizontalCenter) }).first?.indexPath {
-            delegate?.focusedCellChanged?(to: indexPath)
+            delegate?.focusedCellChanged?(to: indexPath, cell: nil)
         }
         
         return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)

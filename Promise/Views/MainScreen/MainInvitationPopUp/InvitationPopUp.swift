@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 protocol InvitationPopUpDelegate: NSObject {
-    func onSuccessAttendPromise(promise: Components.Schemas.OutputPromiseListItem)
-    func onFailureAttendPromise(targetPromise: Components.Schemas.OutputPromiseListItem, error: BadRequestError)
+    func onSuccessAttendPromise(promise: Components.Schemas.PromiseDTO)
+    func onFailureAttendPromise(targetPromise: Components.Schemas.PromiseDTO, error: BadRequestError)
     func onLoadingAttendPromise()
 }
 
@@ -21,7 +21,7 @@ class InvitationPopUp {
     
     private var popupVC: PopupVC?
     
-    private let invitedPromise: Components.Schemas.OutputPromiseListItem
+    private let invitedPromise: Components.Schemas.PromiseDTO
     private let currentVC: UIViewController
     
     // subviews
@@ -162,7 +162,7 @@ class InvitationPopUp {
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: 16)
         
         if let destination = invitedPromise.destination, invitedPromise.destinationType == .STATIC {
-            label.text = destination.value1.address
+            label.text = AddressHelper().getDisplayAddressText(place: destination)
             label.textColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1)
         } else {
             label.text = L10n.InvitationPopUp.middlePlaceWarning
@@ -222,14 +222,14 @@ class InvitationPopUp {
     }()
     
     private lazy var taggedThemes = {
-        let taggedTheme = invitedPromise.themes.map { themeTitle in
+        let taggedTheme = invitedPromise.themes.map { theme in
             let insetLabel = InsetLabel()
             insetLabel.topInset = 3
             insetLabel.bottomInset = 3
             insetLabel.leftInset = 8
             insetLabel.rightInset = 8
             
-            insetLabel.text = themeTitle
+            insetLabel.text = theme.name
             insetLabel.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
             insetLabel.textColor = UIColor(red: 0.898, green: 0.702, blue: 0.204, alpha: 1)
             insetLabel.backgroundColor = UIColor(red: 1, green: 0.976, blue: 0.922, alpha: 1)
@@ -419,7 +419,7 @@ class InvitationPopUp {
             Task { [weak self] in
                 guard let targetPromise = self?.invitedPromise else { return }
                 
-                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attend")
+                let result: Result<EmptyResponse, NetworkError> = await APIService.shared.fetch(.POST, "/promises/\(targetPromise.pid)/attendees")
                 
                 switch result {
                 case .success:
@@ -452,7 +452,7 @@ class InvitationPopUp {
     
     // initializer
     
-    init(invitedPromise: Components.Schemas.OutputPromiseListItem, currentVC: UIViewController) {
+    init(invitedPromise: Components.Schemas.PromiseDTO, currentVC: UIViewController) {
         self.invitedPromise = invitedPromise
         self.currentVC = currentVC
     }
@@ -492,7 +492,7 @@ extension InvitationPopUp {
 extension InvitationPopUp: APIServiceDelegate {
     func onLoading(path: String?, isLoading: Bool) {
         switch(path) {
-        case "/promises/\(invitedPromise.pid)/attend":
+        case "/promises/\(invitedPromise.pid)/attendees":
             if(isLoading) {
                 self.delegate?.onLoadingAttendPromise()
             }

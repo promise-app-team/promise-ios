@@ -84,8 +84,8 @@ class CommonModalManager: NSObject, UIViewControllerTransitioningDelegate, Modal
         parentViewController.present(modalViewController, animated: true, completion: nil)
     }
     
-    func dismiss() {
-        modalViewController?.dismiss(animated: true, completion: nil)
+    func dismiss(completion: @escaping (() -> Void) = {}) {
+        modalViewController?.dismiss(animated: true, completion: completion)
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

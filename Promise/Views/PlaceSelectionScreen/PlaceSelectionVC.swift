@@ -19,53 +19,80 @@ protocol PlaceSelectionDataDelegate: AnyObject {
 }
 
 struct PlaceSelection {
-    var name: String = "주소"
-    var lat: Double = 37.565643683342
-    var lon: Double = 126.95524147826
+    var buildingName: String = ""
+    var lotNumberAddress: String = ""
+    var roadNameAddress: String = ""
+    var userInputAddress: String?
+    var lat: Double = 37.5664056 // 시청
+    var lon: Double = 126.9778222
 }
 
 class PlaceSelectionVC: UIViewController {
-    
     enum SearchStatus {
-        case idle, searching, searchFail, resultList, map
+        case idle
+        case onSearch
+        case searchFail
+        case searchResult
+        case searchMap
     }
     
     // MARK: Public Property
-    
+    let debouncer = Debouncer()
     weak var delegate: PlaceSelectionDelegate?
     weak var dataDelegate: PlaceSelectionDataDelegate?
     
-    var viewState: SearchStatus! {
+    var isSearchBarFocused: Bool
+    var viewState: SearchStatus = .idle {
         didSet {
+            headerView.isUserInteractionEnabled = (viewState == .onSearch) ? false : true
             switch self.viewState {
             case .idle:
-                DispatchQueue.main.async {
-                    self.tipView.isHidden = false
-                    self.tableView.isHidden = true
-                    self.naverMapView.isHidden = true
-                    self.confirmView.isHidden = true
-                }
-                marker = nil
-            case .searching:
-                break
-            case .searchFail:
-                break
-            case .resultList:
-                DispatchQueue.main.async {
-                    self.tipView.isHidden = true
-                    self.tableView.isHidden = false
-                    self.naverMapView.isHidden = true
-                    self.confirmView.isHidden = true
-                }
-            case .map:
+                print("❤️")
+                naverMapView.mapView.addCameraDelegate(delegate: self)
+                // 현재 위치로 지도 보여줌
+                // 지도 이동 조작 가능
+                // 지도 중앙에 프로비 위치
+                // 프로비 위치로 도로명, 지번 업데이트
+                // 이동시에는 라벨에 "..."
                 DispatchQueue.main.async {
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = false
                     self.confirmView.isHidden = false
+                    self.probee.isHidden = false
                 }
-            case .none:
+                let location = LocationService.shared.currentLocation
+                moveMap(to: location)
+                clearData()
+            case .onSearch:
+                DispatchQueue.main.async {
+                    self.tipView.isHidden = false
+                    self.tableView.isHidden = true
+                    self.naverMapView.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                }
+                let _ = self.searchTextField.becomeFirstResponder()
+                marker = nil
+            case .searchFail:
                 break
+            case .searchResult:
+                DispatchQueue.main.async {
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = false
+                    self.naverMapView.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                }
+            case .searchMap:
+                naverMapView.mapView.removeCameraDelegate(delegate: self)
+                DispatchQueue.main.async {
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = true
+                    self.naverMapView.isHidden = false
+                    self.confirmView.isHidden = false
+                    self.probee.isHidden = true
+                }
             }
         }
     }
@@ -81,12 +108,45 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: Private Property
     
-    var currentPlace = PlaceSelection()
+    var currentPlace = PlaceSelection() {
+        didSet {
+            DispatchQueue.main.async {
+                self.confirmView.updateLabel(to: self.currentPlace)
+            }
+        }
+    }
+    
+    // MARK: - Initialize
+    
+    init(isSearchBarFocused: Bool) {
+        self.isSearchBarFocused = isSearchBarFocused
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+//    init(delegate: PlaceSelectionDelegate? = nil, dataDelegate: PlaceSelectionDataDelegate? = nil, viewState: SearchStatus, marker: NMFMarker? = nil, place: KakaoPlaceMDL? = nil, currentPlace: PlaceSelection = PlaceSelection()) {
+//        self.delegate = delegate
+//        self.dataDelegate = dataDelegate
+//        self.viewState = viewState
+//        self.marker = marker
+//        self.place = place
+//        self.currentPlace = currentPlace
+//    }
+    
+    // MARK: - View
     
     private lazy var headerView: HeaderView = {
         let headerView = HeaderView(navigationController: nil, title: "약속장소 설정")
         headerView.delegate = self
         return headerView
+    }()
+    
+    private let probee: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "ProbeeMap"))
+        return imageView
     }()
     
     lazy var searchTextField: TextField = {
@@ -123,33 +183,37 @@ class PlaceSelectionVC: UIViewController {
         let view = PlaceSelectionConfirmView()
         view.handleTappedConfirmButton = {
             print("tapped confirm button")
-            self.currentPlace.name = "\(view.titleLabel.text ?? "") \(view.addressTextField.text ?? "")"
             self.dataDelegate?.handlePlaceResult(place: self.currentPlace)
             self.dismiss(animated: true)
         }
         return view
     }()
     
+    
+    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        viewState = .idle
+        LocationService.shared.start()
         configureAccountVC()
         render()
-        viewState = .idle
         confirmView.configureAddressTextfieldDelegate(self)
-        
+//        naverMapView.mapView.addCameraDelegate(delegate: self)
+        naverMapView.mapView.positionMode = .normal
+        naverMapView.showLocationButton = true
         addKeyboardNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.onWillShow?()
-        let _ = searchTextField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        viewState = isSearchBarFocused ? .onSearch : .idle
         delegate?.onDidShow?()
     }
     
@@ -229,7 +293,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, searchTextField, tipView, tableView, naverMapView, confirmView].forEach {
+        [headerView, searchTextField, tipView, tableView, naverMapView, probee, confirmView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -241,7 +305,6 @@ class PlaceSelectionVC: UIViewController {
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 56),
             
             searchTextField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
             searchTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
@@ -258,6 +321,11 @@ class PlaceSelectionVC: UIViewController {
             naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             naverMapView.bottomAnchor.constraint(equalTo: confirmView.topAnchor),
             
+            probee.widthAnchor.constraint(equalToConstant: 40),
+            probee.heightAnchor.constraint(equalToConstant: 40),
+            probee.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
+            probee.centerYAnchor.constraint(equalTo: naverMapView.centerYAnchor),
+            
             tableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -266,20 +334,25 @@ class PlaceSelectionVC: UIViewController {
             confirmView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             confirmView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             confirmView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            confirmView.heightAnchor.constraint(equalToConstant: 300),
+            confirmView.heightAnchor.constraint(equalToConstant: 250),
         ])
     }
 }
 
-// MARK: HeaderViewDelegate
+extension PlaceSelectionVC {
+    private func moveMap(to location: CLLocationCoordinate2D) {
+        let target = NMGLatLng(lat: location.latitude, lng: location.longitude)
+        let position = NMFCameraPosition(target, zoom: 17)
+        let update = NMFCameraUpdate(position: position)
+        naverMapView.mapView.moveCamera(update)
+    }
 
-extension PlaceSelectionVC: HeaderViewDelegate {
-    
-    func onTapCustomBackAction() {
-        if viewState == .map {
-            viewState = .resultList
-        } else {
-            dismiss(animated: true)
-        }
+    private func clearData() {
+        searchTextField.text = ""
+        confirmView.clearLabel()
+        
+        let location = LocationService.shared.currentLocation
+        moveMap(to: location)
     }
 }
+

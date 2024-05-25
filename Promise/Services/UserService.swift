@@ -32,14 +32,14 @@ final class UserService {
         
         do {
             let jwt = try decode(jwt: accessToken)
-            let userId = jwt.claim(name: "id").string
-            guard let userId = userId else { return false }
+            let userId = jwt.claim(name: "sub").integer
+            guard let userId else { return false }
             
-            let result: Result<Components.Schemas.UserEntity, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
+            let result: Result<Components.Schemas.UserDTO, NetworkError> = await APIService.shared.fetch(.GET, "/user/profile")
             
             switch result {
             case .success(let userInfo):
-                user = UserMDL(userId: userId, nickname: userInfo.username, profileUrl: userInfo.profileUrl, loginMethod: userInfo.provider?.rawValue)
+                user = UserMDL(userId: userId, nickname: userInfo.username, profileUrl: userInfo.profileUrl, loginMethod: userInfo.provider.rawValue)
                 return true
             case .failure(let error):
                 print("Get user data error: ", error)

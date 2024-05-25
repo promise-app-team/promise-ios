@@ -8,6 +8,7 @@
 import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
+import UIKit
 
 enum NetworkError: Error {
     case badUrl
@@ -20,7 +21,9 @@ enum NetworkError: Error {
 
 enum HttpMethod: String {
     case POST
+    case PUT
     case GET
+    case DELETE
     // Ohter http methods
 }
 
@@ -108,7 +111,7 @@ final class APIService {
             switch(method) {
             case .GET:
                 break
-            case .POST:
+            case .POST, .PUT, .DELETE:
                 if let body = body {
                     if let jsonData = try? JSONEncoder().encode(body) {
                         request.httpBody = jsonData
@@ -157,7 +160,7 @@ final class APIService {
             return .failure(.notAuthenticated)
         }
         
-        let result: Result<Components.Schemas.AuthToken, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
+        let result: Result<Components.Schemas.AuthTokenDTO, NetworkError> = await APIService.shared.fetch(.POST, "/auth/refresh", nil, Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
         
         switch result {
         case .success(let updatedToken):
@@ -249,7 +252,7 @@ final class APIService {
         switch(method) {
         case .GET:
             break
-        case .POST:
+        case .POST, .PUT, .DELETE:
             if let body = body {
                 if let jsonData = try? JSONEncoder().encode(body) {
                     request.httpBody = jsonData
@@ -311,8 +314,8 @@ final class APIService {
             .POST,
             "/auth/refresh",
             nil,
-            Components.Schemas.InputRefreshToken(refreshToken: refreshToken))
-        {  (result: Result<Components.Schemas.AuthToken, NetworkError>) in
+            Components.Schemas.InputRefreshTokenDTO(refreshToken: refreshToken))
+        {  (result: Result<Components.Schemas.AuthTokenDTO, NetworkError>) in
             switch result {
             case .success(let updatedToken):
                 Task {
@@ -370,6 +373,125 @@ final class APIService {
         }
         
     }
+    
+    func fetchImage(urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NetworkError.badUrl))
+            return
+        }
+        
+        // MARK: 사용자 프로필 이미지 다운로드를 위한 dataTask
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            //응답 처리
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                completion(.failure(NetworkError.networkError(nil)))
+                return
+            }
+
+            //데이터 처리
+            guard let imageData = data, let image = UIImage(data: imageData) else {
+                completion(.failure(NetworkError.decodingError))
+                return
+            }
+
+            //프로필 이미지 다운로드 및 패치
+            completion(.success(image))
+        }
+        
+        dataTask.resume()
+    }
+
 }
 
-
+extension APIService {
+    func fetch<Response: Decodable>(method: HttpMethod, path: String? = nil, queryItems: [URLQueryItem]? = nil, body: Encodable? = nil) async -> Result<Response, NetworkError> {
+        
+        // MARK: async fetch는 내부 모든 컨텍스트(토큰 만료로 인한 갱신 및 리패치 포함)가 모두 끝날때까지 기다리게 설계됨.
+        // MARK: 즉, defer의 호출은 쿼리 호출이 모두 완료(혹은 중간에 중단)되었다는 것을 보장함.
+        // fetch 함수 시작 loading -> true
+        delegate?.onLoading(path: path, isLoading: true)
+        // fetch 함수의 종료(반환)시 loading -> false
+        defer {
+            delegate?.onLoading(path: path, isLoading: false)
+        }
+        
+        do {
+            var url = Config.apiURL
+            
+            // Step 1: endpoint path setting
+            if let path = path {
+                url.appendPathComponent(path)
+            }
+            
+            // Step 2: create URLComponents
+            guard var urlComponents = URLComponents(string: url.absoluteString) else { return .failure(.badUrl) }
+            
+            // Step 3: query paramenters setting
+            if let queryItems = queryItems {
+                urlComponents.queryItems = queryItems
+            }
+            
+            // Step 4: create URLRequest
+            guard let requestUrl = urlComponents.url else { return .failure(.badUrl) }
+            var request = URLRequest(url: requestUrl)
+            
+            // Step 5: http header setting
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type") // 요청타입: JSON
+            request.setValue("application/json", forHTTPHeaderField: "Accept") // 응답타입: JSON
+            if let token = UserService.shared.getAccessToken(), !token.isEmpty {
+                request.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization") // JWT 토큰
+            }
+            
+            // Step 6: http method setting
+            request.httpMethod = method.rawValue
+            
+            // Step 7: body setting by method
+            switch(method) {
+            case .GET:
+                break
+            case .POST, .PUT, .DELETE:
+                if let body = body {
+                    if let jsonData = try? JSONEncoder().encode(body) {
+                        request.httpBody = jsonData
+                    } else {
+                        return .failure(.encodeingError)
+                    }
+                }
+                // Other handle http methods
+            }
+            
+            // Step 8: resume url session task
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if (response as? HTTPURLResponse)?.statusCode == 401 {
+                return await updateAccessToken(request: request)
+            }
+            
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                
+                if let errorResponse = try? self.decoder.decode(ErrorResponse.self, from: data) {
+                    return .failure(.badRequest(BadRequestError(data: data, errorResponse: errorResponse)))
+                }
+                return .failure(.badRequest(BadRequestError(data: data, errorResponse: nil)))
+                
+            }
+            
+            if data.isEmpty, Response.self == EmptyResponse.self {
+                return .success(EmptyResponse() as! Response)
+            }
+            
+            guard let parsedData = try? self.decoder.decode(Response.self, from: data) else {
+                return .failure(.decodingError)
+            }
+            
+            return .success(parsedData)
+        } catch {
+            return .failure(.networkError(error))
+        }
+    }
+}

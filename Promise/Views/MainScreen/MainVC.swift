@@ -9,11 +9,13 @@ import UIKit
 
 final class MainVC: UIViewController {
     // 메인화면에 진입할때 MainVC(invitedPromiseId:)로 초기화 하면 참여 팝업을 띄워야함.
-    var invitedPromise: Components.Schemas.OutputPromiseListItem?
+    var invitedPromise: Components.Schemas.PromiseDTO?
     
     private var probeeGuidanceTask: Task<Void, Never>? = nil
     private var shouldShowProbeeGuidance = false
     private var isFlyingProbee = false
+    
+    private var shouldLazyCallFocusedCellChanged: IndexPath? = nil
     
     private var focusRatioInfo: (CGFloat?, CGFloat?, IndexPath?)
     
@@ -134,11 +136,11 @@ final class MainVC: UIViewController {
         return view
     }()
     
-    private var promiseStatusView: PromiseStatusView? = nil
+    public var promiseStatusView: PromiseStatusView?
     
     // MARK: handler
     
-    public func showInvitationPopUp(promise: Components.Schemas.OutputPromiseListItem? = nil) {
+    public func showInvitationPopUp(promise: Components.Schemas.PromiseDTO? = nil) {
         if let promise {
             let popup = InvitationPopUp(invitedPromise: promise, currentVC: self)
             popup.delegate = mainVM
@@ -156,37 +158,122 @@ final class MainVC: UIViewController {
         }
     }
     
-    
-    public func focusPromiseById(id: String? = nil) {
-        
-        if let id {
-            if let index = mainVM.promises?.firstIndex(where: { $0?.pid == id }) {
-                let indexPath = IndexPath(item: index, section: 0)
-                promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                focusedCellChanged(to: indexPath)
-            }
+    private func scrollToPreviousFocusedPromise(indexPath: IndexPath) {
+        if indexPath == mainVM.currentFocusedPromiseIndexPath {
             
-            return
+            if let previousFocusedPromiseIndex = mainVM.promises?.firstIndex(where: { $0?.pid == mainVM.currentFocusedPromise?.pid }) {
+                
+                let previousFocusedPromiseIndexPath = IndexPath(
+                    item: previousFocusedPromiseIndex,
+                    section: 0
+                )
+                
+                promiseListView.scrollToItem(
+                    at: previousFocusedPromiseIndexPath,
+                    at: .centeredHorizontally,
+                    animated: false
+                )
+                
+            }
         }
-        
-        
+    }
+    
+    public func focusPromiseById(id: String) {
+        if let index = mainVM.promises?.firstIndex(where: { $0?.pid == id }) {
+            let indexPath = IndexPath(item: index, section: 0)
+            
+            // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
+            scrollToPreviousFocusedPromise(indexPath: indexPath)
+            
+            shouldLazyCallFocusedCellChanged = indexPath
+            promiseListView.scrollToItem(
+                at: indexPath,
+                at: .centeredHorizontally,
+                animated: true
+            )
+            
+        }
+    }
+    
+    private func focusPromiseById() {
+        // MARK: id가 mainVM에 맴버 플레그로 있는 경우
         if let shouldFocusPromiseId = mainVM.shouldFocusPromiseId, !shouldFocusPromiseId.isEmpty {
             
             if let index = mainVM.promises?.firstIndex(where: { $0?.pid == shouldFocusPromiseId }) {
                 let indexPath = IndexPath(item: index, section: 0)
-                promiseListView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                focusedCellChanged(to: indexPath)
+                
+                // MARK: 스크롤(포커스) 할 indexPath가 이미 포커스된 indexPath라면 선행
+                scrollToPreviousFocusedPromise(indexPath: indexPath)
+                
+                if let promisesCount = mainVM.promises?.count,
+                   index == promisesCount - 1
+                {
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                        
+                        self?.shouldLazyCallFocusedCellChanged = indexPath
+                        self?.promiseListView.scrollToItem(
+                            at: indexPath,
+                            at: .centeredHorizontally,
+                            animated: true
+                        )
+                        
+                    }
+                    
+                } else {
+                    
+                    self.shouldLazyCallFocusedCellChanged = indexPath
+                    promiseListView.scrollToItem(
+                        at: indexPath,
+                        at: .centeredHorizontally,
+                        animated: true
+                    )
+                    
+                }
+                
             }
             
             // 포커스 스크롤 동작 후에 리셋
             mainVM.shouldFocusPromiseId = nil
         }
-        
     }
     
+    // MARK: 단일 promise cell 변경 핸들러
+    private func assignPromiseDidChange() {
+        mainVM.promiseDidChange = { reloadTarget in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                let (promise, indexPath) = reloadTarget
+                
+                // MARK: cell 업데이트
+                UIView.performWithoutAnimation {
+                    self?.promiseListView.reloadItems(at: [indexPath])
+                }
+                
+                // MARK: 현재 포커스된 cell이 indexPath와 같다면 업데이트
+                if let currentFocusedPromise = self?.mainVM.currentFocusedPromise,
+                   currentFocusedPromise.pid == promise.pid,
+                   let currentFocusedPromiseIndexPath = self?.mainVM.currentFocusedPromiseIndexPath,
+                   currentFocusedPromiseIndexPath == indexPath
+                {
+                    self?.promiseStatusView?
+                        .promiseStatusWithAllAttendeesView
+                        .updatePromiseStatusWithAllAttendees(with: promise)
+                    
+                    self?.focusedCellChanged(to: indexPath, cell: nil)
+                }
+                
+                
+            }
+        }
+    }
+    
+    // MARK: 전체 promise list 변경 핸들러
     private func assignPromisesDidChange() {
-        mainVM.promisesDidChange = { [weak self] (promiseList) in
-            DispatchQueue.main.async {
+        mainVM.promisesDidChange = { promiseList in
+            
+            DispatchQueue.main.async { [weak self] in
                 guard let promiseList else { return }
                 
                 // MARK: 네트워크 요청중(로딩)
@@ -195,7 +282,10 @@ final class MainVC: UIViewController {
                 }
                 
                 self?.renderAfterGettingPromises(isEmptyPromises: promiseList.isEmpty)
+                
                 self?.promiseListView.reloadData()
+                self?.focusPromiseById()
+                
             }
         }
     }
@@ -221,7 +311,7 @@ final class MainVC: UIViewController {
     // MARK: initialize
     
     init(
-        invitedPromise: Components.Schemas.OutputPromiseListItem? = nil,
+        invitedPromise: Components.Schemas.PromiseDTO? = nil,
         shouldFocusPromiseId: String? = nil
     ) {
         self.invitedPromise = invitedPromise
@@ -230,6 +320,7 @@ final class MainVC: UIViewController {
         mainVM.shouldFocusPromiseId = shouldFocusPromiseId
         
         Task {
+            assignPromiseDidChange()
             assignPromisesDidChange()
             await mainVM.getPromiseList()
         }
@@ -249,7 +340,13 @@ final class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showInvitationPopUp()
-        focusPromiseById()
+        
+        if let shouldLazyFocusPromiseId = mainVM.shouldLazyFocusPromiseId, !shouldLazyFocusPromiseId.isEmpty {
+            focusPromiseById(id: shouldLazyFocusPromiseId)
+            mainVM.shouldLazyFocusPromiseId = nil
+        } else {
+            focusPromiseById()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -353,6 +450,16 @@ final class MainVC: UIViewController {
 }
 
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        
+        if let indexPath = shouldLazyCallFocusedCellChanged {
+            focusedCellChanged(to: indexPath, cell: nil)
+            self.shouldLazyCallFocusedCellChanged = nil
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mainVM.promises?.count ?? 0
     }
@@ -364,15 +471,25 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         guard let promises = mainVM.promises else { return cell }
         
         let promise = promises[indexPath.row]
-        cell.configureCell(with: promise, at: indexPath)
         
-        // MARK: 최초에 한 번만 실행 cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
+        // MARK: cell 구성
+        cell.configureCell(with: promise)
+        cell.mainVM = mainVM
+        
+        // MARK: 최초에 한 번만 실행, cell 재사용시는 focusRatio가 initRaio와 다르기 때문에 실행되지 않고 layoutAttributesForElements 부분이 실행됨.
         if indexPath.row == 0,
+           mainVM.currentFocusedPromiseIndexPath == nil,
            let initFocusRatio = focusRatioInfo.0,
            let focusRatio = focusRatioInfo.1,
            initFocusRatio == focusRatio
         {
-            focusedCellChanged(to: indexPath)
+            focusedCellChanged(to: indexPath, cell: cell)
+            cell.updateBorder(focusRatio: focusRatio)
+        }
+        
+        if mainVM.currentFocusedPromiseIndexPath == indexPath,
+           let focusRatio = focusRatioInfo.1
+        {
             cell.updateBorder(focusRatio: focusRatio)
         } else {
             cell.updateBorder(focusRatio: 0)
@@ -416,7 +533,7 @@ extension MainVC: PromiseListLayoutDelegate {
                     }
                 }
             }
-
+            
             
         } else {
             // MARK: 프로비가 날아다니는 경우
@@ -432,21 +549,42 @@ extension MainVC: PromiseListLayoutDelegate {
         
     }
     
-    func focusedCellChanged(to indexPath: IndexPath) {
+    func focusedCellChanged(to indexPath: IndexPath, cell: PromiseListCell?) {
         guard let promises = mainVM.promises else { return }
         let promise = promises[indexPath.row]
+        
         guard let promise else { return }
         
         mainVM.currentFocusedPromise = promise
+        mainVM.currentFocusedPromiseIndexPath = indexPath
         
-        let isEmptyAttendees = promise.attendees.isEmpty
-        let isOwner = String(Int(promise.host.id)) == UserService.shared.getUser()?.userId
+        // MARK: 최초에 포커스되는 cell
+        if let cell {
+            mainVM.currentFocusedCell = cell
+            
+            // MARK: for promise status (is not called init mount)
+            self.promiseStatusView?.updatePromiseStatus(with: promise, cell: cell)
+            
+        } else {
+            // MARK: 이후 포커스가 변경되는 cell
+            if let cell = promiseListView.cellForItem(at: indexPath) as? PromiseListCell {
+                mainVM.currentFocusedCell = cell
+                
+                // MARK: for promise status (is not called init mount)
+                self.promiseStatusView?.updatePromiseStatus(with: promise, cell: cell)
+                
+            }
+            
+        }
         
-        // MARK: for promise status (is not called init mount)
-        self.promiseStatusView?.updatePromiseStatus(with: promise)
+        let isOnlyOwnerIsAttendee = 
+        promise.attendees.count == 1 &&
+        promise.attendees[0].id == promise.host.id
+        
+        let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
         
         // MARK: for probee
-        self.shouldShowProbeeGuidance = isOwner && isEmptyAttendees
+        self.shouldShowProbeeGuidance = isOwner && isOnlyOwnerIsAttendee
         
     }
 }
