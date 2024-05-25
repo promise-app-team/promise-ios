@@ -19,9 +19,12 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
         cameraDidChangeByReason reason: Int,
         animated: Bool
     ) {
+        guard viewState == .idle else { return }
         debouncer.debounce(interval: 0.5) {
             let position = self.naverMapView.mapView.cameraPosition // 지도의 가운데 좌표
             self.reverseGeocode(from: position) { (data) in
+                var city = ""
+                var district = ""
                 var roadName = ""
                 var lotNumber = ""
                 var building = ""
@@ -33,7 +36,6 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                                                        roadNameAddress: roadName,
                                                        lat: position.target.lat,
                                                        lon: position.target.lng)
-//                    print("no result: ",self.currentPlace)
                     DispatchQueue.main.async {
                         self.confirmView.confirmButton.isDisabled = true
                     }
@@ -44,6 +46,8 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                 }
                 
                 let _ = data.results.filter { $0.name == "addr" }.map { addrData in
+                    city = addrData.region.area1.name
+                    district = addrData.region.area2.name
                     lotNumber = [addrData.region.area3.name,
                                  addrData.region.area4.name,
                                  addrData.land.number1]
@@ -58,20 +62,25 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                     building = roadaddrData.land.addition0.value
                     roadName = [roadaddrData.region.area1.name,
                                 roadaddrData.region.area2.name,
-                                roadaddrData.region.area3.name,
-                                roadaddrData.region.area4.name,
+                                roadaddrData.land.name ?? "",
                                 roadaddrData.land.number1]
                         .filter { $0 != "" }
                         .joined(separator: " ")
                 }
-                self.currentPlace = PlaceSelection(buildingName: building,
-                                           lotNumberAddress: lotNumber,
-                                           roadNameAddress: roadName,
-                                           userInputAddress: self.confirmView.addressTextField.text,
-                                           lat: position.target.lat,
-                                           lon: position.target.lng)
-                print(self.currentPlace)
-                print(data)
+                DispatchQueue.main.async {
+                    let address = self.confirmView.addressTextField.text ?? ""
+                    let latitude = position.target.lat.truncated(toPlaces: 8)
+                    let longitude = position.target.lng.truncated(toPlaces: 8)
+                    self.currentPlace = PlaceSelection(
+                        city: city,
+                        district: district,
+                        buildingName: building,
+                        lotNumberAddress: lotNumber,
+                        roadNameAddress: roadName,
+                        userInputAddress: address,
+                        lat: latitude,
+                        lon: longitude)
+                }
             }
         }
     }

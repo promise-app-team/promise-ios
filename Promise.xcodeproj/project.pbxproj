@@ -54,12 +54,14 @@
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
 		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */; };
+		E707DBB22BEF5433002D13DB /* PlaceSelectionSearchFailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */; };
 		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
 		E7C12CB62BC59A1C003FEF8C /* PlaceSelectionVC+CameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */; };
 		E7C12CB92BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */; };
 		E7C12CBB2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */; };
+		E7D586D02BEF034C0027790B /* PlaceLocationMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */; };
 		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
 		FA0A29692A66F6E7004F44A5 /* CommonFloatingContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */; };
 		FA820AA02A82791F00AD571C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA820A9F2A82791E00AD571C /* UIViewController.swift */; };
@@ -232,11 +234,13 @@
 		DB72AD6D0F050B33425D2D15 /* Pods_Promise_PromiseUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Promise_PromiseUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E09D2D2A7CB3941EAE81423E /* Pods-PromiseTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PromiseTests.release (production).xcconfig"; path = "Target Support Files/Pods-PromiseTests/Pods-PromiseTests.release (production).xcconfig"; sourceTree = "<group>"; };
 		E0C7A14B895018F2DB49ED25 /* Pods-Promise.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Promise.debug (production).xcconfig"; path = "Target Support Files/Pods-Promise/Pods-Promise.debug (production).xcconfig"; sourceTree = "<group>"; };
+		E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSelectionSearchFailView.swift; sourceTree = "<group>"; };
 		E7B91DD82A78D47100426D81 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
 		E7B91E0A2A7D156400426D81 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+CameraDelegate.swift"; sourceTree = "<group>"; };
 		E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+HeaderViewDelegate.swift"; sourceTree = "<group>"; };
 		E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodingMDL.swift; sourceTree = "<group>"; };
+		E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLocationMDL.swift; sourceTree = "<group>"; };
 		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
 		FA0A29682A66F6E7004F44A5 /* CommonFloatingContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContainerVC.swift; sourceTree = "<group>"; };
 		FA820A9F2A82791E00AD571C /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -402,6 +406,7 @@
 				2B7DE45D2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift */,
 				2B7DE43A2B4CE52100127DAA /* PlaceSelectionTipView.swift */,
 				2B98952F2B638AC3006AE27E /* PlaceSelectionConfirmView.swift */,
+				E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -739,6 +744,7 @@
 			children = (
 				2BBA019C2B4F7B0700B1039A /* KakaoPlaceMDL.swift */,
 				FC59743D2A24D59A00A642D7 /* UserMDL.swift */,
+				E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */,
 				FC40FC182A7FB13700B699F4 /* PromiseMDL.swift */,
 				FCC690542A9E37090017D543 /* PromiseFormMDL.swift */,
 				D4336AE32BDFAF2A00F46573 /* AttendeeMDL.swift */,
@@ -1363,12 +1369,14 @@
 				FC4A7A972A616F060055FE4F /* Onboarding.swift in Sources */,
 				D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */,
 				FCC4B6272A9CEA940003AD3C /* FormDateView.swift in Sources */,
+				E7D586D02BEF034C0027790B /* PlaceLocationMDL.swift in Sources */,
 				FCB3AD552ABF1F1100219A25 /* PromiseConstants.swift in Sources */,
 				D4C8D11B2B67DB74008AD1EC /* PromiseListEmptyView.swift in Sources */,
 				FC59740C2A24D38700A642D7 /* SceneDelegate.swift in Sources */,
 				4A6CCFC82ADA8798005759C0 /* EditProfileVC.swift in Sources */,
 				D497715F2B5FF860005DF103 /* AttendanceHelper.swift in Sources */,
 				FC5903492A76BE2900778305 /* String.swift in Sources */,
+				E707DBB22BEF5433002D13DB /* PlaceSelectionSearchFailView.swift in Sources */,
 				FCFC00912A7C0B35009D7BC7 /* SortPromiseListView.swift in Sources */,
 				D4336AE12BDFAB9B00F46573 /* DynamicDestinationSelectionVM.swift in Sources */,
 				D4C4CDAF2BD3644A002F0206 /* DynamicDestinationHelper.swift in Sources */,

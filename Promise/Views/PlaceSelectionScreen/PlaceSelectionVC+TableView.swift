@@ -52,7 +52,6 @@ extension PlaceSelectionVC: UITableViewDelegate {
         
         let marker = NMFMarker()
         marker.iconImage = NMFOverlayImage(name: "ProbeeMap")
-        print(marker.iconImage.imageWidth, marker.iconImage.imageHeight)
         marker.width = 40
         marker.height = 40
         marker.position = position

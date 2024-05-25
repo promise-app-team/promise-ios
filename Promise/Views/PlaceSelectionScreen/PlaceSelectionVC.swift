@@ -15,14 +15,16 @@ import NMapsMap
     @objc optional func onDidHide()
 }
 protocol PlaceSelectionDataDelegate: AnyObject {
-    func handlePlaceResult(place: PlaceSelection)
+    func handlePlaceResult(place: PlaceLocationMDL)
 }
 
 struct PlaceSelection {
+    var city: String = ""
+    var district: String = ""
     var buildingName: String = ""
     var lotNumberAddress: String = ""
     var roadNameAddress: String = ""
-    var userInputAddress: String?
+    var userInputAddress: String = ""
     var lat: Double = 37.5664056 // 시청
     var lon: Double = 126.9778222
 }
@@ -44,17 +46,14 @@ class PlaceSelectionVC: UIViewController {
     var isSearchBarFocused: Bool
     var viewState: SearchStatus = .idle {
         didSet {
-            headerView.isUserInteractionEnabled = (viewState == .onSearch) ? false : true
+            DispatchQueue.main.async {
+                self.headerView.isUserInteractionEnabled = (self.viewState == .onSearch) ? false : true
+            }
             switch self.viewState {
             case .idle:
-                print("❤️")
-                naverMapView.mapView.addCameraDelegate(delegate: self)
-                // 현재 위치로 지도 보여줌
-                // 지도 이동 조작 가능
-                // 지도 중앙에 프로비 위치
-                // 프로비 위치로 도로명, 지번 업데이트
-                // 이동시에는 라벨에 "..."
                 DispatchQueue.main.async {
+                    self.searchFailView.isHidden = true
+                    self.naverMapView.mapView.allowsScrolling = true
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = false
@@ -66,6 +65,7 @@ class PlaceSelectionVC: UIViewController {
                 clearData()
             case .onSearch:
                 DispatchQueue.main.async {
+                    self.searchFailView.isHidden = true
                     self.tipView.isHidden = false
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = true
@@ -75,9 +75,17 @@ class PlaceSelectionVC: UIViewController {
                 let _ = self.searchTextField.becomeFirstResponder()
                 marker = nil
             case .searchFail:
-                break
+                DispatchQueue.main.async {
+                    self.searchFailView.isHidden = false
+                    self.tipView.isHidden = false
+                    self.tableView.isHidden = true
+                    self.naverMapView.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                }
             case .searchResult:
                 DispatchQueue.main.async {
+                    self.searchFailView.isHidden = true
                     self.tipView.isHidden = true
                     self.tableView.isHidden = false
                     self.naverMapView.isHidden = true
@@ -85,8 +93,9 @@ class PlaceSelectionVC: UIViewController {
                     self.probee.isHidden = true
                 }
             case .searchMap:
-                naverMapView.mapView.removeCameraDelegate(delegate: self)
                 DispatchQueue.main.async {
+                    self.searchFailView.isHidden = true
+                    self.naverMapView.mapView.allowsScrolling = false
                     self.tipView.isHidden = true
                     self.tableView.isHidden = true
                     self.naverMapView.isHidden = false
@@ -127,15 +136,6 @@ class PlaceSelectionVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    init(delegate: PlaceSelectionDelegate? = nil, dataDelegate: PlaceSelectionDataDelegate? = nil, viewState: SearchStatus, marker: NMFMarker? = nil, place: KakaoPlaceMDL? = nil, currentPlace: PlaceSelection = PlaceSelection()) {
-//        self.delegate = delegate
-//        self.dataDelegate = dataDelegate
-//        self.viewState = viewState
-//        self.marker = marker
-//        self.place = place
-//        self.currentPlace = currentPlace
-//    }
-    
     // MARK: - View
     
     private lazy var headerView: HeaderView = {
@@ -145,7 +145,7 @@ class PlaceSelectionVC: UIViewController {
     }()
     
     private let probee: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "ProbeeMap"))
+        let imageView = UIImageView(image: UIImage(named: "ProbeeOnMap"))
         return imageView
     }()
     
@@ -157,6 +157,7 @@ class PlaceSelectionVC: UIViewController {
     }()
     
     private let tipView = PlaceSelectionTipView()
+    private let searchFailView = PlaceSelectionSearchFailView()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -168,39 +169,38 @@ class PlaceSelectionVC: UIViewController {
         return tableView
     }()
     
-    let naverMapView: NMFNaverMapView = {
-        let naverMapView = NMFNaverMapView()
-        naverMapView.showCompass = true
-        naverMapView.showZoomControls = true
-        
-        let mapView =  naverMapView.mapView
-        mapView.latitude = 37.4222864409138
-        mapView.longitude = 126.687581340746
-        return naverMapView
-    }()
+    let naverMapView = NMFNaverMapView()
     
     lazy var confirmView: PlaceSelectionConfirmView = {
         let view = PlaceSelectionConfirmView()
         view.handleTappedConfirmButton = {
-            print("tapped confirm button")
-            self.dataDelegate?.handlePlaceResult(place: self.currentPlace)
+            let result = PlaceLocationMDL(
+                city: self.currentPlace.city,
+                disctrict: self.currentPlace.district,
+                address1: self.currentPlace.roadNameAddress == "" ? self.currentPlace.lotNumberAddress : self.currentPlace.roadNameAddress,
+                address2: self.confirmView.addressTextField.text ?? "",
+                latitude: String(self.currentPlace.lat),
+                longitude: String(self.currentPlace.lon))
+            self.dataDelegate?.handlePlaceResult(place: result)
+            print("result: ", result)
             self.dismiss(animated: true)
         }
         return view
     }()
     
-    
-    
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        viewState = .idle
         LocationService.shared.start()
         configureAccountVC()
         render()
         confirmView.configureAddressTextfieldDelegate(self)
-//        naverMapView.mapView.addCameraDelegate(delegate: self)
+        naverMapView.mapView.addCameraDelegate(delegate: self)
+        naverMapView.showCompass = true
+        naverMapView.showZoomControls = true
+        naverMapView.mapView.latitude = 37.4222864409138
+        naverMapView.mapView.longitude = 126.687581340746
         naverMapView.mapView.positionMode = .normal
         naverMapView.showLocationButton = true
         addKeyboardNotification()
@@ -293,7 +293,7 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView, searchTextField, tipView, tableView, naverMapView, probee, confirmView].forEach {
+        [headerView, searchTextField, tipView, searchFailView, tableView, naverMapView, probee, confirmView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -316,13 +316,18 @@ class PlaceSelectionVC: UIViewController {
             tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
+            searchFailView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
+            searchFailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchFailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchFailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
             naverMapView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
             naverMapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             naverMapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             naverMapView.bottomAnchor.constraint(equalTo: confirmView.topAnchor),
             
-            probee.widthAnchor.constraint(equalToConstant: 40),
-            probee.heightAnchor.constraint(equalToConstant: 40),
+            probee.widthAnchor.constraint(equalToConstant: 256),
+            probee.heightAnchor.constraint(equalToConstant: 89),
             probee.centerXAnchor.constraint(equalTo: naverMapView.centerXAnchor),
             probee.centerYAnchor.constraint(equalTo: naverMapView.centerYAnchor),
             
