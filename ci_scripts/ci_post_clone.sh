@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Debug: Check current build number
-echo "Current build number: $(CI_BUILD_NUMBER)"
+echo "Current build number: $CI_BUILD_NUMBER"
 xcrun agvtool what-version
 
 # Cocoapods
