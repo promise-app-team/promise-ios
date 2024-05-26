@@ -1,9 +1,7 @@
 #!/bin/sh
 
-# Debug: Check current build number
-echo "CI_PROJECT_FILE_PATH: $CI_PROJECT_FILE_PATH"
-echo "CI_PRIMARY_REPOSITORY_PATH: $CI_PRIMARY_REPOSITORY_PATH"
-echo "CI_WORKSPACE_PATH: $CI_WORKSPACE_PATH"
+# Navigate repository path
+cd $CI_PRIMARY_REPOSITORY_PATH
 xcrun agvtool what-version
 
 # Cocoapods
@@ -15,7 +13,6 @@ pod install
 echo "Setting defaults for OpenAPIGenerator..."
 set -euo pipefail
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
-
 
 
 ## Automatically increase build number
