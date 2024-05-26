@@ -52,6 +52,7 @@
 		D4E0D3332B5B542E00C9AFC7 /* AttendeeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */; };
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
+		D4E91B6F2C02E58E00F53B06 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D4E91B6E2C02E58E00F53B06 /* Starscream */; };
 		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */; };
 		E707DBB22BEF5433002D13DB /* PlaceSelectionSearchFailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */; };
@@ -347,6 +348,7 @@
 				FCB991772A5B049200B82924 /* KakaoSDKCommon in Frameworks */,
 				FCB991752A5B049200B82924 /* KakaoSDKAuth in Frameworks */,
 				FC4A7AB92A6448790055FE4F /* GoogleSignIn in Frameworks */,
+				D4E91B6F2C02E58E00F53B06 /* Starscream in Frameworks */,
 				07E99E98772ED271504F19DF /* Pods_Promise.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -988,6 +990,7 @@
 				FCD552722ADC271F00C6869A /* Lottie */,
 				FCD160872B08742A0093FD30 /* SkeletonView */,
 				D4312FE42BC80B4A0072F389 /* SwiftJWT */,
+				D4E91B6E2C02E58E00F53B06 /* Starscream */,
 			);
 			productName = Promise;
 			productReference = FC5974062A24D38700A642D7 /* Promise.app */;
@@ -1075,6 +1078,7 @@
 				FCD552712ADC271F00C6869A /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				FCD160862B08742A0093FD30 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				D4E91B6C2C02E44A00F53B06 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
 			productRefGroup = FC5974072A24D38700A642D7 /* Products */;
 			projectDirPath = "";
@@ -2038,6 +2042,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		D4E91B6C2C02E44A00F53B06 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
 		FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -2117,6 +2129,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
+		};
+		D4E91B6E2C02E58E00F53B06 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4E91B6C2C02E44A00F53B06 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
 		};
 		FC4A7AB82A6448790055FE4F /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
