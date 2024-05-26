@@ -53,6 +53,7 @@
 		D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */; };
 		D4E0D3382B5B5EA600C9AFC7 /* UserDefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */; };
 		D4E91B6F2C02E58E00F53B06 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D4E91B6E2C02E58E00F53B06 /* Starscream */; };
+		D4E91B7C2C035E9900F53B06 /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = D4E91B7B2C035E9900F53B06 /* openapi.json */; };
 		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */; };
 		E707DBB22BEF5433002D13DB /* PlaceSelectionSearchFailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */; };
@@ -226,6 +227,7 @@
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
 		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
 		D4E91B772C02F1AF00F53B06 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		D4E91B7B2C035E9900F53B06 /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
 		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
 		D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewService.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
@@ -713,6 +715,7 @@
 				FCE4F73F2A7ABD1B0077F484 /* LaunchScreen.storyboard */,
 				FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */,
 				FC5903282A76A76A00778305 /* swiftgen.yml */,
+				D4E91B7B2C035E9900F53B06 /* openapi.json */,
 				FC5903292A76A76A00778305 /* openapi-generator-config.yml */,
 			);
 			path = Promise;
@@ -1114,6 +1117,7 @@
 				FAD2BFD22A6AF661009E6461 /* Pretendard-Black.otf in Resources */,
 				FC8924882ADEB3DE0027F601 /* map.json in Resources */,
 				FAD2BFD02A6AF661009E6461 /* Pretendard-Regular.otf in Resources */,
+				D4E91B7C2C035E9900F53B06 /* openapi.json in Resources */,
 				FAD2BFCE2A6AF661009E6461 /* Pretendard-ExtraBold.otf in Resources */,
 				FAD2BFD12A6AF661009E6461 /* Pretendard-SemiBold.otf in Resources */,
 				4A8D376F2A66D338002D63FF /* logo.json in Resources */,
