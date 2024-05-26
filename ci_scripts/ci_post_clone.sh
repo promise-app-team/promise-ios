@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Navigate to the project directory
-cd $CI_WORKSPACE
-
 # Cocoapods
 echo "Installing Cocoapods..."
 brew install cocoapods
