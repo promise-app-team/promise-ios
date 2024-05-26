@@ -3,6 +3,17 @@
 # Navigate to the project directory
 cd $CI_WORKSPACE
 
+# Debug: Print current directory
+echo "Current directory: $(pwd)"
+
+# Check if the project file exists
+if ls *.xcodeproj 1> /dev/null 2>&1 || ls *.xcworkspace 1> /dev/null 2>&1; then
+  echo "Project file found"
+else
+  echo "No Xcode project files in this directory"
+  exit 1
+fi
+
 # Cocoapods
 echo "Installing Cocoapods..."
 brew install cocoapods
