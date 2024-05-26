@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Navigate to the project directory
+cd $CI_WORKSPACE
+
 # Cocoapods
 echo "Installing Cocoapods..."
 brew install cocoapods
@@ -16,7 +19,7 @@ xcrun agvtool what-version
 
 # Automatically increase build number
 echo "Increasing build number..."
-/usr/bin/xcrun agvtool next-version -all
+xcrun agvtool next-version -all
 
 # Debug: Check new build number
 echo "New build number:"
