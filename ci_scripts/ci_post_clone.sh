@@ -1,18 +1,22 @@
 #!/bin/sh
 
-# Navigate to the project directory
-cd $CI_WORKSPACE
+# Navigate to the workspace directory
+cd $CI_PRIMARY_REPOSITORY_PATH
 
 # Debug: Print current directory
 echo "Current directory: $(pwd)"
 
-# Check if the project file exists
-if ls *.xcodeproj 1> /dev/null 2>&1 || ls *.xcworkspace 1> /dev/null 2>&1; then
-  echo "Project file found"
+# Check if the project file exists and navigate to it
+if [ -d "$CI_PROJECT_FILE_PATH" ]; then
+  echo "Project file found: $CI_PROJECT_FILE_PATH"
+  cd "$CI_PROJECT_FILE_PATH"
 else
   echo "No Xcode project files in this directory"
   exit 1
 fi
+
+# Debug: Print current directory again
+echo "Now in project directory: $(pwd)"
 
 # Cocoapods
 echo "Installing Cocoapods..."
