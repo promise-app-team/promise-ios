@@ -1,20 +1,23 @@
 #!/bin/sh
 
-#  ci_post_clone.sh
-#  Promise
-#
-#  Created by kwh on 5/26/24.
-#  
-
-#!/usr/bin/env bash
-
 # Cocoapods
+echo "Installing Cocoapods..."
 brew install cocoapods
 pod install
 
 # OpenAPIGenerator
+echo "Setting defaults for OpenAPIGenerator..."
 set -euo pipefail
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
-# Automatically increase build number (Special new build number setting: xcrun agvtool new-version -all 1)
-xcrun agvtool next-version -all
+# Debug: Check current build number
+echo "Current build number:"
+xcrun agvtool what-version
+
+# Automatically increase build number
+echo "Increasing build number..."
+/usr/bin/xcrun agvtool next-version -all
+
+# Debug: Check new build number
+echo "New build number:"
+xcrun agvtool what-version
