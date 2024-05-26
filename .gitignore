@@ -91,4 +91,4 @@ iOSInjectionProject/
 Pods
 
 **/.DS_Store
-**/openapi.json
+# **/openapi.json
