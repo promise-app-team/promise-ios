@@ -100,7 +100,6 @@
 		FC516E032A6D108400709F1E /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = FC516E022A6D108400709F1E /* JWTDecode */; };
 		FC59032B2A76A76A00778305 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = FC5903282A76A76A00778305 /* swiftgen.yml */; };
 		FC59032C2A76A76A00778305 /* openapi-generator-config.yml in Resources */ = {isa = PBXBuildFile; fileRef = FC5903292A76A76A00778305 /* openapi-generator-config.yml */; };
-		FC59032D2A76A76A00778305 /* openapi.json in Resources */ = {isa = PBXBuildFile; fileRef = FC59032A2A76A76A00778305 /* openapi.json */; };
 		FC59033E2A76BA1400778305 /* XCImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59033C2A76BA1400778305 /* XCImages.swift */; };
 		FC59033F2A76BA1400778305 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC59033D2A76BA1400778305 /* Strings.swift */; };
 		FC5903492A76BE2900778305 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5903482A76BE2900778305 /* String.swift */; };
@@ -278,7 +277,6 @@
 		FC4A7A962A616F060055FE4F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		FC5903282A76A76A00778305 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		FC5903292A76A76A00778305 /* openapi-generator-config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = "openapi-generator-config.yml"; sourceTree = "<group>"; };
-		FC59032A2A76A76A00778305 /* openapi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = openapi.json; sourceTree = "<group>"; };
 		FC59033C2A76BA1400778305 /* XCImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCImages.swift; sourceTree = "<group>"; };
 		FC59033D2A76BA1400778305 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		FC5903482A76BE2900778305 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -715,7 +713,6 @@
 				FCE4F73F2A7ABD1B0077F484 /* LaunchScreen.storyboard */,
 				FC1FBE822A5DAD7200C12CBC /* Promise.entitlements */,
 				FC5903282A76A76A00778305 /* swiftgen.yml */,
-				FC59032A2A76A76A00778305 /* openapi.json */,
 				FC5903292A76A76A00778305 /* openapi-generator-config.yml */,
 			);
 			path = Promise;
@@ -1107,7 +1104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC41B2722A782A2900C1C592 /* XCImages.xcassets in Resources */,
-				FC59032D2A76A76A00778305 /* openapi.json in Resources */,
 				FC59034F2A76D08300778305 /* Localizable.strings in Resources */,
 				FC59032C2A76A76A00778305 /* openapi-generator-config.yml in Resources */,
 				FC59032B2A76A76A00778305 /* swiftgen.yml in Resources */,
