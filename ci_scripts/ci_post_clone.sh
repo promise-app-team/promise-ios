@@ -2,7 +2,11 @@
 
 # Navigate repository path
 cd $CI_PRIMARY_REPOSITORY_PATH
-xcrun agvtool what-version
+
+# Automatically increase build number
+echo "Increasing build number..."
+NEW_BUILD_NUMBER=$(($CI_BUILD_NUMBER + 1))
+xcrun agvtool new-version -all $NEW_BUILD_NUMBER
 
 # Cocoapods
 echo "Installing Cocoapods..."
@@ -15,10 +19,4 @@ set -euo pipefail
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
 
-## Automatically increase build number
-#echo "Increasing build number..."
-#xcrun agvtool next-version -all
-#
-## Debug: Check new build number
-#echo "New build number:"
-#xcrun agvtool what-version
+
