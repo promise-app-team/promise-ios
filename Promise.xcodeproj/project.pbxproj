@@ -55,7 +55,6 @@
 		D4EE01F02B8747AF0068DAC4 /* UserStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */; };
 		D4F32BFA2BE4EAB300DDBFC3 /* WebviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */; };
 		E707DBB22BEF5433002D13DB /* PlaceSelectionSearchFailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E707DBB12BEF5433002D13DB /* PlaceSelectionSearchFailView.swift */; };
-		E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = E7B91DD22A78C73400426D81 /* SocketIO */; };
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
 		E7C12CB62BC59A1C003FEF8C /* PlaceSelectionVC+CameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */; };
@@ -338,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCEAAB562A59DBF00048192E /* OpenAPIRuntime in Frameworks */,
-				E7B91DD32A78C73400426D81 /* SocketIO in Frameworks */,
 				FCEAAB5A2A59DC180048192E /* OpenAPIURLSession in Frameworks */,
 				FC516E032A6D108400709F1E /* JWTDecode in Frameworks */,
 				D4312FE52BC80B4A0072F389 /* SwiftJWT in Frameworks */,
@@ -982,7 +980,6 @@
 			packageProductDependencies = (
 				FCEAAB552A59DBF00048192E /* OpenAPIRuntime */,
 				FCEAAB592A59DC180048192E /* OpenAPIURLSession */,
-				E7B91DD22A78C73400426D81 /* SocketIO */,
 				FCB991742A5B049200B82924 /* KakaoSDKAuth */,
 				FCB991762A5B049200B82924 /* KakaoSDKCommon */,
 				FCB991782A5B049200B82924 /* KakaoSDKUser */,
@@ -1072,7 +1069,6 @@
 				FCEAAB542A59DBF00048192E /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				FCEAAB572A59DC040048192E /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
 				FCEAAB582A59DC180048192E /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
-				E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 				FCB991732A5B049200B82924 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				FC516E012A6D108400709F1E /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
@@ -2042,14 +2038,6 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		FC4A7AB72A6448790055FE4F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -2129,11 +2117,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4312FE32BC80B4A0072F389 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
-		};
-		E7B91DD22A78C73400426D81 /* SocketIO */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E7B91DD12A78C73300426D81 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
-			productName = SocketIO;
 		};
 		FC4A7AB82A6448790055FE4F /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
