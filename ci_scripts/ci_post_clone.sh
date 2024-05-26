@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # Debug: Check current build number
-echo "Current build number: $CI_BUILD_NUMBER"
+echo "CI_PROJECT_FILE_PATH: $CI_PROJECT_FILE_PATH"
+echo "CI_PRIMARY_REPOSITORY_PATH: $CI_PRIMARY_REPOSITORY_PATH"
+echo "CI_WORKSPACE_PATH: $CI_WORKSPACE_PATH"
 xcrun agvtool what-version
 
 # Cocoapods
