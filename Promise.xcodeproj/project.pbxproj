@@ -670,7 +670,6 @@
 		FC5973FD2A24D38700A642D7 = {
 			isa = PBXGroup;
 			children = (
-				D4E91B762C02F14000F53B06 /* ci_scripts */,
 				FC5974082A24D38700A642D7 /* Promise */,
 				FC59741F2A24D38800A642D7 /* PromiseTests */,
 				FC5974292A24D38800A642D7 /* PromiseUITests */,
@@ -678,6 +677,7 @@
 				FC5974072A24D38700A642D7 /* Products */,
 				277CF968CAAFEBDB11FA930A /* Pods */,
 				E48870F70E86DAD5E82295C0 /* Frameworks */,
+				D4E91B762C02F14000F53B06 /* ci_scripts */,
 			);
 			sourceTree = "<group>";
 		};
