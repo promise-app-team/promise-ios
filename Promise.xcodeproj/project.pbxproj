@@ -226,6 +226,7 @@
 		D4E0D3322B5B542E00C9AFC7 /* AttendeeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeConstants.swift; sourceTree = "<group>"; };
 		D4E0D3352B5B5B2A00C9AFC7 /* UserConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConstants.swift; sourceTree = "<group>"; };
 		D4E0D3372B5B5EA600C9AFC7 /* UserDefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultConstants.swift; sourceTree = "<group>"; };
+		D4E91B772C02F1AF00F53B06 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		D4EE01EF2B8747AF0068DAC4 /* UserStatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusService.swift; sourceTree = "<group>"; };
 		D4F32BF92BE4EAB300DDBFC3 /* WebviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewService.swift; sourceTree = "<group>"; };
 		D4FC81C92B455836000C18CC /* PromiseDebug (development).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "PromiseDebug (development).entitlements"; sourceTree = "<group>"; };
@@ -512,6 +513,14 @@
 			path = MainPromiseListEmptyView;
 			sourceTree = "<group>";
 		};
+		D4E91B762C02F14000F53B06 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				D4E91B772C02F1AF00F53B06 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		E48870F70E86DAD5E82295C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -663,6 +672,7 @@
 		FC5973FD2A24D38700A642D7 = {
 			isa = PBXGroup;
 			children = (
+				D4E91B762C02F14000F53B06 /* ci_scripts */,
 				FC5974082A24D38700A642D7 /* Promise */,
 				FC59741F2A24D38800A642D7 /* PromiseTests */,
 				FC5974292A24D38800A642D7 /* PromiseUITests */,
