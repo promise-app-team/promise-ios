@@ -113,6 +113,12 @@
 "CreatePromise.ShareLocationEnd.itemSuffix" = "후까지";
 "CreatePromise.ShareLocationEnd.max" = "약속 날짜 자정까지";
 
+"CreatePromise.CreateError.title" = "약속 생성 실패";
+"CreatePromise.CreateError.message" = "약속 정보를 확인해주세요.";
+
+"CreatePromise.EditError.title" = "약속 수정 실패";
+"CreatePromise.EditError.message" = "수정할 약속 정보를 확인해주세요.";
+
 "CompletedCreatePromise.headerTitle" = "약속 생성 완료";
 "CompletedCreatePromise.mainTitle" = "약속이 생성되었어요\n이제 참여자를 초대해 볼까요?";
 "CompletedCreatePromise.mainDescription" = "생성된 약속은 메인화면과 약속 상세페이지에 있는\n공유 아이콘으로 초대할 수 있어요";

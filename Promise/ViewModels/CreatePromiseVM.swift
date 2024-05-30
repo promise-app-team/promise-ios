@@ -558,8 +558,13 @@ class CreatePromiseVM: NSObject {
                 completion(createdPromise)
             case .failure(let errorType):
                 switch errorType {
-                case .badRequest:
-                    // TODO: 약속 생성 에러 핸들링
+                case .badRequest(let error):
+
+                    await self.currentVC?.showPopUp(
+                        title: L10n.CreatePromise.CreateError.title,
+                        message: error.errorResponse?.message ?? L10n.CreatePromise.CreateError.message
+                    )
+                    
                     break
                 default:
                     // Other Error(Network, badUrl ...)
@@ -588,8 +593,13 @@ class CreatePromiseVM: NSObject {
                 completion(createdPromise)
             case .failure(let errorType):
                 switch errorType {
-                case .badRequest:
-                    // TODO: 약속 업데이트 에러 핸들링
+                case .badRequest(let error):
+                    
+                    await self.currentVC?.showPopUp(
+                        title: L10n.CreatePromise.EditError.title,
+                        message: error.errorResponse?.message ?? L10n.CreatePromise.EditError.message
+                    )
+                    
                     break
                 default:
                     // Other Error(Network, badUrl ...)
@@ -637,11 +647,23 @@ class CreatePromiseVM: NSObject {
         
     }
     
-    func getTodayString() -> String {
+    func getCurrentDate() -> Date {
+        return Date()  // 현재 날짜와 시간을 반환
+    }
+
+    func getDateMinutesLater(minutes: Int) -> Date? {
         let date = Date()
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.minute = minutes
+        
+        // 현재 시간에 입력 받은 분을 추가
+        return calendar.date(byAdding: dateComponents, to: date)
+    }
+
+    func formatDateToString(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        
         return dateFormatter.string(from: date)
     }
     

@@ -91,11 +91,23 @@ internal enum L10n {
       /// 약속 생성
       internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Create.submitButtonTitle", fallback: "약속 생성")
     }
+    internal enum CreateError {
+      /// 약속 정보를 확인해주세요.
+      internal static let message = L10n.tr("Localizable", "CreatePromise.CreateError.message", fallback: "약속 정보를 확인해주세요.")
+      /// 약속 생성 실패
+      internal static let title = L10n.tr("Localizable", "CreatePromise.CreateError.title", fallback: "약속 생성 실패")
+    }
     internal enum Edit {
       /// 약속 수정
       internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.Edit.headerTitle", fallback: "약속 수정")
       /// 수정 확인
       internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Edit.submitButtonTitle", fallback: "수정 확인")
+    }
+    internal enum EditError {
+      /// 수정할 약속 정보를 확인해주세요.
+      internal static let message = L10n.tr("Localizable", "CreatePromise.EditError.message", fallback: "수정할 약속 정보를 확인해주세요.")
+      /// 약속 수정 실패
+      internal static let title = L10n.tr("Localizable", "CreatePromise.EditError.title", fallback: "약속 수정 실패")
     }
     internal enum Form {
       /// 약속 시간

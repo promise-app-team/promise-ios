@@ -10,6 +10,7 @@ import UIKit
 
 class FormDateView: UIView {
     var createPromiseVM: CreatePromiseVM
+    let minimumMinutesAllowed = 30
     
     private let label = {
         let label = UILabel()
@@ -66,8 +67,11 @@ class FormDateView: UIView {
         
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         
-        let placeholder = createPromiseVM.getTodayString()
-        label.text = placeholder
+        if let date = createPromiseVM.getDateMinutesLater(minutes: minimumMinutesAllowed) {
+            let placeholder = createPromiseVM.formatDateToString(date)
+            label.text = placeholder
+        }
+        
         label.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -110,18 +114,21 @@ class FormDateView: UIView {
         if let date = createPromiseVM.date {
             datePicker.date = date.originDate
         } else {
-            // MARK: 선택된 날짜가 없으면 현재 날짜로 지정
-            let currentDate = Date()
-            let initialDate = SelectionDate(originDate: currentDate)
             
-            createPromiseVM.onChangedDate(initialDate)
-            
-            // MARK: 현재 시간으로부터 20분 후 부터 설정 가능
-            datePicker.minimumDate = Calendar.current.date(
-                byAdding: .minute,
-                value: 20,
-                to: currentDate
-            )
+            // MARK: 선택된 날짜가 없으면 현재 날짜(기준 분 후)로 지정
+            if let initialDate = createPromiseVM.getDateMinutesLater(minutes: minimumMinutesAllowed) {
+                
+                let initialSelectedDate = SelectionDate(originDate: initialDate)
+                createPromiseVM.onChangedDate(initialSelectedDate)
+                
+                // MARK: 현재 시간으로부터 기준 분 후 부터 설정 가능
+                datePicker.minimumDate = Calendar.current.date(
+                    byAdding: .minute,
+                    value: minimumMinutesAllowed,
+                    to: createPromiseVM.getCurrentDate()
+                )
+                
+            }
         }
         
         KeyboardManager.shared.hideKeyboard()
