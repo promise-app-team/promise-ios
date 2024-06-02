@@ -229,7 +229,6 @@ class PlaceSelectionVC: UIViewController {
         tableView.delegate = self
         tableView.register(PlaceSelectionTableViewCell.self, forCellReuseIdentifier: "cell")
         
-        tableView.backgroundColor = .red
         return tableView
     }()
     
