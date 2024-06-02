@@ -243,6 +243,43 @@ class PlaceSelectionVC: UIViewController {
         return mapView
     }()
     
+    private lazy var focusMyLoactionButton = {
+        let imageView = UIImageView(image: Asset.focusMyLocation.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: adjustedValue(28, .width)),
+            imageView.heightAnchor.constraint(equalToConstant: adjustedValue(28, .height))
+        ])
+        
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: adjustedValue(44, .width)),
+            view.heightAnchor.constraint(equalToConstant: adjustedValue(44, .height))
+        ])
+        
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        view.backgroundColor = .white
+        view.layer.cornerRadius = adjustedValue(44, .height) / 2
+
+        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = 16
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapFocusMyLoaction))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        
+        return view
+    }()
+    
     
     lazy var confirmView: PlaceSelectionConfirmView = {
         let view = PlaceSelectionConfirmView()
@@ -293,6 +330,11 @@ class PlaceSelectionVC: UIViewController {
     
     @objc private func onTapKeyboardDismissBackdrop() {
         view.endEditing(true)
+    }
+    
+    @objc private func onTapFocusMyLoaction() {
+        let location = LocationService.shared.currentLocation
+        moveMap(to: location)
     }
     
     private func moveMap(to location: CLLocationCoordinate2D) {
@@ -414,6 +456,7 @@ class PlaceSelectionVC: UIViewController {
             viewState = .onSearch
         }
         
+        LocationService.shared.start()
         checkViewControllerPresentationStyle()
         confirmView.configureAddressTextfieldDelegate(self)
         listenKeyboardNotification()
@@ -421,14 +464,16 @@ class PlaceSelectionVC: UIViewController {
     }
     
     private func render() {
-        [headerView,
+        [
+            headerView,
          searchTextField,
          tipView,
          searchFailView,
          map,
-         keyboardDismissBackdrop,
+         focusMyLoactionButton,
          probee,
          tableView,
+         keyboardDismissBackdrop,
          confirmView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -465,6 +510,9 @@ class PlaceSelectionVC: UIViewController {
             map.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
             map.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             map.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            focusMyLoactionButton.bottomAnchor.constraint(equalTo: map.bottomAnchor, constant: -adjustedValue(15, .height)),
+            focusMyLoactionButton.trailingAnchor.constraint(equalTo: map.trailingAnchor, constant: -adjustedValue(10, .width)),
             
             probee.centerXAnchor.constraint(equalTo: map.centerXAnchor),
             probee.centerYAnchor.constraint(equalTo: map.centerYAnchor),
