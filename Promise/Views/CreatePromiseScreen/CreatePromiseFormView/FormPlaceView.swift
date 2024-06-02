@@ -56,7 +56,7 @@ class FormPlaceView: UIView {
         let stackView = UIStackView(arrangedSubviews: [selectPlaceButtonIcon, selectedPlace])
         
         stackView.axis = .horizontal
-        stackView.spacing = adjustedValue(5, .width)
+        stackView.spacing = adjustedValue(4, .width)
         stackView.alignment = .center
         
         stackView.isLayoutMarginsRelativeArrangement = true
