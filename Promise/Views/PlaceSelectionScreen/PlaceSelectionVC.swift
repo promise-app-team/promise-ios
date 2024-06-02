@@ -345,6 +345,7 @@ class PlaceSelectionVC: UIViewController {
         let target = NMGLatLng(lat: location.latitude, lng: location.longitude)
         let position = NMFCameraPosition(target, zoom: 17)
         let update = NMFCameraUpdate(position: position)
+        update.animation = .linear
         map.moveCamera(update)
     }
     
