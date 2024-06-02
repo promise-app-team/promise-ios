@@ -19,4 +19,5 @@ KAKAO_NATIVE_APP_KEY = 325babc84c1119a1bf72c318eefde3f5
 KAKAO_REST_APP_KEY = d957fe93f39254e70df345a09caaecf7
 GOOGLE_CLIENT_ID = 882948941624-cd2vl08k9k9ctbt7ghm0bboo3ji7kea3.apps.googleusercontent.com
 NAVER_CLIENT_ID = 85ykpv1z29
+NAVER_CLIENT_SECRET = zImVxRvaFtc2DzDWh1Wp4uImvx85nxrxBb8eU0M8
 KAKAO_LOCAL_SEARCH_API_URL = https:/$()/dapi.kakao.com/v2/local/search/category

@@ -8,9 +8,6 @@
 import Foundation
 import NMapsMap
 
-let clientId = "456s1eany5"
-let clientSecret = "EgPNmYhiYfutCDIy9nAgexPDlFBKamwg8p4us87E"
-
 // MARK: - NMFMapViewCameraDelegate
 
 extension PlaceSelectionVC: NMFMapViewCameraDelegate {
@@ -107,8 +104,8 @@ extension PlaceSelectionVC {
         
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "GET"
-        request.addValue(clientId, forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
-        request.addValue(clientSecret, forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
+        request.addValue(Config.naverClientId, forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
+        request.addValue(Config.naverClientSecret, forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
