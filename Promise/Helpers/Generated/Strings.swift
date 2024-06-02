@@ -314,12 +314,34 @@ internal enum L10n {
     internal enum Label {
       /// 없음
       internal static let empty = L10n.tr("Localizable", "PlaceSelection.Label.empty", fallback: "없음")
+      /// 주소 없음
+      internal static let emptyAddress = L10n.tr("Localizable", "PlaceSelection.Label.emptyAddress", fallback: "주소 없음")
       /// 장소명 없음
       internal static let emptyPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.emptyPlaceName", fallback: "장소명 없음")
+      /// 도로명
+      internal static let loadPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.loadPlaceName", fallback: "도로명")
+      /// 지번
+      internal static let streetPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.streetPlaceName", fallback: "지번")
     }
     internal enum SearchInput {
       /// 도로명, 지번, 건물명 검색
       internal static let placeholder = L10n.tr("Localizable", "PlaceSelection.SearchInput.placeholder", fallback: "도로명, 지번, 건물명 검색")
+    }
+    internal enum Tip {
+      /// 도로명 + 건물번호
+      internal static let description1 = L10n.tr("Localizable", "PlaceSelection.Tip.description1", fallback: "도로명 + 건물번호")
+      /// (예 : 프로미스로 58길)
+      internal static let description1Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description1Suffix", fallback: "(예 : 프로미스로 58길)")
+      /// 지역명 + 번지
+      internal static let description2 = L10n.tr("Localizable", "PlaceSelection.Tip.description2", fallback: "지역명 + 번지")
+      /// (예 : 프로미스동 58)
+      internal static let description2Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description2Suffix", fallback: "(예 : 프로미스동 58)")
+      /// 건물명, 아파트명
+      internal static let description3 = L10n.tr("Localizable", "PlaceSelection.Tip.description3", fallback: "건물명, 아파트명")
+      /// (예 : 프로미스 오피스텔 508동)
+      internal static let description3Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description3Suffix", fallback: "(예 : 프로미스 오피스텔 508동)")
+      /// 주소 검색 Tip
+      internal static let title = L10n.tr("Localizable", "PlaceSelection.Tip.title", fallback: "주소 검색 Tip")
     }
   }
   internal enum PromiseStatusWithAllAttendeesView {

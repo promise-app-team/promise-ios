@@ -21,7 +21,7 @@ extension PlaceSelectionVC: UITableViewDataSource {
         }
         let document = place?.documents?[indexPath.row]
         cell.updateNameLabel(newText: document?.placeName ?? "")
-        cell.updateAddressLabel(newText: document?.roadAddressName ?? "주소 없음")
+        cell.updateAddressLabel(newText: document?.roadAddressName ?? L10n.PlaceSelection.Label.emptyAddress)
         return cell
     }
 }
@@ -51,9 +51,9 @@ extension PlaceSelectionVC: UITableViewDelegate {
         map.zoomLevel = 17
         
         let marker = NMFMarker()
-        marker.iconImage = NMFOverlayImage(name: "ProbeeMap")
-        marker.width = 40
-        marker.height = 40
+        marker.iconImage = NMFOverlayImage(name: Asset.probeeMap.name)
+        marker.width = adjustedValue(40, .width)
+        marker.height = adjustedValue(40, .height)
         marker.position = position
         self.marker = marker
         
@@ -71,7 +71,7 @@ extension PlaceSelectionVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 86
+        return adjustedValue(86, .height)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

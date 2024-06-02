@@ -76,6 +76,7 @@ class PlaceSelectionVC: UIViewController {
                     self.map.isHidden = false
                     self.confirmView.isHidden = false
                     self.probee.isHidden = false
+                    self.focusMyLoactionButton.isHidden = false
                 }
                 
                 let location = LocationService.shared.currentLocation
@@ -93,6 +94,7 @@ class PlaceSelectionVC: UIViewController {
                     self.map.isHidden = true
                     self.confirmView.isHidden = true
                     self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
                 }
                 let _ = self.searchTextField.becomeFirstResponder()
                 marker = nil
@@ -108,6 +110,7 @@ class PlaceSelectionVC: UIViewController {
                     self.map.isHidden = true
                     self.confirmView.isHidden = true
                     self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
                 }
                 
             case .searchResult:
@@ -121,6 +124,7 @@ class PlaceSelectionVC: UIViewController {
                     self.map.isHidden = true
                     self.confirmView.isHidden = true
                     self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
                 }
                 
             case .searchMap:
@@ -135,6 +139,7 @@ class PlaceSelectionVC: UIViewController {
                     self.map.isHidden = false
                     self.confirmView.isHidden = false
                     self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
                 }
                 
             }

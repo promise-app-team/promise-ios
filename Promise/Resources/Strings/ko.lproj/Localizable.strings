@@ -76,8 +76,20 @@
 "PlaceSelection.SearchInput.placeholder" = "도로명, 지번, 건물명 검색";
 "PlaceSelection.DetailAddressInput.placeholder" = "ex) 미팅룸 304호";
 "PlaceSelection.DetailAddressInput.label" = "상세 주소";
+"PlaceSelection.Label.emptyAddress" = "주소 없음";
 "PlaceSelection.Label.emptyPlaceName" = "장소명 없음";
 "PlaceSelection.Label.empty" = "없음";
+"PlaceSelection.Label.loadPlaceName" = "도로명";
+"PlaceSelection.Label.streetPlaceName" = "지번";
+"PlaceSelection.Tip.title" = "주소 검색 Tip";
+
+"PlaceSelection.Tip.description1" = "도로명 + 건물번호";
+"PlaceSelection.Tip.description1Suffix" = "(예 : 프로미스로 58길)";
+"PlaceSelection.Tip.description2" = "지역명 + 번지";
+"PlaceSelection.Tip.description2Suffix" = "(예 : 프로미스동 58)";
+"PlaceSelection.Tip.description3" = "건물명, 아파트명";
+"PlaceSelection.Tip.description3Suffix" = "(예 : 프로미스 오피스텔 508동)";
+
 
 
 // MARK: DynamicDestinationSelectionScreen

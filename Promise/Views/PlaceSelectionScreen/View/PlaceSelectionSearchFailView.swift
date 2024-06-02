@@ -36,8 +36,8 @@ final class PlaceSelectionSearchFailView: UIView {
         probee.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             probee.centerXAnchor.constraint(equalTo: centerXAnchor),
-            probee.topAnchor.constraint(equalTo: topAnchor, constant: 200),
-            probee.widthAnchor.constraint(equalToConstant: 225),
+            probee.topAnchor.constraint(equalTo: topAnchor, constant: adjustedValue(200, .height)),
+            probee.widthAnchor.constraint(equalToConstant: adjustedValue(225, .width)),
         ])
     }
 }
