@@ -18,7 +18,7 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
     ) {
         guard viewState == .idle else { return }
         debouncer.debounce(interval: 0.5) {
-            let position = self.naverMapView.mapView.cameraPosition // 지도의 가운데 좌표
+            let position = self.map.cameraPosition // 지도의 가운데 좌표
             self.reverseGeocode(from: position) { (data) in
                 var city = ""
                 var district = ""
@@ -32,7 +32,7 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                                                        lotNumberAddress: lotNumber,
                                                        roadNameAddress: roadName,
                                                        lat: position.target.lat,
-                                                       lon: position.target.lng)
+                                                       lng: position.target.lng)
                     DispatchQueue.main.async {
                         self.confirmView.confirmButton.isDisabled = true
                     }
@@ -68,6 +68,7 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                     let address = self.confirmView.addressTextField.text ?? ""
                     let latitude = position.target.lat.truncated(toPlaces: 8)
                     let longitude = position.target.lng.truncated(toPlaces: 8)
+                    
                     self.currentPlace = PlaceSelection(
                         city: city,
                         district: district,
@@ -76,7 +77,7 @@ extension PlaceSelectionVC: NMFMapViewCameraDelegate {
                         roadNameAddress: roadName,
                         userInputAddress: address,
                         lat: latitude,
-                        lon: longitude)
+                        lng: longitude)
                 }
             }
         }

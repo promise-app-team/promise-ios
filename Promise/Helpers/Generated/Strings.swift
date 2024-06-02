@@ -54,6 +54,8 @@ internal enum L10n {
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
     /// 거절
     internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
+    /// 완료
+    internal static let success = L10n.tr("Localizable", "Common.success", fallback: "완료")
     internal enum MoreMenu {
       /// 약속 위임
       internal static let delegatePromise = L10n.tr("Localizable", "Common.MoreMenu.delegatePromise", fallback: "약속 위임")
@@ -294,6 +296,30 @@ internal enum L10n {
       internal static let dateTimeQuickOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeQuickOrder", fallback: "약속시간 빠른순")
       /// 정렬 선택
       internal static let selectOrder = L10n.tr("Localizable", "Main.SortPromiseList.selectOrder", fallback: "정렬 선택")
+    }
+  }
+  internal enum PlaceSelection {
+    internal enum DetailAddressInput {
+      /// 상세 주소
+      internal static let label = L10n.tr("Localizable", "PlaceSelection.DetailAddressInput.label", fallback: "상세 주소")
+      /// ex) 미팅룸 304호
+      internal static let placeholder = L10n.tr("Localizable", "PlaceSelection.DetailAddressInput.placeholder", fallback: "ex) 미팅룸 304호")
+    }
+    internal enum HeaderTitle {
+      /// 출발장소 설정
+      internal static let departure = L10n.tr("Localizable", "PlaceSelection.HeaderTitle.departure", fallback: "출발장소 설정")
+      /// 약속장소 설정
+      internal static let destination = L10n.tr("Localizable", "PlaceSelection.HeaderTitle.destination", fallback: "약속장소 설정")
+    }
+    internal enum Label {
+      /// 없음
+      internal static let empty = L10n.tr("Localizable", "PlaceSelection.Label.empty", fallback: "없음")
+      /// 장소명 없음
+      internal static let emptyPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.emptyPlaceName", fallback: "장소명 없음")
+    }
+    internal enum SearchInput {
+      /// 도로명, 지번, 건물명 검색
+      internal static let placeholder = L10n.tr("Localizable", "PlaceSelection.SearchInput.placeholder", fallback: "도로명, 지번, 건물명 검색")
     }
   }
   internal enum PromiseStatusWithAllAttendeesView {

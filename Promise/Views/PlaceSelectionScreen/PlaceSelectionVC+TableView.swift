@@ -34,9 +34,9 @@ extension PlaceSelectionVC: UITableViewDelegate {
         
         guard
             let latString = place?.documents?[indexPath.row].y,
-            let lonString = place?.documents?[indexPath.row].x,
+            let lngString = place?.documents?[indexPath.row].x,
             let lat = Double(latString),
-            let lon = Double(lonString)
+            let lng = Double(lngString)
         else {
             print("didSelectRowAt: fail to transfer")
             
@@ -45,10 +45,10 @@ extension PlaceSelectionVC: UITableViewDelegate {
             return
         }
         
-        let position = NMGLatLng(lat: lat, lng: lon)
+        let position = NMGLatLng(lat: lat, lng: lng)
         let cameraUpdate = NMFCameraUpdate(scrollTo: position)
-        naverMapView.mapView.moveCamera(cameraUpdate)
-        naverMapView.mapView.zoomLevel = 17
+        map.moveCamera(cameraUpdate)
+        map.zoomLevel = 17
         
         let marker = NMFMarker()
         marker.iconImage = NMFOverlayImage(name: "ProbeeMap")
@@ -64,7 +64,7 @@ extension PlaceSelectionVC: UITableViewDelegate {
                                    lotNumberAddress: lotNumberAddress,
                                    roadNameAddress: roadNameAddress,
                                    lat: lat,
-                                   lon: lon)
+                                   lng: lng)
         currentPlace = place
         
         viewState = .searchMap

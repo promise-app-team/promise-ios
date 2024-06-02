@@ -277,8 +277,8 @@ class FormPlaceView: UIView {
     @objc private func onTapSelectPlaceButton() {
         switch createPromiseVM.placeType {
         case .STATIC:
-            let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: true)
-            placeSelectionVC.delegate = self
+            let placeSelectionVC = PlaceSelectionVC(mode: .destination)
+            placeSelectionVC.dataDelegate = self
             createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
         case .DYNAMIC:
             guard let state = createPromiseVM.dynamicDestinationState else { return }
@@ -595,8 +595,10 @@ extension FormPlaceView: FormTabMenuViewDelegate {
     }
 }
 
-extension FormPlaceView: PlaceSelectionDelegate {
-    
+extension FormPlaceView: PlaceSelectionDataDelegate {
+    func handlePlaceResult(place: PlaceLocationMDL) {
+        print("place: ", place)
+    }
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {

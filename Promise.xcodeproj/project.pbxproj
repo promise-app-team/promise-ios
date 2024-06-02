@@ -60,7 +60,6 @@
 		E7B91DD92A78D47100426D81 /* WebsocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91DD82A78D47100426D81 /* WebsocketService.swift */; };
 		E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B91E0A2A7D156400426D81 /* LocationService.swift */; };
 		E7C12CB62BC59A1C003FEF8C /* PlaceSelectionVC+CameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */; };
-		E7C12CB92BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */; };
 		E7C12CBB2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */; };
 		E7D586D02BEF034C0027790B /* PlaceLocationMDL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */; };
 		FA0A29672A66F6D0004F44A5 /* CommonFloatingContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */; };
@@ -240,7 +239,6 @@
 		E7B91DD82A78D47100426D81 /* WebsocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketService.swift; sourceTree = "<group>"; };
 		E7B91E0A2A7D156400426D81 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+CameraDelegate.swift"; sourceTree = "<group>"; };
-		E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceSelectionVC+HeaderViewDelegate.swift"; sourceTree = "<group>"; };
 		E7C12CBA2BC8CD83003FEF8C /* ReverseGeocodingMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeocodingMDL.swift; sourceTree = "<group>"; };
 		E7D586CF2BEF034C0027790B /* PlaceLocationMDL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceLocationMDL.swift; sourceTree = "<group>"; };
 		FA0A29662A66F6D0004F44A5 /* CommonFloatingContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFloatingContentVC.swift; sourceTree = "<group>"; };
@@ -847,7 +845,6 @@
 				FCB3AD5E2AC2E78D00219A25 /* PlaceSelectionVC.swift */,
 				2BBA01C32B4FA37D00B1039A /* PlaceSelectionVC+TextField.swift */,
 				2B7DE4642B4D277000127DAA /* PlaceSelectionVC+TableView.swift */,
-				E7C12CB82BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift */,
 				E7C12CB52BC59A1B003FEF8C /* PlaceSelectionVC+CameraDelegate.swift */,
 				2B9895322B638B24006AE27E /* Components */,
 				2BBA01982B4E8ABA00B1039A /* View */,
@@ -1315,7 +1312,6 @@
 				D4E0D3362B5B5B2A00C9AFC7 /* UserConstants.swift in Sources */,
 				FC59740E2A24D38700A642D7 /* MainVC.swift in Sources */,
 				E7B91E0B2A7D156400426D81 /* LocationService.swift in Sources */,
-				E7C12CB92BC59A8B003FEF8C /* PlaceSelectionVC+HeaderViewDelegate.swift in Sources */,
 				2B7DE45E2B4D21BA00127DAA /* PlaceSelectionTipStackView.swift in Sources */,
 				2B7DE43B2B4CE52100127DAA /* PlaceSelectionTipView.swift in Sources */,
 				D44E58592BEE5516003FA7BB /* AddressHelper.swift in Sources */,

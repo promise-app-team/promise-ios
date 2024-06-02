@@ -12,7 +12,7 @@ final class PlaceSelectionSearchFailView: UIView {
     // MARK: Private Property
     
     private let probee: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "ProbeeNoResult"))
+        let imageView = UIImageView(image: Asset.probeeNoResult.image)
         return imageView
     }()
     

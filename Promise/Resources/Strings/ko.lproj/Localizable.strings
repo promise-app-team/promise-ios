@@ -15,6 +15,7 @@
 "Common.hour" = "시간";
 "Common.minute" = "분";
 "Common.confirm" = "확인";
+"Common.success" = "완료";
 "Common.cancel" = "취소";
 "Common.attend" = "참여";
 "Common.refuse" = "거절";
@@ -68,6 +69,16 @@
 "UpdatePromise.DynamicDestination.Guidance.staging" = "선택한 중간 장소를 약속 장소로 설정할 수 있어요";
 "UpdatePromise.DynamicDestination.selectionButtonTitle" = "중간 장소 변경";
 "UpdatePromise.DynamicDestination.Configurable.placeholder" = "중간장소를 선택해 주세요";
+
+// MARK: PlaceSelectionScreen
+"PlaceSelection.HeaderTitle.destination" = "약속장소 설정";
+"PlaceSelection.HeaderTitle.departure" = "출발장소 설정";
+"PlaceSelection.SearchInput.placeholder" = "도로명, 지번, 건물명 검색";
+"PlaceSelection.DetailAddressInput.placeholder" = "ex) 미팅룸 304호";
+"PlaceSelection.DetailAddressInput.label" = "상세 주소";
+"PlaceSelection.Label.emptyPlaceName" = "장소명 없음";
+"PlaceSelection.Label.empty" = "없음";
+
 
 // MARK: DynamicDestinationSelectionScreen
 "DynamicDestinationSelection.headerTitle" = "중간 장소 선택";
