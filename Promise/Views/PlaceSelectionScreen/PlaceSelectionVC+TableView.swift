@@ -60,14 +60,31 @@ extension PlaceSelectionVC: UITableViewDelegate {
         let placeName = place?.documents?[indexPath.row].placeName ?? ""
         let roadNameAddress = place?.documents?[indexPath.row].roadAddressName ?? ""
         let lotNumberAddress = place?.documents?[indexPath.row].addressName ?? ""
-        let place = PlaceSelection(buildingName: placeName, 
-                                   lotNumberAddress: lotNumberAddress,
-                                   roadNameAddress: roadNameAddress,
-                                   lat: lat,
-                                   lng: lng)
-        currentPlace = place
         
-        viewState = .searchMap
+        let address = roadNameAddress.isEmpty
+        ? lotNumberAddress.isEmpty
+        ? placeName
+        : lotNumberAddress
+        : roadNameAddress
+        
+        let (city, district, address1) = AddressHelper().parseAddress(address)
+        if let city, let district, let address1 {
+            
+            let place = PlaceSelection(
+                city: city,
+                district: district,
+                address1: address1 + " " + placeName,
+                buildingName: placeName,
+                lotNumberAddress: lotNumberAddress,
+                roadNameAddress: roadNameAddress,
+                lat: lat,
+                lng: lng
+            )
+            
+            currentPlace = place
+            viewState = .searchMap
+        }
+    
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

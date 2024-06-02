@@ -22,6 +22,7 @@ protocol PlaceSelectionDataDelegate: AnyObject {
 struct PlaceSelection {
     var city: String = ""
     var district: String = ""
+    var address1: String = ""
     var buildingName: String = ""
     var lotNumberAddress: String = ""
     var roadNameAddress: String = ""
@@ -292,25 +293,15 @@ class PlaceSelectionVC: UIViewController {
             guard let self = self else { return }
             guard let place = self.currentPlace else { return }
             
-            let city = place.city
-            let district = place.district
-            
-            let address1 = place.roadNameAddress == ""
-            ? place.lotNumberAddress
-            : place.roadNameAddress
-            
             let address2 = self.confirmView.addressTextField.text ?? ""
             
-            let latitude = String(place.lat)
-            let longitude = String(place.lng)
-            
             let result = PlaceLocationMDL(
-                city: city,
-                disctrict: district,
-                address1: address1,
+                city: place.city,
+                disctrict: place.district,
+                address1: place.address1,
                 address2: address2,
-                latitude: latitude,
-                longitude: longitude
+                latitude: String(place.lat),
+                longitude: String(place.lng)
             )
             
             self.dataDelegate?.handlePlaceResult(place: result)

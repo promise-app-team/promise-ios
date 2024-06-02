@@ -610,22 +610,13 @@ class CreatePromiseVM: NSObject {
     }
     
     func submit(_ completion: @escaping ((Components.Schemas.PromiseDTO?) -> Void)) {
-        // TODO: 임시, form.place로 변경해야함.
-        let tempStaticPlace = Components.Schemas.InputUpdatePromiseDTO.destinationPayload(value1: .init(
-            city: "서울특별시",
-            district: "관악구",
-            address1: "관악로 14길 109",
-            address2: nil,
-            latitude: 37.48436353,
-            longitude: 126.92972946
-        ))
         
         var submitForm = Components.Schemas.InputUpdatePromiseDTO(
             title: form.title,
             themeIds: themes.filter{ $0.isSelected }.map{ $0.id },
             promisedAt: form.date!.iso8601String,
             destinationType: form.placeType,
-            destination: form.placeType == .STATIC ? tempStaticPlace : form.middlePlace,
+            destination: form.placeType == .STATIC ? form.place : form.middlePlace,
             locationShareStartType: form.shareLocationStartType,
             locationShareStartValue: form.shareLocationStartValue,
             locationShareEndType: .TIME,

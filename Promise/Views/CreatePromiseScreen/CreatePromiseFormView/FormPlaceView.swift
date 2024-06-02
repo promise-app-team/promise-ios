@@ -513,13 +513,28 @@ class FormPlaceView: UIView {
         }
     }
     
-    // TODO: middlePlaceDidChange
+    private func updatePlace() {
+        if let place = self.createPromiseVM.form.place {
+            
+            let placeText = AddressHelper().getDisplayAddressText(place: place)
+            self.selectedPlace.text = placeText
+            self.selectedPlace.textColor = .black
+            
+        } else {
+            
+            self.selectedPlace.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+            self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            
+        }
+        
+        self.layoutIfNeeded()
+    }
+    
     private func assignMiddlePlaceDidChange() {
         createPromiseVM.middlePlaceDidChange = { middlePlace in
             
             DispatchQueue.main.async { [weak self] in
                 self?.updateMiddlePlaceViewByState()
-                self?.layoutIfNeeded()
             }
         }
     }
@@ -529,8 +544,7 @@ class FormPlaceView: UIView {
         createPromiseVM.placeDidChange = { place in
             
             DispatchQueue.main.async { [weak self] in
-                
-                
+                self?.updatePlace()
             }
         }
     }
@@ -597,7 +611,19 @@ extension FormPlaceView: FormTabMenuViewDelegate {
 
 extension FormPlaceView: PlaceSelectionDataDelegate {
     func handlePlaceResult(place: PlaceLocationMDL) {
-        print("place: ", place)
+        guard let latitude = Double(place.latitude),
+              let longitude = Double(place.longitude) else  { return }
+        
+        let updatePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload = .init(value1: .init(
+            city: place.city,
+            district: place.disctrict,
+            address1: place.address1,
+            address2: place.address2,
+            latitude: latitude,
+            longitude: longitude)
+        )
+        
+        createPromiseVM.onChangedPlace(updatePlace)
     }
 }
 
