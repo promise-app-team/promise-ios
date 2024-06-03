@@ -16,7 +16,7 @@ extension PlaceSelectionVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? PlaceSelectionTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceSelectionTableViewCell.identifier, for: indexPath) as? PlaceSelectionTableViewCell else {
             return PlaceSelectionTableViewCell()
         }
         let document = place?.documents?[indexPath.row]
@@ -39,23 +39,9 @@ extension PlaceSelectionVC: UITableViewDelegate {
             let lng = Double(lngString)
         else {
             print("didSelectRowAt: fail to transfer")
-            
             // x,y 없는 경우 사용자 알림 필요
-            
             return
         }
-        
-        let position = NMGLatLng(lat: lat, lng: lng)
-        let cameraUpdate = NMFCameraUpdate(scrollTo: position)
-        map.moveCamera(cameraUpdate)
-        map.zoomLevel = 17
-        
-        let marker = NMFMarker()
-        marker.iconImage = NMFOverlayImage(name: Asset.probeeMap.name)
-        marker.width = adjustedValue(40, .width)
-        marker.height = adjustedValue(40, .height)
-        marker.position = position
-        self.marker = marker
         
         let placeName = place?.documents?[indexPath.row].placeName ?? ""
         let roadNameAddress = place?.documents?[indexPath.row].roadAddressName ?? ""
@@ -83,6 +69,20 @@ extension PlaceSelectionVC: UITableViewDelegate {
             
             currentPlace = place
             viewState = .searchMap
+            
+            DispatchQueue.main.async { [weak self] in
+                let position = NMGLatLng(lat: lat, lng: lng)
+                let cameraUpdate = NMFCameraUpdate(scrollTo: position)
+                self?.map.moveCamera(cameraUpdate)
+                self?.map.zoomLevel = 17
+                
+                let marker = NMFMarker()
+                marker.iconImage = NMFOverlayImage(name: Asset.probeeMap.name)
+                marker.width = adjustedValue(40, .width)
+                marker.height = adjustedValue(40, .height)
+                marker.position = position
+                self?.marker = marker
+            }
         }
     
     }

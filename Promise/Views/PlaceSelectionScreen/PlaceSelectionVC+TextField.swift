@@ -62,6 +62,12 @@ extension PlaceSelectionVC: UITextFieldDelegate {
             break
         }
     }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        viewState = .onSearch
+        let _ = searchTextField.becomeFirstResponder()
+        return true
+    }
 }
 
 extension PlaceSelectionVC {

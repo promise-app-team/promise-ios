@@ -13,6 +13,7 @@ enum Address {
 }
 
 class PlaceSelectionTableViewCell: UITableViewCell {
+    static let identifier = "PlaceSelectionTableViewCell"
     
     // MARK: Public Property
     

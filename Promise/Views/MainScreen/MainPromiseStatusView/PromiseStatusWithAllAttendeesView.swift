@@ -753,9 +753,11 @@ class PromiseStatusWithAllAttendeesView: UIView {
     
     
     private func focusMapOnLocation(location: CLLocation) {
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
-        cameraUpdate.animation = .linear
-        map.moveCamera(cameraUpdate)
+        DispatchQueue.main.async { [weak self] in
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+            cameraUpdate.animation = .linear
+            self?.map.moveCamera(cameraUpdate)
+        }
     }
     
     private func setDestinationMarkerOnMap(destination: Components.Schemas.LocationDTO?) {
