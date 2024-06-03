@@ -13,6 +13,8 @@ class PromiseStatusWithUserView: UIView {
     
     let mainVM: MainVM
     
+    var currentDeparture: PlaceLocationMDL?
+    
     private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
         didSet {
             if isEnabledLocationServiceOnDevice {
@@ -237,11 +239,20 @@ class PromiseStatusWithUserView: UIView {
         
         mainVM.getDepartureLoaction(id: promise.pid) { [weak self] location in
             
-            DispatchQueue.main.async { [weak self] in
+            if !location.city.isEmpty,
+               !location.district.isEmpty,
+               !location.address1.isEmpty {
                 
-                if !location.city.isEmpty,
-                   !location.district.isEmpty,
-                   !location.address1.isEmpty {
+                self?.currentDeparture = .init(
+                    city: location.city,
+                    disctrict: location.district,
+                    address1: location.address1,
+                    address2: location.address2 ?? "",
+                    latitude: String(location.latitude),
+                    longitude: String(location.longitude)
+                )
+                
+                DispatchQueue.main.async { [weak self] in
                     
                     let departureLoaction = AddressHelper().getDisplayAddressText(place: location)
                     
@@ -249,11 +260,15 @@ class PromiseStatusWithUserView: UIView {
                     self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
                     
                     self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                    
                 }
-                
+            } else {
+                self?.currentDeparture = nil
             }
             
         } onFailure: { [weak self] error in
+            
+            self?.currentDeparture = nil
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -269,8 +284,18 @@ class PromiseStatusWithUserView: UIView {
     
     @objc func onTapDepartureLocationLabel() {
         guard let topVC = parentViewController() else { return }
-        let placeSelectionVC = PlaceSelectionVC(mode: .departure)
-        placeSelectionVC.delegate = self
+        
+        var placeSelectionVC: PlaceSelectionVC
+        
+        let departureText = departureLocation.text ?? ""
+        
+        if let currentDeparture {
+            placeSelectionVC = PlaceSelectionVC(mode: .departure, editingPlace: currentDeparture)
+        } else {
+            placeSelectionVC = PlaceSelectionVC(mode: .departure)
+        }
+        
+        placeSelectionVC.dataDelegate = self
         topVC.navigationController?.pushViewController(placeSelectionVC, animated: true)
     }
     
@@ -347,18 +372,18 @@ extension PromiseStatusWithUserView {
     }
 }
 
-extension PromiseStatusWithUserView: PlaceSelectionDelegate {
-    // TODO: 장소 설정 완료후 callback으로 변경 (장소 설정 플로우 화면이 완성되면)
-    func onDidHide() {
+extension PromiseStatusWithUserView: PlaceSelectionDataDelegate {
+    func handlePlaceResult(place: PlaceLocationMDL) {
+        guard let latitude = Double(place.latitude),
+              let longitude = Double(place.longitude) else { return }
         
-        // TODO: 임시 ===========================================
         let location = Components.Schemas.InputLocationDTO(
-            city: "서울특별시",
-            district: "관악구",
-            address1: "신림로3가길 46-17",
-            address2: nil,
-            latitude: 37.48436353,
-            longitude: 126.92972946
+            city: place.city,
+            district: place.disctrict,
+            address1: place.address1,
+            address2: place.address2,
+            latitude: latitude,
+            longitude: longitude
         )
         
         let address = AddressHelper().getDisplayAddressText(place: location)

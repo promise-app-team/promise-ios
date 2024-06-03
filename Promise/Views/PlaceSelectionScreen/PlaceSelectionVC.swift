@@ -40,6 +40,8 @@ class PlaceSelectionVC: UIViewController {
     private var isPushedVC: Bool = false
     private var mode: PlaceSelectionMode = .destination
     
+    private let editingPlace: PlaceLocationMDL?
+    
     enum SearchStatus {
         case idle
         case onSearch
@@ -290,6 +292,7 @@ class PlaceSelectionVC: UIViewController {
         let view = PlaceSelectionConfirmView()
         
         view.handleTappedConfirmButton = { [weak self] in
+            
             guard let self = self else { return }
             guard let place = self.currentPlace else { return }
             
@@ -305,7 +308,13 @@ class PlaceSelectionVC: UIViewController {
             )
             
             self.dataDelegate?.handlePlaceResult(place: result)
-            self.dismiss(animated: true)
+            
+            if isPushedVC {
+                navigationController?.popViewController(animated: true)
+            } else {
+                self.dismiss(animated: true)
+            }
+            
         }
         
         view.layer.zPosition = 1
@@ -403,8 +412,9 @@ class PlaceSelectionVC: UIViewController {
     
     // MARK: initialize
     
-    init(mode: PlaceSelectionMode) {
+    init(mode: PlaceSelectionMode, editingPlace: PlaceLocationMDL? = nil) {
         self.mode = mode
+        self.editingPlace = editingPlace
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -461,7 +471,7 @@ class PlaceSelectionVC: UIViewController {
     
     private func render() {
         [
-            headerView,
+         headerView,
          searchTextField,
          tipView,
          searchFailView,

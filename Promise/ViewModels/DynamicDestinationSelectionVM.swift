@@ -76,6 +76,7 @@ class DynamicDestinationSelectionVM: NSObject {
                 
                 currentPlaceMarkers = [:]
                 middlePoint = nil
+                midpointCalculatedIds = nil
                 return
             }
             
@@ -138,6 +139,7 @@ class DynamicDestinationSelectionVM: NSObject {
         
         getMiddlePointWithDepartures(with: selectedAttendeeIds) { middlePoint in
             self.middlePoint = middlePoint
+            self.midpointCalculatedIds = selectedAttendeeIds
         }
         
     }
