@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 @objc protocol HeaderViewDelegate: AnyObject {
-    @objc optional func onTapCustomBackAction() -> Void
     @objc optional func onTapLeftView() -> Void
     @objc optional func onTapRightView() -> Void
 }
@@ -18,8 +17,16 @@ class HeaderView: UIView {
     weak var navigationController: UINavigationController?
     weak var delegate: HeaderViewDelegate?
     
-    var isHiddenLeftView = false
-    var isHiddenRightView = true
+    var isHiddenLeftView = false {
+        didSet {
+            leftView.isHidden = isHiddenLeftView
+        }
+    }
+    var isHiddenRightView = true {
+        didSet {
+            rightView.isHidden = isHiddenRightView
+        }
+    }
     
     private let title = {
         let label = UILabel()
@@ -97,11 +104,6 @@ class HeaderView: UIView {
     }()
     
     @objc func onTapLeftView() {
-        if let onTapCustomBackAction = delegate?.onTapCustomBackAction {
-            onTapCustomBackAction()
-            return
-        }
-        
         if let onTapLeftView = delegate?.onTapLeftView {
             onTapLeftView()
             return

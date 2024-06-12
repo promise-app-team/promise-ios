@@ -37,7 +37,7 @@ extension UITextField {
         self.leftViewMode = ViewMode.always
     }
     
-    func addClearButton(){
+    func addClearButton() {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold, scale: .medium)
         guard let image = UIImage(systemName: "xmark", withConfiguration: imageConfig)?.withTintColor(UIColor.gray, renderingMode: .alwaysOriginal) else { return }
         
@@ -65,6 +65,9 @@ extension UITextField {
     }
     
     @objc func clearTextField() {
+        guard let isClear = delegate?.textFieldShouldClear?(self) else { return }
+        guard isClear else { return }
+        
         text = ""
         rightViewMode = .never
         

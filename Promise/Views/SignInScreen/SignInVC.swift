@@ -105,7 +105,7 @@ final class SignInVC: UIViewController {
     }()
     
     private let logo: UIImageView = {
-        let imageView = UIImageView(image: Asset.promiseLogo.image)
+        let imageView = UIImageView(image: Asset.appLogo.image)
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView

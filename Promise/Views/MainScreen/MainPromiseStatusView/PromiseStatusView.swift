@@ -75,7 +75,7 @@ class PromiseStatusView: CommonFloatingContainerVC {
         self.promiseStatusContent.delegate = self
         
         LocationService.shared.start()
-        WebsocketService.shared.connect(withQueryItems: [URLQueryItem(name: "to", value: "broadcast")])
+//        WebsocketService.shared.connect(withQueryItems: [URLQueryItem(name: "to", value: "broadcast")])
     }
 }
 

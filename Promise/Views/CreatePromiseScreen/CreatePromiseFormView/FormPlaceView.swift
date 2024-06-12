@@ -56,7 +56,7 @@ class FormPlaceView: UIView {
         let stackView = UIStackView(arrangedSubviews: [selectPlaceButtonIcon, selectedPlace])
         
         stackView.axis = .horizontal
-        stackView.spacing = adjustedValue(5, .width)
+        stackView.spacing = adjustedValue(4, .width)
         stackView.alignment = .center
         
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -277,13 +277,32 @@ class FormPlaceView: UIView {
     @objc private func onTapSelectPlaceButton() {
         switch createPromiseVM.placeType {
         case .STATIC:
-            let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: true)
-            placeSelectionVC.delegate = self
+            var placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: nil)
+            
+            if let formPlace = createPromiseVM.form.place?.value1 {
+                
+                let editingPlace: PlaceSelection = .init(
+                    city: formPlace.city,
+                    district: formPlace.district,
+                    address1: formPlace.address1,
+                    placeName: formPlace.name,
+                    address2: formPlace.address2,
+                    lat: formPlace.latitude,
+                    lng: formPlace.longitude
+                )
+                
+                placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: editingPlace)
+            }
+            
+            placeSelectionVC.dataDelegate = self
             createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
+            
         case .DYNAMIC:
+            
             guard let state = createPromiseVM.dynamicDestinationState else { return }
             guard state == .configurable else { return }
             onTapMiddlePlaceSelectionButton()
+            
         }
     }
     
@@ -513,13 +532,28 @@ class FormPlaceView: UIView {
         }
     }
     
-    // TODO: middlePlaceDidChange
+    private func updatePlace() {
+        if let place = self.createPromiseVM.form.place {
+            
+            let placeText = AddressHelper().getDisplayAddressText(place: place)
+            self.selectedPlace.text = placeText
+            self.selectedPlace.textColor = .black
+            
+        } else {
+            
+            self.selectedPlace.text = L10n.CreatePromise.promisePlaceInputPlaceholder
+            self.selectedPlace.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            
+        }
+        
+        self.layoutIfNeeded()
+    }
+    
     private func assignMiddlePlaceDidChange() {
         createPromiseVM.middlePlaceDidChange = { middlePlace in
             
             DispatchQueue.main.async { [weak self] in
                 self?.updateMiddlePlaceViewByState()
-                self?.layoutIfNeeded()
             }
         }
     }
@@ -529,8 +563,7 @@ class FormPlaceView: UIView {
         createPromiseVM.placeDidChange = { place in
             
             DispatchQueue.main.async { [weak self] in
-                
-                
+                self?.updatePlace()
             }
         }
     }
@@ -595,12 +628,31 @@ extension FormPlaceView: FormTabMenuViewDelegate {
     }
 }
 
-extension FormPlaceView: PlaceSelectionDelegate {
-    
+extension FormPlaceView: PlaceSelectionDataDelegate {
+    func handlePlaceResult(place: PlaceLocationMDL) {
+        guard let latitude = Double(place.latitude),
+              let longitude = Double(place.longitude) else  { return }
+        
+        let updatePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload = .init(value1: .init(
+            name: place.name, 
+            city: place.city,
+            district: place.district,
+            address1: place.address1,
+            address2: place.address2,
+            latitude: latitude,
+            longitude: longitude)
+        )
+        
+        createPromiseVM.onChangedPlace(updatePlace)
+    }
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, middlePoint: Components.Schemas.PointDTO, midpointCalculatedIds: [Double]) {
+    func onSelectedMiddlePlace(
+        place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload,
+        middlePoint: Components.Schemas.PointDTO,
+        midpointCalculatedIds: [Double])
+    {
         createPromiseVM.onChangedMiddlePlace(place)
         createPromiseVM.onChangeMiddlePoint(middlePoint)
         createPromiseVM.onChangeMidpointCalculatedIds(midpointCalculatedIds)

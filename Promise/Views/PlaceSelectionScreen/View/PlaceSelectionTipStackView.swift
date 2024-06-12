@@ -13,12 +13,12 @@ final class PlaceSelectionTipStackView: UIStackView {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         return label
     }()
     private let detailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         label.textColor = .lightGray
         return label
     }()

@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "probeeOnMap.png",
+      "filename" : "EmptyPromises.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "EmptyPromises 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "EmptyPromises 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

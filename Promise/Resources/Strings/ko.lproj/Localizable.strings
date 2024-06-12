@@ -15,6 +15,7 @@
 "Common.hour" = "시간";
 "Common.minute" = "분";
 "Common.confirm" = "확인";
+"Common.success" = "완료";
 "Common.cancel" = "취소";
 "Common.attend" = "참여";
 "Common.refuse" = "거절";
@@ -69,6 +70,29 @@
 "UpdatePromise.DynamicDestination.selectionButtonTitle" = "중간 장소 변경";
 "UpdatePromise.DynamicDestination.Configurable.placeholder" = "중간장소를 선택해 주세요";
 
+// MARK: PlaceSelectionScreen
+"PlaceSelection.HeaderTitle.destination" = "약속장소 설정";
+"PlaceSelection.HeaderTitle.departure" = "출발장소 설정";
+"PlaceSelection.SearchInput.placeholder" = "도로명, 지번, 건물명 검색";
+"PlaceSelection.DetailAddressInput.placeholder" = "ex) 미팅룸 304호";
+"PlaceSelection.DetailAddressInput.label" = "상세 주소";
+"PlaceSelection.Label.emptyAddress" = "주소 없음";
+"PlaceSelection.Label.emptyPlaceName" = "장소명 없음";
+"PlaceSelection.Label.empty" = "없음";
+"PlaceSelection.Label.loadPlaceName" = "도로명";
+"PlaceSelection.Label.streetPlaceName" = "지번";
+"PlaceSelection.Label.address" = "주소";
+"PlaceSelection.Tip.title" = "주소 검색 Tip";
+
+"PlaceSelection.Tip.description1" = "도로명 + 건물번호";
+"PlaceSelection.Tip.description1Suffix" = "(예 : 프로미스로 58길)";
+"PlaceSelection.Tip.description2" = "지역명 + 번지";
+"PlaceSelection.Tip.description2Suffix" = "(예 : 프로미스동 58)";
+"PlaceSelection.Tip.description3" = "건물명, 아파트명";
+"PlaceSelection.Tip.description3Suffix" = "(예 : 프로미스 오피스텔 508동)";
+
+
+
 // MARK: DynamicDestinationSelectionScreen
 "DynamicDestinationSelection.headerTitle" = "중간 장소 선택";
 "DynamicDestinationSelection.confirm" = "선택 완료";
@@ -112,6 +136,12 @@
 "CreatePromise.ShareLocationEnd.selectionLabel" = "위치 공유 종료 시간 선택";
 "CreatePromise.ShareLocationEnd.itemSuffix" = "후까지";
 "CreatePromise.ShareLocationEnd.max" = "약속 날짜 자정까지";
+
+"CreatePromise.CreateError.title" = "약속 생성 실패";
+"CreatePromise.CreateError.message" = "약속 정보를 확인해주세요.";
+
+"CreatePromise.EditError.title" = "약속 수정 실패";
+"CreatePromise.EditError.message" = "수정할 약속 정보를 확인해주세요.";
 
 "CompletedCreatePromise.headerTitle" = "약속 생성 완료";
 "CompletedCreatePromise.mainTitle" = "약속이 생성되었어요\n이제 참여자를 초대해 볼까요?";

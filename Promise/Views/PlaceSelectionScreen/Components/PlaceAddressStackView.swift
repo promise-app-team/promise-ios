@@ -10,7 +10,7 @@ import UIKit
 final class PlaceAddressStackView: UIStackView {
     
     enum AddressType {
-        case roadName, lotNumber
+        case roadName, lotNumber, address
     }
     
     private var addressType: AddressType
@@ -19,19 +19,22 @@ final class PlaceAddressStackView: UIStackView {
         let label = UILabel()
         switch addressType {
         case .roadName:
-            label.text = "도로명"
+            label.text = L10n.PlaceSelection.Label.loadPlaceName
         case .lotNumber:
-            label.text = "지번"
+            label.text = L10n.PlaceSelection.Label.streetPlaceName
+        case .address:
+            label.text = L10n.PlaceSelection.Label.address
         }
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
-        label.widthAnchor.constraint(equalToConstant: 33).isActive = true
+        
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
+        label.widthAnchor.constraint(equalToConstant: adjustedValue(33, .width)).isActive = true
         return label
     }()
     
     private let addressDetailLabel: UILabel = {
         let label = UILabel()
-        label.text = "없음"
-        label.font = UIFont(font: FontFamily.Pretendard.regular, size: 12)
+        label.text = L10n.PlaceSelection.Label.empty
+        label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         label.textColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
         return label
     }()
@@ -44,7 +47,7 @@ final class PlaceAddressStackView: UIStackView {
         addArrangedSubview(addressDetailLabel)
         axis = .horizontal
         distribution = .fill
-        spacing = 4
+        spacing = adjustedValue(4, .width)
     }
     
     required init(coder: NSCoder) {

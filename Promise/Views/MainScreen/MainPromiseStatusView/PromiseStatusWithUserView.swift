@@ -13,6 +13,20 @@ class PromiseStatusWithUserView: UIView {
     
     let mainVM: MainVM
     
+    var currentDeparture: PlaceLocationMDL? {
+        didSet {
+            
+            if let currentDeparture {
+                DispatchQueue.main.async { [weak self] in
+                    self?.departureLocation.text = AddressHelper().getDisplayAddressText(place: currentDeparture)
+                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                }
+            }
+            
+        }
+    }
+    
     private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
         didSet {
             if isEnabledLocationServiceOnDevice {
@@ -167,7 +181,7 @@ class PromiseStatusWithUserView: UIView {
         departureLocationEditIcon.centerYAnchor.constraint(equalTo: iconWrapper.centerYAnchor).isActive = true
         
         let stackView = UIStackView(arrangedSubviews: [departureLocation, iconWrapper])
-
+        
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = adjustedValue(4, .width)
@@ -237,23 +251,27 @@ class PromiseStatusWithUserView: UIView {
         
         mainVM.getDepartureLoaction(id: promise.pid) { [weak self] location in
             
-            DispatchQueue.main.async { [weak self] in
+            if !location.city.isEmpty,
+               !location.district.isEmpty,
+               !location.address1.isEmpty {
                 
-                if !location.city.isEmpty,
-                   !location.district.isEmpty,
-                   !location.address1.isEmpty {
-                    
-                    let departureLoaction = AddressHelper().getDisplayAddressText(place: location)
-                    
-                    self?.departureLocation.text = departureLoaction
-                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-                    
-                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
-                }
+                self?.currentDeparture = .init(
+                    city: location.city,
+                    district: location.district,
+                    address1: location.address1,
+                    name: location.name ?? "",
+                    address2: location.address2 ?? "",
+                    latitude: String(location.latitude),
+                    longitude: String(location.longitude)
+                )
                 
+            } else {
+                self?.currentDeparture = nil
             }
             
         } onFailure: { [weak self] error in
+            
+            self?.currentDeparture = nil
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -269,8 +287,28 @@ class PromiseStatusWithUserView: UIView {
     
     @objc func onTapDepartureLocationLabel() {
         guard let topVC = parentViewController() else { return }
-        let placeSelectionVC = PlaceSelectionVC(isSearchBarFocused: false)
-        placeSelectionVC.delegate = self
+        
+        var placeSelectionVC: PlaceSelectionVC
+        
+        if let currentDeparture,
+           let latitude = Double(currentDeparture.latitude),
+           let longitude = Double(currentDeparture.longitude) {
+            
+            placeSelectionVC = PlaceSelectionVC(mode: .departure, editingPlace: .init(
+                city: currentDeparture.city,
+                district: currentDeparture.district,
+                address1: currentDeparture.address1,
+                placeName: currentDeparture.name,
+                address2: currentDeparture.address2,
+                lat: latitude,
+                lng: longitude
+            ))
+            
+        } else {
+            placeSelectionVC = PlaceSelectionVC(mode: .departure)
+        }
+        
+        placeSelectionVC.dataDelegate = self
         topVC.navigationController?.pushViewController(placeSelectionVC, animated: true)
     }
     
@@ -347,41 +385,38 @@ extension PromiseStatusWithUserView {
     }
 }
 
-extension PromiseStatusWithUserView: PlaceSelectionDelegate {
-    // TODO: 장소 설정 완료후 callback으로 변경 (장소 설정 플로우 화면이 완성되면)
-    func onDidHide() {
+extension PromiseStatusWithUserView: PlaceSelectionDataDelegate {
+    func handlePlaceResult(place: PlaceLocationMDL) {
+        guard let latitude = Double(place.latitude),
+              let longitude = Double(place.longitude) else { return }
         
-        // TODO: 임시 ===========================================
         let location = Components.Schemas.InputLocationDTO(
-            city: "서울특별시",
-            district: "관악구",
-            address1: "신림로3가길 46-17",
-            address2: nil,
-            latitude: 37.48436353,
-            longitude: 126.92972946
+            name: place.name,
+            city: place.city,
+            district: place.district,
+            address1: place.address1,
+            address2: place.address2,
+            latitude: latitude,
+            longitude: longitude
         )
         
         let address = AddressHelper().getDisplayAddressText(place: location)
-        
-        if address == departureLocation.text {
-            return
-        }
-        
-        // =====================================================
+        if address == departureLocation.text { return }
         
         Task {
             await mainVM.editDepartureLoaction(with: location) { [weak self] newDeparture in
                 
-                DispatchQueue.main.async { [weak self] in
-                    
-                    self?.departureLocation.text = AddressHelper().getDisplayAddressText(place: newDeparture)
-                    
-                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-                    
-                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
-                }
-                
+                self?.currentDeparture = .init(
+                    city: newDeparture.city,
+                    district: newDeparture.district,
+                    address1: newDeparture.address1,
+                    name: newDeparture.name ?? "",
+                    address2: newDeparture.address2 ?? "",
+                    latitude: String(newDeparture.latitude),
+                    longitude: String(newDeparture.longitude)
+                )
             }
+            
         }
     }
 }

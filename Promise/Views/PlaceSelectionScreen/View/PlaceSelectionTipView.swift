@@ -13,8 +13,8 @@ final class PlaceSelectionTipView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주소 검색 Tip"
-        label.font = UIFont(font: FontFamily.Pretendard.bold, size: 16)
+        label.text = L10n.PlaceSelection.Tip.title
+        label.font = UIFont(font: FontFamily.Pretendard.bold, size: adjustedValue(16, .width))
         return label
     }()
     
@@ -22,15 +22,25 @@ final class PlaceSelectionTipView: UIView {
         let stackView = UIStackView(arrangedSubviews: [titleLabel])
         let subviews = [
             UILabel(),
-            PlaceSelectionTipStackView(title: "도로명 + 건물번호", description: "(예 : 프로미스로 58길)"),
-            PlaceSelectionTipStackView(title: "지역명 + 번지", description: "(예 : 프로미스동 58)"),
-            PlaceSelectionTipStackView(title: "건물명, 아파트명", description: "(예 : 프로미스 오피스텔 508동)")]
+            PlaceSelectionTipStackView(
+                title: L10n.PlaceSelection.Tip.description1,
+                description: L10n.PlaceSelection.Tip.description1Suffix
+            ),
+            PlaceSelectionTipStackView(
+                title: L10n.PlaceSelection.Tip.description2,
+                description: L10n.PlaceSelection.Tip.description2Suffix
+            ),
+            PlaceSelectionTipStackView(
+                title: L10n.PlaceSelection.Tip.description3,
+                description: L10n.PlaceSelection.Tip.description3Suffix
+            )
+        ]
         subviews.forEach {
             stackView.addArrangedSubview($0)
         }
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 8
+        stackView.spacing = adjustedValue(8, .height)
         return stackView
     }()
     
@@ -53,9 +63,9 @@ final class PlaceSelectionTipView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: adjustedValue(24, .height)),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -adjustedValue(24, .width)),
         ])
     }
 }

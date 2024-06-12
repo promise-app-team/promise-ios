@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Add circle outline.png",
+      "filename" : "probeeOnMap.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "probeeOnMap 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "probeeOnMap 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

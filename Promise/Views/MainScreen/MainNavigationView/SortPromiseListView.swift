@@ -96,7 +96,6 @@ class SortPromiseListView: UIView {
         let font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(16, .width))
         let textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         
-        
         let timeQuickOrderLabel = UILabel()
         timeQuickOrderLabel.tag = SortPromiseListEnum.dateTimeQuickOrder.rawValue
         timeQuickOrderLabel.font = font
@@ -150,6 +149,7 @@ class SortPromiseListView: UIView {
     }()
     
     @objc private func onTapSelf() {
+        if disabled { return }
         popoverView.show()
     }
     

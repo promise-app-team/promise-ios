@@ -280,6 +280,8 @@ class DynamicDestinationSelectionVC: UIViewController {
         )
         
         stackView.backgroundColor = .white
+        stackView.layer.zPosition = 1
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -758,9 +760,11 @@ class DynamicDestinationSelectionVC: UIViewController {
     }
     
     private func focusMapOnLocation(location: CLLocation) {
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
-        cameraUpdate.animation = .linear
-        map.moveCamera(cameraUpdate)
+        DispatchQueue.main.async { [weak self] in
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+            cameraUpdate.animation = .linear
+            self?.map.moveCamera(cameraUpdate)
+        }
     }
     
     @objc private func onConfirm() {
@@ -939,7 +943,7 @@ class DynamicDestinationSelectionVC: UIViewController {
             keyboardDismissBackdrop.topAnchor.constraint(equalTo: header.bottomAnchor),
             keyboardDismissBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             keyboardDismissBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            keyboardDismissBackdrop.bottomAnchor.constraint(equalTo: bottomArea.topAnchor, constant: adjustedValue(36, .height)),
+            keyboardDismissBackdrop.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             bottomArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),

@@ -68,6 +68,22 @@ public enum Config {
         return kakaoRestAppKey
     }()
     
+    static let naverClientId: String = {
+        guard let naverClientId = Config.infoDictionary[Keys.naverClientId.rawValue] as? String else {
+            fatalError("NAVER CLIENT ID not set in plist")
+        }
+        
+        return naverClientId
+    }()
+    
+    static let naverClientSecret: String = {
+        guard let naverClientSecret = Config.infoDictionary[Keys.naverClientSecret.rawValue] as? String else {
+            fatalError("NAVER CLIENT SECRET not set in plist")
+        }
+        
+        return naverClientSecret
+    }()
+    
     static let universalLinkDomain: String = {
         guard let universalLinkDomain = Config.infoDictionary[Keys.universalLinkDomain.rawValue] as? String else {
             fatalError("UNIVEFRSAL LINK DOMAIN not set in plist")
@@ -102,5 +118,7 @@ public enum Config {
         case kakaoRestAppKey = "KAKAO_REST_APP_KEY"
         case universalLinkDomain = "UNIVERSAL_LINK_DOMAIN"
         case kakaoLocalSearchApiUrl = "KAKAO_LOCAL_SEARCH_API_URL"
+        case naverClientId = "NAVER_CLIENT_ID"
+        case naverClientSecret = "NAVER_CLIENT_SECRET"
     }
 }

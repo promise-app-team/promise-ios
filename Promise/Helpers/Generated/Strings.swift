@@ -54,6 +54,8 @@ internal enum L10n {
     internal static let promise = L10n.tr("Localizable", "Common.promise", fallback: "프로미스")
     /// 거절
     internal static let refuse = L10n.tr("Localizable", "Common.refuse", fallback: "거절")
+    /// 완료
+    internal static let success = L10n.tr("Localizable", "Common.success", fallback: "완료")
     internal enum MoreMenu {
       /// 약속 위임
       internal static let delegatePromise = L10n.tr("Localizable", "Common.MoreMenu.delegatePromise", fallback: "약속 위임")
@@ -91,11 +93,23 @@ internal enum L10n {
       /// 약속 생성
       internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Create.submitButtonTitle", fallback: "약속 생성")
     }
+    internal enum CreateError {
+      /// 약속 정보를 확인해주세요.
+      internal static let message = L10n.tr("Localizable", "CreatePromise.CreateError.message", fallback: "약속 정보를 확인해주세요.")
+      /// 약속 생성 실패
+      internal static let title = L10n.tr("Localizable", "CreatePromise.CreateError.title", fallback: "약속 생성 실패")
+    }
     internal enum Edit {
       /// 약속 수정
       internal static let headerTitle = L10n.tr("Localizable", "CreatePromise.Edit.headerTitle", fallback: "약속 수정")
       /// 수정 확인
       internal static let submitButtonTitle = L10n.tr("Localizable", "CreatePromise.Edit.submitButtonTitle", fallback: "수정 확인")
+    }
+    internal enum EditError {
+      /// 수정할 약속 정보를 확인해주세요.
+      internal static let message = L10n.tr("Localizable", "CreatePromise.EditError.message", fallback: "수정할 약속 정보를 확인해주세요.")
+      /// 약속 수정 실패
+      internal static let title = L10n.tr("Localizable", "CreatePromise.EditError.title", fallback: "약속 수정 실패")
     }
     internal enum Form {
       /// 약속 시간
@@ -282,6 +296,54 @@ internal enum L10n {
       internal static let dateTimeQuickOrder = L10n.tr("Localizable", "Main.SortPromiseList.dateTimeQuickOrder", fallback: "약속시간 빠른순")
       /// 정렬 선택
       internal static let selectOrder = L10n.tr("Localizable", "Main.SortPromiseList.selectOrder", fallback: "정렬 선택")
+    }
+  }
+  internal enum PlaceSelection {
+    internal enum DetailAddressInput {
+      /// 상세 주소
+      internal static let label = L10n.tr("Localizable", "PlaceSelection.DetailAddressInput.label", fallback: "상세 주소")
+      /// ex) 미팅룸 304호
+      internal static let placeholder = L10n.tr("Localizable", "PlaceSelection.DetailAddressInput.placeholder", fallback: "ex) 미팅룸 304호")
+    }
+    internal enum HeaderTitle {
+      /// 출발장소 설정
+      internal static let departure = L10n.tr("Localizable", "PlaceSelection.HeaderTitle.departure", fallback: "출발장소 설정")
+      /// 약속장소 설정
+      internal static let destination = L10n.tr("Localizable", "PlaceSelection.HeaderTitle.destination", fallback: "약속장소 설정")
+    }
+    internal enum Label {
+      /// 주소
+      internal static let address = L10n.tr("Localizable", "PlaceSelection.Label.address", fallback: "주소")
+      /// 없음
+      internal static let empty = L10n.tr("Localizable", "PlaceSelection.Label.empty", fallback: "없음")
+      /// 주소 없음
+      internal static let emptyAddress = L10n.tr("Localizable", "PlaceSelection.Label.emptyAddress", fallback: "주소 없음")
+      /// 장소명 없음
+      internal static let emptyPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.emptyPlaceName", fallback: "장소명 없음")
+      /// 도로명
+      internal static let loadPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.loadPlaceName", fallback: "도로명")
+      /// 지번
+      internal static let streetPlaceName = L10n.tr("Localizable", "PlaceSelection.Label.streetPlaceName", fallback: "지번")
+    }
+    internal enum SearchInput {
+      /// 도로명, 지번, 건물명 검색
+      internal static let placeholder = L10n.tr("Localizable", "PlaceSelection.SearchInput.placeholder", fallback: "도로명, 지번, 건물명 검색")
+    }
+    internal enum Tip {
+      /// 도로명 + 건물번호
+      internal static let description1 = L10n.tr("Localizable", "PlaceSelection.Tip.description1", fallback: "도로명 + 건물번호")
+      /// (예 : 프로미스로 58길)
+      internal static let description1Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description1Suffix", fallback: "(예 : 프로미스로 58길)")
+      /// 지역명 + 번지
+      internal static let description2 = L10n.tr("Localizable", "PlaceSelection.Tip.description2", fallback: "지역명 + 번지")
+      /// (예 : 프로미스동 58)
+      internal static let description2Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description2Suffix", fallback: "(예 : 프로미스동 58)")
+      /// 건물명, 아파트명
+      internal static let description3 = L10n.tr("Localizable", "PlaceSelection.Tip.description3", fallback: "건물명, 아파트명")
+      /// (예 : 프로미스 오피스텔 508동)
+      internal static let description3Suffix = L10n.tr("Localizable", "PlaceSelection.Tip.description3Suffix", fallback: "(예 : 프로미스 오피스텔 508동)")
+      /// 주소 검색 Tip
+      internal static let title = L10n.tr("Localizable", "PlaceSelection.Tip.title", fallback: "주소 검색 Tip")
     }
   }
   internal enum PromiseStatusWithAllAttendeesView {

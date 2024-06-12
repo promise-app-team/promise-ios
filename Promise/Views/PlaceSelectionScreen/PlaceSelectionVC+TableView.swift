@@ -16,12 +16,12 @@ extension PlaceSelectionVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? PlaceSelectionTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceSelectionTableViewCell.identifier, for: indexPath) as? PlaceSelectionTableViewCell else {
             return PlaceSelectionTableViewCell()
         }
         let document = place?.documents?[indexPath.row]
         cell.updateNameLabel(newText: document?.placeName ?? "")
-        cell.updateAddressLabel(newText: document?.roadAddressName ?? "주소 없음")
+        cell.updateAddressLabel(newText: document?.roadAddressName ?? L10n.PlaceSelection.Label.emptyAddress)
         return cell
     }
 }
@@ -34,44 +34,46 @@ extension PlaceSelectionVC: UITableViewDelegate {
         
         guard
             let latString = place?.documents?[indexPath.row].y,
-            let lonString = place?.documents?[indexPath.row].x,
+            let lngString = place?.documents?[indexPath.row].x,
             let lat = Double(latString),
-            let lon = Double(lonString)
+            let lng = Double(lngString)
         else {
             print("didSelectRowAt: fail to transfer")
-            
             // x,y 없는 경우 사용자 알림 필요
-            
             return
         }
-        
-        let position = NMGLatLng(lat: lat, lng: lon)
-        let cameraUpdate = NMFCameraUpdate(scrollTo: position)
-        naverMapView.mapView.moveCamera(cameraUpdate)
-        naverMapView.mapView.zoomLevel = 17
-        
-        let marker = NMFMarker()
-        marker.iconImage = NMFOverlayImage(name: "ProbeeMap")
-        marker.width = 40
-        marker.height = 40
-        marker.position = position
-        self.marker = marker
         
         let placeName = place?.documents?[indexPath.row].placeName ?? ""
         let roadNameAddress = place?.documents?[indexPath.row].roadAddressName ?? ""
         let lotNumberAddress = place?.documents?[indexPath.row].addressName ?? ""
-        let place = PlaceSelection(buildingName: placeName, 
-                                   lotNumberAddress: lotNumberAddress,
-                                   roadNameAddress: roadNameAddress,
-                                   lat: lat,
-                                   lon: lon)
-        currentPlace = place
         
-        viewState = .searchMap
+        let address = roadNameAddress.isEmpty
+        ? lotNumberAddress
+        : roadNameAddress
+        
+        let (city, district, address1) = AddressHelper().parseAddress(address)
+        if let city, let district, let address1 {
+            
+            let place = PlaceSelection(
+                city: city,
+                district: district,
+                address1: address1,
+                placeName: placeName,
+                lotNumberAddress: lotNumberAddress,
+                roadNameAddress: roadNameAddress,
+                lat: lat,
+                lng: lng
+            )
+            
+            currentPlace = place
+            viewState = .searchMap
+            changeMarkerPosition(lat: lat, lng: lng)
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 86
+        return adjustedValue(86, .height)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

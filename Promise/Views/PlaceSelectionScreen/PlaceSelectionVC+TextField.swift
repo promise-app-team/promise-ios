@@ -28,31 +28,45 @@ extension PlaceSelectionVC: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeSearchTextField = textField
+        
         switch textField {
         case searchTextField:
+            
             switch viewState {
             case .idle:
                 viewState = .onSearch
             default:
                 break
             }
+            
         default:
             break
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        activeSearchTextField = nil
+        
         switch textField {
         case searchTextField:
+            
             switch viewState {
             case .onSearch:
                 viewState = .idle
             default:
                 break
             }
+            
         default:
             break
         }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        viewState = .onSearch
+        let _ = searchTextField.becomeFirstResponder()
+        return true
     }
 }
 
