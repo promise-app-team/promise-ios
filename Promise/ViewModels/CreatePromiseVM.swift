@@ -357,13 +357,18 @@ class CreatePromiseVM: NSObject {
             // MARK: 장소는 nillable(중간장소로 바꿀 수도 있기 때문)
             switch form.placeType {
             case .STATIC:
-                let city = form.place?.value1.city
-                let district = form.place?.value1.district
-                let address1 = form.place?.value1.address1
-                let name = form.place?.value1.name
-                let address2 = form.place?.value1.address2
-                let lat = form.place?.value1.latitude
-                let lng = form.place?.value1.longitude
+                guard let place = form.place?.value1 else {
+                    formDidValidate?(false)
+                    return
+                }
+                
+                let city = place.city
+                let district = place.district
+                let address1 = place.address1
+                let name = place.name
+                let address2 = place.address2
+                let lat = place.latitude
+                let lng = place.longitude
                 
                 let capturedCity = self.capturedEditingPromisePlace?.value1.city
                 let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
@@ -388,6 +393,8 @@ class CreatePromiseVM: NSObject {
                 }
                 
             case .DYNAMIC:
+                // MARK: 중간장소는 nullable(지정 -> 중간으로 변경하는 경우도 있음)
+                
                 let city = form.middlePlace?.value1.city
                 let district = form.middlePlace?.value1.district
                 let address1 = form.middlePlace?.value1.address1
@@ -488,8 +495,8 @@ class CreatePromiseVM: NSObject {
            // MARK: address2는 상세 주소로 nullable
            // MARK: name도 장소 이름으로 nullable
             
-           let latitude = form.place?.value1.latitude,
-           let longitude = form.place?.value1.longitude,
+           let _ = form.place?.value1.latitude,
+           let _ = form.place?.value1.longitude,
            
            !city.isEmpty,
            !district.isEmpty,

@@ -279,16 +279,16 @@ class FormPlaceView: UIView {
         case .STATIC:
             var placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: nil)
             
-            if let editingDestination = createPromiseVM.editingPromise?.destination?.value1 {
+            if let formPlace = createPromiseVM.form.place?.value1 {
                 
                 let editingPlace: PlaceSelection = .init(
-                    city: editingDestination.city,
-                    district: editingDestination.district,
-                    address1: editingDestination.address1,
-                    placeName: editingDestination.name,
-                    address2: editingDestination.address2,
-                    lat: editingDestination.latitude,
-                    lng: editingDestination.longitude
+                    city: formPlace.city,
+                    district: formPlace.district,
+                    address1: formPlace.address1,
+                    placeName: formPlace.name,
+                    address2: formPlace.address2,
+                    lat: formPlace.latitude,
+                    lng: formPlace.longitude
                 )
                 
                 placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: editingPlace)
@@ -633,8 +633,6 @@ extension FormPlaceView: PlaceSelectionDataDelegate {
         guard let latitude = Double(place.latitude),
               let longitude = Double(place.longitude) else  { return }
         
-        print("place: ", place)
-        
         let updatePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload = .init(value1: .init(
             name: place.name, 
             city: place.city,
@@ -650,7 +648,11 @@ extension FormPlaceView: PlaceSelectionDataDelegate {
 }
 
 extension FormPlaceView: DynamicDestinationSelectionDelegate {
-    func onSelectedMiddlePlace(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload, middlePoint: Components.Schemas.PointDTO, midpointCalculatedIds: [Double]) {
+    func onSelectedMiddlePlace(
+        place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload,
+        middlePoint: Components.Schemas.PointDTO,
+        midpointCalculatedIds: [Double])
+    {
         createPromiseVM.onChangedMiddlePlace(place)
         createPromiseVM.onChangeMiddlePoint(middlePoint)
         createPromiseVM.onChangeMidpointCalculatedIds(midpointCalculatedIds)

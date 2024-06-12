@@ -296,9 +296,10 @@ class DynamicDestinationSelectionVM: NSObject {
         guard let lng, let lat else { return nil }
         
         return .init(value1: .init(
+            name: placeName,
             city: city,
             district: district,
-            address1: address1 + " " + placeName, // MARK: 장소이름(placeName)은 꼭 같이 address1에 붙이기
+            address1: address1,
             address2: etcAddress.isEmpty ? nil : etcAddress,
             latitude: lat,
             longitude: lng

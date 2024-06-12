@@ -763,9 +763,16 @@ class PromiseStatusWithAllAttendeesView: UIView {
     private func setDestinationMarkerOnMap(destination: Components.Schemas.LocationDTO?) {
         guard let destination else {
             guard let location = userLocation else { return }
+            
             focusMapOnLocation(location: location)
+            
+            promiseDestinationMarker.mapView = nil
+            focusPromiseDestinationButton.isHidden = true
+            
             return
         }
+        
+        focusPromiseDestinationButton.isHidden = false
 
         promiseDestinationMarker.position = NMGLatLng(
             lat: destination.latitude,

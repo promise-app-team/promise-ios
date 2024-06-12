@@ -316,9 +316,9 @@ extension MainVM: CreatePromiseDelegate {
         Task {
             guard let _ = await getPromise(id: updatedPromise.pid) else { return }
             
-                await ToastView(
-                    message: L10n.UpdatePromise.Update.successToastMessage
-                ).showToast()
+            await ToastView(
+                message: L10n.UpdatePromise.Update.successToastMessage
+            ).showToast()
             
         }
     }
