@@ -210,7 +210,7 @@ class MainVM: NSObject {
     func leavePromise() {
         guard let promise = currentFocusedPromise, !promise.pid.isEmpty else { return }
         let id = promise.pid
-        let isOwner = Int(promise.host.id) == UserService.shared.getUser()?.userId
+        let _ = Int(promise.host.id) == UserService.shared.getUser()?.userId
         
 //        if isOwner {
 //            return
