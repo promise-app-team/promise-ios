@@ -626,7 +626,7 @@ class DynamicDestinationSelectionVC: UIViewController {
         if let _ = currentTappedPlaceMarker { return }
         guard let destination = dynamicDestinationSelectionVM.promise?.destination else { return }
 
-        let address1 = destination.value1.address1
+        let destinationName = destination.value1.name
         let (destinationLng, destinationLat) = dynamicDestinationSelectionVM.getFixedDecimalPoint(
             x: String(destination.value1.longitude),
             y: String(destination.value1.latitude)
@@ -640,9 +640,9 @@ class DynamicDestinationSelectionVC: UIViewController {
                 y: doc.y
             )
             
-            return destinationLng == docLng &&
-            destinationLat == docLat &&
-            address1.contains(placeName) // MARK: placeName까지 확인
+            return destinationLng == docLng
+            && destinationLat == docLat
+            && destinationName == placeName // MARK: 장소 이름도 확인
         }
         
         guard let initSelectedPlaceInfo else { return }
