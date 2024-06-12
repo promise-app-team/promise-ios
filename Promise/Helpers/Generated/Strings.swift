@@ -312,6 +312,8 @@ internal enum L10n {
       internal static let destination = L10n.tr("Localizable", "PlaceSelection.HeaderTitle.destination", fallback: "약속장소 설정")
     }
     internal enum Label {
+      /// 주소
+      internal static let address = L10n.tr("Localizable", "PlaceSelection.Label.address", fallback: "주소")
       /// 없음
       internal static let empty = L10n.tr("Localizable", "PlaceSelection.Label.empty", fallback: "없음")
       /// 주소 없음

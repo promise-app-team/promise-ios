@@ -81,6 +81,7 @@
 "PlaceSelection.Label.empty" = "없음";
 "PlaceSelection.Label.loadPlaceName" = "도로명";
 "PlaceSelection.Label.streetPlaceName" = "지번";
+"PlaceSelection.Label.address" = "주소";
 "PlaceSelection.Tip.title" = "주소 검색 Tip";
 
 "PlaceSelection.Tip.description1" = "도로명 + 건물번호";

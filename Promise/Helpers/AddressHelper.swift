@@ -12,20 +12,27 @@ struct AddressHelper {
      
      >  아래 예시 커버 완료
      
-     - "서울특별시 관악구 신림로 46-17 비전하우스 206호"
-     - "서울특별시 관악구 신림동 231-36 비전하우스 206호"
-     - "서울 관악구 신림로3가길 46-17 비전하우스 206"
-     - "서울 관악구 신림로 339"
-     - "경기 양평군 양평읍 양평시장길17번길 6 2층"
-     - "부산광역시 해운대구 우동 1106 센텀파크아파트 101동 1504호"
-     - "부산광역시 해운대구 센텀중앙로 97 11층"
-
-    */
-    let parseAddressPattern = "^(\\S+(?:시|도|광역시|특별시|특별자치시|특별자치도)?)\\s+(\\S+(?:구|군|시|읍|면))\\s+((?:\\S+로|\\S+길|\\S+동|\\S+리)\\s.*)$"
+     "서울특별시 관악구 신림로 46-17 비전하우스 206호"
+     "서울특별시 관악구 신림동 231-36 비전하우스 206호"
+     "서울 관악구 신림로3가길 46-17 비전하우스 206"
+     "서울 관악구 신림로 339"
+     "경기 양평군 양평읍 양평시장길17번길 6 2층"
+     "부산광역시 해운대구 우동 1106 센텀파크아파트 101동 1504호"
+     "부산광역시 해운대구 센텀중앙로 97 11층"
+     "경남 창원시 성산구 용호동 29-10"
+     "경남 창원시 성산구 용지로239번길 28"
+     "서울 관악구 남부순환로 지하 1614"
+     "광주 북구 서빙로31번길 3"
+     "부산 남구 유엔로201번길 53"
+     "충남 천안시 서북구 성환읍 성환1로 242"
+     "경남 창원시 성산구 용지로239번길 28"
+     
+     */
+    let parseAddressPattern = "^((?:\\S+\\s)?\\S+(?:시|도|광역시|특별시|특별자치시|특별자치도)?)\\s+(\\S+(?:구|군|시|읍|면))\\s+(.*)$"
     
     func parseAddress(_ address: String) -> (city: String?, district: String?, address1: String?) {
         let regex = try! NSRegularExpression(pattern: parseAddressPattern, options: [])
-
+        
         // 정규 표현식을 이용한 주소 분석
         if let match = regex.firstMatch(in: address, options: [], range: NSRange(location: 0, length: address.utf16.count)) {
             if let cityRange = Range(match.range(at: 1), in: address),
@@ -45,7 +52,11 @@ struct AddressHelper {
     func getDisplayAddressText(place: Components.Schemas.InputUpdatePromiseDTO.destinationPayload) -> String {
         var etcAddress = ""
         if let address2 = place.value1.address2, !address2.isEmpty {
-            etcAddress = "(\(address2))"
+            etcAddress = " (\(address2))"
+        }
+        
+        if let name = place.value1.name, !name.isEmpty {
+            return name + etcAddress
         }
         
         return place.value1.city + " "
@@ -57,7 +68,11 @@ struct AddressHelper {
     func getDisplayAddressText(place: Components.Schemas.PromiseDTO.destinationPayload) -> String {
         var etcAddress = ""
         if let address2 = place.value1.address2, !address2.isEmpty {
-            etcAddress = "(\(address2))"
+            etcAddress = " (\(address2))"
+        }
+        
+        if let name = place.value1.name, !name.isEmpty {
+            return name + etcAddress
         }
         
         return place.value1.city + " "
@@ -69,7 +84,11 @@ struct AddressHelper {
     func getDisplayAddressText(place: Components.Schemas.LocationDTO) -> String {
         var etcAddress = ""
         if let address2 = place.address2, !address2.isEmpty {
-            etcAddress = "(\(address2))"
+            etcAddress = " (\(address2))"
+        }
+        
+        if let name = place.name, !name.isEmpty {
+            return name + etcAddress
         }
         
         return place.city + " "
@@ -81,7 +100,27 @@ struct AddressHelper {
     func getDisplayAddressText(place: Components.Schemas.InputLocationDTO) -> String {
         var etcAddress = ""
         if let address2 = place.address2, !address2.isEmpty {
-            etcAddress = "(\(address2))"
+            etcAddress = " (\(address2))"
+        }
+        
+        if let name = place.name, !name.isEmpty {
+            return name + etcAddress
+        }
+        
+        return place.city + " "
+        + place.district + " "
+        + place.address1 + " "
+        + etcAddress
+    }
+    
+    func getDisplayAddressText(place: PlaceLocationMDL) -> String {
+        var etcAddress = ""
+        if let address2 = place.address2, !address2.isEmpty {
+            etcAddress = " (\(address2))"
+        }
+        
+        if let name = place.name, !name.isEmpty {
+            return name + etcAddress
         }
         
         return place.city + " "

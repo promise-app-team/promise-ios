@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol PlaceSelectionConfirmViewTextFieldDelegate: UIViewController {
-    func placeSelectionConfirmViewTextFieldDelegate()
+protocol PlaceSelectionConfirmViewTextFieldDelegate: AnyObject {
+    func onChangeText(text: String)
 }
 
 final class PlaceSelectionConfirmView: UIView {
@@ -28,6 +28,12 @@ final class PlaceSelectionConfirmView: UIView {
     
     private let roadNameAddressView = PlaceAddressStackView(addressType: .roadName)
     private let lotNumberAddressView = PlaceAddressStackView(addressType: .lotNumber)
+    private let addressView = {
+        let stackView = PlaceAddressStackView(addressType: .address)
+        stackView.isHidden = true
+        return stackView
+    }()
+    
     private let detailLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.PlaceSelection.DetailAddressInput.label
@@ -37,10 +43,12 @@ final class PlaceSelectionConfirmView: UIView {
         return label
     }()
     
-    let addressTextField: TextField = {
+    lazy var addressTextField: TextField = {
         let textField = TextField()
         textField.initialize(placeHolder: L10n.PlaceSelection.DetailAddressInput.placeholder, showSearchIcon: false)
         textField.heightAnchor.constraint(equalToConstant: adjustedValue(40, .height)).isActive = true
+        
+        textField.addTarget(self, action: #selector(onChangedAddressTextField), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -54,6 +62,10 @@ final class PlaceSelectionConfirmView: UIView {
         return button
     }()
     
+    @objc func onChangedAddressTextField(_ textField: UITextField) {
+        textFieldDelegate?.onChangeText(text: textField.text ?? "")
+    }
+    
     @objc func confirmButtonTapped() {
         handleTappedConfirmButton?()
     }
@@ -62,8 +74,8 @@ final class PlaceSelectionConfirmView: UIView {
     
     var mytextfield = UITextField()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .null)
         backgroundColor = .white
         render()
     }
@@ -82,20 +94,60 @@ final class PlaceSelectionConfirmView: UIView {
         titleLabel.text = " "
         roadNameAddressView.clearLabelText()
         lotNumberAddressView.clearLabelText()
+        addressView.clearLabelText()
     }
     
     func updateLabel(to place: PlaceSelection) {
-        titleLabel.text = place.buildingName == "" ? L10n.PlaceSelection.Label.emptyPlaceName : place.buildingName
-        let roadName = (place.roadNameAddress == "") ? L10n.PlaceSelection.Label.empty : place.roadNameAddress
-        let lotNumber = (place.lotNumberAddress == "") ? L10n.PlaceSelection.Label.empty : place.lotNumberAddress
-        roadNameAddressView.updateAddressLabel(newAddress: roadName)
-        lotNumberAddressView.updateAddressLabel(newAddress: lotNumber)
+        DispatchQueue.main.async {
+            
+            self.titleLabel.text = (place.placeName ?? "").isEmpty
+            ? L10n.PlaceSelection.Label.emptyPlaceName
+            : place.placeName
+            
+            let roadName = place.roadNameAddress.isEmpty
+            ? L10n.PlaceSelection.Label.empty
+            : place.roadNameAddress
+            
+            let lotNumber = place.lotNumberAddress.isEmpty
+            ? L10n.PlaceSelection.Label.empty
+            : place.lotNumberAddress
+            
+            self.roadNameAddressView.isHidden = false
+            self.lotNumberAddressView.isHidden = false
+            self.addressView.isHidden = true
+            
+            self.roadNameAddressView.updateAddressLabel(newAddress: roadName)
+            self.lotNumberAddressView.updateAddressLabel(newAddress: lotNumber)
+            
+            self.layoutIfNeeded()
+            
+        }
+    }
+    
+    func updateLabel(with place: PlaceSelection) {
+        DispatchQueue.main.async {
+            
+            self.titleLabel.text = (place.placeName ?? "").isEmpty
+            ? L10n.PlaceSelection.Label.emptyPlaceName
+            : place.placeName
+            
+            let address1 = place.address1
+            
+            self.roadNameAddressView.isHidden = true
+            self.lotNumberAddressView.isHidden = true
+            self.addressView.isHidden = false
+            
+            self.addressView.updateAddressLabel(newAddress: address1)
+            
+            self.layoutIfNeeded()
+            
+        }
     }
     
     // MARK: Private Function
     
     private func render() {
-        [titleLabel, roadNameAddressView, lotNumberAddressView, detailLabel, addressTextField, confirmButton].forEach {
+        [titleLabel, addressView, roadNameAddressView, lotNumberAddressView, detailLabel, addressTextField, confirmButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
@@ -105,10 +157,14 @@ final class PlaceSelectionConfirmView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: adjustedValue(24, .width)),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -adjustedValue(24, .width)),
             
+            addressView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: adjustedValue(8, .height)),
+            addressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            addressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            
             roadNameAddressView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: adjustedValue(8, .height)),
             roadNameAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             roadNameAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-          
+            
             lotNumberAddressView.topAnchor.constraint(equalTo: roadNameAddressView.bottomAnchor, constant: adjustedValue(8, .height)),
             lotNumberAddressView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             lotNumberAddressView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),

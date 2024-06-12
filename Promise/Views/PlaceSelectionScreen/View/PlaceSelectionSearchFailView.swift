@@ -13,6 +13,9 @@ final class PlaceSelectionSearchFailView: UIView {
     
     private let probee: UIImageView = {
         let imageView = UIImageView(image: Asset.probeeNoResult.image)
+        imageView.widthAnchor.constraint(equalToConstant: adjustedValue(225, .width)).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: adjustedValue(189, .height)).isActive = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -21,6 +24,7 @@ final class PlaceSelectionSearchFailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+        render()
     }
     
     required init?(coder: NSCoder) {
@@ -31,13 +35,13 @@ final class PlaceSelectionSearchFailView: UIView {
     
     private func configure() {
         backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.969, alpha: 1)
-        
+    }
+    
+    private func render() {
         addSubview(probee)
-        probee.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             probee.centerXAnchor.constraint(equalTo: centerXAnchor),
-            probee.topAnchor.constraint(equalTo: topAnchor, constant: adjustedValue(200, .height)),
-            probee.widthAnchor.constraint(equalToConstant: adjustedValue(225, .width)),
+            probee.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

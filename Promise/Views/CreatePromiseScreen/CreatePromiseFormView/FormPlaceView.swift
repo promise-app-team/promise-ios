@@ -277,13 +277,32 @@ class FormPlaceView: UIView {
     @objc private func onTapSelectPlaceButton() {
         switch createPromiseVM.placeType {
         case .STATIC:
-            let placeSelectionVC = PlaceSelectionVC(mode: .destination)
+            var placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: nil)
+            
+            if let editingDestination = createPromiseVM.editingPromise?.destination?.value1 {
+                
+                let editingPlace: PlaceSelection = .init(
+                    city: editingDestination.city,
+                    district: editingDestination.district,
+                    address1: editingDestination.address1,
+                    placeName: editingDestination.name,
+                    address2: editingDestination.address2,
+                    lat: editingDestination.latitude,
+                    lng: editingDestination.longitude
+                )
+                
+                placeSelectionVC = PlaceSelectionVC(mode: .destination, editingPlace: editingPlace)
+            }
+            
             placeSelectionVC.dataDelegate = self
             createPromiseVM.currentVC?.present(placeSelectionVC, animated: true)
+            
         case .DYNAMIC:
+            
             guard let state = createPromiseVM.dynamicDestinationState else { return }
             guard state == .configurable else { return }
             onTapMiddlePlaceSelectionButton()
+            
         }
     }
     
@@ -614,9 +633,12 @@ extension FormPlaceView: PlaceSelectionDataDelegate {
         guard let latitude = Double(place.latitude),
               let longitude = Double(place.longitude) else  { return }
         
+        print("place: ", place)
+        
         let updatePlace: Components.Schemas.InputUpdatePromiseDTO.destinationPayload = .init(value1: .init(
+            name: place.name, 
             city: place.city,
-            district: place.disctrict,
+            district: place.district,
             address1: place.address1,
             address2: place.address2,
             latitude: latitude,

@@ -60,12 +60,12 @@ class CreatePromiseVM: NSObject {
                 self.placeType = .STATIC
                 self.capturedEditingPromisePlaceType = .STATIC
                 
-                // TODO: 약속 수정시 확인
                 if let destinationValue = editingPromise.destination?.value1 {
                     let place = Components
                         .Schemas
                         .InputUpdatePromiseDTO
                         .destinationPayload(value1: .init(
+                            name: destinationValue.name,
                             city: destinationValue.city,
                             district: destinationValue.district,
                             address1: destinationValue.address1,
@@ -97,6 +97,7 @@ class CreatePromiseVM: NSObject {
                             .Schemas
                             .InputUpdatePromiseDTO
                             .destinationPayload(value1: .init(
+                                name: destinationValue.name,
                                 city: destinationValue.city,
                                 district: destinationValue.district,
                                 address1: destinationValue.address1,
@@ -353,12 +354,13 @@ class CreatePromiseVM: NSObject {
             }
             
             // MARK: 장소 validate
-            // MARK: 장소는 nillable
+            // MARK: 장소는 nillable(중간장소로 바꿀 수도 있기 때문)
             switch form.placeType {
             case .STATIC:
                 let city = form.place?.value1.city
                 let district = form.place?.value1.district
                 let address1 = form.place?.value1.address1
+                let name = form.place?.value1.name
                 let address2 = form.place?.value1.address2
                 let lat = form.place?.value1.latitude
                 let lng = form.place?.value1.longitude
@@ -366,6 +368,7 @@ class CreatePromiseVM: NSObject {
                 let capturedCity = self.capturedEditingPromisePlace?.value1.city
                 let capturedDistrict = self.capturedEditingPromisePlace?.value1.district
                 let capturedAddress1 = self.capturedEditingPromisePlace?.value1.address1
+                let capturedName = self.capturedEditingPromisePlace?.value1.name
                 let capturedAddress2 = self.capturedEditingPromisePlace?.value1.address2
                 let capturedLat = self.capturedEditingPromisePlace?.value1.latitude
                 let capturedLng = self.capturedEditingPromisePlace?.value1.longitude
@@ -373,6 +376,7 @@ class CreatePromiseVM: NSObject {
                 if city != capturedCity ||
                     district != capturedDistrict ||
                     address1 != capturedAddress1 ||
+                    name != capturedName ||
                     address2 != capturedAddress2 ||
                     lat != capturedLat ||
                     lng != capturedLng {
@@ -387,6 +391,7 @@ class CreatePromiseVM: NSObject {
                 let city = form.middlePlace?.value1.city
                 let district = form.middlePlace?.value1.district
                 let address1 = form.middlePlace?.value1.address1
+                let name = form.middlePlace?.value1.name
                 let address2 = form.middlePlace?.value1.address2
                 let lat = form.middlePlace?.value1.latitude
                 let lng = form.middlePlace?.value1.longitude
@@ -394,6 +399,7 @@ class CreatePromiseVM: NSObject {
                 let capturedCity = self.capturedEditingPromiseMiddlePlace?.value1.city
                 let capturedDistrict = self.capturedEditingPromiseMiddlePlace?.value1.district
                 let capturedAddress1 = self.capturedEditingPromiseMiddlePlace?.value1.address1
+                let capturedName = self.capturedEditingPromiseMiddlePlace?.value1.name
                 let capturedAddress2 = self.capturedEditingPromiseMiddlePlace?.value1.address2
                 let capturedLat = self.capturedEditingPromiseMiddlePlace?.value1.latitude
                 let capturedLng = self.capturedEditingPromiseMiddlePlace?.value1.longitude
@@ -413,6 +419,7 @@ class CreatePromiseVM: NSObject {
                 if city != capturedCity ||
                     district != capturedDistrict ||
                     address1 != capturedAddress1 ||
+                    name != capturedName ||
                     address2 != capturedAddress2 ||
                     lat != capturedLat ||
                     lng != capturedLng {
@@ -475,18 +482,24 @@ class CreatePromiseVM: NSObject {
         }
         
         if form.placeType == .STATIC,
-           let _ = form.place?.value1.city,
-           let _ = form.place?.value1.district,
-           let _ = form.place?.value1.address1,
-           // MARK: address2는 상세 주소로 nullable, address1까지만 필수이기 때문에 제외
-           let _ = form.place?.value1.latitude,
-           let _ = form.place?.value1.longitude
+           let city = form.place?.value1.city,
+           let district = form.place?.value1.district,
+           let address1 = form.place?.value1.address1,
+           // MARK: address2는 상세 주소로 nullable
+           // MARK: name도 장소 이름으로 nullable
+            
+           let latitude = form.place?.value1.latitude,
+           let longitude = form.place?.value1.longitude,
+           
+           !city.isEmpty,
+           !district.isEmpty,
+           !address1.isEmpty
         {
             formDidValidate?(true)
             return
         }
         
-        formDidValidate?(true)
+        formDidValidate?(false)
     }
     
     func onChangedTitle(_ textField: UITextField) {

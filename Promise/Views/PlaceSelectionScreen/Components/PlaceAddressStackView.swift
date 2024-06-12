@@ -10,7 +10,7 @@ import UIKit
 final class PlaceAddressStackView: UIStackView {
     
     enum AddressType {
-        case roadName, lotNumber
+        case roadName, lotNumber, address
     }
     
     private var addressType: AddressType
@@ -22,7 +22,10 @@ final class PlaceAddressStackView: UIStackView {
             label.text = L10n.PlaceSelection.Label.loadPlaceName
         case .lotNumber:
             label.text = L10n.PlaceSelection.Label.streetPlaceName
+        case .address:
+            label.text = L10n.PlaceSelection.Label.address
         }
+        
         label.font = UIFont(font: FontFamily.Pretendard.regular, size: adjustedValue(12, .width))
         label.widthAnchor.constraint(equalToConstant: adjustedValue(33, .width)).isActive = true
         return label

@@ -48,9 +48,7 @@ extension PlaceSelectionVC: UITableViewDelegate {
         let lotNumberAddress = place?.documents?[indexPath.row].addressName ?? ""
         
         let address = roadNameAddress.isEmpty
-        ? lotNumberAddress.isEmpty
-        ? placeName
-        : lotNumberAddress
+        ? lotNumberAddress
         : roadNameAddress
         
         let (city, district, address1) = AddressHelper().parseAddress(address)
@@ -59,8 +57,8 @@ extension PlaceSelectionVC: UITableViewDelegate {
             let place = PlaceSelection(
                 city: city,
                 district: district,
-                address1: address1 + " " + placeName,
-                buildingName: placeName,
+                address1: address1,
+                placeName: placeName,
                 lotNumberAddress: lotNumberAddress,
                 roadNameAddress: roadNameAddress,
                 lat: lat,
@@ -69,22 +67,9 @@ extension PlaceSelectionVC: UITableViewDelegate {
             
             currentPlace = place
             viewState = .searchMap
+            changeMarkerPosition(lat: lat, lng: lng)
             
-            DispatchQueue.main.async { [weak self] in
-                let position = NMGLatLng(lat: lat, lng: lng)
-                let cameraUpdate = NMFCameraUpdate(scrollTo: position)
-                self?.map.moveCamera(cameraUpdate)
-                self?.map.zoomLevel = 17
-                
-                let marker = NMFMarker()
-                marker.iconImage = NMFOverlayImage(name: Asset.probeeMap.name)
-                marker.width = adjustedValue(40, .width)
-                marker.height = adjustedValue(40, .height)
-                marker.position = position
-                self?.marker = marker
-            }
         }
-    
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

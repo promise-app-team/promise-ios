@@ -19,16 +19,30 @@ protocol PlaceSelectionDataDelegate: AnyObject {
     func handlePlaceResult(place: PlaceLocationMDL)
 }
 
-struct PlaceSelection {
+struct PlaceSelection: Equatable {
     var city: String = ""
     var district: String = ""
     var address1: String = ""
-    var buildingName: String = ""
+    var placeName: String? = ""
+    var address2: String? = ""
+    
     var lotNumberAddress: String = ""
     var roadNameAddress: String = ""
-    var userInputAddress: String = ""
+    
     var lat: Double
     var lng: Double
+    
+    static func == (lhs: PlaceSelection, rhs: PlaceSelection) -> Bool {
+        return lhs.city == rhs.city &&
+        lhs.district == rhs.district &&
+        lhs.address1 == rhs.address1 &&
+        lhs.placeName == rhs.placeName &&
+        // lhs.lotNumberAddress == rhs.lotNumberAddress &&
+        // lhs.roadNameAddress == rhs.roadNameAddress &&
+        lhs.address2 == rhs.address2 &&
+        lhs.lat == rhs.lat &&
+        lhs.lng == rhs.lng
+    }
 }
 
 enum PlaceSelectionMode {
@@ -40,7 +54,7 @@ class PlaceSelectionVC: UIViewController {
     private var isPushedVC: Bool = false
     private var mode: PlaceSelectionMode = .destination
     
-    private let editingPlace: PlaceLocationMDL?
+    let editingPlace: PlaceSelection?
     
     enum SearchStatus {
         case idle
@@ -66,88 +80,103 @@ class PlaceSelectionVC: UIViewController {
     var viewState: SearchStatus = .idle {
         didSet {
             
-            print("cur: ", currentPlace)
-            
-            switch viewState {
-            case .idle:
+            DispatchQueue.main.async {
                 
-                self.headerView.isHiddenLeftView = !self.isPushedVC
-                self.headerView.isHiddenRightView = self.isPushedVC
+                switch self.viewState {
+                case .idle:
+                    
+                    self.headerView.isHiddenLeftView = !self.isPushedVC
+                    self.headerView.isHiddenRightView = self.isPushedVC
+                    
+                    self.searchFailView.isHidden = true
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = true
+                    
+                    self.map.allowsScrolling = true
+                    
+                    self.map.isHidden = false
+                    self.confirmView.isHidden = false
+                    self.probee.isHidden = false
+                    self.focusMyLoactionButton.isHidden = false
+                    
+                    if let editingPlace = self.editingPlace {
+                    
+                        self.moveMap(to: .init(
+                            latitude: editingPlace.lat,
+                            longitude: editingPlace.lng
+                        ), reason: 0)
+                        
+                    } else {
+                         self.clearData()
+                    }
+                    
+                    
+                case .onSearch:
+                    
+                    self.headerView.isHiddenLeftView = !self.isPushedVC
+                    self.headerView.isHiddenRightView = self.isPushedVC
+                    
+                    self.searchFailView.isHidden = true
+                    self.tipView.isHidden = false
+                    self.tableView.isHidden = true
+                    
+                    self.map.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
+                    
+                    let _ = self.searchTextField.becomeFirstResponder()
+                    self.marker = nil
+                    
+                case .searchFail:
+                    
+                    self.headerView.isHiddenLeftView = !self.isPushedVC
+                    self.headerView.isHiddenRightView = self.isPushedVC
+                    
+                    self.searchFailView.isHidden = false
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = true
+                    
+                    self.map.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
+                    
+                case .searchResult:
+                    
+                    self.headerView.isHiddenLeftView = !self.isPushedVC
+                    self.headerView.isHiddenRightView = self.isPushedVC
+                    
+                    self.searchFailView.isHidden = true
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = false
+                    
+                    self.map.isHidden = true
+                    self.confirmView.isHidden = true
+                    self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
+                    
+                case .searchMap:
+                    
+                    self.headerView.isHiddenLeftView = !self.isPushedVC
+                    self.headerView.isHiddenRightView = self.isPushedVC
+                    
+                    self.searchFailView.isHidden = true
+                    self.tipView.isHidden = true
+                    self.tableView.isHidden = true
+                    
+                    self.map.allowsScrolling = true
+                    
+                    self.map.isHidden = false
+                    self.confirmView.isHidden = false
+                    self.probee.isHidden = true
+                    self.focusMyLoactionButton.isHidden = true
+                    
+                }
                 
-                self.searchFailView.isHidden = true
-                self.tipView.isHidden = true
-                self.tableView.isHidden = true
-                
-                self.map.allowsScrolling = true
-                // self.map.isHidden = false
-                // self.confirmView.isHidden = false
-                // self.probee.isHidden = false
-                // self.focusMyLoactionButton.isHidden = false
-                
-                clearData()
-                
-            case .onSearch:
-                
-                self.headerView.isHiddenLeftView = !self.isPushedVC
-                self.headerView.isHiddenRightView = self.isPushedVC
-                
-                self.searchFailView.isHidden = true
-                self.tipView.isHidden = false
-                self.tableView.isHidden = true
-                
-                // self.map.isHidden = true
-                // self.confirmView.isHidden = true
-                // self.probee.isHidden = true
-                // self.focusMyLoactionButton.isHidden = true
-                
-                let _ = self.searchTextField.becomeFirstResponder()
-                self.marker = nil
-                
-            case .searchFail:
-                
-                self.headerView.isHiddenLeftView = !self.isPushedVC
-                self.headerView.isHiddenRightView = self.isPushedVC
-                
-                self.searchFailView.isHidden = false
-                self.tipView.isHidden = true
-                self.tableView.isHidden = true
-                
-                // self.map.isHidden = true
-                // self.confirmView.isHidden = true
-                // self.probee.isHidden = true
-                // self.focusMyLoactionButton.isHidden = true
-                
-            case .searchResult:
-                
-                self.headerView.isHiddenLeftView = !self.isPushedVC
-                self.headerView.isHiddenRightView = self.isPushedVC
-                
-                self.searchFailView.isHidden = true
-                self.tipView.isHidden = true
-                self.tableView.isHidden = false
-                
-                // self.map.isHidden = true
-                // self.confirmView.isHidden = true
-                // self.probee.isHidden = true
-                // self.focusMyLoactionButton.isHidden = true
-                
-            case .searchMap:
-                
-                self.headerView.isHiddenLeftView = false
-                self.headerView.isHiddenRightView = self.isPushedVC
-                
-                self.searchFailView.isHidden = true
-                self.tipView.isHidden = true
-                self.tableView.isHidden = true
-                
-                self.map.allowsScrolling = false
-                // self.map.isHidden = false
-                // self.confirmView.isHidden = false
-                // self.probee.isHidden = true
-                self.focusMyLoactionButton.isHidden = true
+                self.view.layoutIfNeeded()
                 
             }
-            
         }
     }
     
@@ -166,10 +195,23 @@ class PlaceSelectionVC: UIViewController {
         didSet {
             guard let currentPlace else { return }
             
-            DispatchQueue.main.async {
-                self.confirmView.updateLabel(to: currentPlace)
+            if let editingPlace {
+                
+                if currentPlace == editingPlace {
+                    
+                    self.confirmView.confirmButton.isDisabled = true
+                    self.confirmView.updateLabel(with: editingPlace)
+                    
+                } else {
+                    
+                    self.confirmView.confirmButton.isDisabled = false
+                    self.confirmView.updateLabel(to: currentPlace)
+                }
+                
+                return
             }
             
+            self.confirmView.updateLabel(to: currentPlace)
         }
     }
     
@@ -298,6 +340,7 @@ class PlaceSelectionVC: UIViewController {
     lazy var confirmView: PlaceSelectionConfirmView = {
         let view = PlaceSelectionConfirmView()
         
+        view.textFieldDelegate = self
         view.handleTappedConfirmButton = { [weak self] in
             
             guard let self = self else { return }
@@ -307,8 +350,9 @@ class PlaceSelectionVC: UIViewController {
             
             let result = PlaceLocationMDL(
                 city: place.city,
-                disctrict: place.district,
+                district: place.district,
                 address1: place.address1,
+                name: place.placeName,
                 address2: address2,
                 latitude: String(place.lat),
                 longitude: String(place.lng)
@@ -365,13 +409,30 @@ class PlaceSelectionVC: UIViewController {
         moveMap(to: location)
     }
     
-    private func moveMap(to location: CLLocationCoordinate2D) {
+    private func moveMap(to location: CLLocationCoordinate2D, reason: Int32 = 1) {
         DispatchQueue.main.async { [weak self] in
             let target = NMGLatLng(lat: location.latitude, lng: location.longitude)
             let position = NMFCameraPosition(target, zoom: 17)
             let update = NMFCameraUpdate(position: position)
             update.animation = .linear
+            update.reason = reason
             self?.map.moveCamera(update)
+        }
+    }
+    
+    func changeMarkerPosition(lat: Double, lng: Double) {
+        DispatchQueue.main.async { [weak self] in
+            let position = NMGLatLng(lat: lat, lng: lng)
+            let cameraUpdate = NMFCameraUpdate(scrollTo: position)
+            self?.map.moveCamera(cameraUpdate)
+            self?.map.zoomLevel = 17
+            
+            let marker = NMFMarker()
+            marker.iconImage = NMFOverlayImage(name: Asset.probeeMap.name)
+            marker.width = adjustedValue(40, .width)
+            marker.height = adjustedValue(40, .height)
+            marker.position = position
+            self?.marker = marker
         }
     }
     
@@ -432,9 +493,15 @@ class PlaceSelectionVC: UIViewController {
         }, completion: nil)
     }
     
+    func validatePlace(currentPlace: PlaceSelection, currentDetailAddress: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.confirmView.confirmButton.isDisabled = currentPlace == self?.editingPlace && currentDetailAddress == self?.editingPlace?.address2
+        }
+    }
+    
     // MARK: initialize
     
-    init(mode: PlaceSelectionMode, editingPlace: PlaceLocationMDL? = nil) {
+    init(mode: PlaceSelectionMode, editingPlace: PlaceSelection? = nil) {
         self.mode = mode
         self.editingPlace = editingPlace
         super.init(nibName: nil, bundle: nil)
@@ -483,13 +550,32 @@ class PlaceSelectionVC: UIViewController {
         confirmView.configureAddressTextfieldDelegate(self)
         listenKeyboardNotification()
         
-        switch mode {
-        case .departure:
-            viewState = .idle
-        case .destination:
-            viewState = .onSearch
+        if let editingPlace {
+            
+            confirmView.addressTextField.text = editingPlace.address2
+            currentPlace = editingPlace
+            
+            switch mode {
+            case .departure:
+                viewState = .idle
+            case .destination:
+                viewState = .searchMap
+                changeMarkerPosition(
+                    lat: editingPlace.lat,
+                    lng: editingPlace.lng
+                )
+            }
+            
+        } else {
+            
+            switch mode {
+            case .departure:
+                viewState = .idle
+            case .destination:
+                viewState = .onSearch
+            }
+            
         }
-        
     }
     
     private func render() {
@@ -519,19 +605,19 @@ class PlaceSelectionVC: UIViewController {
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             searchTextField.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: adjustedValue(16, .height)),
-            searchTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: adjustedValue(24, .width)),
-            searchTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -adjustedValue(24, .width)),
+            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: adjustedValue(24, .width)),
+            searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -adjustedValue(24, .width)),
             
             map.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
             map.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             map.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             probee.centerXAnchor.constraint(equalTo: map.centerXAnchor),
-            probee.centerYAnchor.constraint(equalTo: map.centerYAnchor),
+            probee.centerYAnchor.constraint(equalTo: map.centerYAnchor, constant: -adjustedValue(43.5, .height)),
             
             focusMyLoactionButton.bottomAnchor.constraint(equalTo: map.bottomAnchor, constant: -adjustedValue(15, .height)),
             focusMyLoactionButton.trailingAnchor.constraint(equalTo: map.trailingAnchor, constant: -adjustedValue(10, .width)),
@@ -542,13 +628,13 @@ class PlaceSelectionVC: UIViewController {
             confirmViewHeightAnchorConstraint,
             
             tipView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
-            tipView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tipView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tipView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tipView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tipView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tipView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             searchFailView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
-            searchFailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchFailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchFailView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchFailView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchFailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             tableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
@@ -559,7 +645,7 @@ class PlaceSelectionVC: UIViewController {
             keyboardDismissBackdrop.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: adjustedValue(16, .height)),
             keyboardDismissBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             keyboardDismissBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            keyboardDismissBackdrop.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            keyboardDismissBackdrop.bottomAnchor.constraint(equalTo: confirmView.topAnchor)
         ])
     }
 }
@@ -570,18 +656,14 @@ extension PlaceSelectionVC: HeaderViewDelegate {
     }
     
     func onTapLeftView() {
-        switch viewState {
-        case .onSearch:
-            view.endEditing(true)
-        case .searchMap:
-            viewState = .searchResult
-        case .searchResult:
-            viewState = .idle
-        case .searchFail:
-            viewState = .idle
-        case .idle:
-            view.endEditing(true)
-            navigationController?.popViewController(animated: true)
-        }
+        view.endEditing(true)
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension PlaceSelectionVC: PlaceSelectionConfirmViewTextFieldDelegate {
+    func onChangeText(text: String) {
+        guard let currentPlace else { return }
+        validatePlace(currentPlace: currentPlace, currentDetailAddress: text)
     }
 }

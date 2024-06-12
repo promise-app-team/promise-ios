@@ -13,7 +13,19 @@ class PromiseStatusWithUserView: UIView {
     
     let mainVM: MainVM
     
-    var currentDeparture: PlaceLocationMDL?
+    var currentDeparture: PlaceLocationMDL? {
+        didSet {
+            
+            if let currentDeparture {
+                DispatchQueue.main.async { [weak self] in
+                    self?.departureLocation.text = AddressHelper().getDisplayAddressText(place: currentDeparture)
+                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
+                }
+            }
+            
+        }
+    }
     
     private var isEnabledLocationServiceOnDevice = LocationService.shared.isEnabledLocationServiceOnDevice {
         didSet {
@@ -169,7 +181,7 @@ class PromiseStatusWithUserView: UIView {
         departureLocationEditIcon.centerYAnchor.constraint(equalTo: iconWrapper.centerYAnchor).isActive = true
         
         let stackView = UIStackView(arrangedSubviews: [departureLocation, iconWrapper])
-
+        
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = adjustedValue(4, .width)
@@ -245,23 +257,14 @@ class PromiseStatusWithUserView: UIView {
                 
                 self?.currentDeparture = .init(
                     city: location.city,
-                    disctrict: location.district,
+                    district: location.district,
                     address1: location.address1,
+                    name: location.name ?? "",
                     address2: location.address2 ?? "",
                     latitude: String(location.latitude),
                     longitude: String(location.longitude)
                 )
                 
-                DispatchQueue.main.async { [weak self] in
-                    
-                    let departureLoaction = AddressHelper().getDisplayAddressText(place: location)
-                    
-                    self?.departureLocation.text = departureLoaction
-                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-                    
-                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
-                    
-                }
             } else {
                 self?.currentDeparture = nil
             }
@@ -287,10 +290,20 @@ class PromiseStatusWithUserView: UIView {
         
         var placeSelectionVC: PlaceSelectionVC
         
-        let departureText = departureLocation.text ?? ""
-        
-        if let currentDeparture {
-            placeSelectionVC = PlaceSelectionVC(mode: .departure, editingPlace: currentDeparture)
+        if let currentDeparture,
+           let latitude = Double(currentDeparture.latitude),
+           let longitude = Double(currentDeparture.longitude) {
+            
+            placeSelectionVC = PlaceSelectionVC(mode: .departure, editingPlace: .init(
+                city: currentDeparture.city,
+                district: currentDeparture.district,
+                address1: currentDeparture.address1,
+                placeName: currentDeparture.name,
+                address2: currentDeparture.address2,
+                lat: latitude,
+                lng: longitude
+            ))
+            
         } else {
             placeSelectionVC = PlaceSelectionVC(mode: .departure)
         }
@@ -378,8 +391,9 @@ extension PromiseStatusWithUserView: PlaceSelectionDataDelegate {
               let longitude = Double(place.longitude) else { return }
         
         let location = Components.Schemas.InputLocationDTO(
+            name: place.name,
             city: place.city,
-            district: place.disctrict,
+            district: place.district,
             address1: place.address1,
             address2: place.address2,
             latitude: latitude,
@@ -387,26 +401,22 @@ extension PromiseStatusWithUserView: PlaceSelectionDataDelegate {
         )
         
         let address = AddressHelper().getDisplayAddressText(place: location)
-        
-        if address == departureLocation.text {
-            return
-        }
-        
-        // =====================================================
+        if address == departureLocation.text { return }
         
         Task {
             await mainVM.editDepartureLoaction(with: location) { [weak self] newDeparture in
                 
-                DispatchQueue.main.async { [weak self] in
-                    
-                    self?.departureLocation.text = AddressHelper().getDisplayAddressText(place: newDeparture)
-                    
-                    self?.departureLocation.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-                    
-                    self?.departureLocationEditIcon.image = UIImage(asset: Asset.editGreen)
-                }
-                
+                self?.currentDeparture = .init(
+                    city: newDeparture.city,
+                    district: newDeparture.district,
+                    address1: newDeparture.address1,
+                    name: newDeparture.name ?? "",
+                    address2: newDeparture.address2 ?? "",
+                    latitude: String(newDeparture.latitude),
+                    longitude: String(newDeparture.longitude)
+                )
             }
+            
         }
     }
 }
