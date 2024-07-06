@@ -3,7 +3,7 @@
 # Cocoapods
 echo "Installing Cocoapods..."
 brew install cocoapods
-pod install
+pod install --repo-update
 
 # OpenAPIGenerator
 echo "Setting defaults for OpenAPIGenerator..."
