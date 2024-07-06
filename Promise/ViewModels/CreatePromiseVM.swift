@@ -488,20 +488,26 @@ class CreatePromiseVM: NSObject {
             return
         }
         
-        if form.placeType == .STATIC,
-           let city = form.place?.value1.city,
-           let district = form.place?.value1.district,
-           let address1 = form.place?.value1.address1,
-           // MARK: address2는 상세 주소로 nullable
-           // MARK: name도 장소 이름으로 nullable
-            
-           let _ = form.place?.value1.latitude,
-           let _ = form.place?.value1.longitude,
-           
-           !city.isEmpty,
-           !district.isEmpty,
-           !address1.isEmpty
-        {
+        
+        switch form.placeType {
+        case .STATIC:
+            if let city = form.place?.value1.city,
+               let district = form.place?.value1.district,
+               let address1 = form.place?.value1.address1,
+               // MARK: address2는 상세 주소로 nullable
+               // MARK: name도 장소 이름으로 nullable
+                
+               let _ = form.place?.value1.latitude,
+               let _ = form.place?.value1.longitude,
+               
+               !city.isEmpty,
+               !district.isEmpty,
+               !address1.isEmpty
+            {
+                formDidValidate?(true)
+                return
+            }
+        case .DYNAMIC:
             formDidValidate?(true)
             return
         }
