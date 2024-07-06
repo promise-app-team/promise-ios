@@ -1257,7 +1257,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "curl ${API_DOC_URL} > ${SRCROOT}/Promise/openapi.json --verbose\n";
+			shellScript = "curl ${API_DOC_URL} > ${SRCROOT}/Promise/openapi.json --verbose\n\nDEST_FILE=\"${SRCROOT}/Promise/openapi.json\"\nTEMP_FILE=\"${SRCROOT}/Promise/openapi_temp.json\"\n\n# Step 1: Download the API document to a temporary file\ncurl ${API_DOC_URL} > $TEMP_FILE --silent\n\n# Step 2: Compare the existing file with the temporary file\nif ! cmp -s \"$TEMP_FILE\" \"$DEST_FILE\"; then\n  # Step 3: If the files are different, overwrite the destination file\n  mv $TEMP_FILE $DEST_FILE\n  echo \"openapi.json has been updated.\"\nelse\n  echo \"No changes detected in openapi.json.\"\n  # Step 4: If the files are the same, remove the temporary file\n  rm $TEMP_FILE\nfi\n";
 		};
 		FC59031A2A76A37300778305 /* SwiftGen Script */ = {
 			isa = PBXShellScriptBuildPhase;
