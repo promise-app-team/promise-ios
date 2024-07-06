@@ -2,8 +2,8 @@
 
 # Cocoapods
 echo "Installing Cocoapods..."
-brew install cocoapods
-pod install --repo-update
+sudo gem install cocoapods
+pod install
 
 # OpenAPIGenerator
 echo "Setting defaults for OpenAPIGenerator..."
